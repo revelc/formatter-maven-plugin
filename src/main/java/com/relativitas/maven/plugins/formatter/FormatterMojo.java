@@ -17,21 +17,30 @@ package com.relativitas.maven.plugins.formatter;
  * limitations under the License.
  */
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
@@ -40,6 +49,8 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
+
+import com.twmacinta.util.MD5;
 
 /**
  * Java source code formatter plugin.
@@ -50,6 +61,8 @@ import org.eclipse.text.edits.TextEdit;
  * @author jecki
  */
 public class FormatterMojo extends AbstractMojo {
+	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
+
 	/**
 	 * Project's source directory as specified in the POM.
 	 * 
@@ -67,6 +80,24 @@ public class FormatterMojo extends AbstractMojo {
 	 * @required
 	 */
 	private File testSourceDirectory;
+
+	/**
+	 * Project's target directory as specified in the POM.
+	 * 
+	 * @parameter expression="${project.build.directory}"
+	 * @readonly
+	 * @required
+	 */
+	private File targetDirectory;
+
+	/**
+	 * Project's base directory.
+	 * 
+	 * @parameter expression="${basedir}"
+	 * @readonly
+	 * @required
+	 */
+	private File basedir;
 
 	/**
 	 * Location of the file.
@@ -96,32 +127,104 @@ public class FormatterMojo extends AbstractMojo {
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
+		long startClock = System.currentTimeMillis();
+
 		if (directories == null) {
 			directories = new File[] { sourceDirectory, testSourceDirectory };
 		}
 
 		List files = new ArrayList();
 		probeFiles(directories, files);
+		int numberOfFiles = files.size();
+		Log log = getLog();
+		log.info("Number of files to be formatted: " + numberOfFiles);
 
+		createCodeFormatter();
+		ResultCollector rc = new ResultCollector();
+		Properties hashCache = readFileHashCacheFile();
+
+		String basedirPath = getBasedirPath();
 		for (int i = 0, n = files.size(); i < n; i++) {
 			File file = (File) files.get(i);
-			formatFile(file);
+			formatFile(file, rc, hashCache, basedirPath);
 		}
+
+		storeFileHashCache(hashCache);
+
+		long endClock = System.currentTimeMillis();
+
+		log.info("Successfully formatted: " + rc.successCount + " file(s)");
+		log.info("Fail to format        : " + rc.failCount + " file(s)");
+		log.info("Skipped               : " + rc.skippedCount + " file(s)");
+		log.info("Approximate time taken: " + ((endClock - startClock) / 1000)
+				+ "s");
+	}
+
+	private String getBasedirPath() {
+		try {
+			return basedir.getCanonicalPath();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	private void storeFileHashCache(Properties props) {
+		File cacheFile = new File(targetDirectory, CACHE_PROPERTIES_FILENAME);
+		try {
+			OutputStream out = new BufferedOutputStream(new FileOutputStream(
+					cacheFile));
+			props.store(out, null);
+		} catch (FileNotFoundException e) {
+			getLog().warn("Cannot store file hash cache properties file", e);
+		} catch (IOException e) {
+			getLog().warn("Cannot store file hash cache properties file", e);
+		}
+	}
+
+	private Properties readFileHashCacheFile() {
+		Properties props = new Properties();
+		Log log = getLog();
+		if (!targetDirectory.exists()) {
+			targetDirectory.mkdirs();
+		} else if (!targetDirectory.isDirectory()) {
+			log.warn("Something strange here as the "
+					+ "supposedly target directory is not a directory.");
+			return props;
+		}
+
+		File cacheFile = new File(targetDirectory, CACHE_PROPERTIES_FILENAME);
+		if (!cacheFile.exists()) {
+			return props;
+		}
+
+		try {
+			props.load(new BufferedInputStream(new FileInputStream(cacheFile)));
+		} catch (FileNotFoundException e) {
+			log.warn("Cannot load file hash cache properties file", e);
+		} catch (IOException e) {
+			log.warn("Cannot load file hash cache properties file", e);
+		}
+		return props;
 	}
 
 	/**
 	 * @param file
+	 * @param rc
+	 * @param hashCache
+	 * @param basedirPath 
 	 */
-	private void formatFile(File file) {
-		CodeFormatter formatter = getCodeFormatter();
+	private void formatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath) {
 		try {
-			doFormatFile(file, formatter);
+			doFormatFile(file, rc, hashCache, basedirPath);
 		} catch (IOException e) {
-			e.printStackTrace();
+			rc.failCount++;
+			getLog().warn(e);
 		} catch (MalformedTreeException e) {
-			e.printStackTrace();
+			rc.failCount++;
+			getLog().warn(e);
 		} catch (BadLocationException e) {
-			e.printStackTrace();
+			rc.failCount++;
+			getLog().warn(e);
 		}
 	}
 
@@ -129,24 +232,62 @@ public class FormatterMojo extends AbstractMojo {
 	 * Format individual file.
 	 * 
 	 * @param file
-	 * @param formatter
+	 * @param rc
+	 * @param hashCache
+	 * @param basedirPath 
 	 * @throws IOException
 	 * @throws BadLocationException
 	 */
-	private void doFormatFile(File file, CodeFormatter formatter)
-			throws IOException, BadLocationException {
+	private void doFormatFile(File file, ResultCollector rc,
+			Properties hashCache, String basedirPath) throws IOException, BadLocationException {
+		Log log = getLog();
+		log.debug("Processing file: " + file);
 		String code = readFileAsString(file);
+		String originalHash = md5hash(code);
+
+		String canonicalPath = file.getCanonicalPath();
+		String path = canonicalPath.substring(basedirPath.length());
+		String cachedHash = hashCache.getProperty(path);
+		if (cachedHash != null && cachedHash.equals(originalHash)) {
+			rc.skippedCount++;
+			log.debug("File is already formatted.");
+			return;
+		}
 
 		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code,
 				0, code.length(), 0, null);
 		if (te == null) {
-			// TODO code cannot be formatted
+			rc.skippedCount++;
+			log.debug("Code cannot be formatted. Possible cause "
+					+ "is unmatched source/target/compliance version.");
 			return;
 		}
 
 		IDocument doc = new Document(code);
 		te.apply(doc);
-		writeStringToFile(doc.get(), file);
+		String formattedCode = doc.get();
+		String formattedHash = md5hash(formattedCode);
+		hashCache.setProperty(path, formattedHash);
+
+		if (originalHash.equals(formattedHash)) {
+			rc.skippedCount++;
+			log.debug("Equal hash code. Not writing result to file.");
+			return;
+		}
+
+		writeStringToFile(formattedCode, file);
+		rc.successCount++;
+	}
+
+	/**
+	 * @param str
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	private String md5hash(String str) throws UnsupportedEncodingException {
+		MD5 md5 = new MD5();
+		md5.Update(str, null);
+		return md5.asHex();
 	}
 
 	/**
@@ -252,17 +393,11 @@ public class FormatterMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Get {@link CodeFormatter} instance to be used by this mojo, or create one
-	 * if it does not exist yet.
-	 * 
-	 * @return
+	 * Create a {@link CodeFormatter} instance to be used by this mojo.
 	 */
-	private CodeFormatter getCodeFormatter() {
-		if (formatter == null) {
-			Map options = getFormattingOptions();
-			formatter = ToolFactory.createCodeFormatter(options);
-		}
-		return formatter;
+	private void createCodeFormatter() {
+		Map options = getFormattingOptions();
+		formatter = ToolFactory.createCodeFormatter(options);
 	}
 
 	/**
@@ -277,7 +412,13 @@ public class FormatterMojo extends AbstractMojo {
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
 				compilerTargetPlatform);
-		
+
 		return options;
+	}
+
+	private class ResultCollector {
+		private int successCount;
+		private int failCount;
+		private int skippedCount;
 	}
 }
