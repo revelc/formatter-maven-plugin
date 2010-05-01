@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.relativitas.maven.plugins</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <versioning>
+    <latest>0.1.0-SNAPSHOT</latest>
+    <versions>
+      <version>0.1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20100501115603</lastUpdated>
+  </versioning>
+</metadata>
