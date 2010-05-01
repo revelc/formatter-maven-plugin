@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>fast-md5</groupId>
+  <artifactId>fast-md5</artifactId>
+  <version>2.5</version>
+  <description>POM was created from deploy:deploy-file</description>
+  <distributionManagement>
+    <status>deployed</status>
+  </distributionManagement>
+</project>
