@@ -1,0 +1,10 @@
+#Features List
+
+= Features List =
+
+This page contains list of features for each version of this software.
+
+== 0.1.0 (unstable) ==
+
+  * 2010-05-07: (r26) Added feature to read from eclipse formatter config XML file
+  * 2010-05-01: (r16) Skip writing formatted file if the original and result hash code is the same
