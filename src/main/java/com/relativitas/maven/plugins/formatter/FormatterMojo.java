@@ -33,6 +33,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,8 @@ import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
+import org.eclipse.jdt.internal.formatter.DefaultCodeFormatterOptions;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -120,6 +123,11 @@ public class FormatterMojo extends AbstractMojo {
 	 * @parameter default-value="1.5"
 	 */
 	private String compilerTargetPlatform;
+
+	/**
+	 * @parameter
+	 */
+	private File configFile;
 
 	private CodeFormatter formatter;
 
@@ -211,9 +219,10 @@ public class FormatterMojo extends AbstractMojo {
 	 * @param file
 	 * @param rc
 	 * @param hashCache
-	 * @param basedirPath 
+	 * @param basedirPath
 	 */
-	private void formatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath) {
+	private void formatFile(File file, ResultCollector rc,
+			Properties hashCache, String basedirPath) {
 		try {
 			doFormatFile(file, rc, hashCache, basedirPath);
 		} catch (IOException e) {
@@ -234,12 +243,13 @@ public class FormatterMojo extends AbstractMojo {
 	 * @param file
 	 * @param rc
 	 * @param hashCache
-	 * @param basedirPath 
+	 * @param basedirPath
 	 * @throws IOException
 	 * @throws BadLocationException
 	 */
 	private void doFormatFile(File file, ResultCollector rc,
-			Properties hashCache, String basedirPath) throws IOException, BadLocationException {
+			Properties hashCache, String basedirPath) throws IOException,
+			BadLocationException {
 		Log log = getLog();
 		log.debug("Processing file: " + file);
 		String code = readFileAsString(file);
@@ -397,6 +407,7 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	private void createCodeFormatter() {
 		Map options = getFormattingOptions();
+		System.out.println(options);
 		formatter = ToolFactory.createCodeFormatter(options);
 	}
 
@@ -413,7 +424,39 @@ public class FormatterMojo extends AbstractMojo {
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
 				compilerTargetPlatform);
 
+		System.out.println("@@@ " + configFile);
+		System.out.println(DefaultCodeFormatterConstants.FORMATTER_ALIGN_TYPE_MEMBERS_ON_COLUMNS);
+		if (configFile != null) {
+			Map config = getOptionsFromConfigFile();
+//			System.out.println(config);
+			options.putAll(config);
+		}
+
 		return options;
+	}
+
+	/**
+	 * Read config file and return the config as {@link Map}.
+	 * 
+	 * @return
+	 */
+	private Map getOptionsFromConfigFile() {
+		Log log = getLog();
+		if (!configFile.exists()) {
+			log.error("Config file [" + configFile + "] does not exist");
+		} else if (!configFile.isFile()) {
+			log.error("Config file [" + configFile + "] is not a file");
+		} else {
+			FileReader reader;
+			try {
+				reader = new FileReader(configFile);
+				ConfigReader configReader = new ConfigReader();
+				return configReader.read(reader);
+			} catch (FileNotFoundException e) {
+				log.error("Cannot load config file [" + configFile + "]", e);
+			}
+		}
+		return Collections.emptyMap();
 	}
 
 	private class ResultCollector {
