@@ -1,7 +1,3 @@
-#Features List
-
-= Features List =
-
 This page contains list of features for each version of this software.
 
 == 0.1.0 (unstable) ==
