@@ -45,8 +45,6 @@ import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
-import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
-import org.eclipse.jdt.internal.formatter.DefaultCodeFormatterOptions;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -407,7 +405,6 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	private void createCodeFormatter() {
 		Map options = getFormattingOptions();
-		System.out.println(options);
 		formatter = ToolFactory.createCodeFormatter(options);
 	}
 
@@ -424,11 +421,8 @@ public class FormatterMojo extends AbstractMojo {
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
 				compilerTargetPlatform);
 
-		System.out.println("@@@ " + configFile);
-		System.out.println(DefaultCodeFormatterConstants.FORMATTER_ALIGN_TYPE_MEMBERS_ON_COLUMNS);
 		if (configFile != null) {
 			Map config = getOptionsFromConfigFile();
-//			System.out.println(config);
 			options.putAll(config);
 		}
 
