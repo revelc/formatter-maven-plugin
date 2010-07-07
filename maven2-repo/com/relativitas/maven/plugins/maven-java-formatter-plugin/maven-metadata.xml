@@ -4,11 +4,12 @@
   <artifactId>maven-java-formatter-plugin</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <versioning>
-    <latest>0.2.0-SNAPSHOT</latest>
+    <latest>0.1.0</latest>
     <versions>
       <version>0.1.0-SNAPSHOT</version>
       <version>0.2.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </versions>
-    <lastUpdated>20100707144039</lastUpdated>
+    <lastUpdated>20100707144452</lastUpdated>
   </versioning>
 </metadata>
