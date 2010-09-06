@@ -57,7 +57,7 @@ import com.twmacinta.util.MD5;
  * Java source code formatter plugin.
  * 
  * @goal format
- * @phase compile
+ * @phase process-sources
  * 
  * @author jecki
  */
