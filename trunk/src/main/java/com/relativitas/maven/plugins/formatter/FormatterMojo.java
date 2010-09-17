@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -50,8 +51,6 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
-
-import com.twmacinta.util.MD5;
 
 /**
  * Java source code formatter plugin.
@@ -335,9 +334,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * @throws UnsupportedEncodingException
 	 */
 	private String md5hash(String str) throws UnsupportedEncodingException {
-		MD5 md5 = new MD5();
-		md5.Update(str, null);
-		return md5.asHex();
+		return DigestUtils.md5Hex(str.getBytes("ISO8859_1"));
 	}
 
 	/**
