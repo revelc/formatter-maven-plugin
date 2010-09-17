@@ -5,31 +5,45 @@
 	<packaging>maven-plugin</packaging>
 	<version>0.2.0-SNAPSHOT</version>
 	<name>Maven2 Java Formatter Plugin</name>
+	<description>Plugin for formatting Java source code</description>
 	<url>http://maven-java-formatter-plugin.googlecode.com</url>
+	<licenses>
+ 		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/maven-java-formatter-plugin/issues</url>
+	</issueManagement>
 	<scm>
-		<connection>scm:svn:https://maven-java-formatter-plugin.googlecode.com/svn/trunk/</connection>
+		<connection>scm:svn:http://maven-java-formatter-plugin.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://maven-java-formatter-plugin.googlecode.com/svn/trunk/</developerConnection>
+		<url>http://maven-java-formatter-plugin.googlecode.com/svn/trunk/</url>
 	</scm>
+	<developers>
+		<developer>
+			<id>jecki.go</id>
+			<name>Jecki</name>
+			<email>jecki.go@gmail.com</email>
+		</developer>
+		<developer>
+			<id>matt.blanchette</id>
+			<name>Matt Blanchette</name>
+			<email>matt.blanchette@gmail.com</email>
+		</developer>
+	</developers>
 	<build>
 		<extensions>
 			<extension>
 				<groupId>org.jvnet.wagon-svn</groupId>
 				<artifactId>wagon-svn</artifactId>
-				<version>1.8</version>
+				<version>1.9</version>
 			</extension>
 		</extensions>
 	</build>
-	<repositories>
-		<repository>
-			<id>maven2-repository.dev.java.net</id>
-			<name>Java.net Repository for Maven</name>
-			<url>http://download.java.net/maven/2/</url>
-		</repository>
-		<repository>
-			<id>maven-java-formatter-plugin-repo</id>
-			<name>Maven2 Java Formatter Plugin repository</name>
-			<url>https://maven-java-formatter-plugin.googlecode.com/svn/maven2-repo</url>
-		</repository>
-	</repositories>
 	<distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
@@ -95,9 +109,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>fast-md5</groupId>
-			<artifactId>fast-md5</artifactId>
-			<version>2.5</version>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
 </project>
