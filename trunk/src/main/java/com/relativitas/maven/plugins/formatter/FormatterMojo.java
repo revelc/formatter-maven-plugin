@@ -153,6 +153,11 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	private File configFile;
 
+	/**
+	 * @parameter default-value="false"
+	 */
+	private Boolean overrideConfigCompilerVersion;
+
 	private CodeFormatter formatter;
 
 	/**
@@ -460,6 +465,11 @@ public class FormatterMojo extends AbstractMojo {
 
 		if (configFile != null) {
 			Map config = getOptionsFromConfigFile();
+			if (Boolean.TRUE.equals(overrideConfigCompilerVersion)) {
+				config.remove(JavaCore.COMPILER_SOURCE);
+				config.remove(JavaCore.COMPILER_COMPLIANCE);
+				config.remove(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM);
+			}
 			options.putAll(config);
 		}
 
