@@ -60,9 +60,20 @@ import com.twmacinta.util.MD5;
  * @phase process-sources
  * 
  * @author jecki
+ * @author matt.blanchette
  */
 public class FormatterMojo extends AbstractMojo {
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
+
+	static final String LINE_ENDING_AUTO = "AUTO";
+	static final String LINE_ENDING_KEEP = "KEEP";
+	static final String LINE_ENDING_LF = "LF";
+	static final String LINE_ENDING_CRLF = "CRLF";
+	static final String LINE_ENDING_CR = "CR";
+
+	static final String LINE_ENDING_LF_CHAR = "\n";
+	static final String LINE_ENDING_CRLF_CHARS = "\r\n";
+	static final String LINE_ENDING_CR_CHAR = "\r";
 
 	/**
 	 * Project's source directory as specified in the POM.
@@ -123,6 +134,21 @@ public class FormatterMojo extends AbstractMojo {
 	private String compilerTargetPlatform;
 
 	/**
+	 * Sets the line-ending of files after formatting. Valid values are:
+	 * <ul>
+	 * <li><b>"AUTO"</b> - Use line endings of current system</li>
+	 * <li><b>"KEEP"</b> - Preserve line endings of files, default to AUTO if
+	 * ambiguous</li>
+	 * <li><b>"LF"</b> - Use Unix and Mac style line endings</li>
+	 * <li><b>"CRLF"</b> - Use DOS and Windows style line endings</li>
+	 * <li><b>"CR"</b> - Use early Mac style line endings</li>
+	 * </ul>
+	 * 
+	 * @parameter default-value="AUTO"
+	 */
+	private String lineEnding;
+
+	/**
 	 * @parameter
 	 */
 	private File configFile;
@@ -134,6 +160,15 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	public void execute() throws MojoExecutionException {
 		long startClock = System.currentTimeMillis();
+
+		if (!LINE_ENDING_AUTO.equals(lineEnding)
+				&& !LINE_ENDING_KEEP.equals(lineEnding)
+				&& !LINE_ENDING_LF.equals(lineEnding)
+				&& !LINE_ENDING_CRLF.equals(lineEnding)
+				&& !LINE_ENDING_CR.equals(lineEnding)) {
+			throw new MojoExecutionException(
+					"Unknown value for lineEnding parameter");
+		}
 
 		if (directories == null) {
 			directories = new File[] { sourceDirectory, testSourceDirectory };
@@ -262,8 +297,10 @@ public class FormatterMojo extends AbstractMojo {
 			return;
 		}
 
+		String lineSeparator = getLineEnding(code);
+
 		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code,
-				0, code.length(), 0, null);
+				0, code.length(), 0, lineSeparator);
 		if (te == null) {
 			rc.skippedCount++;
 			log.debug("Code cannot be formatted. Possible cause "
@@ -451,6 +488,49 @@ public class FormatterMojo extends AbstractMojo {
 			}
 		}
 		return Collections.emptyMap();
+	}
+
+	String getLineEnding(String fileDataString) {
+		String lineEnd = null;
+		if (LINE_ENDING_KEEP.equals(lineEnding)) {
+			lineEnd = determineLineEnding(fileDataString);
+		} else if (LINE_ENDING_LF.equals(lineEnding)) {
+			lineEnd = LINE_ENDING_LF_CHAR;
+		} else if (LINE_ENDING_CRLF.equals(lineEnding)) {
+			lineEnd = LINE_ENDING_CRLF_CHARS;
+		} else if (LINE_ENDING_CR.equals(lineEnding)) {
+			lineEnd = LINE_ENDING_CR_CHAR;
+		}
+		return lineEnd;
+	}
+
+	String determineLineEnding(String fileDataString) {
+		int lfCount = 0;
+		int crCount = 0;
+		int crlfCount = 0;
+
+		for (int i = 0; i < fileDataString.length(); i++) {
+			char c = fileDataString.charAt(i);
+			if (c == '\r') {
+				if ((i + 1) < fileDataString.length()
+						&& fileDataString.charAt(i + 1) == '\n') {
+					crlfCount++;
+					i++;
+				} else {
+					crCount++;
+				}
+			} else if (c == '\n') {
+				lfCount++;
+			}
+		}
+		if (lfCount > crCount && lfCount > crlfCount) {
+			return LINE_ENDING_LF_CHAR;
+		} else if (crlfCount > lfCount && crlfCount > crCount) {
+			return LINE_ENDING_CRLF_CHARS;
+		} else if (crCount > lfCount && crCount > crlfCount) {
+			return LINE_ENDING_CR_CHAR;
+		}
+		return null;
 	}
 
 	private class ResultCollector {
