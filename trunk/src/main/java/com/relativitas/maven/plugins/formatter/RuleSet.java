@@ -17,85 +17,33 @@ package com.relativitas.maven.plugins.formatter;
  * limitations under the License.
  */
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.commons.digester.AbstractObjectCreationFactory;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.RuleSetBase;
-import org.xml.sax.Attributes;
+
+import com.relativitas.maven.plugins.formatter.xml.Profile;
+import com.relativitas.maven.plugins.formatter.xml.Profiles;
+import com.relativitas.maven.plugins.formatter.xml.Setting;
 
 /**
  * @author jecki
+ * @author mblanchette
  */
 class RuleSet extends RuleSetBase {
-	private final Object DUMMY = new Dummy();
 
 	/**
 	 * @see org.apache.commons.digester.RuleSetBase#addRuleInstances(org.apache.commons.digester.Digester)
 	 */
 	public void addRuleInstances(Digester digester) {
-		digester.addFactoryCreate("profiles", new ProfilesObjectFactory());
-		digester.addFactoryCreate("profiles/profile",
-				new ProfileObjectFactory());
-		digester.addSetNext("profiles/profile", "add");
+		digester.addObjectCreate("profiles", Profiles.class);
+		digester.addObjectCreate("profiles/profile", Profile.class);
+		digester.addObjectCreate("profiles/profile/setting", Setting.class);
 
-		digester.addCallMethod("profiles/profile/setting", "put", 2);
-		digester.addCallParam("profiles/profile/setting", 0, "id");
-		digester.addCallParam("profiles/profile/setting", 1, "value");
+		digester.addSetNext("profiles/profile", "addProfile");
+		digester.addSetNext("profiles/profile/setting", "addSetting");
+
+		digester.addSetProperties("profiles/profile", "kind", "kind");
+		digester.addSetProperties("profiles/profile/setting", "id", "id");
+		digester.addSetProperties("profiles/profile/setting", "value", "value");
 	}
 
-	/**
-	 * @author jecki
-	 */
-	private class ProfilesObjectFactory extends AbstractObjectCreationFactory {
-
-		public Object createObject(Attributes attrs) throws Exception {
-			ClassLoader cl = Thread.currentThread().getContextClassLoader();
-			InvocationHandler handler = new InvocationHandler() {
-				private List list = new ArrayList();
-
-				public Object invoke(Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-					if ("add".equals(method.getName()) && args.length == 1
-							&& DUMMY.equals(args[0])) {
-						return Boolean.FALSE;
-					}
-
-					return method.invoke(list, args);
-				}
-			};
-			Object proxy = Proxy.newProxyInstance(cl,
-					new Class[] { List.class }, handler);
-			return proxy;
-		}
-	}
-
-	/**
-	 * @author jecki
-	 */
-	private class ProfileObjectFactory extends AbstractObjectCreationFactory {
-
-		public Object createObject(Attributes attrs) throws Exception {
-			String kind = attrs.getValue("kind");
-			if ("CodeFormatterProfile".equals(kind)) {
-				return new HashMap();
-			}
-			return DUMMY;
-		}
-	}
-
-	/**
-	 * @author jecki
-	 */
-	private class Dummy {
-		public void put(Object o1, Object o2) {
-			// do nothing
-		}
-	}
 }
