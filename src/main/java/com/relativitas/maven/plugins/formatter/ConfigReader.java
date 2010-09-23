@@ -19,7 +19,6 @@ package com.relativitas.maven.plugins.formatter;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +64,6 @@ public class ConfigReader {
 					+ Profiles.PROFILE_KIND);
 		}
 
-		return Collections.unmodifiableMap((Map) list.get(0));
+		return (Map) list.get(0);
 	}
 }
