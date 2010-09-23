@@ -1,8 +1,6 @@
 package com.relativitas.maven.plugins.formatter;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Map;
 
 import junit.framework.TestCase;
@@ -24,9 +22,8 @@ public class ConfigReaderTest extends TestCase {
 	public void test_success_read_config() throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-config.xml");
-		Reader reader = new InputStreamReader(in);
 		ConfigReader configReader = new ConfigReader();
-		Map config = configReader.read(reader);
+		Map config = configReader.read(in);
 		assertNotNull(config);
 		assertEquals(264, config.keySet().size());
 		// test get one of the entry in the file
@@ -42,10 +39,9 @@ public class ConfigReaderTest extends TestCase {
 	public void test_read_invalid_config() throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-invalid-config.xml");
-		Reader reader = new InputStreamReader(in);
 		ConfigReader configReader = new ConfigReader();
 		try {
-			configReader.read(reader);
+			configReader.read(in);
 			fail("Expected SAXException to be thrown");
 		} catch (SAXException e) {
 		}
@@ -59,10 +55,9 @@ public class ConfigReaderTest extends TestCase {
 	public void test_read_invalid_config2() throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml");
-		Reader reader = new InputStreamReader(in);
 		ConfigReader configReader = new ConfigReader();
 		try {
-			configReader.read(reader);
+			configReader.read(in);
 			fail("Expected ConfigReadException to be thrown");
 		} catch (ConfigReadException e) {
 		}
