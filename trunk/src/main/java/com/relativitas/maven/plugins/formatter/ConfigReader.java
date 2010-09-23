@@ -18,7 +18,7 @@ package com.relativitas.maven.plugins.formatter;
  */
 
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -36,10 +36,10 @@ import com.relativitas.maven.plugins.formatter.xml.Profiles;
 public class ConfigReader {
 
 	/**
-	 * Read from the <code>reader</code> and return it's configuration settings
+	 * Read from the <code>input</code> and return it's configuration settings
 	 * as a {@link Map}.
 	 * 
-	 * @param reader
+	 * @param input
 	 * @return return unmodifiable {@link Map} with all the configurations read
 	 *         from the config file, or empty {@link Map} if there's an
 	 *         exception occured while reading the reader, e.g.: invalid XML.
@@ -47,12 +47,12 @@ public class ConfigReader {
 	 * @throws IOException
 	 * @throws ConfigReadException
 	 */
-	public Map read(Reader reader) throws IOException, SAXException,
+	public Map read(InputStream input) throws IOException, SAXException,
 			ConfigReadException {
 		Digester digester = new Digester();
 		digester.addRuleSet(new RuleSet());
 
-		Object result = digester.parse(reader);
+		Object result = digester.parse(input);
 		if (result == null && !(result instanceof Profiles)) {
 			throw new ConfigReadException("No profiles found in config file");
 		}

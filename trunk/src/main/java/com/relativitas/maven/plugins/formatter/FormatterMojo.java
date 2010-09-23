@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
@@ -42,6 +43,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.resource.ResourceManager;
+import org.codehaus.plexus.resource.loader.FileResourceLoader;
+import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
@@ -73,6 +77,15 @@ public class FormatterMojo extends AbstractMojo {
 	static final String LINE_ENDING_LF_CHAR = "\n";
 	static final String LINE_ENDING_CRLF_CHARS = "\r\n";
 	static final String LINE_ENDING_CR_CHAR = "\r";
+
+	/**
+	 * ResourceManager for retrieving the configFile resource.
+	 * 
+	 * @component
+	 * @required
+	 * @readonly
+	 */
+	private ResourceManager resourceManager;
 
 	/**
 	 * Project's source directory as specified in the POM.
@@ -150,7 +163,7 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	private File configFile;
+	private String configFile;
 
 	/**
 	 * @parameter default-value="false"
@@ -483,22 +496,24 @@ public class FormatterMojo extends AbstractMojo {
 	 * @throws MojoExecutionException
 	 */
 	private Map getOptionsFromConfigFile() throws MojoExecutionException {
-		Log log = getLog();
-		if (!configFile.exists()) {
+
+		InputStream configInput = null;
+		try {
+			resourceManager.addSearchPath(FileResourceLoader.ID, basedir
+					.getAbsolutePath());
+			configInput = resourceManager.getResourceAsInputStream(configFile);
+		} catch (ResourceNotFoundException e) {
+			throw new MojoExecutionException("Config file [" + configFile
+					+ "] cannot be found", e);
+		}
+
+		if (configInput == null) {
 			throw new MojoExecutionException("Config file [" + configFile
 					+ "] does not exist");
-		} else if (!configFile.isFile()) {
-			throw new MojoExecutionException("Config file [" + configFile
-					+ "] is not a file");
 		} else {
-			FileReader reader;
 			try {
-				reader = new FileReader(configFile);
 				ConfigReader configReader = new ConfigReader();
-				return configReader.read(reader);
-			} catch (FileNotFoundException e) {
-				throw new MojoExecutionException("Cannot load config file ["
-						+ configFile + "]", e);
+				return configReader.read(configInput);
 			} catch (IOException e) {
 				throw new MojoExecutionException("Cannot read config file ["
 						+ configFile + "]", e);
@@ -507,6 +522,13 @@ public class FormatterMojo extends AbstractMojo {
 						+ configFile + "]", e);
 			} catch (ConfigReadException e) {
 				throw new MojoExecutionException(e.getMessage(), e);
+			} finally {
+				if (configInput != null) {
+					try {
+						configInput.close();
+					} catch (IOException e) {
+					}
+				}
 			}
 		}
 	}
