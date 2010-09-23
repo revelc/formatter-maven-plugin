@@ -26,6 +26,8 @@ import java.util.Map;
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
 
+import com.relativitas.maven.plugins.formatter.xml.Profiles;
+
 /**
  * This config reader read Eclipse's config file for eclipse formatter.
  * 
@@ -49,11 +51,12 @@ public class ConfigReader {
 		Map config = Collections.emptyMap();
 		try {
 			Object result = digester.parse(reader);
-			if (result == null && !(result instanceof List)) {
+			if (result == null && !(result instanceof Profiles)) {
 				return config;
 			}
 
-			List list = (List) result;
+			Profiles profiles = (Profiles) result;
+			List list = profiles.getProfiles();
 			if (list.size() == 0) {
 				return config;
 			}
