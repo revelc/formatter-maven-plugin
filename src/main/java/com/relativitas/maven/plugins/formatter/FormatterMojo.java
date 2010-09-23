@@ -33,7 +33,6 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +50,7 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
+import org.xml.sax.SAXException;
 
 /**
  * Java source code formatter plugin.
@@ -441,8 +441,10 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Create a {@link CodeFormatter} instance to be used by this mojo.
+	 * 
+	 * @throws MojoExecutionException
 	 */
-	private void createCodeFormatter() {
+	private void createCodeFormatter() throws MojoExecutionException {
 		Map options = getFormattingOptions();
 		formatter = ToolFactory.createCodeFormatter(options);
 	}
@@ -452,8 +454,9 @@ public class FormatterMojo extends AbstractMojo {
 	 * instance.
 	 * 
 	 * @return
+	 * @throws MojoExecutionException
 	 */
-	private Map getFormattingOptions() {
+	private Map getFormattingOptions() throws MojoExecutionException {
 		Map options = new HashMap();
 		options.put(JavaCore.COMPILER_SOURCE, compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
@@ -477,13 +480,16 @@ public class FormatterMojo extends AbstractMojo {
 	 * Read config file and return the config as {@link Map}.
 	 * 
 	 * @return
+	 * @throws MojoExecutionException
 	 */
-	private Map getOptionsFromConfigFile() {
+	private Map getOptionsFromConfigFile() throws MojoExecutionException {
 		Log log = getLog();
 		if (!configFile.exists()) {
-			log.error("Config file [" + configFile + "] does not exist");
+			throw new MojoExecutionException("Config file [" + configFile
+					+ "] does not exist");
 		} else if (!configFile.isFile()) {
-			log.error("Config file [" + configFile + "] is not a file");
+			throw new MojoExecutionException("Config file [" + configFile
+					+ "] is not a file");
 		} else {
 			FileReader reader;
 			try {
@@ -491,10 +497,18 @@ public class FormatterMojo extends AbstractMojo {
 				ConfigReader configReader = new ConfigReader();
 				return configReader.read(reader);
 			} catch (FileNotFoundException e) {
-				log.error("Cannot load config file [" + configFile + "]", e);
+				throw new MojoExecutionException("Cannot load config file ["
+						+ configFile + "]", e);
+			} catch (IOException e) {
+				throw new MojoExecutionException("Cannot read config file ["
+						+ configFile + "]", e);
+			} catch (SAXException e) {
+				throw new MojoExecutionException("Cannot parse config file ["
+						+ configFile + "]", e);
+			} catch (ConfigReadException e) {
+				throw new MojoExecutionException(e.getMessage(), e);
 			}
 		}
-		return Collections.emptyMap();
 	}
 
 	String getLineEnding(String fileDataString) {

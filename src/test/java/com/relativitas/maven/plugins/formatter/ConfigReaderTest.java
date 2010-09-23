@@ -7,6 +7,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.xml.sax.SAXException;
+
 /**
  * Test class for {@link ConfigReader}.
  * 
@@ -27,8 +29,9 @@ public class ConfigReaderTest extends TestCase {
 		Map config = configReader.read(reader);
 		assertNotNull(config);
 		assertEquals(264, config.keySet().size());
-		// test get one of the entry in the file 
-		assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+		// test get one of the entry in the file
+		assertEquals("true", config
+				.get("org.eclipse.jdt.core.formatter.comment.format_html"));
 	}
 
 	/**
@@ -41,9 +44,11 @@ public class ConfigReaderTest extends TestCase {
 		InputStream in = cl.getResourceAsStream("sample-invalid-config.xml");
 		Reader reader = new InputStreamReader(in);
 		ConfigReader configReader = new ConfigReader();
-		Map config = configReader.read(reader);
-		assertNotNull(config);
-		assertEquals(0, config.size());
+		try {
+			configReader.read(reader);
+			fail("Expected SAXException to be thrown");
+		} catch (SAXException e) {
+		}
 	}
 
 	/**
@@ -56,8 +61,11 @@ public class ConfigReaderTest extends TestCase {
 		InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml");
 		Reader reader = new InputStreamReader(in);
 		ConfigReader configReader = new ConfigReader();
-		Map config = configReader.read(reader);
-		assertNotNull(config);
-		assertEquals(0, config.size());
+		try {
+			configReader.read(reader);
+			fail("Expected ConfigReadException to be thrown");
+		} catch (ConfigReadException e) {
+		}
 	}
+
 }
