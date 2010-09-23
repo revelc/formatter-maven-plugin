@@ -32,6 +32,7 @@ import com.relativitas.maven.plugins.formatter.xml.Profiles;
  * This config reader read Eclipse's config file for eclipse formatter.
  * 
  * @author jecki
+ * @author mblanchette
  */
 public class ConfigReader {
 
@@ -43,31 +44,27 @@ public class ConfigReader {
 	 * @return return unmodifiable {@link Map} with all the configurations read
 	 *         from the config file, or empty {@link Map} if there's an
 	 *         exception occured while reading the reader, e.g.: invalid XML.
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ConfigReadException
 	 */
-	public Map read(Reader reader) {
+	public Map read(Reader reader) throws IOException, SAXException,
+			ConfigReadException {
 		Digester digester = new Digester();
 		digester.addRuleSet(new RuleSet());
 
-		Map config = Collections.emptyMap();
-		try {
-			Object result = digester.parse(reader);
-			if (result == null && !(result instanceof Profiles)) {
-				return config;
-			}
-
-			Profiles profiles = (Profiles) result;
-			List list = profiles.getProfiles();
-			if (list.size() == 0) {
-				return config;
-			}
-
-			config = Collections.unmodifiableMap((Map) list.get(0));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
+		Object result = digester.parse(reader);
+		if (result == null && !(result instanceof Profiles)) {
+			throw new ConfigReadException("No profiles found in config file");
 		}
 
-		return config;
+		Profiles profiles = (Profiles) result;
+		List list = profiles.getProfiles();
+		if (list.size() == 0) {
+			throw new ConfigReadException("No profile in config file of kind: "
+					+ Profiles.PROFILE_KIND);
+		}
+
+		return Collections.unmodifiableMap((Map) list.get(0));
 	}
 }
