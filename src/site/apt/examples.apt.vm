@@ -3,7 +3,7 @@
  ---
  Matt Blanchette
  ---
- 2010-09-23
+ 2010-09-24
 
 Examples
 
@@ -78,16 +78,16 @@ Examples
 +---+
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <profiles version="11">
-<profile kind="CodeFormatterProfile" name="Custom Project Formatter" version="11">
-<setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
-<setting id="org.eclipse.jdt.core.compiler.source" value="1.6"/>
-...
-</profile>
+  <profile kind="CodeFormatterProfile" name="Custom Project Formatter" version="11">
+    <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
+    <setting id="org.eclipse.jdt.core.compiler.source" value="1.6"/>
+    ...
+  </profile>
 </profiles>
 +---+
 
  By default, the plugin uses the Eclipse formatter settings and provides no additional preferences other than the compiler version.\
- This example uses a configuration file named config.xml for formatting:
+ This example uses a configuration file named <eclipse-formatter-config.xml> for formatting:
 
 +---+
 <plugin>
@@ -95,7 +95,7 @@ Examples
   <artifactId>maven-java-formatter-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
-    <configFile>config.xml</configFile>
+    <configFile>\${project.basedir}/eclipse-formatter-config.xml</configFile>
   </configuration>
 </plugin>
 +---+
@@ -104,7 +104,7 @@ Examples
  To specify uses the compiler parameters instead of those in the configFile, set the <<<overrideConfigCompilerVersion>>> parameter to <<<true>>>.
 
  This parameter is useful to avoid updating the configFile to keep the compiler version in sync.\
- This example uses all settings except the compiler version defined in the configuration file named config.xml and instead uses the compiler version specified in the parameters for formatting:
+ This example uses all settings except the compiler version defined in the configuration file named <eclipse-formatter-config.xml> and instead uses the compiler version specified in the parameters for formatting:
 
 +---+
 <plugin>
@@ -112,7 +112,7 @@ Examples
   <artifactId>maven-java-formatter-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
-    <configFile>config.xml</configFile>
+    <configFile>\${project.basedir}/eclipse-formatter-config.xml</configFile>
     <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
     <compilerSource>1.6</compilerSource>
     <compilerCompliance>1.6</compilerCompliance>
@@ -149,8 +149,8 @@ multiproject
 |   |-- src
 |   |   `-- main
 |   |       `-- resources
-|   |           `-- formatter
-|   |               `-- config.xml
+|   |           `-- eclipse
+|   |               `-- formatter.xml
 |   `-- pom.xml
 |-- moduleA
 |-- moduleB
@@ -185,7 +185,7 @@ multiproject
           </execution>
         </executions>
         <configuration>
-          <configFile>formatter/config.xml</configFile>
+          <configFile>eclipse/formatter.xml</configFile>
         </configuration>
         <dependencies>
           <dependency>
