@@ -1,0 +1,46 @@
+ ---
+ Plugin Usage
+ ---
+ Matt Blanchette
+ ---
+ 2010-09-23
+
+Plugin Usage
+
+ The following instructions describe how to use the plugin in its simplest
+ configuration. The following pom section will be able to get you started
+ using the plugin. 
+
++---+
+<project ...>
+    ...
+    <plugins>
+      <plugin>
+        <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+        <artifactId>maven-java-formatter-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    ...
+</project>
++---+
+
+ With this configuration, java source files in <<<src/main/java>>> and <<<src/test/java>>> of 
+ the project will be formatted prior to compilation
+ using the default compiler version (1.5) and line ending of the current system.
+
+ Run the plugin during the build with the compile goal.
+
++-----+
+mvn compile
++-----+
+
+ If you want to override the default plugin behavior, check out
+ {{{examples.html}custom configurations}} and {{{plugin-info.html}how to configure}} it.
