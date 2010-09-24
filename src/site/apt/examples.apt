@@ -1,0 +1,210 @@
+ ---
+ Examples
+ ---
+ Matt Blanchette
+ ---
+ 2010-09-23
+
+Examples
+
+ Here are more examples of using the java formatter plugin.
+ 
+ For more details on these parameters, see the {{{format-mojo.html}format goal}}
+
+* {Setting Source Files}
+
+ To specify the locations of java source files to format, use the <<<directories>>> parameter.\
+ By default, the plugin formats java source files in the <<<src/main/java>>> and <<<src/test/java>>> directories.\
+ This example only formats files in the java main source directory:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <directories>
+      <param>\${project.build.sourceDirectory}</param>
+    </directories>
+  </configuration>
+</plugin>
++---+
+
+* {Setting Compiler Version}
+
+ To specify the compiler version to use in formatting, use the <<<compilerSource>>>, <<<compilerCompliance>>>, and <<<compilerTargetPlatform>>> parameters.\
+ By default, the plugin uses a version of 1.5 for all of these parameters.\
+ This example uses 1.6 as the compiler version during formatting:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <compilerSource>1.6</compilerSource>
+    <compilerCompliance>1.6</compilerCompliance>
+    <compilerTargetPlatform>1.6</compilerTargetPlatform>
+  </configuration>
+</plugin>
++---+
+
+* {System Independent Line Endings}
+
+ To specify the line ending to use in formatting, use the  <<<lineEnding>>> parameter.\
+ By default, the plugin uses the line ending of the current system.\
+ This parameter allows using the existing line ending of files or a consistent line ending for all files, useful for large projects with developers using different operating systems.\
+ This example specifies using the carriage-return and line-feed of DOS/Windows for the line ending during formatting:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <lineEnding>CRLF</lineEnding>
+  </configuration>
+</plugin>
++---+
+
+ For all possible values, see the <<<lineEnding>>> description on the {{{format-mojo.html}format goal}}
+
+* {Custom Configuration File}
+
+ To specify formatting preferences for the Eclipse code formatter, use the <<<configFile>>> parameter.\
+ This parameter points to a file or classpath resource location for an Eclipse code formatter xml file.\
+ This file should contain a profile of kind <<<CodeFormatterProfile>>> with <<<org.eclipse.jdt.core.formatter>>> settings:
+
++---+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profiles version="11">
+<profile kind="CodeFormatterProfile" name="Custom Project Formatter" version="11">
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
+<setting id="org.eclipse.jdt.core.compiler.source" value="1.6"/>
+...
+</profile>
+</profiles>
++---+
+
+ By default, the plugin uses the Eclipse formatter settings and provides no additional preferences other than the compiler version.\
+ This example uses a configuration file named config.xml for formatting:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <configFile>config.xml</configFile>
+  </configuration>
+</plugin>
++---+
+
+ By default, the plugin uses the compiler versions in the configFile instead of the compiler parameters.\
+ To specify uses the compiler parameters instead of those in the configFile, set the <<<overrideConfigCompilerVersion>>> parameter to <<<true>>>.
+
+ This parameter is useful to avoid updating the configFile to keep the compiler version in sync.\
+ This example uses all settings except the compiler version defined in the configuration file named config.xml and instead uses the compiler version specified in the parameters for formatting:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <configFile>config.xml</configFile>
+    <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
+    <compilerSource>1.6</compilerSource>
+    <compilerCompliance>1.6</compilerCompliance>
+    <compilerTargetPlatform>1.6</compilerTargetPlatform>
+  </configuration>
+</plugin>
++---+
+
+* {Multimodule Configuration}
+
+ This section describes configuring the plugin for use within multimodule projects
+ using a module containing the configuration file resource.
+
+ This example uses a project called <multiproject> with the following structure:
+
++-----+
+multiproject
+|-- pom.xml
+|-- moduleA
+|   `-- pom.xml
+|-- moduleB
+|   `-- pom.xml
++-----+
+
+  <<Create new project for the shared resource>>
+
+   Add another project for the common configuration resources, called <build-tools> in 
+   this example.
+
++-----+
+multiproject
+|-- pom.xml
+|-- build-tools
+|   |-- src
+|   |   `-- main
+|   |       `-- resources
+|   |           `-- formatter
+|   |               `-- config.xml
+|   `-- pom.xml
+|-- moduleA
+|-- moduleB
++-----+
+
+  <<Configure the other projects to use it>>
+
+   Include the java formatter plugin in the top level <<<pom.xml>>>.
+
+   Specify a plugin dependency on <<<build-tools>>> in the
+   <<<\<build\>>>> element of your <<<pom.xml>>>.
+
++-----+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.googlecode.example.multiproject</groupId>
+  <artifactId>multiproject-parent</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>Multiproject Parent</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+        <artifactId>maven-java-formatter-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <configFile>formatter/config.xml</configFile>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.googlecode.example.multiproject</groupId>
+            <artifactId>build-tools</artifactId>
+            <version>1.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+  <modules>
+    <module>build-tools</module>
+    <module>moduleA</module>
+    <module>moduleB</module>
+  </modules>
+</project>
++-----+
+
+   Based on this configuration, the value of <<<configFile>>> will be resolved from the
+   classpath, specifically from the <build-tools> JAR. Adding <build-tools> as a 
+   dependency on the plugin included it in the classpath.
