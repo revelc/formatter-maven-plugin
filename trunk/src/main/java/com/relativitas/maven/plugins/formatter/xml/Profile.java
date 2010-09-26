@@ -21,7 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author mblanchette
+ * A class representing the profile XML element in the Eclipse formatter config
+ * file, including the kind attribute and Map of setting id and value.
+ * 
+ * @author Matt Blanchette
  */
 public class Profile {
 

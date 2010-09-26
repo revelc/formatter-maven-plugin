@@ -28,10 +28,10 @@ import org.xml.sax.SAXException;
 import com.relativitas.maven.plugins.formatter.xml.Profiles;
 
 /**
- * This config reader read Eclipse's config file for eclipse formatter.
+ * This class reads a config file for Eclipse code formatter.
  * 
  * @author jecki
- * @author mblanchette
+ * @author Matt Blanchette
  */
 public class ConfigReader {
 
@@ -40,9 +40,9 @@ public class ConfigReader {
 	 * as a {@link Map}.
 	 * 
 	 * @param input
-	 * @return return unmodifiable {@link Map} with all the configurations read
-	 *         from the config file, or empty {@link Map} if there's an
-	 *         exception occured while reading the reader, e.g.: invalid XML.
+	 * @return return {@link Map} with all the configurations read from the
+	 *         config file, or throws an exception if there's a problem reading
+	 *         the input, e.g.: invalid XML.
 	 * @throws SAXException
 	 * @throws IOException
 	 * @throws ConfigReadException
