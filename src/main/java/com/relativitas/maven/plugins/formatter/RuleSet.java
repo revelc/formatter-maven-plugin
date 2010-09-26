@@ -25,8 +25,11 @@ import com.relativitas.maven.plugins.formatter.xml.Profiles;
 import com.relativitas.maven.plugins.formatter.xml.Setting;
 
 /**
+ * An Apache Commons Digester RuleSet for configuring a digester to parse the
+ * Eclipse formatter config XML into objects.
+ * 
  * @author jecki
- * @author mblanchette
+ * @author Matt Blanchette
  */
 class RuleSet extends RuleSetBase {
 

@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author mblanchette
+ * A class representing the profiles XML element in the Eclipse formatter config
+ * file, including a List of profile setting Maps with id and value.
+ * 
+ * @author Matt Blanchette
  */
 public class Profiles {
 

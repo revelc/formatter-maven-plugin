@@ -57,13 +57,19 @@ import org.eclipse.text.edits.TextEdit;
 import org.xml.sax.SAXException;
 
 /**
- * Java source code formatter plugin.
+ * A Maven plugin mojo to format Java source code using the Eclipse code
+ * formatter.
+ * 
+ * Mojo parameters allow customizing formatting by specifying the config XML
+ * file, line endings, compiler version, and source code locations. Reformatting
+ * source files is avoided using an md5 hash of the content, comparing to the
+ * original hash to the hash after formatting and a cached hash.
  * 
  * @goal format
  * @phase process-sources
  * 
  * @author jecki
- * @author matt.blanchette
+ * @author Matt Blanchette
  */
 public class FormatterMojo extends AbstractMojo {
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
@@ -124,23 +130,29 @@ public class FormatterMojo extends AbstractMojo {
 	private File basedir;
 
 	/**
-	 * Location of the file.
+	 * Location of the Java source files to format.
 	 * 
 	 * @parameter
 	 */
 	private File[] directories;
 
 	/**
+	 * Java compiler source version.
+	 * 
 	 * @parameter default-value="1.5"
 	 */
 	private String compilerSource;
 
 	/**
+	 * Java compiler compliance version.
+	 * 
 	 * @parameter default-value="1.5"
 	 */
 	private String compilerCompliance;
 
 	/**
+	 * Java compiler target version.
+	 * 
 	 * @parameter default-value="1.5"
 	 */
 	private String compilerTargetPlatform;
@@ -161,11 +173,18 @@ public class FormatterMojo extends AbstractMojo {
 	private String lineEnding;
 
 	/**
+	 * File or classpath location of an Eclipse code formatter configuration xml
+	 * file to use in formatting.
+	 * 
 	 * @parameter
 	 */
 	private String configFile;
 
 	/**
+	 * Sets whether compilerSource, compilerCompliance, and
+	 * compilerTargetPlatform values are used instead of those defined in the
+	 * configFile.
+	 * 
 	 * @parameter default-value="false"
 	 */
 	private Boolean overrideConfigCompilerVersion;
@@ -533,6 +552,13 @@ public class FormatterMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * Returns the lineEnding parameter as characters when the value is known
+	 * (LF, CRLF, CR) or can be determined from the file text (KEEP). Otherwise
+	 * null is returned.
+	 * 
+	 * @return
+	 */
 	String getLineEnding(String fileDataString) {
 		String lineEnd = null;
 		if (LINE_ENDING_KEEP.equals(lineEnding)) {
@@ -547,6 +573,12 @@ public class FormatterMojo extends AbstractMojo {
 		return lineEnd;
 	}
 
+	/**
+	 * Returns the most occurring line-ending characters in the file text or
+	 * null if no line-ending occurs the most.
+	 * 
+	 * @return
+	 */
 	String determineLineEnding(String fileDataString) {
 		int lfCount = 0;
 		int crCount = 0;
