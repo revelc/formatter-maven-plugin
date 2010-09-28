@@ -3,3 +3,13 @@ This page contains list of features for each version of this software.
 *0.1.0 (unstable)*
   * 2010-05-07: (r26) Added feature to read from eclipse formatter config XML file
   * 2010-05-01: (r16) Skip writing formatted file if the original and result hash code is the same
+
+*0.2.0 (unstable)*
+  * 2010-09-06: (r59) Changed plugin phase to run prior to compilation
+  * 2010-09-17: (r60) Added parameter to specify line ending of formatted files
+  * 2010-09-17: (r61,r67) Added parameter to override config XML file compiler version
+  * 2010-09-23: (r66) Fail plugin execution for an invalid config XML file
+  * 2010-09-23: (r68) Allow config XML file to be resolved from dependency of plugin
+  * 2010-09-28: (r72) Use Eclipse version 3.5 code formatter
+  * 2010-09-28: (r82,r83,r84) Provide [http://maven-java-formatter-plugin.googlecode.com/svn/site/0.2.0/index.html Maven site for 0.2.0 release]
+  * 2010-09-28: Available from Maven central repository
