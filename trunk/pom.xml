@@ -49,20 +49,10 @@
 			<version>2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jdt</groupId>
-			<artifactId>core</artifactId>
-			<version>3.3.0-v_771</version>
+			<groupId>org.sonatype.tycho</groupId>
+			<artifactId>org.eclipse.jdt.core</artifactId>
+			<version>3.5.2.v_981_R35x</version>
 			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.equinox</groupId>
-					<artifactId>app</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.equinox</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse</groupId>
