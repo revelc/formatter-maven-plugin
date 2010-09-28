@@ -71,8 +71,26 @@ Examples
 
 * {Custom Configuration File}
 
+ By default, the plugin uses the Eclipse formatter settings and provides no additional preferences other than the compiler version.\
  To specify formatting preferences for the Eclipse code formatter, use the <<<configFile>>> parameter.\
- This parameter points to a file or classpath resource location for an Eclipse code formatter xml file.\
+ This parameter points to a file or classpath resource location for an Eclipse code formatter xml file.
+
+ A <<<configFile>>> can be created and exported in Eclipse as follows:
+ 
+ * In Eclipse, go to <<<Window>>> > <<<Preferences>>> > <<<Java>>> > <<<Code Style>>> > <<<Formatter>>>
+ 
+ * If you have a custom profile, select the profile and click on the <<<Edit>>> button
+  
+  * To create a custom profile, click the <<<New>>> button
+  
+  * Enter a name and select an existing profile to inherit settings from
+  
+  * Click <<<Ok>>> and set the profile settings
+  
+ * Click the <<<Export>>> button and save the file
+ 
+ []
+ 
  This file should contain a profile of kind <<<CodeFormatterProfile>>> with <<<org.eclipse.jdt.core.formatter>>> settings:
 
 +---+
@@ -86,7 +104,6 @@ Examples
 </profiles>
 +---+
 
- By default, the plugin uses the Eclipse formatter settings and provides no additional preferences other than the compiler version.\
  This example uses a configuration file named <eclipse-formatter-config.xml> for formatting:
 
 +---+
@@ -101,9 +118,9 @@ Examples
 +---+
 
  By default, the plugin uses the compiler versions in the configFile instead of the compiler parameters.\
- To specify uses the compiler parameters instead of those in the configFile, set the <<<overrideConfigCompilerVersion>>> parameter to <<<true>>>.
+ To specify using the compiler parameters instead of those in the configFile, set the <<<overrideConfigCompilerVersion>>> parameter to <<<true>>>.
 
- This parameter is useful to avoid updating the configFile to keep the compiler version in sync.\
+ This parameter is useful to avoid updating the configFile to keep the compiler version in sync with the pom.\
  This example uses all settings except the compiler version defined in the configuration file named <eclipse-formatter-config.xml> and instead uses the compiler version specified in the parameters for formatting:
 
 +---+
