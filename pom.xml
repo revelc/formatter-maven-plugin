@@ -137,6 +137,11 @@
 					<id>googlecode</id>
 					<url>svn:https://maven-java-formatter-plugin.googlecode.com/svn/maven2-repo</url>
 				</repository>
+				<site>
+					<id>googlecode</id>
+					<name>Google Code Subversion</name>
+					<url>svn:https://maven-java-formatter-plugin.googlecode.com/svn/site/${project.version}</url>
+				</site>
 			</distributionManagement>
 		</profile>
 		<profile>
