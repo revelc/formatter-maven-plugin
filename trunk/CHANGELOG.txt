@@ -1,3 +1,12 @@
 ver 0.1.0 (2010-07-07)
 ======================
 - accept following configuration options: directories, compilerSource, compilerCompliance, compilerTargetPlatform, configFile (eclipse formatter configuration file)
+
+ver 0.2.0 (2010-09-28)
+======================
+- accept new configuration options: lineEnding, overrideConfigCompilerVersion, configFile (from dependency classpath, fail if invalid)
+- use Eclipse 3.5 code formatter
+- use process-sources phase
+- use googlecode groupId
+- provide Maven site 
+- available from Maven central repository
