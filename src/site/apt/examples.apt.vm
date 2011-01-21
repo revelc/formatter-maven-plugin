@@ -3,7 +3,7 @@
  ---
  Matt Blanchette
  ---
- 2010-09-24
+ 2011-01-21
 
 Examples
 
@@ -13,9 +13,10 @@ Examples
 
 * {Setting Source Files}
 
- To specify the locations of java source files to format, use the <<<directories>>> parameter.\
- By default, the plugin formats java source files in the <<<src/main/java>>> and <<<src/test/java>>> directories.\
- This example only formats files in the java main source directory:
+ To specify the locations of java source files to format, use the <<<includes>>> and <<<excludes>>> parameters.\
+ These parameters are fileset patterns relative to the source and test source directories, usually <<<src/main/java>>> and <<<src/test/java>>>.\
+ By default, the plugin formats all java source files in the source and test source directories.\
+ This example only formats files in the <<<include>>> package, except for test classes and those in the <<<exclude>>> "special" subpackage:
 
 +---+
 <plugin>
@@ -23,9 +24,13 @@ Examples
   <artifactId>maven-java-formatter-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
-    <directories>
-      <param>\${project.build.sourceDirectory}</param>
-    </directories>
+    <includes>
+      <include>com/relativitas/maven/plugins/formatter/</include>
+    </includes>
+    <excludes>
+      <exclude>com/relativitas/maven/plugins/formatter/special/</exclude>
+      <exclude>**/*Test.java</exclude>
+    </excludes>
   </configuration>
 </plugin>
 +---+
