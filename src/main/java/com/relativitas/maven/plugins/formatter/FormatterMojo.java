@@ -196,6 +196,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * </ul>
 	 * 
 	 * @parameter default-value="AUTO"
+	 * @since 0.2.0
 	 */
 	private String lineEnding;
 
@@ -213,6 +214,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * configFile.
 	 * 
 	 * @parameter default-value="false"
+	 * @since 0.2.0
 	 */
 	private Boolean overrideConfigCompilerVersion;
 
