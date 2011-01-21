@@ -35,6 +35,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -43,6 +44,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.components.io.fileselectors.FileSelector;
+import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelector;
+import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
+import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
 import org.codehaus.plexus.resource.ResourceManager;
 import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
@@ -73,6 +78,7 @@ import org.xml.sax.SAXException;
  */
 public class FormatterMojo extends AbstractMojo {
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
+	private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java" };
 
 	static final String LINE_ENDING_AUTO = "AUTO";
 	static final String LINE_ENDING_KEEP = "KEEP";
@@ -133,9 +139,30 @@ public class FormatterMojo extends AbstractMojo {
 	 * Location of the Java source files to format.
 	 * 
 	 * @parameter
+	 * @deprecated Use includes/excludes instead
 	 */
 	private File[] directories;
 
+	/**
+	 * List of fileset patterns for Java source locations to include in formatting.
+	 * Patterns are relative to the project source and test source directories.
+	 * When not specified, the default include is <code>**&#47;*.java</code>
+	 * 
+	 * @parameter
+	 * @since 0.3.0
+	 */
+	private String[] includes;
+	
+	/**
+	 * List of fileset patterns for Java source locations to exclude from formatting.
+	 * Patterns are relative to the project source and test source directories.
+	 * When not specified, there is no default exclude.
+	 * 
+	 * @parameter
+	 * @since 0.3.0
+	 */
+	private String[] excludes;
+	
 	/**
 	 * Java compiler source version.
 	 * 
@@ -191,6 +218,8 @@ public class FormatterMojo extends AbstractMojo {
 
 	private CodeFormatter formatter;
 
+	private PlexusIoFileResourceCollection collection;
+	
 	/**
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
@@ -206,12 +235,19 @@ public class FormatterMojo extends AbstractMojo {
 					"Unknown value for lineEnding parameter");
 		}
 
-		if (directories == null) {
-			directories = new File[] { sourceDirectory, testSourceDirectory };
+		createResourceCollection();
+		
+		List files = new ArrayList();
+		try {
+			collection.setBaseDir(sourceDirectory);
+			addCollectionFiles(files);
+			collection.setBaseDir(testSourceDirectory);
+			addCollectionFiles(files);
+		}
+		catch (IOException e) {
+			throw new MojoExecutionException("Unable to find files using includes/excludes", e);
 		}
 
-		List files = new ArrayList();
-		probeFiles(directories, files);
 		int numberOfFiles = files.size();
 		Log log = getLog();
 		log.info("Number of files to be formatted: " + numberOfFiles);
@@ -237,6 +273,39 @@ public class FormatterMojo extends AbstractMojo {
 				+ "s");
 	}
 
+	/**
+	 * Create a {@link PlexusIoFileResourceCollection} instance to be used by this mojo.
+	 * This collection uses the includes and excludes to find the source files.
+	 */
+	void createResourceCollection() {
+		collection = new PlexusIoFileResourceCollection();
+		if ( includes != null && includes.length > 0 ) {
+			collection.setIncludes(includes);
+		} else {
+			collection.setIncludes(DEFAULT_INCLUDES);
+		}
+		collection.setExcludes(excludes);
+		collection.setIncludingEmptyDirectories(false);
+
+		IncludeExcludeFileSelector fileSelector = new IncludeExcludeFileSelector();
+		fileSelector.setIncludes(DEFAULT_INCLUDES);
+		collection.setFileSelectors(new FileSelector[]{fileSelector});
+	}
+	
+	/**
+	 * Add source files from the {@link PlexusIoFileResourceCollection} to the files list.
+	 * 
+	 * @param files
+	 * @throws IOException
+	 */
+	void addCollectionFiles(List files) throws IOException {
+		Iterator resources = collection.getResources();
+		while(resources.hasNext()) {
+			  PlexusIoFileResource resource = (PlexusIoFileResource)resources.next();
+			  files.add(resource.getFile());
+		}
+	}
+	
 	private String getBasedirPath() {
 		try {
 			return basedir.getCanonicalPath();
@@ -444,30 +513,6 @@ public class FormatterMojo extends AbstractMojo {
 		try {
 			writer.close();
 		} catch (IOException e) {
-		}
-	}
-
-	/**
-	 * Recursively probe for all files to be processed.
-	 * 
-	 * @param files
-	 * @param result
-	 */
-	private void probeFiles(File[] files, List result) {
-		for (int i = 0, n = files.length; i < n; i++) {
-			File file = files[i];
-			if (!file.exists()) {
-				continue;
-			}
-
-			if (file.isDirectory()) {
-				probeFiles(file.listFiles(), result);
-			}
-			if (file.isFile()) {
-				if (file.getName().endsWith(".java")) {
-					result.add(file);
-				}
-			}
 		}
 	}
 

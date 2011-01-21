@@ -96,6 +96,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-io</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-resources</artifactId>
 			<version>1.0-alpha-7</version>
 		</dependency>
