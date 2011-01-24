@@ -25,8 +25,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -51,6 +49,10 @@ import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollectio
 import org.codehaus.plexus.resource.ResourceManager;
 import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
+import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.ReaderFactory;
+import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.WriterFactory;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
@@ -185,6 +187,14 @@ public class FormatterMojo extends AbstractMojo {
 	private String compilerTargetPlatform;
 
 	/**
+	 * The file encoding of the source files.
+	 * 
+	 * @parameter default-value="${project.build.sourceEncoding}"
+	 * @since 0.3.0
+	 */
+	 private String encoding;
+	
+	/**
 	 * Sets the line-ending of files after formatting. Valid values are:
 	 * <ul>
 	 * <li><b>"AUTO"</b> - Use line endings of current system</li>
@@ -228,7 +238,22 @@ public class FormatterMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException {
 		long startClock = System.currentTimeMillis();
 
-		if (!LINE_ENDING_AUTO.equals(lineEnding)
+		if (StringUtils.isEmpty(encoding)) {
+			encoding = ReaderFactory.FILE_ENCODING;
+			getLog().warn(
+				"File encoding has not been set, using platform encoding (" + encoding
+						+ ") to format source files, i.e. build is platform dependent!");
+		} else {
+			try {
+				"Test Encoding".getBytes(encoding);
+			}
+			catch (UnsupportedEncodingException e) {
+				throw new MojoExecutionException("Encoding '" + encoding + "' is not supported");
+			}
+			getLog().info("Using '" + encoding + "' encoding to format source files.");
+		}
+		
+		if (!LINE_ENDING_AUTO.equals(lineEnding) 
 				&& !LINE_ENDING_KEEP.equals(lineEnding)
 				&& !LINE_ENDING_LF.equals(lineEnding)
 				&& !LINE_ENDING_CRLF.equals(lineEnding)
@@ -437,7 +462,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * @throws UnsupportedEncodingException
 	 */
 	private String md5hash(String str) throws UnsupportedEncodingException {
-		return DigestUtils.md5Hex(str.getBytes("ISO8859_1"));
+		return DigestUtils.md5Hex(str.getBytes(encoding));
 	}
 
 	/**
@@ -451,7 +476,7 @@ public class FormatterMojo extends AbstractMojo {
 		StringBuilder fileData = new StringBuilder(1000);
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(ReaderFactory.newReader(file, encoding));
 			char[] buf = new char[1024];
 			int numRead = 0;
 			while ((numRead = reader.read(buf)) != -1) {
@@ -460,7 +485,7 @@ public class FormatterMojo extends AbstractMojo {
 				buf = new char[1024];
 			}
 		} finally {
-			closeReader(reader);
+			IOUtil.close(reader);
 		}
 		return fileData.toString();
 	}
@@ -479,42 +504,10 @@ public class FormatterMojo extends AbstractMojo {
 
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter(file));
+			bw = new BufferedWriter(WriterFactory.newWriter(file, encoding));
 			bw.write(str);
 		} finally {
-			closeWriter(bw);
-		}
-	}
-
-	/**
-	 * Quietly close a reader.
-	 * 
-	 * @param reader
-	 */
-	private void closeReader(Reader reader) {
-		if (reader == null) {
-			return;
-		}
-
-		try {
-			reader.close();
-		} catch (IOException e) {
-		}
-	}
-
-	/**
-	 * Quietly close a writer.
-	 * 
-	 * @param writer
-	 */
-	private void closeWriter(Writer writer) {
-		if (writer == null) {
-			return;
-		}
-
-		try {
-			writer.close();
-		} catch (IOException e) {
+			IOUtil.close(bw);
 		}
 	}
 
