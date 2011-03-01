@@ -15,7 +15,7 @@ This page contains list of features for each version of this software.
   * 2010-09-28: (r82,r83,r84) Provide [http://maven-java-formatter-plugin.googlecode.com/svn/site/0.2.0/index.html Maven site for 0.2.0 release]
   * 2010-09-28: Available from Maven central repository
 
-*0.3.0*
+*0.3*
   * 2011-01-21: (r86) Added includes/excludes parameters to replace directories parameter
   * 2011-01-24: (r89) Added encoding parameter to specify charset used to read/write source files and create hash
   * 2011-01-24: (r90) Fixed eclipse dependencies to avoid checking for updates
