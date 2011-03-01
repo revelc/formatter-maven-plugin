@@ -149,7 +149,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * When not specified, the default include is <code>**&#47;*.java</code>
 	 * 
 	 * @parameter
-	 * @since 0.3.0
+	 * @since 0.3
 	 */
 	private String[] includes;
 	
@@ -159,7 +159,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * When not specified, there is no default exclude.
 	 * 
 	 * @parameter
-	 * @since 0.3.0
+	 * @since 0.3
 	 */
 	private String[] excludes;
 	
@@ -188,7 +188,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * The file encoding of the source files.
 	 * 
 	 * @parameter default-value="${project.build.sourceEncoding}"
-	 * @since 0.3.0
+	 * @since 0.3
 	 */
 	 private String encoding;
 	
