@@ -185,7 +185,9 @@ public class FormatterMojo extends AbstractMojo {
 	private String compilerTargetPlatform;
 
 	/**
-	 * The file encoding of the source files.
+	 * The file encoding used to read and write source files. 
+	 * When not specified and sourceEncoding also not set, 
+	 * default is platform file encoding.
 	 * 
 	 * @parameter default-value="${project.build.sourceEncoding}"
 	 * @since 0.3
