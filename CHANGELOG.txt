@@ -10,3 +10,9 @@ ver 0.2.0 (2010-09-28)
 - use googlecode groupId
 - provide Maven site 
 - available from Maven central repository
+
+ver 0.3 (2011-03-01)
+======================
+- accept new configuration options: includes, excludes, encoding
+- removed configuration option: directories
+- uses specific Eclipse dependency versions to avoid checking for updates
