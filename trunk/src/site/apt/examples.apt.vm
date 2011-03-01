@@ -3,7 +3,7 @@
  ---
  Matt Blanchette
  ---
- 2011-01-21
+ 2011-01-26
 
 Examples
 
@@ -73,6 +73,38 @@ Examples
 +---+
 
  For all possible values, see the <<<lineEnding>>> description on the {{{format-mojo.html}format goal}}
+
+* {Source File Encoding}
+
+ To specify the encoding to use during formatting, use the  <<<encoding>>> parameter.\
+ By default, the plugin uses the <<<project.build.sourceEncoding>>> property if specified in the pom.\
+ Otherwise, the file encoding of the current system will be used.\
+ This example specifies using the UTF-8 encoding during formatting using the parameter:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <encoding>UTF-8</encoding>
+  </configuration>
+</plugin>
++---+
+
+ This example specifies also using the UTF-8 encoding during formatting but using the property:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+</plugin>
+...
+<properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
++---+
 
 * {Custom Configuration File}
 
