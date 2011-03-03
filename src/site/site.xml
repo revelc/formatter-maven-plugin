@@ -10,7 +10,7 @@
 			<item name="Source Files" href="examples.html#Setting_Source_Files"/>
 			<item name="Compiler Version" href="examples.html#Setting_Compiler_Version"/>
 			<item name="Line Endings" href="examples.html#System_Independent_Line_Endings"/>
-			<item name="File Encoding" href="examples.html#Source_File_Encoding"/>
+			<item name="File Encoding" href="examples.html#Source File Encoding"/>
 			<item name="Custom Formatting" href="examples.html#Custom_Configuration_File"/>
 			<item name="Multimodule" href="examples.html#Multimodule_Configuration"/>
 		</menu>
