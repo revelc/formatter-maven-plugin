@@ -266,10 +266,16 @@ public class FormatterMojo extends AbstractMojo {
 		
 		List files = new ArrayList();
 		try {
-			collection.setBaseDir(sourceDirectory);
-			addCollectionFiles(files);
-			collection.setBaseDir(testSourceDirectory);
-			addCollectionFiles(files);
+			if (sourceDirectory != null && sourceDirectory.exists()
+					&& sourceDirectory.isDirectory()) {
+				collection.setBaseDir(sourceDirectory);
+				addCollectionFiles(files);
+			}
+			if (testSourceDirectory != null && testSourceDirectory.exists()
+					&& testSourceDirectory.isDirectory()) {
+				collection.setBaseDir(testSourceDirectory);
+				addCollectionFiles(files);
+			}
 		}
 		catch (IOException e) {
 			throw new MojoExecutionException("Unable to find files using includes/excludes", e);
@@ -279,25 +285,27 @@ public class FormatterMojo extends AbstractMojo {
 		Log log = getLog();
 		log.info("Number of files to be formatted: " + numberOfFiles);
 
-		createCodeFormatter();
-		ResultCollector rc = new ResultCollector();
-		Properties hashCache = readFileHashCacheFile();
+		if (numberOfFiles > 0) {
+			createCodeFormatter();
+			ResultCollector rc = new ResultCollector();
+			Properties hashCache = readFileHashCacheFile();
 
-		String basedirPath = getBasedirPath();
-		for (int i = 0, n = files.size(); i < n; i++) {
-			File file = (File) files.get(i);
-			formatFile(file, rc, hashCache, basedirPath);
+			String basedirPath = getBasedirPath();
+			for (int i = 0, n = files.size(); i < n; i++) {
+				File file = (File) files.get(i);
+				formatFile(file, rc, hashCache, basedirPath);
+			}
+
+			storeFileHashCache(hashCache);
+
+			long endClock = System.currentTimeMillis();
+
+			log.info("Successfully formatted: " + rc.successCount + " file(s)");
+			log.info("Fail to format        : " + rc.failCount + " file(s)");
+			log.info("Skipped               : " + rc.skippedCount + " file(s)");
+			log.info("Approximate time taken: "
+					+ ((endClock - startClock) / 1000) + "s");
 		}
-
-		storeFileHashCache(hashCache);
-
-		long endClock = System.currentTimeMillis();
-
-		log.info("Successfully formatted: " + rc.successCount + " file(s)");
-		log.info("Fail to format        : " + rc.failCount + " file(s)");
-		log.info("Skipped               : " + rc.skippedCount + " file(s)");
-		log.info("Approximate time taken: " + ((endClock - startClock) / 1000)
-				+ "s");
 	}
 
 	/**
