@@ -12,7 +12,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Maven2 Java Formatter Plugin - Team list</title>
+    <title>Maven2 Java Formatter Plugin - Plugin Documentation</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2011-03-01
+        Last Published: 2011-03-04
                       </div>
             <div class="xright">      
   
@@ -79,8 +79,8 @@
           </li>
               
     <li class="none">
-                    <a href="plugin-info.html">Goals</a>
-          </li>
+              <strong>Goals</strong>
+        </li>
               
     <li class="none">
                     <a href="usage.html">Usage</a>
@@ -136,67 +136,27 @@
             
       
             
-            
-            
       
-              
-            <li class="expanded">
-                    <a href="project-info.html">Project Information</a>
-                  <ul>
-                  
-    <li class="none">
-                    <a href="integration.html">Continuous Integration</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="dependencies.html">Dependencies</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="dependency-management.html">Dependency Management</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="issue-tracking.html">Issue Tracking</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="mail-lists.html">Mailing Lists</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="plugin-management.html">Plugin Management</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="license.html">Project License</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="plugins.html">Project Plugins</a>
-          </li>
-                  
-    <li class="none">
-                    <a href="project-summary.html">Project Summary</a>
-          </li>
-                  
-    <li class="none">
-              <strong>Project Team</strong>
-        </li>
-                  
-    <li class="none">
-                    <a href="source-repository.html">Source Repository</a>
-          </li>
-              </ul>
-        </li>
-              
-                
-              
+            
       
               
         <li class="collapsed">
-                    <a href="project-reports.html">Project Reports</a>
+                    <a href="project-info.html">Project Information</a>
                 </li>
+              
+                
+              
+            
+              
+            <li class="expanded">
+                    <a href="project-reports.html">Project Reports</a>
+                  <ul>
+                  
+    <li class="none">
+              <strong>Plugin Documentation</strong>
+        </li>
+              </ul>
+        </li>
           </ul>
                                            <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
             <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
@@ -213,45 +173,70 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>The Team</h2>
-<p>A successful project requires many people to play many roles. Some members write code or documentation, while others are valuable as testers, submitting patches and suggestions.</p>
-<p>The team is comprised of Members and Contributors. Members have direct access to the source of a project and actively evolve the code-base. Contributors improve the project through submission of patches and suggestions to the Members. The number of Contributors to the project is unbounded. Get involved today. All contributions to the project are greatly appreciated.</p>
-<div class="section"><h3>Members</h3>
-<p>The following is a list of developers with commit privileges that have directly contributed to the project in one way or another.</p>
-<table class="bodyTable"><tr class="a"><th>Id</th>
-<th>Name</th>
-<th>Email</th>
+        <a name="Plugin_Documentation"></a><div class="section"><h2>Plugin Documentation</h2>
+<p>Goals available for this plugin:</p>
+<table class="bodyTable"><tr class="a"><th>Goal</th>
+<th>Description</th>
 </tr>
-<tr class="b"><td><a name="jecki.go"></a>jecki.go</td>
-<td>Jecki</td>
-<td><a href="mailto:jecki.go@gmail.com" class="externalLink">jecki.go@gmail.com</a></td>
+<tr class="b"><td><a href="format-mojo.html">java-formatter:format</a></td>
+<td>A Maven plugin mojo to format Java source code using the Eclipse
+code formatter. Mojo parameters allow customizing formatting by
+specifying the config XML file, line endings, compiler version, and
+source code locations. Reformatting source files is avoided using
+an md5 hash of the content, comparing to the original hash to the
+hash after formatting and a cached hash.</td>
 </tr>
-<tr class="a"><td><a name="matt.blanchette"></a>matt.blanchette</td>
-<td>Matt Blanchette</td>
-<td><a href="mailto:matt.blanchette@gmail.com" class="externalLink">matt.blanchette@gmail.com</a></td>
+</table>
+<a name="System_Requirements"></a><div class="section"><h3>System Requirements</h3>
+<p>The following specifies the minimum requirements to run this Maven plugin:</p>
+<table class="bodyTable"><tr class="a"><td>Maven</td>
+<td>2.0</td>
+</tr>
+<tr class="b"><td>JDK</td>
+<td>1.1</td>
+</tr>
+<tr class="a"><td>Memory</td>
+<td>No minimum requirement.</td>
+</tr>
+<tr class="b"><td>Disk Space</td>
+<td>No minimum requirement.</td>
 </tr>
 </table>
 </div>
-<div class="section"><h3>Contributors</h3>
-<p>There are no contributors listed for this project. Please check back again later.</p>
+<a name="Usage"></a><div class="section"><h3>Usage</h3>
+<p>You should specify the version in your project's plugin configuration:</p>
+<div class="source"><pre>&lt;project&gt;
+  ...
+  &lt;build&gt;
+    &lt;!-- To define the plugin version in your parent POM --&gt;
+    &lt;pluginManagement&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;groupId&gt;com.googlecode.maven-java-formatter-plugin&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-java-formatter-plugin&lt;/artifactId&gt;
+          &lt;version&gt;0.3.1&lt;/version&gt;
+        &lt;/plugin&gt;
+        ...
+      &lt;/plugins&gt;
+    &lt;/pluginManagement&gt;
+    &lt;!-- To use the plugin goals in your POM or parent POM --&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;com.googlecode.maven-java-formatter-plugin&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-java-formatter-plugin&lt;/artifactId&gt;
+        &lt;version&gt;0.3.1&lt;/version&gt;
+      &lt;/plugin&gt;
+      ...
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+  ...
+&lt;/project&gt;
+</pre>
+</div>
+<p>For more information, see <a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html" class="externalLink">&quot;Guide to Configuring Plug-ins&quot;</a></p>
 </div>
 </div>
-<script type="text/javascript">
-function offsetDate(id, offset) {
-    var now = new Date();
-    var nowTime = now.getTime();
-    var localOffset = now.getTimezoneOffset();
-    var developerTime = nowTime + ( offset * 60 * 60 * 1000 )+ ( localOffset * 60 * 1000 );
-    var developerDate = new Date(developerTime);
 
-    document.getElementById(id).innerHTML = developerDate;
-}
-
-function init(){
-}
-
-window.onLoad = init();
-</script>
       </div>
     </div>
     <div class="clear">

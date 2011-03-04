@@ -12,7 +12,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Maven2 Java Formatter Plugin - Project Build Plugins</title>
+    <title>Maven2 Java Formatter Plugin - Project Dependency Management</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2011-03-01
+        Last Published: 2011-03-04
                       </div>
             <div class="xright">      
   
@@ -122,6 +122,8 @@
             
       
             
+            
+            
       
             
       
@@ -131,8 +133,6 @@
       
             
       
-            
-            
             
       
             
@@ -153,8 +153,8 @@
           </li>
                   
     <li class="none">
-                    <a href="dependency-management.html">Dependency Management</a>
-          </li>
+              <strong>Dependency Management</strong>
+        </li>
                   
     <li class="none">
                     <a href="issue-tracking.html">Issue Tracking</a>
@@ -173,8 +173,8 @@
           </li>
                   
     <li class="none">
-              <strong>Project Plugins</strong>
-        </li>
+                    <a href="plugins.html">Project Plugins</a>
+          </li>
                   
     <li class="none">
                     <a href="project-summary.html">Project Summary</a>
@@ -213,19 +213,51 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Project Build Plugins</h2>
-<p>There are no plugins defined in the Build part of this project.</p>
-</div>
-<div class="section"><h2>Project Report Plugins</h2>
+        <div class="section"><h2>Project Dependency Management</h2>
+<div class="section"><h3>compile</h3>
+<p>The following is a list of compile dependencies in the DependencyManagement of this project. These dependencies can be included in the submodules to compile and run the submodule:</p>
 <table class="bodyTable"><tr class="a"><th>GroupId</th>
 <th>ArtifactId</th>
 <th>Version</th>
+<th>Type</th>
 </tr>
-<tr class="b"><td>org.apache.maven.plugins</td>
-<td><a href="http://maven.apache.org/plugins/maven-plugin-plugin" class="externalLink">maven-plugin-plugin</a></td>
-<td>2.6</td>
+<tr class="b"><td>org.eclipse</td>
+<td>osgi</td>
+<td>3.3.0-v20070530</td>
+<td>jar</td>
+</tr>
+<tr class="a"><td>org.eclipse.core</td>
+<td>commands</td>
+<td>3.3.0-I20070605-0010</td>
+<td>jar</td>
+</tr>
+<tr class="b"><td>org.eclipse.core</td>
+<td>contenttype</td>
+<td>3.2.100-v20070319</td>
+<td>jar</td>
+</tr>
+<tr class="a"><td>org.eclipse.core</td>
+<td>jobs</td>
+<td>3.3.0-v20070423</td>
+<td>jar</td>
+</tr>
+<tr class="b"><td>org.eclipse.equinox</td>
+<td>common</td>
+<td>3.3.0-v20070426</td>
+<td>jar</td>
+</tr>
+<tr class="a"><td>org.eclipse.equinox</td>
+<td>preferences</td>
+<td>3.2.100-v20070522</td>
+<td>jar</td>
+</tr>
+<tr class="b"><td>org.eclipse.equinox</td>
+<td>registry</td>
+<td>3.3.0-v20070522</td>
+<td>jar</td>
 </tr>
 </table>
+</div>
 </div>
 
       </div>

@@ -12,14 +12,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Maven2 Java Formatter Plugin - Plugin Usage</title>
+    <title>Maven2 Java Formatter Plugin - Project Summary</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
       @import url("./css/site.css");
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
-          <meta name="author" content="Matt Blanchette" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
       </head>
   <body class="composite">
@@ -43,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2011-03-01
+        Last Published: 2011-03-04
                       </div>
             <div class="xright">      
   
@@ -84,8 +83,8 @@
           </li>
               
     <li class="none">
-              <strong>Usage</strong>
-        </li>
+                    <a href="usage.html">Usage</a>
+          </li>
           </ul>
               <h5>Examples</h5>
             <ul>
@@ -135,15 +134,61 @@
             
       
             
-      
+            
             
       
             
       
               
-        <li class="collapsed">
+            <li class="expanded">
                     <a href="project-info.html">Project Information</a>
-                </li>
+                  <ul>
+                  
+    <li class="none">
+                    <a href="integration.html">Continuous Integration</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="dependencies.html">Dependencies</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="dependency-management.html">Dependency Management</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="issue-tracking.html">Issue Tracking</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="mail-lists.html">Mailing Lists</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="plugin-management.html">Plugin Management</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="license.html">Project License</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="plugins.html">Project Plugins</a>
+          </li>
+                  
+    <li class="none">
+              <strong>Project Summary</strong>
+        </li>
+                  
+    <li class="none">
+                    <a href="team-list.html">Project Team</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="source-repository.html">Source Repository</a>
+          </li>
+              </ul>
+        </li>
               
                 
               
@@ -168,49 +213,43 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Plugin Usage</h2>
-<p>The following instructions describe how to use the plugin in its simplest configuration. The following pom section will be able to get you started using the plugin. </p>
-<div class="source"><pre>&lt;project ...&gt;
-    ...
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;com.googlecode.maven-java-formatter-plugin&lt;/groupId&gt;
-        &lt;artifactId&gt;maven-java-formatter-plugin&lt;/artifactId&gt;
-        &lt;version&gt;0.3&lt;/version&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-    ...
-&lt;/project&gt;</pre>
+        <div class="section"><h2>Project Summary</h2>
+<div class="section"><h3>Project Information</h3>
+<table class="bodyTable"><tr class="a"><th>Field</th>
+<th>Value</th>
+</tr>
+<tr class="b"><td>Name</td>
+<td>Maven2 Java Formatter Plugin</td>
+</tr>
+<tr class="a"><td>Description</td>
+<td>Plugin for formatting Java source code</td>
+</tr>
+<tr class="b"><td>Homepage</td>
+<td><a href="http://maven-java-formatter-plugin.googlecode.com" class="externalLink">http://maven-java-formatter-plugin.googlecode.com</a></td>
+</tr>
+</table>
 </div>
-<p>With this configuration, java source files in <tt>src/main/java</tt> and <tt>src/test/java</tt> of the project will be formatted using the default compiler version (1.5) and line ending of the current system.</p>
-<p>Run the plugin with the <tt>format</tt> goal.</p>
-<div class="source"><pre>mvn java-formatter:format</pre>
+<div class="section"><h3>Project Organization</h3>
+<p>This project does not belong to an organization.</p>
 </div>
-<p>In order to format the source files during the build, include the <tt>format</tt> goal in the plugin executions.</p>
-<div class="source"><pre>&lt;project ...&gt;
-    ...
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;com.googlecode.maven-java-formatter-plugin&lt;/groupId&gt;
-        &lt;artifactId&gt;maven-java-formatter-plugin&lt;/artifactId&gt;
-        &lt;version&gt;0.3&lt;/version&gt;
-        &lt;executions&gt;
-          &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;format&lt;/goal&gt;
-            &lt;/goals&gt;
-          &lt;/execution&gt;
-        &lt;/executions&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-    ...
-&lt;/project&gt;</pre>
+<div class="section"><h3>Build Information</h3>
+<table class="bodyTable"><tr class="a"><th>Field</th>
+<th>Value</th>
+</tr>
+<tr class="b"><td>GroupId</td>
+<td>com.googlecode.maven-java-formatter-plugin</td>
+</tr>
+<tr class="a"><td>ArtifactId</td>
+<td>maven-java-formatter-plugin</td>
+</tr>
+<tr class="b"><td>Version</td>
+<td>0.3.1</td>
+</tr>
+<tr class="a"><td>Type</td>
+<td>maven-plugin</td>
+</tr>
+</table>
 </div>
-<p>The source files will be formatted prior to compilation in the build lifecycle.</p>
-<p>Run the plugin during the build with the <tt>compile</tt> goal.</p>
-<div class="source"><pre>mvn compile</pre>
-</div>
-<p>If you want to override the default plugin behavior, check out <a href="examples.html">custom configurations</a> and <a href="plugin-info.html">how to configure</a> it.</p>
 </div>
 
       </div>
