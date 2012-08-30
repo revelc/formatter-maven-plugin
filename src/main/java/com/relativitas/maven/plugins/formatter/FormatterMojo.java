@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,14 +53,12 @@ import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.WriterFactory;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
 import org.xml.sax.SAXException;
+
+import com.relativitas.maven.plugins.formatter.java.JavaFormatter;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -75,20 +74,12 @@ import org.xml.sax.SAXException;
  * 
  * @author jecki
  * @author Matt Blanchette
+ * @author marvin.froeder
  */
-public class FormatterMojo extends AbstractMojo {
+public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
+
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
-	private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java" };
-
-	static final String LINE_ENDING_AUTO = "AUTO";
-	static final String LINE_ENDING_KEEP = "KEEP";
-	static final String LINE_ENDING_LF = "LF";
-	static final String LINE_ENDING_CRLF = "CRLF";
-	static final String LINE_ENDING_CR = "CR";
-
-	static final String LINE_ENDING_LF_CHAR = "\n";
-	static final String LINE_ENDING_CRLF_CHARS = "\r\n";
-	static final String LINE_ENDING_CR_CHAR = "\r";
+	private static final String[] DEFAULT_INCLUDES = new String[]{"**/*.java"};
 
 	/**
 	 * ResourceManager for retrieving the configFile resource.
@@ -154,17 +145,17 @@ public class FormatterMojo extends AbstractMojo {
 	 * @since 0.3
 	 */
 	private String[] includes;
-	
+
 	/**
-	 * List of fileset patterns for Java source locations to exclude from formatting.
-	 * Patterns are relative to the project source and test source directories.
-	 * When not specified, there is no default exclude.
+	 * List of fileset patterns for Java source locations to exclude from
+	 * formatting. Patterns are relative to the project source and test source
+	 * directories. When not specified, there is no default exclude.
 	 * 
 	 * @parameter
 	 * @since 0.3
 	 */
 	private String[] excludes;
-	
+
 	/**
 	 * Java compiler source version.
 	 * 
@@ -187,15 +178,14 @@ public class FormatterMojo extends AbstractMojo {
 	private String compilerTargetPlatform;
 
 	/**
-	 * The file encoding used to read and write source files. 
-	 * When not specified and sourceEncoding also not set, 
-	 * default is platform file encoding.
+	 * The file encoding used to read and write source files. When not specified
+	 * and sourceEncoding also not set, default is platform file encoding.
 	 * 
 	 * @parameter default-value="${project.build.sourceEncoding}"
 	 * @since 0.3
 	 */
-	 private String encoding;
-	
+	private String encoding;
+
 	/**
 	 * Sets the line-ending of files after formatting. Valid values are:
 	 * <ul>
@@ -210,7 +200,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * @parameter default-value="AUTO"
 	 * @since 0.2.0
 	 */
-	private String lineEnding;
+	private LineEnding lineEnding;
 
 	/**
 	 * File or classpath location of an Eclipse code formatter configuration xml
@@ -238,10 +228,10 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	private Boolean skipFormatting;
 
-	private CodeFormatter formatter;
+	private JavaFormatter javaFormatter = new JavaFormatter();
 
 	private PlexusIoFileResourceCollection collection;
-	
+
 	/**
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
@@ -255,25 +245,18 @@ public class FormatterMojo extends AbstractMojo {
 		if (StringUtils.isEmpty(encoding)) {
 			encoding = ReaderFactory.FILE_ENCODING;
 			getLog().warn(
-				"File encoding has not been set, using platform encoding (" + encoding
-						+ ") to format source files, i.e. build is platform dependent!");
+					"File encoding has not been set, using platform encoding ("
+							+ encoding
+							+ ") to format source files, i.e. build is platform dependent!");
 		} else {
 			try {
 				"Test Encoding".getBytes(encoding);
+			} catch (UnsupportedEncodingException e) {
+				throw new MojoExecutionException("Encoding '" + encoding
+						+ "' is not supported");
 			}
-			catch (UnsupportedEncodingException e) {
-				throw new MojoExecutionException("Encoding '" + encoding + "' is not supported");
-			}
-			getLog().info("Using '" + encoding + "' encoding to format source files.");
-		}
-		
-		if (!LINE_ENDING_AUTO.equals(lineEnding) 
-				&& !LINE_ENDING_KEEP.equals(lineEnding)
-				&& !LINE_ENDING_LF.equals(lineEnding)
-				&& !LINE_ENDING_CRLF.equals(lineEnding)
-				&& !LINE_ENDING_CR.equals(lineEnding)) {
-			throw new MojoExecutionException(
-					"Unknown value for lineEnding parameter");
+			getLog().info(
+					"Using '" + encoding + "' encoding to format source files.");
 		}
 
 		createResourceCollection();
@@ -332,12 +315,13 @@ public class FormatterMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Create a {@link PlexusIoFileResourceCollection} instance to be used by this mojo.
-	 * This collection uses the includes and excludes to find the source files.
+	 * Create a {@link PlexusIoFileResourceCollection} instance to be used by
+	 * this mojo. This collection uses the includes and excludes to find the
+	 * source files.
 	 */
 	void createResourceCollection() {
 		collection = new PlexusIoFileResourceCollection();
-		if ( includes != null && includes.length > 0 ) {
+		if (includes != null && includes.length > 0) {
 			collection.setIncludes(includes);
 		} else {
 			collection.setIncludes(DEFAULT_INCLUDES);
@@ -349,21 +333,23 @@ public class FormatterMojo extends AbstractMojo {
 		fileSelector.setIncludes(DEFAULT_INCLUDES);
 		collection.setFileSelectors(new FileSelector[]{fileSelector});
 	}
-	
+
 	/**
-	 * Add source files from the {@link PlexusIoFileResourceCollection} to the files list.
+	 * Add source files from the {@link PlexusIoFileResourceCollection} to the
+	 * files list.
 	 * 
 	 * @param files
 	 * @throws IOException
 	 */
-	void addCollectionFiles(List files) throws IOException {
-		Iterator resources = collection.getResources();
-		while(resources.hasNext()) {
-			  PlexusIoFileResource resource = (PlexusIoFileResource)resources.next();
-			  files.add(resource.getFile());
+	void addCollectionFiles(List<File> files) throws IOException {
+		Iterator<PlexusIoFileResource> resources = collection.getResources();
+		while (resources.hasNext()) {
+			PlexusIoFileResource resource = (PlexusIoFileResource) resources
+					.next();
+			files.add(resource.getFile());
 		}
 	}
-	
+
 	private String getBasedirPath() {
 		try {
 			return basedir.getCanonicalPath();
@@ -460,20 +446,20 @@ public class FormatterMojo extends AbstractMojo {
 			return;
 		}
 
-		String lineSeparator = getLineEnding(code);
-
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT + CodeFormatter.F_INCLUDE_COMMENTS, code,
-				0, code.length(), 0, lineSeparator);
-		if (te == null) {
-			rc.skippedCount++;
-			log.debug("Code cannot be formatted. Possible cause "
-					+ "is unmatched source/target/compliance version.");
-			return;
+		Result r = javaFormatter.doFormatFile(file, lineEnding);
+		switch (r) {
+			case SKIPPED :
+				rc.skippedCount++;
+				break;
+			case SUCCESS :
+				rc.successCount++;
+				break;
+			case FAIL :
+				rc.failCount++;
+				break;
 		}
 
-		IDocument doc = new Document(code);
-		te.apply(doc);
-		String formattedCode = doc.get();
+		String formattedCode = readFileAsString(file);
 		String formattedHash = md5hash(formattedCode);
 		hashCache.setProperty(path, formattedHash);
 
@@ -548,8 +534,8 @@ public class FormatterMojo extends AbstractMojo {
 	 * @throws MojoExecutionException
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
-		Map options = getFormattingOptions();
-		formatter = ToolFactory.createCodeFormatter(options);
+		Map<String, String> options = getFormattingOptions();
+		javaFormatter.init(options, this);
 	}
 
 	/**
@@ -559,15 +545,16 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map getFormattingOptions() throws MojoExecutionException {
-		Map options = new HashMap();
+	private Map<String, String> getFormattingOptions()
+			throws MojoExecutionException {
+		Map<String, String> options = new HashMap<String, String>();
 		options.put(JavaCore.COMPILER_SOURCE, compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
 				compilerTargetPlatform);
 
 		if (configFile != null) {
-			Map config = getOptionsFromConfigFile();
+			Map<String, String> config = getOptionsFromConfigFile();
 			if (Boolean.TRUE.equals(overrideConfigCompilerVersion)) {
 				config.remove(JavaCore.COMPILER_SOURCE);
 				config.remove(JavaCore.COMPILER_COMPLIANCE);
@@ -585,12 +572,13 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map getOptionsFromConfigFile() throws MojoExecutionException {
+	private Map<String, String> getOptionsFromConfigFile()
+			throws MojoExecutionException {
 
 		InputStream configInput = null;
 		try {
-			resourceManager.addSearchPath(FileResourceLoader.ID, basedir
-					.getAbsolutePath());
+			resourceManager.addSearchPath(FileResourceLoader.ID,
+					basedir.getAbsolutePath());
 			configInput = resourceManager.getResourceAsInputStream(configFile);
 		} catch (ResourceNotFoundException e) {
 			throw new MojoExecutionException("Config file [" + configFile
@@ -631,57 +619,43 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 */
 	String getLineEnding(String fileDataString) {
-		String lineEnd = null;
-		if (LINE_ENDING_KEEP.equals(lineEnding)) {
-			lineEnd = determineLineEnding(fileDataString);
-		} else if (LINE_ENDING_LF.equals(lineEnding)) {
-			lineEnd = LINE_ENDING_LF_CHAR;
-		} else if (LINE_ENDING_CRLF.equals(lineEnding)) {
-			lineEnd = LINE_ENDING_CRLF_CHARS;
-		} else if (LINE_ENDING_CR.equals(lineEnding)) {
-			lineEnd = LINE_ENDING_CR_CHAR;
+		String ending;
+		switch (lineEnding) {
+			case KEEP :
+				ending = LineEnding.determineLineEnding(fileDataString)
+						.getChars();
+			default :
+				ending = lineEnding.getChars();
 		}
-		return lineEnd;
-	}
 
-	/**
-	 * Returns the most occurring line-ending characters in the file text or
-	 * null if no line-ending occurs the most.
-	 * 
-	 * @return
-	 */
-	String determineLineEnding(String fileDataString) {
-		int lfCount = 0;
-		int crCount = 0;
-		int crlfCount = 0;
-
-		for (int i = 0; i < fileDataString.length(); i++) {
-			char c = fileDataString.charAt(i);
-			if (c == '\r') {
-				if ((i + 1) < fileDataString.length()
-						&& fileDataString.charAt(i + 1) == '\n') {
-					crlfCount++;
-					i++;
-				} else {
-					crCount++;
-				}
-			} else if (c == '\n') {
-				lfCount++;
-			}
-		}
-		if (lfCount > crCount && lfCount > crlfCount) {
-			return LINE_ENDING_LF_CHAR;
-		} else if (crlfCount > lfCount && crlfCount > crCount) {
-			return LINE_ENDING_CRLF_CHARS;
-		} else if (crCount > lfCount && crCount > crlfCount) {
-			return LINE_ENDING_CR_CHAR;
-		}
-		return null;
+		return ending;
 	}
 
 	private class ResultCollector {
 		private int successCount;
+
 		private int failCount;
+
 		private int skippedCount;
+	}
+
+	public String getCompilerSources() {
+		return compilerSource;
+	}
+
+	public String getCompilerCompliance() {
+		return compilerCompliance;
+	}
+
+	public String getCompilerCodegenTargetPlatform() {
+		return compilerTargetPlatform;
+	}
+
+	public File getTargetDirectory() {
+		return targetDirectory;
+	}
+
+	public Charset getEncoding() {
+		return Charset.forName(encoding);
 	}
 }
