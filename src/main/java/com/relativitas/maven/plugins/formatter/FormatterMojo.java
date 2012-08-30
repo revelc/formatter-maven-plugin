@@ -446,7 +446,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			return;
 		}
 
-		Result r = javaFormatter.doFormatFile(file, lineEnding);
+		Result r = javaFormatter.formatFile(file, lineEnding);
 		switch (r) {
 			case SKIPPED :
 				rc.skippedCount++;

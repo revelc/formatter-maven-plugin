@@ -1,46 +1,37 @@
-package com.relativitas.maven.plugins.formatter.java;
+package com.relativitas.maven.plugins.formatter.javascript;
 
 import java.io.IOException;
 import java.util.Map;
 
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.ToolFactory;
-import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
+import org.eclipse.wst.jsdt.core.ToolFactory;
+import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 
 import com.relativitas.maven.plugins.formatter.AbstractCacheableFormatter;
 import com.relativitas.maven.plugins.formatter.ConfigurationSource;
 import com.relativitas.maven.plugins.formatter.Formatter;
 import com.relativitas.maven.plugins.formatter.LineEnding;
 
-public class JavaFormatter extends AbstractCacheableFormatter
+public class JavascriptFormatter extends AbstractCacheableFormatter
 		implements
 			Formatter {
 
-	CodeFormatter formatter;
+	private CodeFormatter formatter;
 
 	@Override
 	public void init(Map<String, String> options, ConfigurationSource cfg) {
-		if (options.isEmpty()) {
-			options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-			options.put(JavaCore.COMPILER_COMPLIANCE,
-					cfg.getCompilerCompliance());
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
-					cfg.getCompilerCodegenTargetPlatform());
-		}
-
 		super.initCfg(cfg);
 
-		formatter = ToolFactory.createCodeFormatter(options);
+		this.formatter = ToolFactory.createCodeFormatter(options);
 	}
 
 	@Override
 	public String doFormat(String code, LineEnding ending) throws IOException,
 			BadLocationException {
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code,
+		TextEdit te = formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code,
 				0, code.length(), 0, ending.getChars());
 		if (te == null) {
 			log.debug("Code cannot be formatted. Possible cause "
