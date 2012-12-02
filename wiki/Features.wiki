@@ -19,3 +19,5 @@ This page contains list of features for each version of this software.
   * 2011-01-21: (r86) Added includes/excludes parameters to replace directories parameter
   * 2011-01-24: (r89) Added encoding parameter to specify charset used to read/write source files and create hash
   * 2011-01-24: (r90) Fixed eclipse dependencies to avoid checking for updates
+
+*0.4*
