@@ -439,7 +439,7 @@ public class FormatterMojo extends AbstractMojo {
 
 		String lineSeparator = getLineEnding(code);
 
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code,
+		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT + CodeFormatter.F_INCLUDE_COMMENTS, code,
 				0, code.length(), 0, lineSeparator);
 		if (te == null) {
 			rc.skippedCount++;
