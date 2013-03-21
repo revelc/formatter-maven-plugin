@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.util.FileUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
@@ -16,7 +17,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 
-import com.google.common.io.Files;
 import com.relativitas.maven.plugins.formatter.ConfigurationSource;
 import com.relativitas.maven.plugins.formatter.LineEnding;
 import com.relativitas.maven.plugins.formatter.Result;
@@ -69,7 +69,7 @@ public class JavaFormatter {
 	public Result doFormatFile(File file, LineEnding ending) {
 		try {
 			log.debug("Processing file: " + file);
-			String code = Files.toString(file, encoding);
+			String code = FileUtils.fileRead(file, encoding.name());
 
 			TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT,
 					code, 0, code.length(), 0, ending.getChars());
@@ -87,7 +87,7 @@ public class JavaFormatter {
 				return Result.SKIPPED;
 			}
 
-			Files.write(formattedCode, file, encoding);
+			FileUtils.fileWrite(file, encoding.name(), formattedCode);
 
 			return Result.SUCCESS;
 		} catch (IOException e) {
