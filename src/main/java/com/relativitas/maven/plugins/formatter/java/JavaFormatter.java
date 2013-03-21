@@ -16,9 +16,8 @@ import com.relativitas.maven.plugins.formatter.ConfigurationSource;
 import com.relativitas.maven.plugins.formatter.Formatter;
 import com.relativitas.maven.plugins.formatter.LineEnding;
 
-public class JavaFormatter extends AbstractCacheableFormatter
-		implements
-			Formatter {
+public class JavaFormatter extends AbstractCacheableFormatter implements
+		Formatter {
 
 	CodeFormatter formatter;
 

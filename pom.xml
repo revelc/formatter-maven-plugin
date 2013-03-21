@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>com.marvinformatics</groupId>
 	<artifactId>formatter-maven-plugin</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Maven Formatter Plugin</name>
-	
+
 	<description>Plugin for formatting source code</description>
 	<url>http://maven-formatter-plugin.googlecode.com</url>
-	
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -20,18 +20,18 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/velo/maven-formatter-plugin/issues</url>
 	</issueManagement>
-	
+
 	<scm>
 		<connection>scm:git:git://github.com/velo/maven-formatter-plugin.git</connection>
 		<developerConnection>scm:git:git://github.com/velo/maven-formatter-plugin.git</developerConnection>
 		<url>https://github.com/velo/maven-formatter-plugin/</url>
 	</scm>
-	
+
 	<developers>
 		<developer>
 			<id>jecki.go</id>
@@ -61,13 +61,6 @@
 			</roles>
 		</developer>
 	</developers>
-	
-	<repositories>
-	<repository>
-	<id>local</id>
-	<url>file://C:\java\eclipse4\repo</url>
-	</repository>
-	</repositories>
 
 	<dependencyManagement>
 		<dependencies>
@@ -133,7 +126,7 @@
 			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
-	
+
 	<reporting>
 		<plugins>
 			<plugin>
@@ -143,7 +136,7 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -157,11 +150,6 @@
 			</extension>
 		</extensions>
 		<plugins>
-			<!-- <plugin>
-				<groupId>com.marvinformatics</groupId>
-				<artifactId>formatter-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
-			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
