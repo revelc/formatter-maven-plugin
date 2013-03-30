@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.marvinformatics.formatter</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>formatter-maven-plugin</artifactId>
+	<packaging>maven-plugin</packaging>
+
+	<name>Formatter Maven Plugin</name>
+
+	<developers>
+		<developer>
+			<id>jecki.go</id>
+			<name>Jecki</name>
+			<email>jecki.go@gmail.com</email>
+			<roles>
+				<role>maven-java-formatter-plugin</role>
+				<role>owner</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>matt.blanchette</id>
+			<name>Matt Blanchette</name>
+			<email>matt.blanchette@gmail.com</email>
+			<roles>
+				<role>maven-java-formatter-plugin</role>
+				<role>owner</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>velo</id>
+			<name>Marvin Froeder</name>
+			<email>velo.br@gmail.com</email>
+			<roles>
+				<role>maven-formatter-plugin</role>
+				<role>owner</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.marvinformatics.formatter</groupId>
+			<artifactId>jdt-core</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.marvinformatics.formatter</groupId>
+			<artifactId>jsdt-core</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-io</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-resources</artifactId>
+			<version>1.0-alpha-7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
