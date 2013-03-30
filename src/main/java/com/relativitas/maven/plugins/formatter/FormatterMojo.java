@@ -46,8 +46,6 @@ import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelecto
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
 import org.codehaus.plexus.resource.ResourceManager;
-import org.codehaus.plexus.resource.loader.FileResourceLoader;
-import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
@@ -59,6 +57,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
 import com.relativitas.maven.plugins.formatter.java.JavaFormatter;
+import com.relativitas.maven.plugins.formatter.javascript.JavascriptFormatter;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -71,6 +70,7 @@ import com.relativitas.maven.plugins.formatter.java.JavaFormatter;
  * 
  * @goal format
  * @phase process-sources
+ * @requiresProject false
  * 
  * @author jecki
  * @author Matt Blanchette
@@ -79,21 +79,13 @@ import com.relativitas.maven.plugins.formatter.java.JavaFormatter;
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
-	private static final String[] DEFAULT_INCLUDES = new String[]{"**/*.java"};
 
-	/**
-	 * ResourceManager for retrieving the configFile resource.
-	 * 
-	 * @component
-	 * @required
-	 * @readonly
-	 */
-	private ResourceManager resourceManager;
+	private static final String[] DEFAULT_INCLUDES = new String[]{"**/*.java","**/*.js"};
 
 	/**
 	 * Project's source directory as specified in the POM.
 	 * 
-	 * @parameter expression="${project.build.sourceDirectory}"
+	 * @parameter default-value="${project.build.sourceDirectory}" expression="${sourceDirectory}"
 	 * @readonly
 	 * @required
 	 */
@@ -197,7 +189,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * <li><b>"CR"</b> - Use early Mac style line endings</li>
 	 * </ul>
 	 * 
-	 * @parameter default-value="AUTO"
+	 * @parameter default-value="AUTO" expression="${lineending}"
 	 * @since 0.2.0
 	 */
 	private LineEnding lineEnding;
@@ -206,20 +198,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * File or classpath location of an Eclipse code formatter configuration xml
 	 * file to use in formatting.
 	 * 
-	 * @parameter
+	 * @parameter default-value="src/config/eclipse/formatter/java.xml"  expression="${configfile}"
 	 */
-	private String configFile;
-
+	private File configFile;
+	
 	/**
-	 * Sets whether compilerSource, compilerCompliance, and
-	 * compilerTargetPlatform values are used instead of those defined in the
-	 * configFile.
+	 * File or classpath location of an Eclipse code formatter configuration xml
+	 * file to use in formatting.
 	 * 
-	 * @parameter default-value="false"
-	 * @since 0.2.0
+	 * @parameter default-value="src/config/eclipse/formatter/javascript.xml"  expression="${configjsfile}"
 	 */
-	private Boolean overrideConfigCompilerVersion;
+	private File configJsFile;
 
+	
 	/**
 	 * Whether the formatting is skipped.
 	 *
@@ -229,6 +220,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	private Boolean skipFormatting;
 
 	private JavaFormatter javaFormatter = new JavaFormatter();
+	private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
 	private PlexusIoFileResourceCollection collection;
 
@@ -446,7 +438,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			return;
 		}
 
-		Result r = javaFormatter.formatFile(file, lineEnding);
+		Result r;
+		if (file.getName().endsWith(".java")) {
+			r = javaFormatter.formatFile(file, lineEnding);
+		} else {
+			r = jsFormatter.formatFile(file, lineEnding);
+		}
+
 		switch (r) {
 			case SKIPPED :
 				rc.skippedCount++;
@@ -534,8 +532,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoExecutionException
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
-		Map<String, String> options = getFormattingOptions();
-		javaFormatter.init(options, this);
+		
+		javaFormatter.init(
+				getFormattingOptions(configFile)
+				, this);
+		jsFormatter.init(getFormattingOptions(configJsFile), this);
 	}
 
 	/**
@@ -545,23 +546,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map<String, String> getFormattingOptions()
+	private Map<String, String> getFormattingOptions(File configFile)
 			throws MojoExecutionException {
+		if (configFile != null)
+			return getOptionsFromConfigFile(configFile);
+
 		Map<String, String> options = new HashMap<String, String>();
 		options.put(JavaCore.COMPILER_SOURCE, compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
 				compilerTargetPlatform);
 
-		if (configFile != null) {
-			Map<String, String> config = getOptionsFromConfigFile();
-			if (Boolean.TRUE.equals(overrideConfigCompilerVersion)) {
-				config.remove(JavaCore.COMPILER_SOURCE);
-				config.remove(JavaCore.COMPILER_COMPLIANCE);
-				config.remove(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM);
-			}
-			options.putAll(config);
-		}
 
 		return options;
 	}
@@ -572,42 +567,26 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map<String, String> getOptionsFromConfigFile()
+	private Map<String, String> getOptionsFromConfigFile(File configFile)
 			throws MojoExecutionException {
 
 		InputStream configInput = null;
+		
 		try {
-			resourceManager.addSearchPath(FileResourceLoader.ID,
-					basedir.getAbsolutePath());
-			configInput = resourceManager.getResourceAsInputStream(configFile);
-		} catch (ResourceNotFoundException e) {
-			throw new MojoExecutionException("Config file [" + configFile
-					+ "] cannot be found", e);
-		}
-
-		if (configInput == null) {
-			throw new MojoExecutionException("Config file [" + configFile
-					+ "] does not exist");
-		} else {
-			try {
-				ConfigReader configReader = new ConfigReader();
-				return configReader.read(configInput);
-			} catch (IOException e) {
-				throw new MojoExecutionException("Cannot read config file ["
-						+ configFile + "]", e);
-			} catch (SAXException e) {
-				throw new MojoExecutionException("Cannot parse config file ["
-						+ configFile + "]", e);
-			} catch (ConfigReadException e) {
-				throw new MojoExecutionException(e.getMessage(), e);
-			} finally {
-				if (configInput != null) {
-					try {
-						configInput.close();
-					} catch (IOException e) {
-					}
-				}
-			}
+			configInput = new FileInputStream(configFile);
+			
+			ConfigReader configReader = new ConfigReader();
+			return configReader.read(configInput);
+		} catch (IOException e) {
+			throw new MojoExecutionException("Cannot read config file ["
+					+ configFile + "]", e);
+		} catch (SAXException e) {
+			throw new MojoExecutionException("Cannot parse config file ["
+					+ configFile + "]", e);
+		} catch (ConfigReadException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} finally {
+			IOUtil.close(configInput);
 		}
 	}
 
