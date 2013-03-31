@@ -38,6 +38,14 @@
 		<url>https://github.com/velo/maven-formatter-plugin/</url>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>juno</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/juno/</url>
+		</repository>
+	</repositories>
+
 	<developers>
 		<developer>
 			<id>velo</id>
