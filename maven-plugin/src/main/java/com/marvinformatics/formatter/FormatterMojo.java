@@ -41,6 +41,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.components.io.fileselectors.FileSelector;
 import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelector;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
@@ -69,14 +72,11 @@ import com.marvinformatics.formatter.model.ConfigReader;
  * source files is avoided using an md5 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
  * 
- * @goal format
- * @phase process-sources
- * @requiresProject false
- * 
  * @author jecki
  * @author Matt Blanchette
  * @author marvin.froeder
  */
+@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
@@ -85,38 +85,26 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	/**
 	 * Project's source directory as specified in the POM.
-	 * 
-	 * @parameter default-value="${project.build.sourceDirectory}" expression="${sourceDirectory}"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(defaultValue = "${project.build.sourceDirectory}", property = "sourceDirectory", readonly = true, required = true)
 	private File sourceDirectory;
 
 	/**
 	 * Project's test source directory as specified in the POM.
-	 * 
-	 * @parameter expression="${project.build.testSourceDirectory}"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(defaultValue = "${project.build.testSourceDirectory}", readonly = true, required = true)
 	private File testSourceDirectory;
 
 	/**
 	 * Project's target directory as specified in the POM.
-	 * 
-	 * @parameter expression="${project.build.directory}"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(defaultValue = "${project.build.directory}", readonly = true, required = true)
 	private File targetDirectory;
 
 	/**
 	 * Project's base directory.
-	 * 
-	 * @parameter expression="${basedir}"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(defaultValue = "${basedir}", readonly = true, required = true)
 	private File basedir;
 
 	/**
@@ -134,9 +122,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * Patterns are relative to the project source and test source directories.
 	 * When not specified, the default include is <code>**&#47;*.java</code>
 	 * 
-	 * @parameter
 	 * @since 0.3
 	 */
+	@Parameter
 	private String[] includes;
 
 	/**
@@ -144,39 +132,36 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * formatting. Patterns are relative to the project source and test source
 	 * directories. When not specified, there is no default exclude.
 	 * 
-	 * @parameter
 	 * @since 0.3
 	 */
+	@Parameter
 	private String[] excludes;
 
 	/**
 	 * Java compiler source version.
-	 * 
-	 * @parameter default-value="1.5" expression="${maven.compiler.source}"
 	 */
+	@Parameter(defaultValue = "1.5", property = "maven.compiler.source", required = true)
 	private String compilerSource;
 
 	/**
 	 * Java compiler compliance version.
-	 * 
-	 * @parameter default-value="1.5" expression="${maven.compiler.source}"
 	 */
+	@Parameter(defaultValue = "1.5", property = "maven.compiler.source", required = true)
 	private String compilerCompliance;
 
 	/**
 	 * Java compiler target version.
-	 * 
-	 * @parameter default-value="1.5" expression="${maven.compiler.target}"
 	 */
+	@Parameter(defaultValue = "1.5", property = "maven.compiler.target", required = true)
 	private String compilerTargetPlatform;
 
 	/**
 	 * The file encoding used to read and write source files. When not specified
 	 * and sourceEncoding also not set, default is platform file encoding.
 	 * 
-	 * @parameter default-value="${project.build.sourceEncoding}"
 	 * @since 0.3
 	 */
+	@Parameter(property = "project.build.sourceEncoding", required = true)
 	private String encoding;
 
 	/**
@@ -190,25 +175,23 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * <li><b>"CR"</b> - Use early Mac style line endings</li>
 	 * </ul>
 	 * 
-	 * @parameter default-value="AUTO" expression="${lineending}"
 	 * @since 0.2.0
 	 */
+	@Parameter(defaultValue = "AUTO", property = "lineending", required = true)
 	private LineEnding lineEnding;
 
 	/**
 	 * File or classpath location of an Eclipse code formatter configuration xml
 	 * file to use in formatting.
-	 * 
-	 * @parameter default-value="src/config/eclipse/formatter/java.xml"  expression="${configfile}"
 	 */
+	@Parameter(defaultValue = "src/config/eclipse/formatter/java.xml", property = "configfile", required = true)
 	private File configFile;
 	
 	/**
 	 * File or classpath location of an Eclipse code formatter configuration xml
 	 * file to use in formatting.
-	 * 
-	 * @parameter default-value="src/config/eclipse/formatter/javascript.xml"  expression="${configjsfile}"
 	 */
+	@Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
 	private File configJsFile;
 
 	
