@@ -34,6 +34,7 @@ public interface Formatter {
 	 * @throws IOException
 	 * @throws BadLocationException
 	 */
-	public abstract Result formatFile(File file, LineEnding ending);
+	public abstract Result formatFile(File file, LineEnding ending,
+			boolean dryRun);
 
 }

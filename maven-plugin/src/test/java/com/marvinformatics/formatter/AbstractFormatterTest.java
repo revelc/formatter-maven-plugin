@@ -15,10 +15,6 @@ import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.marvinformatics.formatter.ConfigurationSource;
-import com.marvinformatics.formatter.Formatter;
-import com.marvinformatics.formatter.LineEnding;
-import com.marvinformatics.formatter.Result;
 
 public abstract class AbstractFormatterTest extends TestCase {
 
@@ -58,7 +54,7 @@ public abstract class AbstractFormatterTest extends TestCase {
 				return "1.5";
 			}
 		});
-		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF);
+		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
 		assertEquals(Result.SUCCESS, r);
 
 		byte[] sha1 = Files.getDigest(sourceFile,

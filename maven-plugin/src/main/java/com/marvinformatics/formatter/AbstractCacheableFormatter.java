@@ -31,7 +31,7 @@ public abstract class AbstractCacheableFormatter {
 		this.encoding = cfg.getEncoding();
 	}
 
-	public Result formatFile(File file, LineEnding ending) {
+	public Result formatFile(File file, LineEnding ending, boolean dryRun) {
 		try {
 			log.debug("Processing file: " + file);
 			String code = FileUtils.fileRead(file, encoding.name());
@@ -46,7 +46,9 @@ public abstract class AbstractCacheableFormatter {
 				return Result.SKIPPED;
 			}
 
-			FileUtils.fileWrite(file, encoding.name(), formattedCode);
+			if (!dryRun) {
+				FileUtils.fileWrite(file, encoding.name(), formattedCode);
+			}
 
 			return Result.SUCCESS;
 		} catch (IOException e) {
