@@ -104,7 +104,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	/**
 	 * Project's base directory.
 	 */
-	@Parameter(defaultValue = "${basedir}", readonly = true, required = true)
+	@Parameter(defaultValue = ".", property = "project.basedir", readonly = true, required = true)
 	private File basedir;
 
 	/**
