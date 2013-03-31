@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter.model;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -24,8 +24,6 @@ import java.util.Map;
 
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
-
-import com.relativitas.maven.plugins.formatter.xml.Profiles;
 
 /**
  * This class reads a config file for Eclipse code formatter.

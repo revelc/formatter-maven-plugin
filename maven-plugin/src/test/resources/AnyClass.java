@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;  import java.io.IOException; import java.io.InputStream; import java.util.List; import java.util.Map; import org.apache.commons.digester.Digester; import org.xml.sax.SAXException; import com.relativitas.maven.plugins.formatter.xml.Profiles; 
+package com.marvinformatics.formatter;  import java.io.IOException; import java.io.InputStream; import java.util.List; import java.util.Map; import org.apache.commons.digester.Digester; import org.xml.sax.SAXException; import com.marvinformatics.formatter.xml.Profiles; 
 
 
 

@@ -1,6 +1,6 @@
-package com.relativitas.maven.plugins.formatter.javascript;
+package com.marvinformatics.formatter.javascript;
 
-import com.relativitas.maven.plugins.formatter.AbstractFormatterTest;
+import com.marvinformatics.formatter.AbstractFormatterTest;
 
 public class JavascriptFormatterTest extends AbstractFormatterTest {
 

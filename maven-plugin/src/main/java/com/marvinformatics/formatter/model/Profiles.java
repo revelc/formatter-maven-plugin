@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter.model;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -17,18 +17,32 @@ package com.relativitas.maven.plugins.formatter;
  * limitations under the License.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
- * An exception thrown when there is an error reading settings from the code
- * formatter profile of an Eclipse formatter config file.
+ * A class representing the profiles XML element in the Eclipse formatter config
+ * file, including a List of profile setting Maps with id and value.
  * 
  * @author Matt Blanchette
  */
-public class ConfigReadException extends Exception {
+public class Profiles {
 
-	private static final long serialVersionUID = 1L;
+	public static final String PROFILE_KIND = "CodeFormatterProfile";
 
-	public ConfigReadException(String message) {
-		super(message);
+	private List<Map<String, String>> profiles = new ArrayList<Map<String, String>>();
+
+	public Profiles() {
 	}
 
+	public void addProfile(Profile profile) {
+		if (PROFILE_KIND.equals(profile.getKind())) {
+			profiles.add(profile.getSettings());
+		}
+	}
+
+	public List<Map<String, String>> getProfiles() {
+		return profiles;
+	}
 }

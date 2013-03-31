@@ -1,6 +1,6 @@
-package com.relativitas.maven.plugins.formatter.java;
+package com.marvinformatics.formatter.java;
 
-import com.relativitas.maven.plugins.formatter.AbstractFormatterTest;
+import com.marvinformatics.formatter.AbstractFormatterTest;
 
 /**
  * @author marvin.froeder
@@ -9,7 +9,7 @@ public class JavaFormatterTest extends AbstractFormatterTest {
 
 	public void testDoFormatFile() throws Exception {
 		doTestFormat(new JavaFormatter(), "AnyClass.java",
-				"d9c0aec7b7f350f19089258ba86aeaf92f39669b");
+				"0cc3cb63da5943c9b2ceede6231ac3b93a83c363");
 	}
 
 }

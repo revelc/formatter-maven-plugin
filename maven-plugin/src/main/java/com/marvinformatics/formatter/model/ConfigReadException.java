@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter.xml;
+package com.marvinformatics.formatter.model;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -17,36 +17,18 @@ package com.relativitas.maven.plugins.formatter.xml;
  * limitations under the License.
  */
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * A class representing the profile XML element in the Eclipse formatter config
- * file, including the kind attribute and Map of setting id and value.
+ * An exception thrown when there is an error reading settings from the code
+ * formatter profile of an Eclipse formatter config file.
  * 
  * @author Matt Blanchette
  */
-public class Profile {
+public class ConfigReadException extends Exception {
 
-	private String kind;
-	private Map<String, String> settings = new HashMap<String, String>();
+	private static final long serialVersionUID = 1L;
 
-	public Profile() {
+	public ConfigReadException(String message) {
+		super(message);
 	}
 
-	public void addSetting(Setting setting) {
-		settings.put(setting.getId(), setting.getValue());
-	}
-
-	public Map<String, String> getSettings() {
-		return settings;
-	}
-
-	public String getKind() {
-		return kind;
-	}
-
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
 }

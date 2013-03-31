@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter.model;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),

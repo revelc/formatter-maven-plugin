@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter.xml;
+package com.marvinformatics.formatter.model;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -17,32 +17,36 @@ package com.relativitas.maven.plugins.formatter.xml;
  * limitations under the License.
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A class representing the profiles XML element in the Eclipse formatter config
- * file, including a List of profile setting Maps with id and value.
+ * A class representing the profile XML element in the Eclipse formatter config
+ * file, including the kind attribute and Map of setting id and value.
  * 
  * @author Matt Blanchette
  */
-public class Profiles {
+public class Profile {
 
-	public static final String PROFILE_KIND = "CodeFormatterProfile";
+	private String kind;
+	private Map<String, String> settings = new HashMap<String, String>();
 
-	private List<Map<String, String>> profiles = new ArrayList<Map<String, String>>();
-
-	public Profiles() {
+	public Profile() {
 	}
 
-	public void addProfile(Profile profile) {
-		if (PROFILE_KIND.equals(profile.getKind())) {
-			profiles.add(profile.getSettings());
-		}
+	public void addSetting(Setting setting) {
+		settings.put(setting.getId(), setting.getValue());
 	}
 
-	public List<Map<String, String>> getProfiles() {
-		return profiles;
+	public Map<String, String> getSettings() {
+		return settings;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
 }

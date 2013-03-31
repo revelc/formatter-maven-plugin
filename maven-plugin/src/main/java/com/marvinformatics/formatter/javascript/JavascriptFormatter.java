@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter.javascript;
+package com.marvinformatics.formatter.javascript;
 
 import java.io.IOException;
 import java.util.Map;
@@ -10,10 +10,10 @@ import org.eclipse.text.edits.TextEdit;
 import org.eclipse.wst.jsdt.core.ToolFactory;
 import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 
-import com.relativitas.maven.plugins.formatter.AbstractCacheableFormatter;
-import com.relativitas.maven.plugins.formatter.ConfigurationSource;
-import com.relativitas.maven.plugins.formatter.Formatter;
-import com.relativitas.maven.plugins.formatter.LineEnding;
+import com.marvinformatics.formatter.AbstractCacheableFormatter;
+import com.marvinformatics.formatter.ConfigurationSource;
+import com.marvinformatics.formatter.Formatter;
+import com.marvinformatics.formatter.LineEnding;
 
 public class JavascriptFormatter extends AbstractCacheableFormatter
 		implements

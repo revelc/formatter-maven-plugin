@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter.model;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -20,9 +20,9 @@ package com.relativitas.maven.plugins.formatter;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.RuleSetBase;
 
-import com.relativitas.maven.plugins.formatter.xml.Profile;
-import com.relativitas.maven.plugins.formatter.xml.Profiles;
-import com.relativitas.maven.plugins.formatter.xml.Setting;
+import com.marvinformatics.formatter.model.Profile;
+import com.marvinformatics.formatter.model.Profiles;
+import com.marvinformatics.formatter.model.Setting;
 
 /**
  * An Apache Commons Digester RuleSet for configuring a digester to parse the

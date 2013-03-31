@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter;
 
 /**
  * @author marvin.froeder

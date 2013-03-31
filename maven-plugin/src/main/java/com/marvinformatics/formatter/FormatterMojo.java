@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -55,8 +55,10 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
-import com.relativitas.maven.plugins.formatter.java.JavaFormatter;
-import com.relativitas.maven.plugins.formatter.javascript.JavascriptFormatter;
+import com.marvinformatics.formatter.java.JavaFormatter;
+import com.marvinformatics.formatter.javascript.JavascriptFormatter;
+import com.marvinformatics.formatter.model.ConfigReadException;
+import com.marvinformatics.formatter.model.ConfigReader;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code

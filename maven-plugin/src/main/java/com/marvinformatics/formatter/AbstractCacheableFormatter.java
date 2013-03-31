@@ -1,4 +1,4 @@
-package com.relativitas.maven.plugins.formatter;
+package com.marvinformatics.formatter;
 
 import java.io.File;
 import java.io.IOException;
