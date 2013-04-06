@@ -5,8 +5,12 @@ package com.marvinformatics.formatter;
  */
 public enum LineEnding {
 
-	AUTO(System.getProperty("line.separator")), KEEP(null), LF("\n"), CRLF(
-			"\r\n"), CR("\r");
+	AUTO(System.getProperty("line.separator")),
+	KEEP(null),
+	LF("\n"),
+	CRLF("\r\n"),
+	CR("\r"),
+	UNKNOW(null);
 
 	private final String chars;
 
@@ -50,7 +54,7 @@ public enum LineEnding {
 		} else if (crCount > lfCount && crCount > crlfCount) {
 			return CR;
 		}
-		return null;
+		return UNKNOW;
 	}
 
 }

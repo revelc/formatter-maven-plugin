@@ -461,7 +461,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		}
 
 		writeStringToFile(formattedCode, file);
-		rc.successCount++;
 	}
 
 	/**
@@ -581,26 +580,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		} finally {
 			IOUtil.close(configInput);
 		}
-	}
-
-	/**
-	 * Returns the lineEnding parameter as characters when the value is known
-	 * (LF, CRLF, CR) or can be determined from the file text (KEEP). Otherwise
-	 * null is returned.
-	 * 
-	 * @return
-	 */
-	String getLineEnding(String fileDataString) {
-		String ending;
-		switch (lineEnding) {
-			case KEEP :
-				ending = LineEnding.determineLineEnding(fileDataString)
-						.getChars();
-			default :
-				ending = lineEnding.getChars();
-		}
-
-		return ending;
 	}
 
 	class ResultCollector {

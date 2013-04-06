@@ -37,18 +37,16 @@ public abstract class AbstractCacheableFormatter {
 			String code = FileUtils.fileRead(file, encoding.name());
 			String formattedCode = doFormat(code, ending);
 
-			if (formattedCode == null) {
+			if (formattedCode == null)
 				formattedCode = fixLineEnding(code, ending);
-			}
 
 			if (formattedCode == null) {
 				log.debug("Equal code. Not writing result to file.");
 				return Result.SKIPPED;
 			}
 
-			if (!dryRun) {
+			if (!dryRun)
 				FileUtils.fileWrite(file, encoding.name(), formattedCode);
-			}
 
 			return Result.SUCCESS;
 		} catch (IOException e) {
@@ -68,8 +66,11 @@ public abstract class AbstractCacheableFormatter {
 			return null;
 
 		LineEnding current = LineEnding.determineLineEnding(code);
+		if (current == LineEnding.UNKNOW)
+			return null;
 		if (current == ending)
 			return null;
+
 		return code.replace(current.getChars(), ending.getChars());
 	}
 

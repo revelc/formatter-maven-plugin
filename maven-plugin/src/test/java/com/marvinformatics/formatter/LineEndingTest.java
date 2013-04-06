@@ -80,7 +80,7 @@ public class LineEndingTest extends TestCase {
 	public void test_success_read_line_endings_mixed_auto() throws Exception {
 		String fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-		assertNull("Not AUTO line ending", lineEnd);
+		assertEquals(LineEnding.UNKNOW, lineEnd);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class LineEndingTest extends TestCase {
 	public void test_success_read_line_endings_none_auto() throws Exception {
 		String fileData = "TestTestTestTest";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-		assertNull("Not AUTO line ending", lineEnd);
+		assertEquals(LineEnding.UNKNOW, lineEnd);
 	}
 
 }
