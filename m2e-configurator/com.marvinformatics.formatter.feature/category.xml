@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.marvinformatics.formatter.feature_0.15.0.qualifier.jar" id="com.marvinformatics.formatter.feature" version="0.15.0.qualifier">
+      <category name="m2eclipse-buildhelper"/>
+   </feature>
+   <category-def name="m2eclipse-buildhelper" label="M2E Buildhelper Connector"/>
+</site>
