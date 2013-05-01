@@ -8,6 +8,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.eclipse.jface.text.BadLocationException;
 
 /**
@@ -19,6 +20,20 @@ import org.eclipse.jface.text.BadLocationException;
  */
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false)
 public class ValidateMojo extends FormatterMojo {
+
+	@Parameter(defaultValue = "false", property = "aggregator", required = true)
+	private boolean aggregator;
+
+	@Parameter(defaultValue = "${project.executionRoot}", required = true)
+	private boolean executionRoot;
+
+	@Override
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		if (aggregator && !executionRoot)
+			return;
+
+		super.execute();
+	}
 
 	@Override
 	protected void doFormatFile(File file, ResultCollector rc,
