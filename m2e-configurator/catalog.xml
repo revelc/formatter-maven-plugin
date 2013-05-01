@@ -2,44 +2,23 @@
   <catalogItems>
     <catalogItem>
       <categoryId>org.eclipse.m2e.discovery.category.lifecycles</categoryId>
-      <m2e-versions>1.0</m2e-versions>
-      <description>buildhelper</description>
+      <m2e-versions>1.2.0.qualifier</m2e-versions>
+      <description>formatter</description>
       <groupId>lifecycles</groupId>
-      <id>org.eclipse.m2e.discovery.lifecyclemapping.buildhelper</id>
+      <id>com.marvinformatics.formatter.connector</id>
       <kind>lifecycles</kind>
       <license>EPL</license>
-      <name>buildhelper</name>
+      <name>formatter</name>
       <provider>Marvinformatics Ltda</provider>
       <p2>
-        <repositoryUrl>https://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.14.0/N/0.14.0.201109282148/</repositoryUrl>
+        <repositoryUrl>http://repo1.maven.org/maven2/com/marvinformatics/formatter/com.marvinformatics.formatter.feature/1.2.0-SNAPSHOT</repositoryUrl>
         <iuId>com.marvinformatics.formatter.feature.feature.group</iuId>
         <lifecycleMappingIU>
           <iuId>com.marvinformatics.formatter</iuId>
         </lifecycleMappingIU>
       </p2>
       <overview>
-        <summary>buildhelper</summary>
-      </overview>
-    </catalogItem>
-    <catalogItem>
-      <categoryId>org.eclipse.m2e.discovery.category.lifecycles</categoryId>
-      <m2e-versions>1.1</m2e-versions>
-      <description>buildhelper</description>
-      <groupId>lifecycles</groupId>
-      <id>org.eclipse.m2e.discovery.lifecyclemapping.buildhelper</id>
-      <kind>lifecycles</kind>
-      <license>EPL</license>
-      <name>buildhelper</name>
-      <provider>Marvinformatics Ltda</provider>
-      <p2>
-        <repositoryUrl>https://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.15.0/N/0.15.0.201109282249/</repositoryUrl>
-        <iuId>com.marvinformatics.formatter.feature.feature.group</iuId>
-        <lifecycleMappingIU>
-          <iuId>com.marvinformatics.formatter</iuId>
-        </lifecycleMappingIU>
-      </p2>
-      <overview>
-        <summary>buildhelper</summary>
+        <summary>formatter</summary>
       </overview>
     </catalogItem>
   </catalogItems>
