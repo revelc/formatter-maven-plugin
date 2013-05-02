@@ -11,7 +11,7 @@
       <name>formatter</name>
       <provider>Marvinformatics Ltda</provider>
       <p2>
-        <repositoryUrl>http://repo1.maven.org/maven2/com/marvinformatics/formatter/com.marvinformatics.formatter.feature/1.2.0</repositoryUrl>
+        <repositoryUrl>http://velo.github.io/maven-formatter-plugin/p2/1.2.0/</repositoryUrl>
         <iuId>com.marvinformatics.formatter.feature.feature.group</iuId>
         <lifecycleMappingIU>
           <iuId>com.marvinformatics.formatter</iuId>
