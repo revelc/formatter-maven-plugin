@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.marvinformatics.formatter.feature_1.2.0.jar" id="com.marvinformatics.formatter.feature" version="1.2.0">
+   <feature url="features/com.marvinformatics.formatter.feature_0.15.0.qualifier.jar" id="com.marvinformatics.formatter.feature" version="0.15.0.qualifier">
       <category name="m2eclipse-formatter"/>
    </feature>
    <category-def name="m2eclipse-formatter" label="M2E Formatter Maven Plugin Connector"/>
