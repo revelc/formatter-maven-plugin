@@ -16,3 +16,8 @@ ver 0.3 (2011-03-01)
 - accept new configuration options: includes, excludes, encoding
 - removed configuration option: directories
 - uses specific Eclipse dependency versions to avoid checking for updates
+
+ver 0.4 (?)
+======================
+- using eclipse formatter version 3.8 instead of 3.5 (newer maven dependencies)
+- added back configuration option: directories, to allow formatting source files other than main and test, such as generated sources
