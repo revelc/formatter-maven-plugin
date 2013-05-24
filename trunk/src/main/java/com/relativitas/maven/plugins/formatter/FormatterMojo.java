@@ -137,9 +137,11 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Location of the Java source files to format.
+	 * Defaults to source main and test directories if not set.
+	 * Deprecated in version 0.3. Reintroduced in 0.4.
 	 * 
 	 * @parameter
-	 * @deprecated Use includes/excludes instead
+	 * @since 0.4
 	 */
 	private File[] directories;
 
@@ -266,15 +268,24 @@ public class FormatterMojo extends AbstractMojo {
 		
 		List files = new ArrayList();
 		try {
-			if (sourceDirectory != null && sourceDirectory.exists()
-					&& sourceDirectory.isDirectory()) {
-				collection.setBaseDir(sourceDirectory);
-				addCollectionFiles(files);
-			}
-			if (testSourceDirectory != null && testSourceDirectory.exists()
-					&& testSourceDirectory.isDirectory()) {
-				collection.setBaseDir(testSourceDirectory);
-				addCollectionFiles(files);
+			if( directories != null ) {
+				for( File directory : directories ) {
+					if( directory.exists() && directory.isDirectory() ) {
+						collection.setBaseDir(directory);
+						addCollectionFiles(files);
+					}
+				}
+			} else { // Using defaults of source main and test dirs
+				if (sourceDirectory != null && sourceDirectory.exists()
+						&& sourceDirectory.isDirectory()) {
+					collection.setBaseDir(sourceDirectory);
+					addCollectionFiles(files);
+				}
+				if (testSourceDirectory != null && testSourceDirectory.exists()
+						&& testSourceDirectory.isDirectory()) {
+					collection.setBaseDir(testSourceDirectory);
+					addCollectionFiles(files);
+				}
 			}
 		}
 		catch (IOException e) {
