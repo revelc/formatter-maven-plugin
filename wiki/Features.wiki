@@ -21,3 +21,6 @@ This page contains list of features for each version of this software.
   * 2011-01-24: (r90) Fixed eclipse dependencies to avoid checking for updates
 
 *0.4*
+  * 2011-03-03: (r109) Added supporting compiler plugin properties for source/target
+  * 2012-12-01: (r118,r119) Updated eclipse formatter to version 3.8 from 3.5
+  * 2013-05-23: (r121) Added back directories parameter to allow formatting sources other than main/test
