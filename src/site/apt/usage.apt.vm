@@ -68,4 +68,4 @@ mvn compile
 +-----+
 
  If you want to override the default plugin behavior, check out
- {{{examples.html}custom configurations}} and {{{plugin-info.html}how to configure}} it.
+ {{{./examples.html}custom configurations}} and {{{./plugin-info.html}how to configure}} it.

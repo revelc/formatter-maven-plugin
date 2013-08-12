@@ -1,4 +1,7 @@
-﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
@@ -11,7 +14,7 @@
 	<url>http://maven-java-formatter-plugin.googlecode.com</url>
 	
 	<licenses>
- 		<license>
+		<license>
 			<name>Apache License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
@@ -93,12 +96,12 @@
 			<artifactId>org.eclipse.core.runtime</artifactId>
 		</dependency>
 		<dependency>
-		  <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-		  <artifactId>org.eclipse.core.resources</artifactId>
+			<groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
+			<artifactId>org.eclipse.core.resources</artifactId>
 		</dependency>
 		<dependency>
-		  <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-		  <artifactId>org.eclipse.equinox.common</artifactId>
+			<groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
+			<artifactId>org.eclipse.equinox.common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-digester</groupId>
@@ -155,6 +158,20 @@
 				<version>1.9</version>
 			</extension>
 		</extensions>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>2.5.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	
 	<profiles>
