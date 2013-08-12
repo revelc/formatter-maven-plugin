@@ -1,0 +1,24 @@
+ver 0.1.0 (2010-07-07)
+======================
+- accept following configuration options: directories, compilerSource, compilerCompliance, compilerTargetPlatform, configFile (eclipse formatter configuration file)
+
+ver 0.2.0 (2010-09-28)
+======================
+- accept new configuration options: lineEnding, overrideConfigCompilerVersion, configFile (from dependency classpath, fail if invalid)
+- use Eclipse 3.5 code formatter
+- use process-sources phase
+- use googlecode groupId
+- provide Maven site 
+- available from Maven central repository
+
+ver 0.3 (2011-03-01)
+======================
+- accept new configuration options: includes, excludes, encoding
+- removed configuration option: directories
+- uses specific Eclipse dependency versions to avoid checking for updates
+
+ver 0.4 (2013-08-11)
+======================
+- using eclipse formatter version 3.8 instead of 3.5 (newer maven dependencies)
+- added back configuration option: directories, to allow formatting source files other than main and test, such as generated sources
+- added supporting compiler plugin properties for source/target
