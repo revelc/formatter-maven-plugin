@@ -3,19 +3,36 @@
  ---
  Matt Blanchette
  ---
- 2011-01-26
+ 2013-08-11
 
 Examples
 
  Here are more examples of using the java formatter plugin.
  
- For more details on these parameters, see the {{{format-mojo.html}format goal}}
+ For more details on these parameters, see the {{{./format-mojo.html}format goal}}
 
 * {Setting Source Files}
 
- To specify the locations of java source files to format, use the <<<includes>>> and <<<excludes>>> parameters.\
- These parameters are fileset patterns relative to the source and test source directories, usually <<<src/main/java>>> and <<<src/test/java>>>.\
- By default, the plugin formats all java source files in the source and test source directories.\
+ By default, the plugin formats all java source files in the <<<src/main/java>>> and <<<src/test/java>>> directories.\
+ To format source files in other locations, use the <<<directories>>> parameter.\
+ This example formats files in the java main source and generated sources directories:
+
++---+
+<plugin>
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>${project.version}</version>
+  <configuration>
+    <directories>
+      <directory>\${project.build.sourceDirectory}</directory>
+      <directory>\${project.build.directory}/generated-sources</directory>
+    </directories>
+  </configuration>
+</plugin>
++---+
+
+ For more control in specifying the java source files to format, use the <<<includes>>> and <<<excludes>>> parameters.\
+ These parameters are fileset patterns relative to all source directories, usually <<<src/main/java>>> and <<<src/test/java>>>.\
  This example only formats files in the <<<include>>> package, except for test classes and those in the <<<exclude>>> "special" subpackage:
 
 +---+
@@ -54,6 +71,15 @@ Examples
 </plugin>
 +---+
 
+ These 3 parameters can also be set using the maven compiler plugin properties for source and target.
+
++---+
+<properties>
+  <maven.compiler.source>1.6</maven.compiler.source>
+  <maven.compiler.target>1.6</maven.compiler.target>
+</properties>
++---+
+
 * {System Independent Line Endings}
 
  To specify the line ending to use in formatting, use the  <<<lineEnding>>> parameter.\
@@ -72,7 +98,7 @@ Examples
 </plugin>
 +---+
 
- For all possible values, see the <<<lineEnding>>> description on the {{{format-mojo.html}format goal}}
+ For all possible values, see the <<<lineEnding>>> description on the {{{./format-mojo.html}format goal}}
 
 * {Source File Encoding}
 
