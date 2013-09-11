@@ -20,11 +20,18 @@
 	<url>https://github.com/velo/maven-formatter-plugin/</url>
 
 	<modules>
-		<module>jdt-core</module>
-		<module>jsdt-core</module>
+		<module>formatters</module>
 		<module>maven-plugin</module>
 		<module>m2e-configurator</module>
 	</modules>
+
+	<repositories>
+		<repository>
+			<id>kepler</id>
+			<url>http://download.eclipse.org/releases/kepler</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
 
 	<licenses>
 		<license>
