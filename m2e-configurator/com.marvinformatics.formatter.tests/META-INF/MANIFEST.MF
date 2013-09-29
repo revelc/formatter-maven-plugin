@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: com.marvinformatics.formatter.tests
-Bundle-Version: 1.3.0
+Bundle-Version: 1.4.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.m2e.tests.common;bundle-version="[1.0.0,2.0.0)",
  org.junit;bundle-version="3.8.2",
