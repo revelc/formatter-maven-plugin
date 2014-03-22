@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>io.tesla.tycho</groupId>
 		<artifactId>tycho-support</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.9</version>
 	</parent>
 
 	<groupId>com.marvinformatics.formatter</groupId>
@@ -24,14 +24,6 @@
 		<module>maven-plugin</module>
 		<module>m2e-configurator</module>
 	</modules>
-
-	<repositories>
-		<repository>
-			<id>kepler</id>
-			<url>http://download.eclipse.org/releases/kepler</url>
-			<layout>p2</layout>
-		</repository>
-	</repositories>
 
 	<licenses>
 		<license>
