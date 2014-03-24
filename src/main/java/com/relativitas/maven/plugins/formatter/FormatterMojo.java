@@ -230,6 +230,14 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	private Boolean overrideConfigCompilerVersion;
 
+	/**
+	 * Whether the formatting is skipped.
+	 *
+	 * @parameter default-value="false" expression="${skipFormat}"
+	 * @since 0.5
+	 */
+	private Boolean skipFormatting;
+
 	private CodeFormatter formatter;
 
 	private PlexusIoFileResourceCollection collection;
@@ -238,7 +246,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
-		if (skipFormatting()){
+		if (skipFormatting){
 			getLog().info("Formatting is skipped");
 			return;
 		}
@@ -669,18 +677,6 @@ public class FormatterMojo extends AbstractMojo {
 			return LINE_ENDING_CR_CHAR;
 		}
 		return null;
-	}
-
-	/**
-	 * Return whether the formatting is skipped based on the value of JVM parameter <code>skipFormat</code>
-	 * <br />If the value of JVM parameter <code>skipFormat</code> is true, then  this method will return <code>true</code>,<br />
-	 * otherwise <code>false</code> will be returned.
-	 *
-	 * @return
-	 */
-	private boolean skipFormatting(){
-		String value = System.getProperty("skipFormat");
-		return "true".equalsIgnoreCase(value);
 	}
 
 	private class ResultCollector {
