@@ -2,7 +2,7 @@
   <catalogItems>
     <catalogItem>
       <categoryId>org.eclipse.m2e.discovery.category.lifecycles</categoryId>
-      <m2e-versions>1.4.0.M6</m2e-versions>
+      <m2e-versions>1.4.0.qualifier</m2e-versions>
       <description>formatter</description>
       <groupId>lifecycles</groupId>
       <id>com.marvinformatics.formatter.connector</id>
