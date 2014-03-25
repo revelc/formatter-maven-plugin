@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+  <artifactId>maven-java-formatter-plugin</artifactId>
+  <version>0.5-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20140325.132324</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20140325132324</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.5-20140325.132324-1</value>
+        <updated>20140325132324</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.5-20140325.132324-1</value>
+        <updated>20140325132324</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
