@@ -56,7 +56,7 @@ Examples
 
  To specify the compiler version to use in formatting, use the <<<compilerSource>>>, <<<compilerCompliance>>>, and <<<compilerTargetPlatform>>> parameters.\
  By default, the plugin uses a version of 1.5 for all of these parameters.\
- This example uses 1.6 as the compiler version during formatting:
+ This example uses 1.7 as the compiler version during formatting:
 
 +---+
 <plugin>
@@ -64,9 +64,9 @@ Examples
   <artifactId>maven-java-formatter-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
-    <compilerSource>1.6</compilerSource>
-    <compilerCompliance>1.6</compilerCompliance>
-    <compilerTargetPlatform>1.6</compilerTargetPlatform>
+    <compilerSource>1.7</compilerSource>
+    <compilerCompliance>1.7</compilerCompliance>
+    <compilerTargetPlatform>1.7</compilerTargetPlatform>
   </configuration>
 </plugin>
 +---+
@@ -161,7 +161,7 @@ Examples
 <profiles version="11">
   <profile kind="CodeFormatterProfile" name="Custom Project Formatter" version="11">
     <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
-    <setting id="org.eclipse.jdt.core.compiler.source" value="1.6"/>
+    <setting id="org.eclipse.jdt.core.compiler.source" value="1.7"/>
     ...
   </profile>
 </profiles>
@@ -194,9 +194,9 @@ Examples
   <configuration>
     <configFile>\${project.basedir}/eclipse-formatter-config.xml</configFile>
     <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
-    <compilerSource>1.6</compilerSource>
-    <compilerCompliance>1.6</compilerCompliance>
-    <compilerTargetPlatform>1.6</compilerTargetPlatform>
+    <compilerSource>1.7</compilerSource>
+    <compilerCompliance>1.7</compilerCompliance>
+    <compilerTargetPlatform>1.7</compilerTargetPlatform>
   </configuration>
 </plugin>
 +---+
