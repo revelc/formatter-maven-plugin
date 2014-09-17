@@ -50,6 +50,7 @@ import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelecto
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
 import org.codehaus.plexus.components.io.resources.PlexusIoResource;
+import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
@@ -208,7 +209,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	private JavaFormatter javaFormatter = new JavaFormatter();
 	private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
-	private PlexusIoFileResourceCollection collection;
 
 	/**
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
@@ -240,7 +240,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 		createResourceCollection();
 		
-		List files = new ArrayList();
+		List<File> files = new ArrayList<File>();
 		try {
 			if( directories != null ) {
 				for( File directory : directories ) {
@@ -252,13 +252,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			} else { // Using defaults of source main and test dirs
 				if (sourceDirectory != null && sourceDirectory.exists()
 						&& sourceDirectory.isDirectory()) {
-					collection.setBaseDir(sourceDirectory);
-					addCollectionFiles(files);
+				files.addAll(addCollectionFiles(sourceDirectory));
 				}
 				if (testSourceDirectory != null && testSourceDirectory.exists()
 						&& testSourceDirectory.isDirectory()) {
-					collection.setBaseDir(testSourceDirectory);
-					addCollectionFiles(files);
+				files.addAll(addCollectionFiles(testSourceDirectory));
 				}
 			}
 		}
@@ -278,7 +276,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			String basedirPath = getBasedirPath();
 			for (int i = 0, n = files.size(); i < n; i++) {
 				File file = (File) files.get(i);
-				formatFile(file, rc, hashCache, basedirPath);
+				if(file.exists())
+					formatFile(file, rc, hashCache, basedirPath);
 			}
 
 			storeFileHashCache(hashCache);
@@ -294,40 +293,31 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	}
 
 	/**
-	 * Create a {@link PlexusIoFileResourceCollection} instance to be used by
-	 * this mojo. This collection uses the includes and excludes to find the
-	 * source files.
-	 */
-	void createResourceCollection() {
-		collection = new PlexusIoFileResourceCollection();
-		if (includes != null && includes.length > 0) {
-			collection.setIncludes(includes);
-		} else {
-			collection.setIncludes(DEFAULT_INCLUDES);
-		}
-		collection.setExcludes(excludes);
-		collection.setIncludingEmptyDirectories(false);
-
-		IncludeExcludeFileSelector fileSelector = new IncludeExcludeFileSelector();
-		fileSelector.setIncludes(DEFAULT_INCLUDES);
-		collection.setFileSelectors(new FileSelector[]{fileSelector});
-	}
-
-	/**
 	 * Add source files from the {@link PlexusIoFileResourceCollection} to the
 	 * files list.
 	 * 
-	 * @param files
+	 * @param basedir
 	 * @throws IOException
 	 */
-	void addCollectionFiles(List<File> files) throws IOException {
-		@SuppressWarnings("unchecked")
-		Iterator<PlexusIoResource> resources = collection.getResources();
-		while (resources.hasNext()) {
-			PlexusIoFileResource resource = (PlexusIoFileResource) resources
-					.next();
-			files.add(resource.getFile());
+	List<File> addCollectionFiles(File basedir) throws IOException {
+        final DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir( basedir );
+		if (includes != null && includes.length > 0)
+			ds.setIncludes(includes);
+		else
+			ds.setIncludes(DEFAULT_INCLUDES);
+
+        ds.setExcludes( excludes );
+        ds.addDefaultExcludes();
+        ds.setCaseSensitive( false );
+        ds.setFollowSymlinks( false );
+        ds.scan();
+
+        List<File> foundFiles = new ArrayList<File>();
+		for (String filename : ds.getIncludedFiles()) {
+			foundFiles.add(new File(basedir, filename));
 		}
+		return foundFiles;
 	}
 
 	private String getBasedirPath() {

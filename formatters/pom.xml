@@ -15,7 +15,6 @@
 	<modules>
 		<module>jdt-core</module>
 		<module>jsdt-core</module>
-		<module>html-core</module>
 	</modules>
 
 </project>
