@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.xml.sax.SAXException;
 
 import com.relativitas.maven.plugins.formatter.xml.Profiles;

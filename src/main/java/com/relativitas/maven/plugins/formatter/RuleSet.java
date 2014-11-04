@@ -16,8 +16,8 @@
  */
 package com.relativitas.maven.plugins.formatter;
 
-import org.apache.commons.digester.Digester;
-import org.apache.commons.digester.RuleSetBase;
+import org.apache.commons.digester3.Digester;
+import org.apache.commons.digester3.RuleSetBase;
 
 import com.relativitas.maven.plugins.formatter.xml.Profile;
 import com.relativitas.maven.plugins.formatter.xml.Profiles;
