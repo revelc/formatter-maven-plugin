@@ -17,25 +17,27 @@ package com.relativitas.maven.plugins.formatter;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test class for {@link FormatterMojo}.
  * 
  * @author Matt Blanchette
  */
-public class FormatterMojoTest extends TestCase {
+public class FormatterMojoTest {
 
 	/**
 	 * Test successfully determining CRLF line ending.
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_line_endings_crlf() throws Exception {
 		String fileData = "Test\r\nTest\r\nTest\r\n";
 		FormatterMojo mojo = new FormatterMojo();
 		String lineEnd = mojo.determineLineEnding(fileData);
-		assertEquals(FormatterMojo.LINE_ENDING_CRLF_CHARS, lineEnd);
+		Assert.assertEquals(FormatterMojo.LINE_ENDING_CRLF_CHARS, lineEnd);
 	}
 
 	/**
@@ -43,11 +45,12 @@ public class FormatterMojoTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_line_endings_lf() throws Exception {
 		String fileData = "Test\nTest\nTest\n";
 		FormatterMojo mojo = new FormatterMojo();
 		String lineEnd = mojo.determineLineEnding(fileData);
-		assertEquals(FormatterMojo.LINE_ENDING_LF_CHAR, lineEnd);
+		Assert.assertEquals(FormatterMojo.LINE_ENDING_LF_CHAR, lineEnd);
 	}
 
 	/**
@@ -55,11 +58,12 @@ public class FormatterMojoTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_line_endings_cr() throws Exception {
 		String fileData = "Test\rTest\rTest\r";
 		FormatterMojo mojo = new FormatterMojo();
 		String lineEnd = mojo.determineLineEnding(fileData);
-		assertEquals(FormatterMojo.LINE_ENDING_CR_CHAR, lineEnd);
+		Assert.assertEquals(FormatterMojo.LINE_ENDING_CR_CHAR, lineEnd);
 	}
 
 	/**
@@ -67,11 +71,12 @@ public class FormatterMojoTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_line_endings_mixed_lf() throws Exception {
 		String fileData = "Test\r\nTest\rTest\nTest\nTest\r\nTest\n";
 		FormatterMojo mojo = new FormatterMojo();
 		String lineEnd = mojo.determineLineEnding(fileData);
-		assertEquals(FormatterMojo.LINE_ENDING_LF_CHAR, lineEnd);
+		Assert.assertEquals(FormatterMojo.LINE_ENDING_LF_CHAR, lineEnd);
 	}
 
 	/**
@@ -80,11 +85,12 @@ public class FormatterMojoTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_line_endings_mixed_auto() throws Exception {
 		String fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
 		FormatterMojo mojo = new FormatterMojo();
 		String lineEnd = mojo.determineLineEnding(fileData);
-		assertNull("Not AUTO line ending", lineEnd);
+		Assert.assertNull("Not AUTO line ending", lineEnd);
 	}
 
 	/**
@@ -92,11 +98,12 @@ public class FormatterMojoTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_line_endings_none_auto() throws Exception {
 		String fileData = "TestTestTestTest";
 		FormatterMojo mojo = new FormatterMojo();
 		String lineEnd = mojo.determineLineEnding(fileData);
-		assertNull("Not AUTO line ending", lineEnd);
+		Assert.assertNull("Not AUTO line ending", lineEnd);
 	}
 
 }

@@ -22,6 +22,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.xml.sax.SAXException;
 
 /**
@@ -30,22 +32,23 @@ import org.xml.sax.SAXException;
  * @author jecki
  * @author Matt Blanchette
  */
-public class ConfigReaderTest extends TestCase {
+public class ConfigReaderTest {
 
 	/**
 	 * Test successfully read a config file.
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_success_read_config() throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-config.xml");
 		ConfigReader configReader = new ConfigReader();
 		Map config = configReader.read(in);
-		assertNotNull(config);
-		assertEquals(264, config.keySet().size());
+		Assert.assertNotNull(config);
+		Assert.assertEquals(264, config.keySet().size());
 		// test get one of the entry in the file
-		assertEquals("true", config
+		Assert.assertEquals("true", config
 				.get("org.eclipse.jdt.core.formatter.comment.format_html"));
 	}
 
@@ -54,13 +57,14 @@ public class ConfigReaderTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_read_invalid_config() throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-invalid-config.xml");
 		ConfigReader configReader = new ConfigReader();
 		try {
 			configReader.read(in);
-			fail("Expected SAXException to be thrown");
+			Assert.fail("Expected SAXException to be thrown");
 		} catch (SAXException e) {
 		}
 	}
@@ -70,13 +74,14 @@ public class ConfigReaderTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void test_read_invalid_config2() throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml");
 		ConfigReader configReader = new ConfigReader();
 		try {
 			configReader.read(in);
-			fail("Expected ConfigReadException to be thrown");
+			Assert.fail("Expected ConfigReadException to be thrown");
 		} catch (ConfigReadException e) {
 		}
 	}
