@@ -46,8 +46,8 @@ public class ConfigReader {
 	 * @throws IOException
 	 * @throws ConfigReadException
 	 */
-	public Map<String, String> read(InputStream input) throws IOException, SAXException,
-			ConfigReadException {
+	public Map<String, String> read(InputStream input) throws IOException,
+			SAXException, ConfigReadException {
 		Digester digester = new Digester();
 		digester.addRuleSet(new RuleSet());
 
