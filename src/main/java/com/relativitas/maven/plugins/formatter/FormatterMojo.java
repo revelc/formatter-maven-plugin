@@ -43,6 +43,7 @@ import org.codehaus.plexus.components.io.fileselectors.FileSelector;
 import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelector;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
+import org.codehaus.plexus.components.io.resources.PlexusIoResource;
 import org.codehaus.plexus.resource.ResourceManager;
 import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
@@ -101,7 +102,7 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Project's source directory as specified in the POM.
 	 * 
-	 * @parameter expression="${project.build.sourceDirectory}"
+	 * @parameter property="project.build.sourceDirectory"
 	 * @readonly
 	 * @required
 	 */
@@ -110,7 +111,7 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Project's test source directory as specified in the POM.
 	 * 
-	 * @parameter expression="${project.build.testSourceDirectory}"
+	 * @parameter property="project.build.testSourceDirectory"
 	 * @readonly
 	 * @required
 	 */
@@ -119,7 +120,7 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Project's target directory as specified in the POM.
 	 * 
-	 * @parameter expression="${project.build.directory}"
+	 * @parameter property="project.build.directory"
 	 * @readonly
 	 * @required
 	 */
@@ -128,7 +129,7 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Project's base directory.
 	 * 
-	 * @parameter expression="${basedir}"
+	 * @parameter property="project.basedir"
 	 * @readonly
 	 * @required
 	 */
@@ -167,21 +168,21 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Java compiler source version.
 	 * 
-	 * @parameter default-value="1.5" expression="${maven.compiler.source}"
+	 * @parameter default-value="1.5" property="maven.compiler.source"
 	 */
 	private String compilerSource;
 
 	/**
 	 * Java compiler compliance version.
 	 * 
-	 * @parameter default-value="1.5" expression="${maven.compiler.source}"
+	 * @parameter default-value="1.5" property="maven.compiler.source"
 	 */
 	private String compilerCompliance;
 
 	/**
 	 * Java compiler target version.
 	 * 
-	 * @parameter default-value="1.5" expression="${maven.compiler.target}"
+	 * @parameter default-value="1.5" property="maven.compiler.target"
 	 */
 	private String compilerTargetPlatform;
 
@@ -232,7 +233,7 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Whether the formatting is skipped.
 	 *
-	 * @parameter default-value="false" expression="${skipFormat}"
+	 * @parameter default-value="false" property="skipFormat"
 	 * @since 0.5
 	 */
 	private Boolean skipFormatting;
@@ -259,8 +260,7 @@ public class FormatterMojo extends AbstractMojo {
 		} else {
 			try {
 				"Test Encoding".getBytes(encoding);
-			}
-			catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException e) {
 				throw new MojoExecutionException("Encoding '" + encoding + "' is not supported");
 			}
 			getLog().info("Using '" + encoding + "' encoding to format source files.");
@@ -277,7 +277,7 @@ public class FormatterMojo extends AbstractMojo {
 
 		createResourceCollection();
 		
-		List files = new ArrayList();
+		List<File> files = new ArrayList<File>();
 		try {
 			if( directories != null ) {
 				for( File directory : directories ) {
@@ -298,8 +298,7 @@ public class FormatterMojo extends AbstractMojo {
 					addCollectionFiles(files);
 				}
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new MojoExecutionException("Unable to find files using includes/excludes", e);
 		}
 
@@ -355,8 +354,8 @@ public class FormatterMojo extends AbstractMojo {
 	 * @param files
 	 * @throws IOException
 	 */
-	void addCollectionFiles(List files) throws IOException {
-		Iterator resources = collection.getResources();
+	void addCollectionFiles(List<File> files) throws IOException {
+		Iterator<PlexusIoResource> resources = collection.getResources();
 		while(resources.hasNext()) {
 			  PlexusIoFileResource resource = (PlexusIoFileResource)resources.next();
 			  files.add(resource.getFile());
@@ -547,7 +546,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * @throws MojoExecutionException
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
-		Map options = getFormattingOptions();
+		Map<String, String> options = getFormattingOptions();
 		formatter = ToolFactory.createCodeFormatter(options);
 	}
 
@@ -558,15 +557,15 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map getFormattingOptions() throws MojoExecutionException {
-		Map options = new HashMap();
+	private Map<String, String> getFormattingOptions() throws MojoExecutionException {
+		Map<String, String> options = new HashMap<String, String>();
 		options.put(JavaCore.COMPILER_SOURCE, compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
 				compilerTargetPlatform);
 
 		if (configFile != null) {
-			Map config = getOptionsFromConfigFile();
+			Map<String, String> config = getOptionsFromConfigFile();
 			if (Boolean.TRUE.equals(overrideConfigCompilerVersion)) {
 				config.remove(JavaCore.COMPILER_SOURCE);
 				config.remove(JavaCore.COMPILER_COMPLIANCE);
@@ -584,7 +583,7 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map getOptionsFromConfigFile() throws MojoExecutionException {
+	private Map<String, String> getOptionsFromConfigFile() throws MojoExecutionException {
 
 		InputStream configInput = null;
 		try {
