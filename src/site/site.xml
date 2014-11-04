@@ -1,19 +1,32 @@
-<project>
-	<body>
-		<menu name="Overview">
-			<item name="Project Home" href="http://code.google.com/p/maven-java-formatter-plugin/"/>
-			<item name="Introduction" href="index.html"/>
-			<item name="Goals" href="plugin-info.html"/>
-			<item name="Usage" href="usage.html"/>
-		</menu>
-		<menu name="Examples">
-			<item name="Source Files" href="examples.html#Setting_Source_Files"/>
-			<item name="Compiler Version" href="examples.html#Setting_Compiler_Version"/>
-			<item name="Line Endings" href="examples.html#System_Independent_Line_Endings"/>
-			<item name="File Encoding" href="examples.html#Source_File_Encoding"/>
-			<item name="Custom Formatting" href="examples.html#Custom_Configuration_File"/>
-			<item name="Multimodule" href="examples.html#Multimodule_Configuration"/>
-		</menu>
-		<menu ref="reports" />
-	</body>
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.3.1</version>
+    </skin>
+    <custom>
+        <fluidoSkin>
+            <topBarEnabled>true</topBarEnabled>
+            <sideBarEnabled>true</sideBarEnabled>
+        </fluidoSkin>
+    </custom>
+    <body>
+        <menu name="Overview">
+            <item name="Project Home" href="http://code.google.com/p/maven-java-formatter-plugin/"/>
+            <item name="Introduction" href="index.html"/>
+            <item name="Goals" href="plugin-info.html"/>
+            <item name="Usage" href="usage.html"/>
+        </menu>
+        <menu name="Examples">
+            <item name="Source Files" href="examples.html#Setting_Source_Files"/>
+            <item name="Compiler Version" href="examples.html#Setting_Compiler_Version"/>
+            <item name="Line Endings" href="examples.html#System_Independent_Line_Endings"/>
+            <item name="File Encoding" href="examples.html#Source_File_Encoding"/>
+            <item name="Custom Formatting" href="examples.html#Custom_Configuration_File"/>
+            <item name="Multimodule" href="examples.html#Multimodule_Configuration"/>
+        </menu>
+        <menu ref="reports" />
+    </body>
 </project>
