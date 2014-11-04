@@ -18,6 +18,7 @@
             <name>Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
 
@@ -185,8 +186,45 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>2.5.1</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <header>copyright.txt</header>
+                        <excludes>
+                            <exclude>target/**</exclude>
+                            <exclude>**/.gitignore</exclude>
+                            <exclude>**/*.txt</exclude>
+                            <exclude>**/*.xml</exclude>
+                            <exclude>**/*.properties</exclude>
+                            <exclude>**/*.html</exclude>
+                            <exclude>**/*.css</exclude>
+                        </excludes>
+                        <includes>
+                            <include>**/*.java</include>
+                        </includes>
+                        <mapping>
+                            <java>JAVADOC_STYLE</java>
+                        </mapping>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <profiles>

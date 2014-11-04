@@ -1,8 +1,6 @@
-package com.relativitas.maven.plugins.formatter.xml;
-
-/*
- * Copyright 2010. All work is copyrighted to their respective author(s),
- * unless otherwise stated.
+/**
+ * Copyright 2010-2014. All work is copyrighted to their respective
+ * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@ package com.relativitas.maven.plugins.formatter.xml;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.relativitas.maven.plugins.formatter.xml;
 
 /**
  * A class representing the setting XML element in the Eclipse formatter config
