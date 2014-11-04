@@ -28,7 +28,7 @@ import java.util.Map;
 public class Profile {
 
 	private String kind;
-	private Map settings = new HashMap();
+	private Map<String, String> settings = new HashMap<String, String>();
 
 	public Profile() {
 	}
@@ -37,7 +37,7 @@ public class Profile {
 		settings.put(setting.getId(), setting.getValue());
 	}
 
-	public Map getSettings() {
+	public Map<String, String> getSettings() {
 		return settings;
 	}
 

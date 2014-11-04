@@ -41,7 +41,7 @@ public class ConfigReaderTest {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = cl.getResourceAsStream("sample-config.xml");
 		ConfigReader configReader = new ConfigReader();
-		Map config = configReader.read(in);
+		Map<String, String> config = configReader.read(in);
 		Assert.assertNotNull(config);
 		Assert.assertEquals(264, config.keySet().size());
 		// test get one of the entry in the file
