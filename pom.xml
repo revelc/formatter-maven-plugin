@@ -94,30 +94,15 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-                <artifactId>org.eclipse.core.resources</artifactId>
-                <version>3.7.100.v20110510-0712</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-                <artifactId>org.eclipse.core.runtime</artifactId>
-                <version>3.7.0.v20110110</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-                <artifactId>org.eclipse.equinox.common</artifactId>
-                <version>3.6.0.v20110523</version>
-            </dependency>
-            <dependency>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>org.eclipse.jdt.core</artifactId>
-                <version>3.8.1.v20120125-1544</version>
+                <version>3.10.0.v20140604-1726</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
+                <groupId>org.eclipse.text</groupId>
                 <artifactId>org.eclipse.text</artifactId>
-                <version>3.5.100.v20110505-0800</version>
+                <version>3.5.101</version>
                 <scope>compile</scope>
             </dependency>
         </dependencies>
@@ -130,24 +115,18 @@
             <version>3.2.3</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>org.eclipse.jdt.core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-            <artifactId>org.eclipse.text</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-            <artifactId>org.eclipse.core.runtime</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-            <artifactId>org.eclipse.core.resources</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jibx.config.3rdparty.org.eclipse</groupId>
-            <artifactId>org.eclipse.equinox.common</artifactId>
+             <groupId>org.eclipse.text</groupId>
+             <artifactId>org.eclipse.text</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -226,6 +205,24 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.3</version>
+                    <configuration>
+                        <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+                        <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>mojo-descriptor</id>
+                            <goals>
+                                <goal>descriptor</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>help-goal</id>
+                            <goals>
+                                <goal>helpmojo</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -385,6 +382,37 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.1</version>
+                </plugin>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.apache.maven.plugins
+                                        </groupId>
+                                        <artifactId>
+                                            maven-plugin-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [3.3,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>helpmojo</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

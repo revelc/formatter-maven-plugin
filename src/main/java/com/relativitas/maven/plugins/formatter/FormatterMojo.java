@@ -39,6 +39,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.components.io.fileselectors.FileSelector;
 import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelector;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
@@ -70,12 +74,10 @@ import org.xml.sax.SAXException;
  * source files is avoided using an md5 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
  * 
- * @goal format
- * @phase process-sources
- * 
  * @author jecki
  * @author Matt Blanchette
  */
+@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class FormatterMojo extends AbstractMojo {
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 	private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java" };
@@ -92,110 +94,92 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * ResourceManager for retrieving the configFile resource.
-	 * 
-	 * @component
-	 * @required
-	 * @readonly
 	 */
+	@Component(role=ResourceManager.class)
 	private ResourceManager resourceManager;
 
 	/**
 	 * Project's source directory as specified in the POM.
-	 * 
-	 * @parameter property="project.build.sourceDirectory"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(property = "project.build.sourceDirectory", readonly = true, required = true)
 	private File sourceDirectory;
 
 	/**
 	 * Project's test source directory as specified in the POM.
-	 * 
-	 * @parameter property="project.build.testSourceDirectory"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(property = "project.build.testSourceDirectory", readonly = true, required = true)
 	private File testSourceDirectory;
 
 	/**
 	 * Project's target directory as specified in the POM.
-	 * 
-	 * @parameter property="project.build.directory"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(property = "project.build.directory", readonly = true, required = true)
 	private File targetDirectory;
 
 	/**
 	 * Project's base directory.
-	 * 
-	 * @parameter property="project.basedir"
-	 * @readonly
-	 * @required
 	 */
+	@Parameter(property = "project.basedir", readonly = true, required = true)
 	private File basedir;
 
 	/**
-	 * Location of the Java source files to format.
-	 * Defaults to source main and test directories if not set.
-	 * Deprecated in version 0.3. Reintroduced in 0.4.
+	 * Location of the Java source files to format. Defaults to source main and
+	 * test directories if not set. Deprecated in version 0.3. Reintroduced in
+	 * 0.4.
 	 * 
-	 * @parameter
 	 * @since 0.4
 	 */
+	@Parameter
 	private File[] directories;
 
 	/**
-	 * List of fileset patterns for Java source locations to include in formatting.
-	 * Patterns are relative to the project source and test source directories.
-	 * When not specified, the default include is <code>**&#47;*.java</code>
+	 * List of fileset patterns for Java source locations to include in
+	 * formatting. Patterns are relative to the project source and test source
+	 * directories. When not specified, the default include is
+	 * <code>**&#47;*.java</code>
 	 * 
-	 * @parameter
 	 * @since 0.3
 	 */
+	@Parameter
 	private String[] includes;
-	
+
 	/**
-	 * List of fileset patterns for Java source locations to exclude from formatting.
-	 * Patterns are relative to the project source and test source directories.
-	 * When not specified, there is no default exclude.
+	 * List of fileset patterns for Java source locations to exclude from
+	 * formatting. Patterns are relative to the project source and test source
+	 * directories. When not specified, there is no default exclude.
 	 * 
-	 * @parameter
 	 * @since 0.3
 	 */
+	@Parameter
 	private String[] excludes;
-	
+
 	/**
 	 * Java compiler source version.
-	 * 
-	 * @parameter default-value="1.5" property="maven.compiler.source"
 	 */
+	@Parameter(defaultValue = "1.5", property = "maven.compiler.source")
 	private String compilerSource;
 
 	/**
 	 * Java compiler compliance version.
-	 * 
-	 * @parameter default-value="1.5" property="maven.compiler.source"
 	 */
+	@Parameter(defaultValue = "1.5", property = "maven.compiler.source")
 	private String compilerCompliance;
 
 	/**
 	 * Java compiler target version.
-	 * 
-	 * @parameter default-value="1.5" property="maven.compiler.target"
 	 */
+	@Parameter(defaultValue = "1.5", property = "maven.compiler.target")
 	private String compilerTargetPlatform;
 
 	/**
-	 * The file encoding used to read and write source files. 
-	 * When not specified and sourceEncoding also not set, 
-	 * default is platform file encoding.
+	 * The file encoding used to read and write source files. When not specified
+	 * and sourceEncoding also not set, default is platform file encoding.
 	 * 
-	 * @parameter default-value="${project.build.sourceEncoding}"
 	 * @since 0.3
 	 */
-	 private String encoding;
-	
+	@Parameter(defaultValue = "${project.build.sourceEncoding}")
+	private String encoding;
+
 	/**
 	 * Sets the line-ending of files after formatting. Valid values are:
 	 * <ul>
@@ -207,17 +191,16 @@ public class FormatterMojo extends AbstractMojo {
 	 * <li><b>"CR"</b> - Use early Mac style line endings</li>
 	 * </ul>
 	 * 
-	 * @parameter default-value="AUTO"
 	 * @since 0.2.0
 	 */
+	@Parameter(defaultValue = "AUTO")
 	private String lineEnding;
 
 	/**
 	 * File or classpath location of an Eclipse code formatter configuration xml
 	 * file to use in formatting.
-	 * 
-	 * @parameter
 	 */
+	@Parameter
 	private String configFile;
 
 	/**
@@ -225,28 +208,28 @@ public class FormatterMojo extends AbstractMojo {
 	 * compilerTargetPlatform values are used instead of those defined in the
 	 * configFile.
 	 * 
-	 * @parameter default-value="false"
 	 * @since 0.2.0
 	 */
+	@Parameter(defaultValue = "false")
 	private Boolean overrideConfigCompilerVersion;
 
 	/**
 	 * Whether the formatting is skipped.
 	 *
-	 * @parameter default-value="false" property="skipFormat"
 	 * @since 0.5
 	 */
+	@Parameter(defaultValue = "false", property = "skipFormat")
 	private Boolean skipFormatting;
 
 	private CodeFormatter formatter;
 
 	private PlexusIoFileResourceCollection collection;
-	
+
 	/**
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
-		if (skipFormatting){
+		if (skipFormatting) {
 			getLog().info("Formatting is skipped");
 			return;
 		}
@@ -255,18 +238,21 @@ public class FormatterMojo extends AbstractMojo {
 		if (StringUtils.isEmpty(encoding)) {
 			encoding = ReaderFactory.FILE_ENCODING;
 			getLog().warn(
-				"File encoding has not been set, using platform encoding (" + encoding
-						+ ") to format source files, i.e. build is platform dependent!");
+					"File encoding has not been set, using platform encoding ("
+							+ encoding
+							+ ") to format source files, i.e. build is platform dependent!");
 		} else {
 			try {
 				"Test Encoding".getBytes(encoding);
 			} catch (UnsupportedEncodingException e) {
-				throw new MojoExecutionException("Encoding '" + encoding + "' is not supported");
+				throw new MojoExecutionException("Encoding '" + encoding
+						+ "' is not supported");
 			}
-			getLog().info("Using '" + encoding + "' encoding to format source files.");
+			getLog().info(
+					"Using '" + encoding + "' encoding to format source files.");
 		}
-		
-		if (!LINE_ENDING_AUTO.equals(lineEnding) 
+
+		if (!LINE_ENDING_AUTO.equals(lineEnding)
 				&& !LINE_ENDING_KEEP.equals(lineEnding)
 				&& !LINE_ENDING_LF.equals(lineEnding)
 				&& !LINE_ENDING_CRLF.equals(lineEnding)
@@ -276,12 +262,12 @@ public class FormatterMojo extends AbstractMojo {
 		}
 
 		createResourceCollection();
-		
+
 		List<File> files = new ArrayList<File>();
 		try {
-			if( directories != null ) {
-				for( File directory : directories ) {
-					if( directory.exists() && directory.isDirectory() ) {
+			if (directories != null) {
+				for (File directory : directories) {
+					if (directory.exists() && directory.isDirectory()) {
 						collection.setBaseDir(directory);
 						addCollectionFiles(files);
 					}
@@ -299,7 +285,8 @@ public class FormatterMojo extends AbstractMojo {
 				}
 			}
 		} catch (IOException e) {
-			throw new MojoExecutionException("Unable to find files using includes/excludes", e);
+			throw new MojoExecutionException(
+					"Unable to find files using includes/excludes", e);
 		}
 
 		int numberOfFiles = files.size();
@@ -330,12 +317,13 @@ public class FormatterMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Create a {@link PlexusIoFileResourceCollection} instance to be used by this mojo.
-	 * This collection uses the includes and excludes to find the source files.
+	 * Create a {@link PlexusIoFileResourceCollection} instance to be used by
+	 * this mojo. This collection uses the includes and excludes to find the
+	 * source files.
 	 */
 	void createResourceCollection() {
 		collection = new PlexusIoFileResourceCollection();
-		if ( includes != null && includes.length > 0 ) {
+		if (includes != null && includes.length > 0) {
 			collection.setIncludes(includes);
 		} else {
 			collection.setIncludes(DEFAULT_INCLUDES);
@@ -345,23 +333,25 @@ public class FormatterMojo extends AbstractMojo {
 
 		IncludeExcludeFileSelector fileSelector = new IncludeExcludeFileSelector();
 		fileSelector.setIncludes(DEFAULT_INCLUDES);
-		collection.setFileSelectors(new FileSelector[]{fileSelector});
+		collection.setFileSelectors(new FileSelector[] { fileSelector });
 	}
-	
+
 	/**
-	 * Add source files from the {@link PlexusIoFileResourceCollection} to the files list.
+	 * Add source files from the {@link PlexusIoFileResourceCollection} to the
+	 * files list.
 	 * 
 	 * @param files
 	 * @throws IOException
 	 */
 	void addCollectionFiles(List<File> files) throws IOException {
 		Iterator<PlexusIoResource> resources = collection.getResources();
-		while(resources.hasNext()) {
-			  PlexusIoFileResource resource = (PlexusIoFileResource)resources.next();
-			  files.add(resource.getFile());
+		while (resources.hasNext()) {
+			PlexusIoFileResource resource = (PlexusIoFileResource) resources
+					.next();
+			files.add(resource.getFile());
 		}
 	}
-	
+
 	private String getBasedirPath() {
 		try {
 			return basedir.getCanonicalPath();
@@ -460,8 +450,9 @@ public class FormatterMojo extends AbstractMojo {
 
 		String lineSeparator = getLineEnding(code);
 
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT + CodeFormatter.F_INCLUDE_COMMENTS, code,
-				0, code.length(), 0, lineSeparator);
+		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT
+				+ CodeFormatter.F_INCLUDE_COMMENTS, code, 0, code.length(), 0,
+				lineSeparator);
 		if (te == null) {
 			rc.skippedCount++;
 			log.debug("Code cannot be formatted. Possible cause "
@@ -557,7 +548,8 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map<String, String> getFormattingOptions() throws MojoExecutionException {
+	private Map<String, String> getFormattingOptions()
+			throws MojoExecutionException {
 		Map<String, String> options = new HashMap<String, String>();
 		options.put(JavaCore.COMPILER_SOURCE, compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
@@ -583,12 +575,14 @@ public class FormatterMojo extends AbstractMojo {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map<String, String> getOptionsFromConfigFile() throws MojoExecutionException {
+	private Map<String, String> getOptionsFromConfigFile()
+			throws MojoExecutionException {
 
 		InputStream configInput = null;
+		System.out.println("Resource manager is" + resourceManager);
 		try {
-			resourceManager.addSearchPath(FileResourceLoader.ID, basedir
-					.getAbsolutePath());
+			resourceManager.addSearchPath(FileResourceLoader.ID,
+					basedir.getAbsolutePath());
 			configInput = resourceManager.getResourceAsInputStream(configFile);
 		} catch (ResourceNotFoundException e) {
 			throw new MojoExecutionException("Config file [" + configFile
