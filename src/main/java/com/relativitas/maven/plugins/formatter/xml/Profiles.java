@@ -32,9 +32,6 @@ public class Profiles {
 
 	private List<Map<String, String>> profiles = new ArrayList<Map<String, String>>();
 
-	public Profiles() {
-	}
-
 	public void addProfile(Profile profile) {
 		if (PROFILE_KIND.equals(profile.getKind())) {
 			profiles.add(profile.getSettings());

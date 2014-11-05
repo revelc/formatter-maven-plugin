@@ -27,9 +27,6 @@ public class Setting {
 	private String id;
 	private String value;
 
-	public Setting() {
-	}
-
 	public String getId() {
 		return id;
 	}
