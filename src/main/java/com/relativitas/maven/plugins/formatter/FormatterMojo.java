@@ -579,7 +579,6 @@ public class FormatterMojo extends AbstractMojo {
 			throws MojoExecutionException {
 
 		InputStream configInput = null;
-		System.out.println("Resource manager is" + resourceManager);
 		try {
 			resourceManager.addSearchPath(FileResourceLoader.ID,
 					basedir.getAbsolutePath());
