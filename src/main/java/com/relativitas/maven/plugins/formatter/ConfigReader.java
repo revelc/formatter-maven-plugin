@@ -37,14 +37,14 @@ public class ConfigReader {
 	/**
 	 * Read from the <code>input</code> and return it's configuration settings
 	 * as a {@link Map}.
-	 * 
-	 * @param input
+	 *
+	 * @param input the input
 	 * @return return {@link Map} with all the configurations read from the
 	 *         config file, or throws an exception if there's a problem reading
 	 *         the input, e.g.: invalid XML.
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ConfigReadException
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SAXException the SAX exception
+	 * @throws ConfigReadException the config read exception
 	 */
 	public Map<String, String> read(InputStream input) throws IOException,
 			SAXException, ConfigReadException {

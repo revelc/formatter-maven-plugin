@@ -28,16 +28,28 @@ import java.util.Map;
  */
 public class Profiles {
 
+	/** The Constant PROFILE_KIND. */
 	public static final String PROFILE_KIND = "CodeFormatterProfile";
 
+	/** The profiles. */
 	private List<Map<String, String>> profiles = new ArrayList<Map<String, String>>();
 
+	/**
+	 * Adds the profile.
+	 *
+	 * @param profile the profile
+	 */
 	public void addProfile(Profile profile) {
 		if (PROFILE_KIND.equals(profile.getKind())) {
 			profiles.add(profile.getSettings());
 		}
 	}
 
+	/**
+	 * Gets the profiles.
+	 *
+	 * @return the profiles
+	 */
 	public List<Map<String, String>> getProfiles() {
 		return profiles;
 	}

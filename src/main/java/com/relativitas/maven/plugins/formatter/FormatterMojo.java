@@ -79,17 +79,35 @@ import org.xml.sax.SAXException;
  */
 @Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class FormatterMojo extends AbstractMojo {
+	
+	/** The Constant CACHE_PROPERTIES_FILENAME. */
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
+	
+	/** The Constant DEFAULT_INCLUDES. */
 	private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java" };
 
+	/** The Constant LINE_ENDING_AUTO. */
 	static final String LINE_ENDING_AUTO = "AUTO";
+	
+	/** The Constant LINE_ENDING_KEEP. */
 	static final String LINE_ENDING_KEEP = "KEEP";
+	
+	/** The Constant LINE_ENDING_LF. */
 	static final String LINE_ENDING_LF = "LF";
+	
+	/** The Constant LINE_ENDING_CRLF. */
 	static final String LINE_ENDING_CRLF = "CRLF";
+	
+	/** The Constant LINE_ENDING_CR. */
 	static final String LINE_ENDING_CR = "CR";
 
+	/** The Constant LINE_ENDING_LF_CHAR. */
 	static final String LINE_ENDING_LF_CHAR = "\n";
+	
+	/** The Constant LINE_ENDING_CRLF_CHARS. */
 	static final String LINE_ENDING_CRLF_CHARS = "\r\n";
+	
+	/** The Constant LINE_ENDING_CR_CHAR. */
 	static final String LINE_ENDING_CR_CHAR = "\r";
 
 	/**
@@ -221,11 +239,16 @@ public class FormatterMojo extends AbstractMojo {
 	@Parameter(defaultValue = "false", property = "skipFormat")
 	private Boolean skipFormatting;
 
+	/** The formatter. */
 	private CodeFormatter formatter;
 
+	/** The collection. */
 	private PlexusIoFileResourceCollection collection;
 
 	/**
+	 * Execute.
+	 *
+	 * @throws MojoExecutionException the mojo execution exception
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
@@ -339,9 +362,9 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Add source files from the {@link PlexusIoFileResourceCollection} to the
 	 * files list.
-	 * 
-	 * @param files
-	 * @throws IOException
+	 *
+	 * @param files the files
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	void addCollectionFiles(List<File> files) throws IOException {
 		Iterator<PlexusIoResource> resources = collection.getResources();
@@ -352,6 +375,11 @@ public class FormatterMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * Gets the basedir path.
+	 *
+	 * @return the basedir path
+	 */
 	private String getBasedirPath() {
 		try {
 			return basedir.getCanonicalPath();
@@ -360,6 +388,11 @@ public class FormatterMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * Store file hash cache.
+	 *
+	 * @param props the props
+	 */
 	private void storeFileHashCache(Properties props) {
 		File cacheFile = new File(targetDirectory, CACHE_PROPERTIES_FILENAME);
 		try {
@@ -373,6 +406,11 @@ public class FormatterMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * Read file hash cache file.
+	 *
+	 * @return the properties
+	 */
 	private Properties readFileHashCacheFile() {
 		Properties props = new Properties();
 		Log log = getLog();
@@ -400,10 +438,12 @@ public class FormatterMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @param file
-	 * @param rc
-	 * @param hashCache
-	 * @param basedirPath
+	 * Format file.
+	 *
+	 * @param file the file
+	 * @param rc the rc
+	 * @param hashCache the hash cache
+	 * @param basedirPath the basedir path
 	 */
 	private void formatFile(File file, ResultCollector rc,
 			Properties hashCache, String basedirPath) {
@@ -423,13 +463,13 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Format individual file.
-	 * 
-	 * @param file
-	 * @param rc
-	 * @param hashCache
-	 * @param basedirPath
-	 * @throws IOException
-	 * @throws BadLocationException
+	 *
+	 * @param file the file
+	 * @param rc the rc
+	 * @param hashCache the hash cache
+	 * @param basedirPath the basedir path
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws BadLocationException the bad location exception
 	 */
 	private void doFormatFile(File file, ResultCollector rc,
 			Properties hashCache, String basedirPath) throws IOException,
@@ -477,9 +517,11 @@ public class FormatterMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @param str
-	 * @return
-	 * @throws UnsupportedEncodingException
+	 * Md5hash.
+	 *
+	 * @param str the str
+	 * @return the string
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	private String md5hash(String str) throws UnsupportedEncodingException {
 		return DigestUtils.md5Hex(str.getBytes(encoding));
@@ -487,10 +529,10 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Read the given file and return the content as a string.
-	 * 
-	 * @param file
-	 * @return
-	 * @throws java.io.IOException
+	 *
+	 * @param file the file
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private String readFileAsString(File file) throws java.io.IOException {
 		StringBuilder fileData = new StringBuilder(1000);
@@ -512,10 +554,10 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Write the given string to a file.
-	 * 
-	 * @param str
-	 * @param file
-	 * @throws IOException
+	 *
+	 * @param str the str
+	 * @param file the file
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private void writeStringToFile(String str, File file) throws IOException {
 		if (!file.exists() && file.isDirectory()) {
@@ -533,8 +575,8 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Create a {@link CodeFormatter} instance to be used by this mojo.
-	 * 
-	 * @throws MojoExecutionException
+	 *
+	 * @throws MojoExecutionException the mojo execution exception
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
 		Map<String, String> options = getFormattingOptions();
@@ -544,9 +586,9 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Return the options to be passed when creating {@link CodeFormatter}
 	 * instance.
-	 * 
-	 * @return
-	 * @throws MojoExecutionException
+	 *
+	 * @return the formatting options
+	 * @throws MojoExecutionException the mojo execution exception
 	 */
 	private Map<String, String> getFormattingOptions()
 			throws MojoExecutionException {
@@ -571,9 +613,9 @@ public class FormatterMojo extends AbstractMojo {
 
 	/**
 	 * Read config file and return the config as {@link Map}.
-	 * 
-	 * @return
-	 * @throws MojoExecutionException
+	 *
+	 * @return the options from config file
+	 * @throws MojoExecutionException the mojo execution exception
 	 */
 	private Map<String, String> getOptionsFromConfigFile()
 			throws MojoExecutionException {
@@ -618,8 +660,9 @@ public class FormatterMojo extends AbstractMojo {
 	 * Returns the lineEnding parameter as characters when the value is known
 	 * (LF, CRLF, CR) or can be determined from the file text (KEEP). Otherwise
 	 * null is returned.
-	 * 
-	 * @return
+	 *
+	 * @param fileDataString the file data string
+	 * @return the line ending
 	 */
 	String getLineEnding(String fileDataString) {
 		String lineEnd = null;
@@ -638,8 +681,9 @@ public class FormatterMojo extends AbstractMojo {
 	/**
 	 * Returns the most occurring line-ending characters in the file text or
 	 * null if no line-ending occurs the most.
-	 * 
-	 * @return
+	 *
+	 * @param fileDataString the file data string
+	 * @return the string
 	 */
 	String determineLineEnding(String fileDataString) {
 		int lfCount = 0;
@@ -670,9 +714,18 @@ public class FormatterMojo extends AbstractMojo {
 		return null;
 	}
 
+	/**
+	 * The Class ResultCollector.
+	 */
 	private class ResultCollector {
+		
+		/** The success count. */
 		private int successCount;
+		
+		/** The fail count. */
 		private int failCount;
+		
+		/** The skipped count. */
 		private int skippedCount;
 	}
 }

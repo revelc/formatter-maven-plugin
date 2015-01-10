@@ -27,21 +27,44 @@ import java.util.Map;
  */
 public class Profile {
 
+	/** The kind. */
 	private String kind;
+	
+	/** The settings. */
 	private Map<String, String> settings = new HashMap<String, String>();
 
+	/**
+	 * Adds the setting.
+	 *
+	 * @param setting the setting
+	 */
 	public void addSetting(Setting setting) {
 		settings.put(setting.getId(), setting.getValue());
 	}
 
+	/**
+	 * Gets the settings.
+	 *
+	 * @return the settings
+	 */
 	public Map<String, String> getSettings() {
 		return settings;
 	}
 
+	/**
+	 * Gets the kind.
+	 *
+	 * @return the kind
+	 */
 	public String getKind() {
 		return kind;
 	}
 
+	/**
+	 * Sets the kind.
+	 *
+	 * @param kind the new kind
+	 */
 	public void setKind(String kind) {
 		this.kind = kind;
 	}

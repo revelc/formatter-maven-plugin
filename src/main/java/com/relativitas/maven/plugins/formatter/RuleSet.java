@@ -33,6 +33,9 @@ import com.relativitas.maven.plugins.formatter.xml.Setting;
 class RuleSet extends RuleSetBase {
 
 	/**
+	 * Adds the rule instances.
+	 *
+	 * @param digester the digester
 	 * @see org.apache.commons.digester.RuleSetBase#addRuleInstances(org.apache.commons.digester.Digester)
 	 */
 	public void addRuleInstances(Digester digester) {
