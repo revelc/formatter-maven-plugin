@@ -41,7 +41,7 @@ public class Profiles {
 	 */
 	public void addProfile(Profile profile) {
 		if (PROFILE_KIND.equals(profile.getKind())) {
-			profiles.add(profile.getSettings());
+			this.profiles.add(profile.getSettings());
 		}
 	}
 
@@ -51,6 +51,6 @@ public class Profiles {
 	 * @return the profiles
 	 */
 	public List<Map<String, String>> getProfiles() {
-		return profiles;
+		return this.profiles;
 	}
 }

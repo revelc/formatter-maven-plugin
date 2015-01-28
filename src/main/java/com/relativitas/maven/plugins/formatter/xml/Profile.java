@@ -39,7 +39,7 @@ public class Profile {
 	 * @param setting the setting
 	 */
 	public void addSetting(Setting setting) {
-		settings.put(setting.getId(), setting.getValue());
+		this.settings.put(setting.getId(), setting.getValue());
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Profile {
 	 * @return the settings
 	 */
 	public Map<String, String> getSettings() {
-		return settings;
+		return this.settings;
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class Profile {
 	 * @return the kind
 	 */
 	public String getKind() {
-		return kind;
+		return this.kind;
 	}
 
 	/**

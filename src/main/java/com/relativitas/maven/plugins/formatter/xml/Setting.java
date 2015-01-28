@@ -36,7 +36,7 @@ public class Setting {
 	 * @return the id
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class Setting {
 	 * @return the value
 	 */
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
 	/**

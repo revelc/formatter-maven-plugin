@@ -63,6 +63,7 @@ public class ConfigReaderTest {
 			configReader.read(in);
 			Assert.fail("Expected SAXException to be thrown");
 		} catch (SAXException e) {
+			// ignore
 		}
 	}
 
@@ -80,6 +81,7 @@ public class ConfigReaderTest {
 			configReader.read(in);
 			Assert.fail("Expected ConfigReadException to be thrown");
 		} catch (ConfigReadException e) {
+			// ignore
 		}
 	}
 
