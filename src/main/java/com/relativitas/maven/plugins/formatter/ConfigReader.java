@@ -52,7 +52,7 @@ public class ConfigReader {
 		digester.addRuleSet(new RuleSet());
 
 		Object result = digester.parse(input);
-		if (result == null && !(result instanceof Profiles)) {
+		if (result == null || !(result instanceof Profiles)) {
 			throw new ConfigReadException("No profiles found in config file");
 		}
 
@@ -63,6 +63,6 @@ public class ConfigReader {
 					+ Profiles.PROFILE_KIND);
 		}
 
-		return (Map<String, String>) list.get(0);
+		return list.get(0);
 	}
 }
