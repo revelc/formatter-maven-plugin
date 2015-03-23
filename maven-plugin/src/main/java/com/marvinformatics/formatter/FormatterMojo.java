@@ -50,6 +50,7 @@ import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelecto
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
 import org.codehaus.plexus.components.io.resources.PlexusIoResource;
+import org.codehaus.plexus.resource.loader.ResourceIOException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
@@ -65,6 +66,8 @@ import com.marvinformatics.formatter.java.JavaFormatter;
 import com.marvinformatics.formatter.javascript.JavascriptFormatter;
 import com.marvinformatics.formatter.model.ConfigReadException;
 import com.marvinformatics.formatter.model.ConfigReader;
+import com.marvinformatics.formatter.support.io.Resource;
+import com.marvinformatics.formatter.support.io.Resource.UnknownResourceException;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -188,14 +191,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * file to use in formatting.
 	 */
 	@Parameter(defaultValue = "src/config/eclipse/formatter/java.xml", property = "configfile", required = true)
-	private File configFile;
+	private String configFile;
 	
 	/**
 	 * File or classpath location of an Eclipse code formatter configuration xml
 	 * file to use in formatting.
 	 */
 	@Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
-	private File configJsFile;
+	private String configJsFile;
 
 	
 	/**
@@ -515,11 +518,27 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoExecutionException
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
-		
-		javaFormatter.init(
-				getFormattingOptions(configFile)
-				, this);
-		jsFormatter.init(getFormattingOptions(configJsFile), this);
+		Resource configFileResource = null;
+		Resource configJsFileResource = null;
+
+		try {
+			if (configFile != null) {
+				configFileResource = Resource.forPath(configFile);
+			}
+		} catch (Resource.UnknownResourceException e) {
+			throw new MojoExecutionException("Error loading Java config", e);
+		}
+
+		try {
+			if (configJsFile != null) {
+				configJsFileResource = Resource.forPath(configJsFile);
+			}
+		} catch (Resource.UnknownResourceException e) {
+			throw new MojoExecutionException("Error loading JS config", e);
+		}
+
+		javaFormatter.init(getFormattingOptions(configFileResource), this);
+		jsFormatter.init(getFormattingOptions(configJsFileResource), this);
 	}
 
 	/**
@@ -529,7 +548,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map<String, String> getFormattingOptions(File configFile)
+	private Map<String, String> getFormattingOptions(Resource configFile)
 			throws MojoExecutionException {
 		if (configFile != null)
 			return getOptionsFromConfigFile(configFile);
@@ -550,13 +569,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	private Map<String, String> getOptionsFromConfigFile(File configFile)
+	private Map<String, String> getOptionsFromConfigFile(Resource configFile)
 			throws MojoExecutionException {
 
 		InputStream configInput = null;
 		
 		try {
-			configInput = new FileInputStream(configFile);
+			configInput = configFile.asInputStream();
 			
 			ConfigReader configReader = new ConfigReader();
 			return configReader.read(configInput);
@@ -567,6 +586,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			throw new MojoExecutionException("Cannot parse config file ["
 					+ configFile + "]", e);
 		} catch (ConfigReadException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (UnknownResourceException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
 			IOUtil.close(configInput);

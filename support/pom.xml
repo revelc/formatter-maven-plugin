@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.marvinformatics.formatter</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>support</artifactId>
+	<packaging>jar</packaging>
+
+	<developers>
+		<developer>
+			<id>jecki.go</id>
+			<name>Jecki</name>
+			<email>jecki.go@gmail.com</email>
+			<roles>
+				<role>maven-java-formatter-plugin</role>
+				<role>owner</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>matt.blanchette</id>
+			<name>Matt Blanchette</name>
+			<email>matt.blanchette@gmail.com</email>
+			<roles>
+				<role>maven-java-formatter-plugin</role>
+				<role>owner</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>velo</id>
+			<name>Marvin Froeder</name>
+			<email>velo.br@gmail.com</email>
+			<roles>
+				<role>maven-formatter-plugin</role>
+				<role>owner</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>
