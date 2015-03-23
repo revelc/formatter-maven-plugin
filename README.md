@@ -1,6 +1,6 @@
 maven-formatter-plugin
 ======================
-[![Build Status](https://api.shippable.com/projects/54cfaf705ab6cc13528a8b4c/badge?branchName=master)](https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest)
+[![Build Status](https://api.shippable.com/projects/54cfaf705ab6cc13528a8b4c/badge?branchName=master)](https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest)  [![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg)](https://coveralls.io/r/velo/maven-formatter-plugin)
 
 Exported from code.google.com/p/maven-java-formatter-plugin
 forked from http://code.google.com/p/maven-java-formatter-plugin/
