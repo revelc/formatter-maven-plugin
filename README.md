@@ -1,6 +1,6 @@
 maven-formatter-plugin
 ======================
-[![Build Status](https://marvinformatics.ci.cloudbees.com/buildStatus/icon?job=maven-formatter-plugin)](https://marvinformatics.ci.cloudbees.com/job/maven-formatter-plugin/)
+[![Build Status](https://api.shippable.com/projects/54cfaf705ab6cc13528a8b4c/badge?branchName=master)](https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest)
 
 Exported from code.google.com/p/maven-java-formatter-plugin
 forked from http://code.google.com/p/maven-java-formatter-plugin/
