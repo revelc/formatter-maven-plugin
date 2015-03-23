@@ -4,5 +4,8 @@ jdk:
    - oraclejdk8
    - oraclejdk7
 
+install:
+   - echo 'skipping'
+
 script:
    - mvn install
