@@ -8,4 +8,4 @@ install:
    - echo 'skipping'
 
 script:
-   - mvn install
+   - mvn install -B
