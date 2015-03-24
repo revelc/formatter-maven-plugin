@@ -37,8 +37,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.eclipse.jface.text.BadLocationException;
-
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -46,7 +44,6 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
@@ -56,6 +53,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
+import com.google.common.hash.Hashing;
 import com.marvinformatics.formatter.java.JavaFormatter;
 import com.marvinformatics.formatter.javascript.JavascriptFormatter;
 import com.marvinformatics.formatter.model.ConfigReadException;
@@ -287,8 +285,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	}
 
 	/**
-	 * Add source files from the {@link PlexusIoFileResourceCollection} to the
-	 * files list.
+	 * Add source files to the files list.
 	 * 
 	 * @param basedir
 	 * @throws IOException
@@ -454,7 +451,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws UnsupportedEncodingException
 	 */
 	private String md5hash(String str) throws UnsupportedEncodingException {
-		return DigestUtils.md5Hex(str.getBytes(encoding));
+		return Hashing.md5().hashBytes(str.getBytes(encoding)).toString();
 	}
 
 	/**
