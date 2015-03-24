@@ -1,0 +1,25 @@
+<catalog>
+  <catalogItems>
+    <catalogItem>
+      <categoryId>org.eclipse.m2e.discovery.category.lifecycles</categoryId>
+      <m2e-versions>1.6.0-SNAPSHOT</m2e-versions>
+      <description>formatter</description>
+      <groupId>lifecycles</groupId>
+      <id>com.marvinformatics.formatter.connector</id>
+      <kind>lifecycles</kind>
+      <license>EPL</license>
+      <name>formatter</name>
+      <provider>Marvinformatics Ltda</provider>
+      <p2>
+        <repositoryUrl>http://velo.github.io/maven-formatter-plugin/p2/1.6.0-SNAPSHOT/</repositoryUrl>
+        <iuId>com.marvinformatics.formatter.feature.feature.group</iuId>
+        <lifecycleMappingIU>
+          <iuId>com.marvinformatics.formatter</iuId>
+        </lifecycleMappingIU>
+      </p2>
+      <overview>
+        <summary>formatter</summary>
+      </overview>
+    </catalogItem>
+  </catalogItems>
+</catalog>
