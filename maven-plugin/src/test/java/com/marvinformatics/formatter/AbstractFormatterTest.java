@@ -3,7 +3,6 @@ package com.marvinformatics.formatter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +13,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest extends TestCase {
@@ -57,8 +57,7 @@ public abstract class AbstractFormatterTest extends TestCase {
 		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
 		assertEquals(Result.SUCCESS, r);
 
-		byte[] sha1 = Files.getDigest(sourceFile,
-				MessageDigest.getInstance("sha1"));
+		byte[] sha1 = Files.hash( sourceFile, Hashing.sha1()).asBytes();
 		StringBuffer sb = new StringBuffer("");
 		for (int i = 0; i < sha1.length; i++) {
 			sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(
