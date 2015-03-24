@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.eclipse.jface.text.BadLocationException;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.eclipse.jface.text.BadLocationException;
 
 /**
  * This mojo is very similar to Formatter mojo, but it is focused on CI servers.
@@ -38,7 +39,7 @@ public class ValidateMojo extends FormatterMojo {
 	@Override
 	protected void doFormatFile(File file, ResultCollector rc,
 			Properties hashCache, String basedirPath, boolean dryRun)
-			throws IOException, BadLocationException, MojoFailureException,
+			throws IOException, MojoFailureException, BadLocationException,
 			MojoExecutionException {
 		super.doFormatFile(file, rc, hashCache, basedirPath, true);
 

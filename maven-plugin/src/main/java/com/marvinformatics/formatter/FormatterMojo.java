@@ -32,10 +32,11 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import org.eclipse.jface.text.BadLocationException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.AbstractMojo;
@@ -45,20 +46,13 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.codehaus.plexus.components.io.fileselectors.FileSelector;
-import org.codehaus.plexus.components.io.fileselectors.IncludeExcludeFileSelector;
-import org.codehaus.plexus.components.io.resources.PlexusIoFileResource;
 import org.codehaus.plexus.components.io.resources.PlexusIoFileResourceCollection;
-import org.codehaus.plexus.components.io.resources.PlexusIoResource;
-import org.codehaus.plexus.resource.loader.ResourceIOException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.WriterFactory;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.formatter.CodeFormatter;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
@@ -241,15 +235,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 					"Using '" + encoding + "' encoding to format source files.");
 		}
 
-		createResourceCollection();
-		
 		List<File> files = new ArrayList<File>();
 		try {
 			if( directories != null ) {
 				for( File directory : directories ) {
 					if( directory.exists() && directory.isDirectory() ) {
-						collection.setBaseDir(directory);
-						addCollectionFiles(files);
+						files.addAll(addCollectionFiles(directory));
 					}
 				}
 			} else { // Using defaults of source main and test dirs
@@ -410,7 +401,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	protected void doFormatFile(File file, ResultCollector rc,
 			Properties hashCache, String basedirPath, boolean dryRun)
 			throws IOException, BadLocationException, MojoFailureException,
-			MojoExecutionException {
+			MojoExecutionException  {
 		Log log = getLog();
 		log.debug("Processing file: " + file);
 		String code = readFileAsString(file);
