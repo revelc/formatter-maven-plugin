@@ -13,5 +13,5 @@ install:
 script:
    - mvn install -B -T10
 
-after_sucess:
+after_success:
    - mvn resources:resources jacoco:merge jacoco:report coveralls:report -DrepoToken=$COVERALLS_REPO_KEY -Pcoveralls -N
