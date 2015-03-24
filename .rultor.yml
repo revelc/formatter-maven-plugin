@@ -1,0 +1,3 @@
+merge:
+  script:
+    - mvn install -B -T10
