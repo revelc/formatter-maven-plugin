@@ -11,7 +11,7 @@ install:
    - echo 'skipping'
 
 script:
-   - mvn install -B
+   - mvn install -B -T10
 
 after_sucess:
-   - mvn org.eluder.coveralls:coveralls-maven-plugin:report -DrepoToken=$COVERALLS_REPO_KEY
+   - mvn resources:resources jacoco:merge jacoco:report coveralls:report -DrepoToken=$COVERALLS_REPO_KEY -Pcoveralls -N
