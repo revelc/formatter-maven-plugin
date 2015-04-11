@@ -4,6 +4,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+        <relativePath />
+    </parent>
+
     <prerequisites>
         <maven>3.0.5</maven>
     </prerequisites>
@@ -15,7 +22,7 @@
     <name>Maven Java Formatter Plugin</name>
 
     <description>Plugin for formatting Java source code</description>
-    <url>http://maven-java-formatter-plugin.googlecode.com</url>
+    <url>http://mblanchette.github.io/maven-java-formatter-plugin/0.4/</url>
     <inceptionYear>2010</inceptionYear>
 
     <licenses>
@@ -28,14 +35,19 @@
     </licenses>
 
     <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/maven-java-formatter-plugin/issues</url>
+        <system>Github</system>
+        <url>https://github.com/mblanchette/maven-java-formatter-plugin/issues</url>
     </issueManagement>
+    <ciManagement>
+        <system>travis</system>
+        <url>https://travis-ci.org/mblanchette/maven-java-formatter-plugin/</url>
+    </ciManagement>
 
     <scm>
-        <connection>scm:svn:http://maven-java-formatter-plugin.googlecode.com/svn/trunk/</connection>
-        <developerConnection>scm:svn:https://maven-java-formatter-plugin.googlecode.com/svn/trunk/</developerConnection>
-        <url>http://maven-java-formatter-plugin.googlecode.com/svn/trunk/</url>
+        <connection>scm:git:ssh://git@github.com/mblanchette/maven-java-formatter-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/mblanchette/maven-java-formatter-plugin.git</developerConnection>
+        <url>https://github.com/mblanchette/maven-java-formatter-plugin</url>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
@@ -81,6 +93,14 @@
             </properties>
         </contributor>
     </contributors>
+
+    <distributionManagement>
+        <site>
+            <id>gh-paages</id>
+            <name>Maven Java Formatter Plugin GitHub Pages</name>
+            <url>git:ssh://git@github.com/mblanchette/maven-java-formatter-plugin.get?gh-pages#</url>
+        </site>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
@@ -427,90 +447,13 @@
 
     <profiles>
         <profile>
-            <id>googlecode</id>
             <id>eclipse</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
                 <property>
                     <name>m2e.version</name>
                 </property>
             </activation>
-            <distributionManagement>
-                <repository>
-                    <uniqueVersion>false</uniqueVersion>
-                    <id>googlecode</id>
-                    <url>svn:https://maven-java-formatter-plugin.googlecode.com/svn/maven2-repo</url>
-                </repository>
-                <site>
-                    <id>googlecode</id>
-                    <name>Google Code Subversion</name>
-                    <url>svn:https://maven-java-formatter-plugin.googlecode.com/svn/site/${project.version}</url>
-                </site>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>sonatype</id>
-            <distributionManagement>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Nexus Release Repository</name>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-                <snapshotRepository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-                </snapshotRepository>
-            </distributionManagement>
             <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <configuration>
-                            <mavenExecutorId>forked-path</mavenExecutorId>
-                            <useReleaseProfile>false</useReleaseProfile>
-                            <arguments>-Psonatype</arguments>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
                 <pluginManagement>
                     <plugins>
                         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
