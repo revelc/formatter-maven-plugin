@@ -428,8 +428,12 @@
     <profiles>
         <profile>
             <id>googlecode</id>
+            <id>eclipse</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>m2e.version</name>
+                </property>
             </activation>
             <distributionManagement>
                 <repository>
