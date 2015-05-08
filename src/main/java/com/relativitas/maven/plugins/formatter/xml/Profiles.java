@@ -1,8 +1,6 @@
-package com.relativitas.maven.plugins.formatter.xml;
-
-/*
- * Copyright 2010. All work is copyrighted to their respective author(s),
- * unless otherwise stated.
+/**
+ * Copyright 2010-2014. All work is copyrighted to their respective
+ * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +14,11 @@ package com.relativitas.maven.plugins.formatter.xml;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.relativitas.maven.plugins.formatter.xml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A class representing the profiles XML element in the Eclipse formatter config
@@ -28,20 +28,29 @@ import java.util.List;
  */
 public class Profiles {
 
+	/** The Constant PROFILE_KIND. */
 	public static final String PROFILE_KIND = "CodeFormatterProfile";
 
-	private List profiles = new ArrayList();
+	/** The profiles. */
+	private List<Map<String, String>> profiles = new ArrayList<Map<String, String>>();
 
-	public Profiles() {
-	}
-
+	/**
+	 * Adds the profile.
+	 *
+	 * @param profile the profile
+	 */
 	public void addProfile(Profile profile) {
 		if (PROFILE_KIND.equals(profile.getKind())) {
-			profiles.add(profile.getSettings());
+			this.profiles.add(profile.getSettings());
 		}
 	}
 
-	public List getProfiles() {
-		return profiles;
+	/**
+	 * Gets the profiles.
+	 *
+	 * @return the profiles
+	 */
+	public List<Map<String, String>> getProfiles() {
+		return this.profiles;
 	}
 }

@@ -1,8 +1,6 @@
-package com.relativitas.maven.plugins.formatter.xml;
-
-/*
- * Copyright 2010. All work is copyrighted to their respective author(s),
- * unless otherwise stated.
+/**
+ * Copyright 2010-2014. All work is copyrighted to their respective
+ * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@ package com.relativitas.maven.plugins.formatter.xml;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.relativitas.maven.plugins.formatter.xml;
 
 /**
  * A class representing the setting XML element in the Eclipse formatter config
@@ -25,24 +24,44 @@ package com.relativitas.maven.plugins.formatter.xml;
  */
 public class Setting {
 
+	/** The id. */
 	private String id;
+	
+	/** The value. */
 	private String value;
 
-	public Setting() {
-	}
-
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
+	 */
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
+	/**
+	 * Sets the value.
+	 *
+	 * @param value the new value
+	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
