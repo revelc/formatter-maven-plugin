@@ -725,12 +725,12 @@ public class FormatterMojo extends AbstractMojo {
 		}
 
 		/** The success count. */
-		private int successCount;
+		int successCount;
 		
 		/** The fail count. */
-		private int failCount;
+		int failCount;
 		
 		/** The skipped count. */
-		private int skippedCount;
+		int skippedCount;
 	}
 }

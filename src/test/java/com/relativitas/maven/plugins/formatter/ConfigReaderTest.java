@@ -47,6 +47,7 @@ public class ConfigReaderTest {
 		// test get one of the entry in the file
 		Assert.assertEquals("true", config
 				.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+		in.close();
 	}
 
 	/**
@@ -65,6 +66,7 @@ public class ConfigReaderTest {
 		} catch (SAXException e) {
 			// ignore
 		}
+		in.close();
 	}
 
 	/**
@@ -83,6 +85,7 @@ public class ConfigReaderTest {
 		} catch (ConfigReadException e) {
 			// ignore
 		}
+		in.close();
 	}
 
 }
