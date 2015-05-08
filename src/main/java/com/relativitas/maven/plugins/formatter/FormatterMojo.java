@@ -720,6 +720,10 @@ public class FormatterMojo extends AbstractMojo {
 	 */
 	private class ResultCollector {
 		
+		public ResultCollector() {
+			// Prevent synthetic access
+		}
+
 		/** The success count. */
 		private int successCount;
 		
