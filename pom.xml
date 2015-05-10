@@ -15,8 +15,8 @@
         <maven>3.0.5</maven>
     </prerequisites>
 
-    <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-    <artifactId>maven-java-formatter-plugin</artifactId>
+    <groupId>com.github.java-formatter-maven-plugin</groupId>
+    <artifactId>java-formatter-maven-plugin</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Maven Java Formatter Plugin</name>
