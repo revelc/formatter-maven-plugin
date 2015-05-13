@@ -15,14 +15,14 @@
         <maven>3.0.5</maven>
     </prerequisites>
 
-    <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-    <artifactId>maven-java-formatter-plugin</artifactId>
+    <groupId>net.revelc.code</groupId>
+    <artifactId>formatter-maven-plugin</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Maven Java Formatter Plugin</name>
 
     <description>Plugin for formatting Java source code</description>
-    <url>http://mblanchette.github.io/maven-java-formatter-plugin/0.4/</url>
+    <url>http://code.revelc.net/formatter-maven-plugin</url>
     <inceptionYear>2010</inceptionYear>
 
     <licenses>
@@ -36,18 +36,18 @@
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/mblanchette/maven-java-formatter-plugin/issues</url>
+        <url>https://github.com/revelc/formatter-maven-plugin/issues</url>
     </issueManagement>
     <ciManagement>
         <system>travis</system>
-        <url>https://travis-ci.org/mblanchette/maven-java-formatter-plugin/</url>
+        <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
     </ciManagement>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/mblanchette/maven-java-formatter-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/mblanchette/maven-java-formatter-plugin.git</developerConnection>
-        <url>https://github.com/mblanchette/maven-java-formatter-plugin</url>
+        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
         <tag>HEAD</tag>
+        <url>https://github.com/revelc/formatter-maven-plugin</url>
     </scm>
 
     <developers>
@@ -98,7 +98,7 @@
         <site>
             <id>gh-paages</id>
             <name>Maven Java Formatter Plugin GitHub Pages</name>
-            <url>git:ssh://git@github.com/mblanchette/maven-java-formatter-plugin.get?gh-pages#</url>
+            <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.get?gh-pages#</url>
         </site>
     </distributionManagement>
 
