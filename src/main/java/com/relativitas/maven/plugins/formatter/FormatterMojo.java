@@ -236,7 +236,7 @@ public class FormatterMojo extends AbstractMojo {
 	 *
 	 * @since 0.5
 	 */
-	@Parameter(defaultValue = "false", property = "skipFormat")
+	@Parameter(defaultValue = "false", alias = "skip", property = "formatter.skip")
 	private Boolean skipFormatting;
 
 	/** The formatter. */
