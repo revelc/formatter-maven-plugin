@@ -1,8 +1,6 @@
-package com.marvinformatics.formatter.model;
-
-/*
- * Copyright 2010. All work is copyrighted to their respective author(s),
- * unless otherwise stated.
+/**
+ * Copyright 2010-2014. All work is copyrighted to their respective
+ * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@ package com.marvinformatics.formatter.model;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.marvinformatics.formatter.model;
 
 /**
  * An exception thrown when there is an error reading settings from the code
@@ -25,8 +24,14 @@ package com.marvinformatics.formatter.model;
  */
 public class ConfigReadException extends Exception {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new config read exception.
+	 *
+	 * @param message the message
+	 */
 	public ConfigReadException(String message) {
 		super(message);
 	}

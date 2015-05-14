@@ -5,6 +5,8 @@ maven-formatter-plugin
 Exported from code.google.com/p/maven-java-formatter-plugin
 forked from http://code.google.com/p/maven-java-formatter-plugin/
 
+[![Build Status](https://travis-ci.org/hazendaz/maven-java-formatter-plugin.svg?branch=master)](https://travis-ci.org/hazendaz/maven-java-formatter-plugin)
+[![Maven central](https://maven-badges.herokuapp.com/maven-central/com.googlecode.maven-java-formatter-plugin/maven-java-formatter-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.googlecode.maven-java-formatter-plugin/maven-java-formatter-plugin)
 
 The original project aims to provide Java source file formatting using the Eclipse code formatter as a Maven plugin.  
 
@@ -26,17 +28,17 @@ http://mblanchette.github.io/maven-java-formatter-plugin/0.4/
 
 ##Eclipse Compatiblity
 
-Plugin Version	| Eclipse Version
---------------  | ---------------
-0.1.0           |	3.3.0
-0.2.0 - 0.3.1   |	3.5.2
-0.4             |	3.8.1 
+---------------------------------------------------------
+| Plugin Version	| 	Eclipse Version		|
+| --------------	|	---------------		|
+| 0.1.0 		|	3.3.0			|
+| 0.2.0 - 0.3.1 	|	3.5.2			|
+| 0.4 			|	3.8.1 			|
 1.0.0           |	3.8.3
 1.1.0           |	3.8.3
 1.2.0           |	3.8.3
 1.3.0           |	3.8.3
 1.4.0           |	4.4.0
-1.5.0           |	4.4.2
-
+---------------------------------------------------------
 
 
