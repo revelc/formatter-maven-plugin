@@ -417,6 +417,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <!-- NOTE: Due to Sonatype usage of version at unmanaged 
+                    level, it wins out so we must override here so we win out. -->
+                <version>1.4</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -477,22 +480,19 @@
                                                 <ignore />
                                             </action>
                                         </pluginExecution>
-                                        <!-- Seems silly but yes this is double wrapped -->
-                                        <pluginExecutions>
-                                            <pluginExecution>
-                                                <pluginExecutionFilter>
-                                                    <groupId>org.apache.maven.plugins</groupId>
-                                                    <artifactId>maven-enforcer-plugin</artifactId>
-                                                    <versionRange>[1.4,)</versionRange>
-                                                    <goals>
-                                                        <goal>enforce</goal>
-                                                    </goals>
-                                                </pluginExecutionFilter>
-                                                <action>
-                                                    <ignore />
-                                                </action>
-                                            </pluginExecution>
-                                        </pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-enforcer-plugin</artifactId>
+                                                <versionRange>[1.4,)</versionRange>
+                                                <goals>
+                                                    <goal>enforce</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
                                     </pluginExecutions>
                                 </lifecycleMappingMetadata>
                             </configuration>
