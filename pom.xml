@@ -19,7 +19,7 @@
     <artifactId>formatter-maven-plugin</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-    <name>Maven Java Formatter Plugin</name>
+    <name>formatter-maven-plugin</name>
 
     <description>Plugin for formatting Java source code</description>
     <url>http://code.revelc.net/formatter-maven-plugin</url>
@@ -96,8 +96,8 @@
 
     <distributionManagement>
         <site>
-            <id>gh-paages</id>
-            <name>Maven Java Formatter Plugin GitHub Pages</name>
+            <id>gh-pages</id>
+            <name>Formatter Maven Plugin GitHub Pages</name>
             <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.get?gh-pages#</url>
         </site>
     </distributionManagement>
@@ -145,8 +145,8 @@
             <artifactId>org.eclipse.jdt.core</artifactId>
         </dependency>
         <dependency>
-             <groupId>org.eclipse.text</groupId>
-             <artifactId>org.eclipse.text</artifactId>
+            <groupId>org.eclipse.text</groupId>
+            <artifactId>org.eclipse.text</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -307,7 +307,8 @@
                     <artifactId>site-maven-plugin</artifactId>
                     <version>0.11</version>
                     <dependencies>
-                        <!-- Site Maven Plugin is referencing incorrect version so fixed here -->
+                        <!-- Site Maven Plugin is referencing incorrect version 
+                            so fixed here -->
                         <dependency>
                             <groupId>org.eclipse.mylyn.github</groupId>
                             <artifactId>org.eclipse.egit.github.core</artifactId>
@@ -350,7 +351,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.2</version>
                 </plugin>
-                 <plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.4</version>
@@ -416,6 +417,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <!-- NOTE: Due to Sonatype usage of version at unmanaged 
+                    level, it wins out so we must override here so we win out. -->
+                <version>1.4</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -453,7 +457,8 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                        <!--This plugin's configuration is used to store 
+                            Eclipse m2e settings only. It has no influence on the Maven build itself. -->
                         <plugin>
                             <groupId>org.eclipse.m2e</groupId>
                             <artifactId>lifecycle-mapping</artifactId>
@@ -475,22 +480,19 @@
                                                 <ignore />
                                             </action>
                                         </pluginExecution>
-                                        <!-- Seems silly but yes this is double wrapped -->
-                                        <pluginExecutions>
-                                            <pluginExecution>
-                                                <pluginExecutionFilter>
-                                                    <groupId>org.apache.maven.plugins</groupId>
-                                                    <artifactId>maven-enforcer-plugin</artifactId>
-                                                    <versionRange>[1.4,)</versionRange>
-                                                    <goals>
-                                                        <goal>enforce</goal>
-                                                    </goals>
-                                                </pluginExecutionFilter>
-                                                <action>
-                                                    <ignore />
-                                                </action>
-                                            </pluginExecution>
-                                        </pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-enforcer-plugin</artifactId>
+                                                <versionRange>[1.4,)</versionRange>
+                                                <goals>
+                                                    <goal>enforce</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
                                     </pluginExecutions>
                                 </lifecycleMappingMetadata>
                             </configuration>
