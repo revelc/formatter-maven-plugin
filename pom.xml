@@ -19,7 +19,7 @@
     <artifactId>formatter-maven-plugin</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-    <name>Maven Java Formatter Plugin</name>
+    <name>formatter-maven-plugin</name>
 
     <description>Plugin for formatting Java source code</description>
     <url>http://code.revelc.net/formatter-maven-plugin</url>
