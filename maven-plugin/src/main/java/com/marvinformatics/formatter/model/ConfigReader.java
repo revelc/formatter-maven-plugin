@@ -1,8 +1,6 @@
-package com.marvinformatics.formatter.model;
-
-/*
- * Copyright 2010. All work is copyrighted to their respective author(s),
- * unless otherwise stated.
+/**
+ * Copyright 2010-2014. All work is copyrighted to their respective
+ * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@ package com.marvinformatics.formatter.model;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.marvinformatics.formatter.model;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,14 +35,14 @@ public class ConfigReader {
 	/**
 	 * Read from the <code>input</code> and return it's configuration settings
 	 * as a {@link Map}.
-	 * 
-	 * @param input
+	 *
+	 * @param input the input
 	 * @return return {@link Map} with all the configurations read from the
 	 *         config file, or throws an exception if there's a problem reading
 	 *         the input, e.g.: invalid XML.
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ConfigReadException
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SAXException the SAX exception
+	 * @throws ConfigReadException the config read exception
 	 */
 	public Map<String, String> read(InputStream input) throws IOException,
 			SAXException, ConfigReadException {
@@ -51,7 +50,7 @@ public class ConfigReader {
 		digester.addRuleSet(new RuleSet());
 
 		Object result = digester.parse(input);
-		if (result == null && !(result instanceof Profiles)) {
+		if (result == null || !(result instanceof Profiles)) {
 			throw new ConfigReadException("No profiles found in config file");
 		}
 
@@ -62,7 +61,7 @@ public class ConfigReader {
 					+ Profiles.PROFILE_KIND);
 		}
 
-		return (Map<String, String>) list.get(0);
+		return list.get(0);
 	}
 
 }

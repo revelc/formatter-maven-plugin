@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -9,6 +9,10 @@
 		<version>1.1.0</version>
 	</parent>
 
+	<prerequisites>
+		<maven>3.0.5</maven>
+	</prerequisites>
+
 	<groupId>com.marvinformatics.formatter</groupId>
 	<artifactId>parent</artifactId>
 	<version>1.6.0-SNAPSHOT</version>
@@ -16,6 +20,7 @@
 
 	<description>Plugin for formatting source code</description>
 	<url>https://github.com/velo/maven-formatter-plugin/</url>
+	<inceptionYear>2010</inceptionYear>
 
 	<modules>
 		<module>formatters</module>
@@ -29,6 +34,7 @@
 			<name>Apache License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
 
@@ -36,6 +42,10 @@
 		<system>github</system>
 		<url>https://github.com/velo/maven-formatter-plugin/issues</url>
 	</issueManagement>
+	<ciManagement>
+		<system>shippable</system>
+		<url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url>
+	</ciManagement>
 
 	<scm>
 		<connection>scm:git:git://github.com/velo/maven-formatter-plugin.git</connection>
@@ -50,6 +60,11 @@
 			<name>Nexus Release Repository</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
+		<site>
+			<id>gh-pages</id>
+			<name>Formatter Maven Plugin GitHub Pages</name>
+			<url>git:ssh://git@github.com/revelc/formatter-maven-plugin.get?gh-pages#</url>
+		</site>
 	</distributionManagement>
 
 	<developers>
@@ -62,13 +77,45 @@
 			</roles>
 		</developer>
 	</developers>
+	<contributors>
+		<contributor>
+			<name>Jeremy Landis</name>
+			<email>jeremylandis@hotmail.com</email>
+			<url>http://www.linkedin.com/pub/jeremy-landis/19/b27/548/</url>
+			<organization>hazendaz</organization>
+			<organizationUrl>https://github.com/hazendaz</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+			<properties>
+				<picUrl>http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/128/174/30cff69.jpg</picUrl>
+			</properties>
+		</contributor>
+		<contributor>
+			<name>Jeremy Landis</name>
+			<email>jeremylandis@hotmail.com</email>
+			<url>http://www.linkedin.com/pub/jeremy-landis/19/b27/548/</url>
+			<organization>hazendaz</organization>
+			<organizationUrl>https://github.com/hazendaz</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+			<properties>
+				<picUrl>http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/128/174/30cff69.jpg</picUrl>
+			</properties>
+		</contributor>
+	</contributors>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<plugin.version>3.2</plugin.version>
 		<java.version>1.7</java.version>
+		<project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -96,6 +143,38 @@
 				<configuration>
 					<argLine>${utCoverage}</argLine>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.11</version>
+        <inherited>false</inherited>
+				<configuration>
+					<header>copyright.txt</header>
+					<excludes>
+						<exclude>target/**</exclude>
+						<exclude>**/.gitignore</exclude>
+						<exclude>**/*.txt</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.html</exclude>
+						<exclude>**/*.css</exclude>
+					</excludes>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+					<mapping>
+						<java>JAVADOC_STYLE</java>
+					</mapping>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>

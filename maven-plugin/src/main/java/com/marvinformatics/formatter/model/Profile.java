@@ -1,8 +1,6 @@
-package com.marvinformatics.formatter.model;
-
-/*
- * Copyright 2010. All work is copyrighted to their respective author(s),
- * unless otherwise stated.
+/**
+ * Copyright 2010-2014. All work is copyrighted to their respective
+ * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@ package com.marvinformatics.formatter.model;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.marvinformatics.formatter.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,24 +27,44 @@ import java.util.Map;
  */
 public class Profile {
 
+	/** The kind. */
 	private String kind;
+	
+	/** The settings. */
 	private Map<String, String> settings = new HashMap<String, String>();
 
-	public Profile() {
-	}
-
+	/**
+	 * Adds the setting.
+	 *
+	 * @param setting the setting
+	 */
 	public void addSetting(Setting setting) {
-		settings.put(setting.getId(), setting.getValue());
+		this.settings.put(setting.getId(), setting.getValue());
 	}
 
+	/**
+	 * Gets the settings.
+	 *
+	 * @return the settings
+	 */
 	public Map<String, String> getSettings() {
-		return settings;
+		return this.settings;
 	}
 
+	/**
+	 * Gets the kind.
+	 *
+	 * @return the kind
+	 */
 	public String getKind() {
-		return kind;
+		return this.kind;
 	}
 
+	/**
+	 * Sets the kind.
+	 *
+	 * @param kind the new kind
+	 */
 	public void setKind(String kind) {
 		this.kind = kind;
 	}
