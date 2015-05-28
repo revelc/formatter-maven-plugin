@@ -9,7 +9,7 @@ public class JavaFormatterTest extends AbstractFormatterTest {
 
 	public void testDoFormatFile() throws Exception {
 		doTestFormat(new JavaFormatter(), "AnyClass.java",
-				"389cb11465d22459423a9ee1bf3628bc1124f533");
+				"c120a11572348caf71e2c050c6219880b0d59bf2");
 	}
 
 }
