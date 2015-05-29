@@ -2,7 +2,7 @@
 <feature
       id="com.marvinformatics.formatter.feature"
       label="%featureName"
-      version="1.6.0.qualifier"
+      version="1.6.0.RC1"
       provider-name="%providerName"
       plugin="com.marvinformatics.formatter">
 

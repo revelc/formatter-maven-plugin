@@ -15,7 +15,7 @@
 
 	<groupId>com.marvinformatics.formatter</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.6.0-SNAPSHOT</version>
+	<version>1.6.0.RC1</version>
 	<packaging>pom</packaging>
 
 	<description>Plugin for formatting source code</description>
@@ -232,6 +232,7 @@
 					<version>2.8.2</version>
 					<configuration>
 						<skip>false</skip>
+						<deployAtEnd>true</deployAtEnd>
 					</configuration>
 				</plugin>
 			</plugins>

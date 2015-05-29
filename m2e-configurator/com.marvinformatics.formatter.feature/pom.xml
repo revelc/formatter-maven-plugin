@@ -3,12 +3,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.marvinformatics.formatter</groupId>  
+    <groupId>com.marvinformatics.formatter</groupId>
     <artifactId>com.marvinformatics.formatter.parent</artifactId>
-    <version>1.6.0-SNAPSHOT</version>
+    <version>1.6.0.RC1</version>
   </parent>
 
   <artifactId>com.marvinformatics.formatter.feature</artifactId>
   <packaging>eclipse-feature</packaging>
+
+  <properties>
+    <serverIdInSettingsXml>sonatype-nexus-staging</serverIdInSettingsXml>
+    <repositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repositoryUrl>
+    <repositoryPathId>com/marvinformatics/formatter/com.marvinformatics.formatter.feature</repositoryPathId>
+  </properties>
 
 </project>
