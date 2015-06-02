@@ -12,7 +12,7 @@
   <packaging>eclipse-repository</packaging>
 
   <properties>
-    <serverIdInSettingsXml>sonatype-nexus-staging</serverIdInSettingsXml>
+    <serverIdInSettingsXml>ossrh</serverIdInSettingsXml>
     <repositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repositoryUrl>
     <repositoryPathId>com/marvinformatics/formatter/com.marvinformatics.formatter.feature</repositoryPathId>
   </properties>
