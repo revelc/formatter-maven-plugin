@@ -232,6 +232,7 @@
 					<version>2.8.2</version>
 					<configuration>
 						<skip>false</skip>
+						<deployAtEnd>true</deployAtEnd>
 					</configuration>
 				</plugin>
 			</plugins>
