@@ -1,3 +1,8 @@
+decrypt:
+  settings.xml: ".rultor/settings.xml.asc"
+  pubring.gpg: ".rultor/pubring.gpg.asc"
+  secring.gpg: ".rultor/secring.gpg.asc"
+
 merge:
   script:
     - mvn install -B -T10
@@ -7,11 +12,11 @@ release:
     - mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${tag}
     - git commit -am "Release ${tag}"
     - git tag -a ${tag} -m "version ${tag}"
-    - mvn clean deploy -Psonatype-oss-release"
+    - mvn clean deploy -Psonatype-oss-release --settings /home/r/settings.xml -Dgpg.homedir=/home/r/
     - mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${next}
     - git commit -am "Next development version ${next}"
     - mvn clean install
-    - mvn nexus-staging:release
+    - mvn nexus-staging:release --settings /home/r/settings.xml
     - git checkout gh-pages
     - mkdir -p p2/${tag}
     - cp m2e-configurator/com.marvinformatics.formatter.site/target/repository/* p2/${tag}
