@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.m2e.core.projectConfigurators">
+      <configurator
+            class="com.marvinformatics.formatter.connector.internal.FormatterProjectConfigurator"
+            id="com.marvinformatics.formatter.connector"
+            name="Eclipse formmater configuration">
+      </configurator>
+   </extension>
+   <extension
+         point="org.eclipse.m2e.core.lifecycleMappingMetadataSource">
+   </extension>
+</plugin>
