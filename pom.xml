@@ -56,14 +56,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>sonatype-nexus-staging</id>
+			<id>ossrh</id>
 			<name>Nexus Release Repository</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<site>
 			<id>gh-pages</id>
 			<name>Formatter Maven Plugin GitHub Pages</name>
-			<url>git:ssh://git@github.com/revelc/formatter-maven-plugin.get?gh-pages#</url>
+			<url>git:ssh://git@github.com/velo/formatter-maven-plugin.get?gh-pages#</url>
 		</site>
 	</distributionManagement>
 
@@ -148,7 +148,7 @@
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
 				<version>2.11</version>
-        <inherited>false</inherited>
+				<inherited>false</inherited>
 				<configuration>
 					<header>copyright.txt</header>
 					<excludes>
@@ -175,6 +175,17 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.5</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
 			</plugin>
 		</plugins>
 		<pluginManagement>
