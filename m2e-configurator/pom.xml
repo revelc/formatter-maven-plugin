@@ -24,7 +24,9 @@
 	<modules>
 		<module>com.marvinformatics.formatter</module>
 		<module>com.marvinformatics.formatter.feature</module>
+		<module>com.marvinformatics.formatter.site</module>
 		<!-- <module>com.marvinformatics.formatter.tests</module> -->
 	</modules>
 
+<version>1.6.0-SNAPSHOT</version>
 </project>
