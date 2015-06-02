@@ -36,7 +36,8 @@ Plugin Version	| Eclipse Version
 1.1.0           |	3.8.3
 1.2.0           |	3.8.3
 1.3.0           |	3.8.3
-1.4.0           |	4.4.0
+1.4.0           |	4.4.0 (luna)
 1.5.0           |	4.4.2
+1.6.0.RC1       |	4.5.0.RC1 (mars)
 
 [1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
