@@ -15,12 +15,12 @@ release:
     - mvn clean install -Psonatype-oss-release --settings /home/r/settings.xml -Dgpg.homedir=/home/r/
     - mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${next}
     - git commit -am "Next development version ${next}"
-    - git push origin/master
+    - git push origin master
     - git push origin --tags
     - git checkout gh-pages
     - mkdir -p p2/${tag}
     - cp m2e-configurator/com.marvinformatics.formatter.site/target/repository/* p2/${tag}
     - git add p2/${tag}
     - git commit -am "Release ${tag}"
-    - git push origin/gh-pages
+    - git push origin gh-pages
 	
