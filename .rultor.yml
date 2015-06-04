@@ -11,5 +11,3 @@ release:
   script:
     - mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${tag}
     - mvn clean deploy -Psonatype-oss-release --settings /home/r/settings.xml -Dgpg.homedir=/home/r/
-    - git commit -a -m "${tag}"
-    - git push
