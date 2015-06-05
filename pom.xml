@@ -16,7 +16,7 @@
 
     <groupId>net.revelc.code</groupId>
     <artifactId>formatter-maven-plugin</artifactId>
-    <version>0.5</version>
+    <version>0.5.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>formatter-maven-plugin</name>
 
