@@ -43,8 +43,8 @@ mvn java-formatter:format
     ...
     <plugins>
       <plugin>
-        <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-        <artifactId>maven-java-formatter-plugin</artifactId>
+        <groupId>net.revelc.code</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
           <execution>
