@@ -22,3 +22,11 @@ ver 0.4 (2013-08-11)
 - using eclipse formatter version 3.8 instead of 3.5 (newer maven dependencies)
 - added back configuration option: directories, to allow formatting source files other than main and test, such as generated sources
 - added supporting compiler plugin properties for source/target
+
+ver 0.5.2 (2015-06-04)
+======================
+- released under revelc
+- using eclipse formatter version 4.4.1
+- updated maven build
+- deployed gh-pages
+  -- Site page using bootstrap look and feel
