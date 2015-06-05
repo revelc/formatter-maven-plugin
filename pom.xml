@@ -98,7 +98,7 @@
         <site>
             <id>gh-pages</id>
             <name>Formatter Maven Plugin GitHub Pages</name>
-            <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.get?gh-pages#</url>
+            <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.git?gh-pages#</url>
         </site>
     </distributionManagement>
 
