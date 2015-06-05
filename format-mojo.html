@@ -7,11 +7,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Matt Blanchette" />
-    <meta name="Date-Creation-yyyymmdd" content="20100923" />
     <meta name="Date-Revision-yyyymmdd" content="20150604" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>formatter-maven-plugin &#x2013; Introduction</title>
+    <title>formatter-maven-plugin &#x2013; formatter:format</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.4.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -192,10 +190,12 @@
         Project Home</a>
             </li>
                 
-      <li class="active">
+      <li>
   
-            <a href="#"><span class="none"></span>Introduction</a>
-          </li>
+                          <a href="index.html" title="Introduction">
+          <span class="none"></span>
+        Introduction</a>
+            </li>
                 
       <li>
   
@@ -254,104 +254,13 @@
         Multimodule</a>
             </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                        
       <li>
   
                           <a href="project-info.html" title="Project Information">
-          <span class="icon-chevron-down"></span>
+          <span class="icon-chevron-right"></span>
         Project Information</a>
-                    <ul class="nav nav-list">
-                    
-      <li>
-  
-                          <a href="integration.html" title="Continuous Integration">
-          <span class="none"></span>
-        Continuous Integration</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependencies.html" title="Dependencies">
-          <span class="none"></span>
-        Dependencies</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-info.html" title="Dependency Information">
-          <span class="none"></span>
-        Dependency Information</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-management.html" title="Dependency Management">
-          <span class="none"></span>
-        Dependency Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="distribution-management.html" title="Distribution Management">
-          <span class="none"></span>
-        Distribution Management</a>
-            </li>
-                    
-      <li class="active">
-  
-            <a href="#"><span class="none"></span>About</a>
-          </li>
-                    
-      <li>
-  
-                          <a href="issue-tracking.html" title="Issue Tracking">
-          <span class="none"></span>
-        Issue Tracking</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="license.html" title="Project License">
-          <span class="none"></span>
-        Project License</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugin-management.html" title="Plugin Management">
-          <span class="none"></span>
-        Plugin Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugins.html" title="Project Plugins">
-          <span class="none"></span>
-        Project Plugins</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="team-list.html" title="Project Team">
-          <span class="none"></span>
-        Project Team</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="source-repository.html" title="Source Repository">
-          <span class="none"></span>
-        Source Repository</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="project-summary.html" title="Project Summary">
-          <span class="none"></span>
-        Project Summary</a>
-            </li>
-              </ul>
-        </li>
+                  </li>
                                                                                                                                                                                                                   
       <li>
   
@@ -380,12 +289,379 @@
                 
         <div id="bodyColumn"  class="span10" >
                                   
-            <div class="section">
-<h2><a name="Introduction"></a>Introduction</h2>
-<p>Plugin for formatting Java source code<br />This plugin allows formatting java source code using the Eclipse code formatter.</p>
-<p>For a description on how to begin using the plugin, see the <a href="./usage.html">usage</a> section. </p>
-<p>For a description of the plugin's goals and configuration parameters, see the <a href="./plugin-info.html">goals</a> section. </p>
-<p>For more example configurations, check out the <a href="./examples.html">examples</a> section.</p></div>
+            
+  
+    <div class="section">
+<h2><a name="formatter:format"></a>formatter:format</h2>
+      
+<p><b>Full name</b>:</p>
+      
+<p>net.revelc.code:formatter-maven-plugin:0.5.2:format</p>
+      
+<p><b>Description</b>:</p>
+      
+<div>A Maven plugin mojo to format Java source code using the Eclipse
+code formatter. Mojo parameters allow customizing formatting by
+specifying the config XML file, line endings, compiler version, and
+source code locations. Reformatting source files is avoided using
+an md5 hash of the content, comparing to the original hash to the
+hash after formatting and a cached hash.</div>
+      
+<p><b>Attributes</b>:</p>
+      
+<ul>
+        
+<li>Requires a Maven project to be executed.</li>
+        
+<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>process-sources</tt>.</li>
+      </ul>
+      
+<div class="section">
+<h3><a name="Optional_Parameters"></a>Optional Parameters</h3>
+        
+<table class="table table-striped" border="0">
+          
+<tr class="a">
+            
+<th>Name</th>
+            
+<th>Type</th>
+            
+<th>Since</th>
+            
+<th>Description</th>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#compilerCompliance">compilerCompliance</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Java compiler compliance version.<br /><b>Default value is</b>: <tt>1.5</tt>.<br /><b>User property is</b>: <tt>maven.compiler.source</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#compilerSource">compilerSource</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Java compiler source version.<br /><b>Default value is</b>: <tt>1.5</tt>.<br /><b>User property is</b>: <tt>maven.compiler.source</tt>.</td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#compilerTargetPlatform">compilerTargetPlatform</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Java compiler target version.<br /><b>Default value is</b>: <tt>1.5</tt>.<br /><b>User property is</b>: <tt>maven.compiler.target</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#configFile">configFile</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>File or classpath location of an Eclipse code formatter
+configuration xml file to use in formatting.<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#directories">directories</a></b></td>
+            
+<td><tt>File[]</tt></td>
+            
+<td><tt>0.4</tt></td>
+            
+<td>Location of the Java source files to format. Defaults to source
+main and test directories if not set. Deprecated in version 0.3.
+Reintroduced in 0.4.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#encoding">encoding</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.3</tt></td>
+            
+<td>The file encoding used to read and write source files. When not
+specified and sourceEncoding also not set, default is platform file
+encoding.<br /><b>Default value is</b>: <tt>${project.build.sourceEncoding}</tt>.<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#excludes">excludes</a></b></td>
+            
+<td><tt>String[]</tt></td>
+            
+<td><tt>0.3</tt></td>
+            
+<td>List of fileset patterns for Java source locations to exclude from
+formatting. Patterns are relative to the project source and test
+source directories. When not specified, there is no default
+exclude.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#includes">includes</a></b></td>
+            
+<td><tt>String[]</tt></td>
+            
+<td><tt>0.3</tt></td>
+            
+<td>List of fileset patterns for Java source locations to include in
+formatting. Patterns are relative to the project source and test
+source directories. When not specified, the default include is
+<tt>**/*.java</tt><br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#lineEnding">lineEnding</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.2.0</tt></td>
+            
+<td>Sets the line-ending of files after formatting. Valid values are: 
+
+<ul>
+
+<li><b>&quot;AUTO&quot;</b> - Use line endings of current system</li>
+
+<li><b>&quot;KEEP&quot;</b> - Preserve line endings of files, default to AUTO
+if ambiguous</li>
+
+<li><b>&quot;LF&quot;</b> - Use Unix and Mac style line endings</li>
+
+<li><b>&quot;CRLF&quot;</b> - Use DOS and Windows style line endings</li>
+
+<li><b>&quot;CR&quot;</b> - Use early Mac style line endings</li>
+</ul><br /><b>Default value is</b>: <tt>AUTO</tt>.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#overrideConfigCompilerVersion">overrideConfigCompilerVersion</a></b></td>
+            
+<td><tt>Boolean</tt></td>
+            
+<td><tt>0.2.0</tt></td>
+            
+<td>Sets whether compilerSource, compilerCompliance, and
+compilerTargetPlatform values are used instead of those defined in
+the configFile.<br /><b>Default value is</b>: <tt>false</tt>.<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#skipFormatting">skipFormatting</a></b></td>
+            
+<td><tt>Boolean</tt></td>
+            
+<td><tt>0.5</tt></td>
+            
+<td>Whether the formatting is skipped.<br /><b>Default value is</b>: <tt>false</tt>.<br /><b>User property is</b>: <tt>formatter.skip</tt>.</td>
+          </tr>
+        </table>
+      </div>
+      
+<div class="section">
+<h3><a name="Parameter_Details"></a>Parameter Details</h3>
+        
+<p><b><a name="compilerCompliance">compilerCompliance</a>:</b></p>
+        
+<div>Java compiler compliance version.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>maven.compiler.source</tt></li>
+          
+<li><b>Default</b>: <tt>1.5</tt></li>
+        </ul><hr />
+<p><b><a name="compilerSource">compilerSource</a>:</b></p>
+        
+<div>Java compiler source version.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>maven.compiler.source</tt></li>
+          
+<li><b>Default</b>: <tt>1.5</tt></li>
+        </ul><hr />
+<p><b><a name="compilerTargetPlatform">compilerTargetPlatform</a>:</b></p>
+        
+<div>Java compiler target version.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>maven.compiler.target</tt></li>
+          
+<li><b>Default</b>: <tt>1.5</tt></li>
+        </ul><hr />
+<p><b><a name="configFile">configFile</a>:</b></p>
+        
+<div>File or classpath location of an Eclipse code formatter
+configuration xml file to use in formatting.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr />
+<p><b><a name="directories">directories</a>:</b></p>
+        
+<div>Location of the Java source files to format. Defaults to source
+main and test directories if not set. Deprecated in version 0.3.
+Reintroduced in 0.4.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.io.File[]</tt></li>
+          
+<li><b>Since</b>: <tt>0.4</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr />
+<p><b><a name="encoding">encoding</a>:</b></p>
+        
+<div>The file encoding used to read and write source files. When not
+specified and sourceEncoding also not set, default is platform file
+encoding.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.3</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>${project.build.sourceEncoding}</tt></li>
+        </ul><hr />
+<p><b><a name="excludes">excludes</a>:</b></p>
+        
+<div>List of fileset patterns for Java source locations to exclude from
+formatting. Patterns are relative to the project source and test
+source directories. When not specified, there is no default
+exclude.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String[]</tt></li>
+          
+<li><b>Since</b>: <tt>0.3</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr />
+<p><b><a name="includes">includes</a>:</b></p>
+        
+<div>List of fileset patterns for Java source locations to include in
+formatting. Patterns are relative to the project source and test
+source directories. When not specified, the default include is
+<tt>**/*.java</tt></div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String[]</tt></li>
+          
+<li><b>Since</b>: <tt>0.3</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr />
+<p><b><a name="lineEnding">lineEnding</a>:</b></p>
+        
+<div>Sets the line-ending of files after formatting. Valid values are: 
+
+<ul>
+
+<li><b>&quot;AUTO&quot;</b> - Use line endings of current system</li>
+
+<li><b>&quot;KEEP&quot;</b> - Preserve line endings of files, default to AUTO
+if ambiguous</li>
+
+<li><b>&quot;LF&quot;</b> - Use Unix and Mac style line endings</li>
+
+<li><b>&quot;CRLF&quot;</b> - Use DOS and Windows style line endings</li>
+
+<li><b>&quot;CR&quot;</b> - Use early Mac style line endings</li>
+</ul></div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>AUTO</tt></li>
+        </ul><hr />
+<p><b><a name="overrideConfigCompilerVersion">overrideConfigCompilerVersion</a>:</b></p>
+        
+<div>Sets whether compilerSource, compilerCompliance, and
+compilerTargetPlatform values are used instead of those defined in
+the configFile.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.Boolean</tt></li>
+          
+<li><b>Since</b>: <tt>0.2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>false</tt></li>
+        </ul><hr />
+<p><b><a name="skipFormatting">skipFormatting</a>:</b></p>
+        
+<div>Whether the formatting is skipped.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.Boolean</tt></li>
+          
+<li><b>Since</b>: <tt>0.5</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>formatter.skip</tt></li>
+          
+<li><b>Default</b>: <tt>false</tt></li>
+        </ul>
+      </div>
+    </div>
+  
+
                   </div>
             </div>
           </div>

@@ -7,11 +7,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Matt Blanchette" />
-    <meta name="Date-Creation-yyyymmdd" content="20100923" />
     <meta name="Date-Revision-yyyymmdd" content="20150604" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>formatter-maven-plugin &#x2013; Introduction</title>
+    <title>formatter-maven-plugin &#x2013; Surefire Report</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.4.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -192,10 +190,12 @@
         Project Home</a>
             </li>
                 
-      <li class="active">
+      <li>
   
-            <a href="#"><span class="none"></span>Introduction</a>
-          </li>
+                          <a href="index.html" title="Introduction">
+          <span class="none"></span>
+        Introduction</a>
+            </li>
                 
       <li>
   
@@ -254,111 +254,83 @@
         Multimodule</a>
             </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                        
       <li>
   
                           <a href="project-info.html" title="Project Information">
-          <span class="icon-chevron-down"></span>
+          <span class="icon-chevron-right"></span>
         Project Information</a>
+                  </li>
+                                                                                                                                                                                                                            
+      <li>
+  
+                          <a href="project-reports.html" title="Project Reports">
+          <span class="icon-chevron-down"></span>
+        Project Reports</a>
                     <ul class="nav nav-list">
                     
       <li>
   
-                          <a href="integration.html" title="Continuous Integration">
+                          <a href="plugin-info.html" title="Plugin Documentation">
           <span class="none"></span>
-        Continuous Integration</a>
+        Plugin Documentation</a>
             </li>
                     
       <li>
   
-                          <a href="dependencies.html" title="Dependencies">
+                          <a href="testapidocs/index.html" title="Test JavaDocs">
           <span class="none"></span>
-        Dependencies</a>
+        Test JavaDocs</a>
             </li>
                     
       <li>
   
-                          <a href="dependency-info.html" title="Dependency Information">
+                          <a href="apidocs/index.html" title="JavaDocs">
           <span class="none"></span>
-        Dependency Information</a>
+        JavaDocs</a>
             </li>
                     
       <li>
   
-                          <a href="dependency-management.html" title="Dependency Management">
+                          <a href="xref/index.html" title="Source Xref">
           <span class="none"></span>
-        Dependency Management</a>
+        Source Xref</a>
             </li>
                     
       <li>
   
-                          <a href="distribution-management.html" title="Distribution Management">
+                          <a href="xref-test/index.html" title="Test Source Xref">
           <span class="none"></span>
-        Distribution Management</a>
+        Test Source Xref</a>
             </li>
                     
       <li class="active">
   
-            <a href="#"><span class="none"></span>About</a>
+            <a href="#"><span class="none"></span>Surefire Report</a>
           </li>
                     
       <li>
   
-                          <a href="issue-tracking.html" title="Issue Tracking">
+                          <a href="dependency-updates-report.html" title="Dependency Updates Report">
           <span class="none"></span>
-        Issue Tracking</a>
+        Dependency Updates Report</a>
             </li>
                     
       <li>
   
-                          <a href="license.html" title="Project License">
+                          <a href="plugin-updates-report.html" title="Plugin Updates Report">
           <span class="none"></span>
-        Project License</a>
+        Plugin Updates Report</a>
             </li>
                     
       <li>
   
-                          <a href="plugin-management.html" title="Plugin Management">
+                          <a href="property-updates-report.html" title="Property Updates Report">
           <span class="none"></span>
-        Plugin Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugins.html" title="Project Plugins">
-          <span class="none"></span>
-        Project Plugins</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="team-list.html" title="Project Team">
-          <span class="none"></span>
-        Project Team</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="source-repository.html" title="Source Repository">
-          <span class="none"></span>
-        Source Repository</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="project-summary.html" title="Project Summary">
-          <span class="none"></span>
-        Project Summary</a>
+        Property Updates Report</a>
             </li>
               </ul>
         </li>
-                                                                                                                                                                                                                  
-      <li>
-  
-                          <a href="project-reports.html" title="Project Reports">
-          <span class="icon-chevron-right"></span>
-        Project Reports</a>
-                  </li>
             </ul>
                 
                     
@@ -380,12 +352,140 @@
                 
         <div id="bodyColumn"  class="span10" >
                                   
-            <div class="section">
-<h2><a name="Introduction"></a>Introduction</h2>
-<p>Plugin for formatting Java source code<br />This plugin allows formatting java source code using the Eclipse code formatter.</p>
-<p>For a description on how to begin using the plugin, see the <a href="./usage.html">usage</a> section. </p>
-<p>For a description of the plugin's goals and configuration parameters, see the <a href="./plugin-info.html">goals</a> section. </p>
-<p>For more example configurations, check out the <a href="./examples.html">examples</a> section.</p></div>
+            <script type="text/javascript">
+//<![CDATA[
+function toggleDisplay(elementId) {
+ var elm = document.getElementById(elementId + 'error');
+ if (elm && typeof elm.style != "undefined") {
+ if (elm.style.display == "none") {
+ elm.style.display = "";
+ document.getElementById(elementId + 'off').style.display = "none";
+ document.getElementById(elementId + 'on').style.display = "inline";
+ } else if (elm.style.display == "") { elm.style.display = "none";
+ document.getElementById(elementId + 'off').style.display = "inline";
+ document.getElementById(elementId + 'on').style.display = "none";
+ } 
+ } 
+ }
+//]]>
+</script>
+<div class="section">
+<h2><a name="Surefire_Report"></a>Surefire Report</h2></div>
+<div class="section">
+<h2><a name="Summary"></a>Summary</h2><a name="Summary"></a>
+<p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
+<table border="1" class="table table-striped">
+<tr class="a">
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.169</td></tr></table><br />
+<p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></div>
+<div class="section">
+<h2><a name="Package_List"></a>Package List</h2><a name="Package_List"></a>
+<p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
+<table border="1" class="table table-striped">
+<tr class="a">
+<th>Package</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#com.relativitas.maven.plugins.formatter">com.relativitas.maven.plugins.formatter</a></td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.169</td></tr></table><br />
+<p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p>
+<div class="section">
+<h3><a name="com.relativitas.maven.plugins.formatter"></a>com.relativitas.maven.plugins.formatter</h3><a name="com.relativitas.maven.plugins.formatter"></a>
+<table border="1" class="table table-striped">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#com.relativitas.maven.plugins.formatterConfigReaderTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#com.relativitas.maven.plugins.formatterConfigReaderTest">ConfigReaderTest</a></td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.142</td></tr>
+<tr class="a">
+<td><a href="#com.relativitas.maven.plugins.formatterFormatterMojoTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#com.relativitas.maven.plugins.formatterFormatterMojoTest">FormatterMojoTest</a></td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.027</td></tr></table></div><br /></div>
+<div class="section">
+<h2><a name="Test_Cases"></a>Test Cases</h2><a name="Test_Cases"></a>
+<p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p>
+<div class="section">
+<h3><a name="ConfigReaderTest"></a>ConfigReaderTest</h3><a name="com.relativitas.maven.plugins.formatterConfigReaderTest"></a>
+<table border="1" class="table table-striped">
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_read_invalid_config</td>
+<td>0.132</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_read_invalid_config2</td>
+<td>0</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_config</td>
+<td>0.01</td></tr></table></div>
+<div class="section">
+<h3><a name="FormatterMojoTest"></a>FormatterMojoTest</h3><a name="com.relativitas.maven.plugins.formatterFormatterMojoTest"></a>
+<table border="1" class="table table-striped">
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_line_endings_crlf</td>
+<td>0.027</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_line_endings_mixed_lf</td>
+<td>0</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_line_endings_none_auto</td>
+<td>0</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_line_endings_cr</td>
+<td>0</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_line_endings_lf</td>
+<td>0</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>test_success_read_line_endings_mixed_auto</td>
+<td>0</td></tr></table></div><br /></div>
                   </div>
             </div>
           </div>

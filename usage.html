@@ -8,10 +8,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Matt Blanchette" />
-    <meta name="Date-Creation-yyyymmdd" content="20100923" />
+    <meta name="Date-Creation-yyyymmdd" content="20100924" />
     <meta name="Date-Revision-yyyymmdd" content="20150604" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>formatter-maven-plugin &#x2013; Introduction</title>
+    <title>formatter-maven-plugin &#x2013; Plugin Usage</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.4.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -192,10 +192,12 @@
         Project Home</a>
             </li>
                 
-      <li class="active">
+      <li>
   
-            <a href="#"><span class="none"></span>Introduction</a>
-          </li>
+                          <a href="index.html" title="Introduction">
+          <span class="none"></span>
+        Introduction</a>
+            </li>
                 
       <li>
   
@@ -204,12 +206,10 @@
         Goals</a>
             </li>
                 
-      <li>
+      <li class="active">
   
-                          <a href="usage.html" title="Usage">
-          <span class="none"></span>
-        Usage</a>
-            </li>
+            <a href="#"><span class="none"></span>Usage</a>
+          </li>
                               <li class="nav-header">Examples</li>
                               
       <li>
@@ -254,104 +254,13 @@
         Multimodule</a>
             </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                        
       <li>
   
                           <a href="project-info.html" title="Project Information">
-          <span class="icon-chevron-down"></span>
+          <span class="icon-chevron-right"></span>
         Project Information</a>
-                    <ul class="nav nav-list">
-                    
-      <li>
-  
-                          <a href="integration.html" title="Continuous Integration">
-          <span class="none"></span>
-        Continuous Integration</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependencies.html" title="Dependencies">
-          <span class="none"></span>
-        Dependencies</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-info.html" title="Dependency Information">
-          <span class="none"></span>
-        Dependency Information</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-management.html" title="Dependency Management">
-          <span class="none"></span>
-        Dependency Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="distribution-management.html" title="Distribution Management">
-          <span class="none"></span>
-        Distribution Management</a>
-            </li>
-                    
-      <li class="active">
-  
-            <a href="#"><span class="none"></span>About</a>
-          </li>
-                    
-      <li>
-  
-                          <a href="issue-tracking.html" title="Issue Tracking">
-          <span class="none"></span>
-        Issue Tracking</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="license.html" title="Project License">
-          <span class="none"></span>
-        Project License</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugin-management.html" title="Plugin Management">
-          <span class="none"></span>
-        Plugin Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugins.html" title="Project Plugins">
-          <span class="none"></span>
-        Project Plugins</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="team-list.html" title="Project Team">
-          <span class="none"></span>
-        Project Team</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="source-repository.html" title="Source Repository">
-          <span class="none"></span>
-        Source Repository</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="project-summary.html" title="Project Summary">
-          <span class="none"></span>
-        Project Summary</a>
-            </li>
-              </ul>
-        </li>
+                  </li>
                                                                                                                                                                                                                   
       <li>
   
@@ -381,11 +290,49 @@
         <div id="bodyColumn"  class="span10" >
                                   
             <div class="section">
-<h2><a name="Introduction"></a>Introduction</h2>
-<p>Plugin for formatting Java source code<br />This plugin allows formatting java source code using the Eclipse code formatter.</p>
-<p>For a description on how to begin using the plugin, see the <a href="./usage.html">usage</a> section. </p>
-<p>For a description of the plugin's goals and configuration parameters, see the <a href="./plugin-info.html">goals</a> section. </p>
-<p>For more example configurations, check out the <a href="./examples.html">examples</a> section.</p></div>
+<h2><a name="Plugin_Usage"></a>Plugin Usage</h2>
+<p>The following instructions describe how to use the plugin in its simplest configuration. The following pom section will be able to get you started using the plugin. </p>
+<div class="source"><pre class="prettyprint">&lt;project ...&gt;
+    ...
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;com.googlecode.maven-java-formatter-plugin&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-java-formatter-plugin&lt;/artifactId&gt;
+        &lt;version&gt;0.5.2&lt;/version&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+    ...
+&lt;/project&gt;
+</pre></div>
+<p>With this configuration, java source files in <tt>src/main/java</tt> and <tt>src/test/java</tt> of the project will be formatted using the default compiler version (1.5) and line ending of the current system.</p>
+<p>Run the plugin with the <tt>format</tt> goal.</p>
+<div class="source"><pre class="prettyprint">mvn java-formatter:format
+</pre></div>
+<p>In order to format the source files during the build, include the <tt>format</tt> goal in the plugin executions.</p>
+<div class="source"><pre class="prettyprint">&lt;project ...&gt;
+    ...
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;com.googlecode.maven-java-formatter-plugin&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-java-formatter-plugin&lt;/artifactId&gt;
+        &lt;version&gt;0.5.2&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;format&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+    ...
+&lt;/project&gt;
+</pre></div>
+<p>The source files will be formatted prior to compilation in the build lifecycle.</p>
+<p>Run the plugin during the build with the <tt>compile</tt> goal.</p>
+<div class="source"><pre class="prettyprint">mvn compile
+</pre></div>
+<p>If you want to override the default plugin behavior, check out <a href="./examples.html">custom configurations</a> and <a href="./plugin-info.html">how to configure</a> it.</p></div>
                   </div>
             </div>
           </div>

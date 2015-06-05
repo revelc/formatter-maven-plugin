@@ -7,11 +7,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Matt Blanchette" />
-    <meta name="Date-Creation-yyyymmdd" content="20100923" />
     <meta name="Date-Revision-yyyymmdd" content="20150604" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>formatter-maven-plugin &#x2013; Introduction</title>
+    <title>formatter-maven-plugin &#x2013; Dependency Information</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.4.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -192,10 +190,12 @@
         Project Home</a>
             </li>
                 
-      <li class="active">
+      <li>
   
-            <a href="#"><span class="none"></span>Introduction</a>
-          </li>
+                          <a href="index.html" title="Introduction">
+          <span class="none"></span>
+        Introduction</a>
+            </li>
                 
       <li>
   
@@ -276,12 +276,10 @@
         Dependencies</a>
             </li>
                     
-      <li>
+      <li class="active">
   
-                          <a href="dependency-info.html" title="Dependency Information">
-          <span class="none"></span>
-        Dependency Information</a>
-            </li>
+            <a href="#"><span class="none"></span>Dependency Information</a>
+          </li>
                     
       <li>
   
@@ -297,10 +295,12 @@
         Distribution Management</a>
             </li>
                     
-      <li class="active">
+      <li>
   
-            <a href="#"><span class="none"></span>About</a>
-          </li>
+                          <a href="index.html" title="About">
+          <span class="none"></span>
+        About</a>
+            </li>
                     
       <li>
   
@@ -381,11 +381,37 @@
         <div id="bodyColumn"  class="span10" >
                                   
             <div class="section">
-<h2><a name="Introduction"></a>Introduction</h2>
-<p>Plugin for formatting Java source code<br />This plugin allows formatting java source code using the Eclipse code formatter.</p>
-<p>For a description on how to begin using the plugin, see the <a href="./usage.html">usage</a> section. </p>
-<p>For a description of the plugin's goals and configuration parameters, see the <a href="./plugin-info.html">goals</a> section. </p>
-<p>For more example configurations, check out the <a href="./examples.html">examples</a> section.</p></div>
+<h2><a name="Dependency_Information"></a>Dependency Information</h2><a name="Dependency_Information"></a>
+<div class="section">
+<h3><a name="Apache_Maven"></a>Apache Maven</h3><a name="Apache_Maven"></a>
+<div class="source"><pre class="prettyprint">&lt;dependency&gt;
+  &lt;groupId&gt;net.revelc.code&lt;/groupId&gt;
+  &lt;artifactId&gt;formatter-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;0.5.2&lt;/version&gt;
+  &lt;type&gt;maven-plugin&lt;/type&gt;
+&lt;/dependency&gt;</pre></div></div>
+<div class="section">
+<h3><a name="Apache_Buildr"></a>Apache Buildr</h3><a name="Apache_Buildr"></a>
+<div class="source"><pre class="prettyprint">'net.revelc.code:formatter-maven-plugin:maven-plugin:0.5.2'</pre></div></div>
+<div class="section">
+<h3><a name="Apache_Ivy"></a>Apache Ivy</h3><a name="Apache_Ivy"></a>
+<div class="source"><pre class="prettyprint">&lt;dependency org=&quot;net.revelc.code&quot; name=&quot;formatter-maven-plugin&quot; rev=&quot;0.5.2&quot;&gt;
+  &lt;artifact name=&quot;formatter-maven-plugin&quot; type=&quot;maven-plugin&quot; /&gt;
+&lt;/dependency&gt;</pre></div></div>
+<div class="section">
+<h3><a name="Groovy_Grape"></a>Groovy Grape</h3><a name="Groovy_Grape"></a>
+<div class="source"><pre class="prettyprint">@Grapes(
+@Grab(group='net.revelc.code', module='formatter-maven-plugin', version='0.5.2')
+)</pre></div></div>
+<div class="section">
+<h3><a name="Grails"></a>Grails</h3><a name="Grails"></a>
+<div class="source"><pre class="prettyprint">compile 'net.revelc.code:formatter-maven-plugin:0.5.2'</pre></div></div>
+<div class="section">
+<h3><a name="Leiningen"></a>Leiningen</h3><a name="Leiningen"></a>
+<div class="source"><pre class="prettyprint">[net.revelc.code/formatter-maven-plugin &quot;0.5.2&quot;]</pre></div></div>
+<div class="section">
+<h3><a name="SBT"></a>SBT</h3><a name="SBT"></a>
+<div class="source"><pre class="prettyprint">libraryDependencies += &quot;net.revelc.code&quot; % &quot;formatter-maven-plugin&quot; % &quot;0.5.2&quot;</pre></div></div></div>
                   </div>
             </div>
           </div>
