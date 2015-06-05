@@ -16,7 +16,7 @@
 
     <groupId>net.revelc.code</groupId>
     <artifactId>formatter-maven-plugin</artifactId>
-    <version>0.5.2-SNAPSHOT</version>
+    <version>0.5.2</version>
     <packaging>maven-plugin</packaging>
     <name>formatter-maven-plugin</name>
 
@@ -45,7 +45,7 @@
     <scm>
         <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
-        <tag>formatter-maven-plugin-0.5</tag>
+        <tag>formatter-maven-plugin-0.5.2</tag>
         <url>https://github.com/revelc/formatter-maven-plugin</url>
     </scm>
 
