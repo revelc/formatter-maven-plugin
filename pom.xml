@@ -307,20 +307,6 @@
                     </dependencies>
                 </plugin>
                 <plugin>
-                    <groupId>com.github.github</groupId>
-                    <artifactId>site-maven-plugin</artifactId>
-                    <version>0.12</version>
-                    <dependencies>
-                        <!-- Site Maven Plugin is referencing incorrect version 
-                            so fixed here -->
-                        <dependency>
-                            <groupId>org.eclipse.mylyn.github</groupId>
-                            <artifactId>org.eclipse.egit.github.core</artifactId>
-                            <version>2.1.5</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.18.1</version>
