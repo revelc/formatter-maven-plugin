@@ -19,8 +19,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <directories>
@@ -37,8 +37,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <includes>
@@ -60,8 +60,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <compilerSource>1.7</compilerSource>
@@ -89,8 +89,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <lineEnding>CRLF</lineEnding>
@@ -109,8 +109,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <encoding>UTF-8</encoding>
@@ -122,8 +122,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
 </plugin>
 ...
@@ -171,8 +171,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <configFile>\${project.basedir}/eclipse-formatter-config.xml</configFile>
@@ -188,8 +188,8 @@ Examples
 
 +---+
 <plugin>
-  <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-  <artifactId>maven-java-formatter-plugin</artifactId>
+  <groupId>net.revelc.code</groupId>
+  <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
     <configFile>\${project.basedir}/eclipse-formatter-config.xml</configFile>
@@ -254,8 +254,8 @@ multiproject
   <build>
     <plugins>
       <plugin>
-        <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-        <artifactId>maven-java-formatter-plugin</artifactId>
+        <groupId>net.revelc.code</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
           <execution>
