@@ -13,7 +13,7 @@
 		<maven>3.0.5</maven>
 	</prerequisites>
 
-	<groupId>com.marvinformatics.formatter</groupId>
+	<groupId>net.revelc.code.formatter</groupId>
 	<artifactId>parent</artifactId>
 	<version>1.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -130,7 +130,7 @@
 						</goals>
 						<configuration>
 							<includes>
-								<include>**/marvinformatics/*</include>
+								<include>**/revelc/*</include>
 							</includes>
 							<destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
 							<propertyName>utCoverage</propertyName>
@@ -366,7 +366,7 @@
 								</fileSet>
 							</fileSets>
 							<includes>
-								<include>**/marvinformatics/**</include>
+								<include>**/revelc/**</include>
 							</includes>
 							<destFile>${project.build.directory}/jacoco.exec</destFile>
 						</configuration>

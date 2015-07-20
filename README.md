@@ -2,7 +2,7 @@
 ======================
 [![Build Status](https://api.shippable.com/projects/54cfaf705ab6cc13528a8b4c/badge?branchName=master)](https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest)  
 [![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/velo/maven-formatter-plugin?branch=master)  
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/) 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/) 
 [![Issues](https://img.shields.io/github/issues/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/issues) 
 [![Forks](https://img.shields.io/github/forks/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/network) 
 [![Stars](https://img.shields.io/github/stars/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/stargazers)
