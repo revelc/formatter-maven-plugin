@@ -155,7 +155,6 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		try {
 			eval(prefs, "\t", sb);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -166,7 +165,6 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 			fw.close();
 			f.getAbsolutePath();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -186,7 +184,6 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 	}
 
 	private Map<? extends String, ? extends String> readFromCfg() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
