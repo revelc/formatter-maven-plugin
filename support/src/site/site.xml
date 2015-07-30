@@ -1,7 +1,7 @@
 <project>
 	<body>
 		<menu name="Overview">
-			<item name="Project Home" href="http://code.google.com/p/maven-java-formatter-plugin/"/>
+			<item name="Project Home" href="https://github.com/revelc/formatter-maven-plugin/"/>
 			<item name="Introduction" href="index.html"/>
 			<item name="Goals" href="plugin-info.html"/>
 			<item name="Usage" href="usage.html"/>
