@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -47,10 +48,7 @@
     <ciManagement>
         <system>travis</system>
         <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
-        <!-- Do we want this?  Can we have two?
-        <system>shippable</system>
-        <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url>
-        -->
+        <!-- Do we want this? Can we have two? <system>shippable</system> <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url> -->
     </ciManagement>
 
     <scm>
@@ -129,6 +127,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.parentdir>.</project.parentdir>
     </properties>
 
     <reporting>
@@ -291,7 +290,7 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>2.11</version>
                     <configuration>
-                        <header>copyright.txt</header>
+                        <header>${project.parentdir}/copyright.txt</header>
                         <excludes>
                             <exclude>target/**</exclude>
                             <exclude>**/.gitignore</exclude>
@@ -335,7 +334,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.4.201502262128</version>
+                <version>0.7.5.201505241946</version>
                 <executions>
                     <execution>
                         <id>pre-unit-test</id>
@@ -520,8 +519,8 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <!--This plugin's configuration is used to store 
-                            Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It 
+                            has no influence on the Maven build itself. -->
                         <plugin>
                             <groupId>org.eclipse.m2e</groupId>
                             <artifactId>lifecycle-mapping</artifactId>
@@ -550,6 +549,19 @@
                                                 <versionRange>[1.4,)</versionRange>
                                                 <goals>
                                                     <goal>enforce</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.jacoco</groupId>
+                                                <artifactId>jacoco-maven-plugin</artifactId>
+                                                <versionRange>[0.7.5.201505241946,)</versionRange>
+                                                <goals>
+                                                    <goal>prepare-agent</goal>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
