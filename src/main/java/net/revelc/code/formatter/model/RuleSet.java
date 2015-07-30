@@ -14,14 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.relativitas.maven.plugins.formatter;
+package net.revelc.code.formatter.model;
 
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.digester3.RuleSetBase;
-
-import com.relativitas.maven.plugins.formatter.xml.Profile;
-import com.relativitas.maven.plugins.formatter.xml.Profiles;
-import com.relativitas.maven.plugins.formatter.xml.Setting;
 
 /**
  * An Apache Commons Digester RuleSet for configuring a digester to parse the

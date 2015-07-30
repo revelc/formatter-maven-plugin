@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.relativitas.maven.plugins.formatter.xml;
+package net.revelc.code.formatter.model;
 
 /**
  * A class representing the setting XML element in the Eclipse formatter config

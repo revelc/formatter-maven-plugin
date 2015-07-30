@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.relativitas.maven.plugins.formatter;
+package net.revelc.code.formatter;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -64,6 +64,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.xml.sax.SAXException;
+
+import net.revelc.code.formatter.model.ConfigReadException;
+import net.revelc.code.formatter.model.ConfigReader;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.relativitas.maven.plugins.formatter;
+package net.revelc.code.formatter.model;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +23,6 @@ import java.util.Map;
 
 import org.apache.commons.digester3.Digester;
 import org.xml.sax.SAXException;
-
-import com.relativitas.maven.plugins.formatter.xml.Profiles;
 
 /**
  * This class reads a config file for Eclipse code formatter.

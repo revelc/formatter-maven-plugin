@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.relativitas.maven.plugins.formatter;
+package net.revelc.code.formatter.model;
 
 import java.io.InputStream;
 import java.util.Map;
