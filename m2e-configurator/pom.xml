@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.revelc.code.formatter</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.6.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>net.revelc.code.formatter.parent</artifactId>
+	<packaging>pom</packaging>
+	<name>M2E formatter Connector</name>
+
+	<repositories>
+		<repository>
+			<id>m2e-tests</id>
+			<url>https://repository.sonatype.org/content/sites/forge-sites/m2e/1.1.0/N/1.1.0.20120622-0806/</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>net.revelc.code.formatter</module>
+		<module>net.revelc.code.formatter.feature</module>
+		<module>net.revelc.code.formatter.site</module>
+		<!-- <module>net.revelc.code.formatter.tests</module> -->
+	</modules>
+
+<version>1.6.0-SNAPSHOT</version>
+</project>
