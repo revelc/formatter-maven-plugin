@@ -1,0 +1,13 @@
+decrypt:
+  settings.xml: "repo/.rultor/settings.xml.asc"
+  pubring.gpg: "repo/.rultor/pubring.gpg.asc"
+  secring.gpg: "repo/.rultor/secring.gpg.asc"
+
+merge:
+  script:
+    - mvn install -B -T10
+
+release:
+  script:
+    - mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${tag}
+    - mvn clean deploy -Psonatype-oss-release --settings /home/r/settings.xml -Dgpg.homedir=/home/r/
