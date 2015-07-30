@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.revelc.code</groupId>
-        <artifactId>formatter-parent</artifactId>
-        <version>0.5.3-SNAPSHOT</version>
+        <groupId>net.revelc.code.formatter</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>net.revelc.code</groupId>
+    <groupId>net.revelc.code.formatter</groupId>
     <artifactId>formatter-maven-plugin</artifactId>
-    <version>0.5.3-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>formatter-maven-plugin</name>
 
@@ -25,28 +25,33 @@
         <tag>HEAD</tag>
     </scm>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>org.eclipse.jdt.core</artifactId>
-                <version>3.10.0.v20140604-1726</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.text</groupId>
-                <artifactId>org.eclipse.text</artifactId>
-                <version>3.5.101</version>
-                <scope>compile</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
+        <!-- Ours -->
+        <dependency>
+            <groupId>net.revelc.code.formatter</groupId>
+            <artifactId>support</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.revelc.code.formatter</groupId>
+            <artifactId>jdt-core</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.revelc.code.formatter</groupId>
+            <artifactId>jsdt-core</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Third Parties -->
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>3.2.5</version> <!-- 3.3.1 required jdk7 -->
+            <version>3.3.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
@@ -55,17 +60,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>org.eclipse.jdt.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.text</groupId>
-            <artifactId>org.eclipse.text</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-digester3</artifactId>
             <version>3.2</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -79,19 +77,28 @@
             <version>1.10</version>
         </dependency>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-io</artifactId>
             <version>2.6</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-resources</artifactId>
             <version>1.0.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>3.0.22</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -119,3 +126,4 @@
     </build>
 
 </project>
+
