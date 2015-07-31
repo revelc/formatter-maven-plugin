@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
+        <groupId>io.takari.tycho</groupId>
+        <artifactId>tycho-support</artifactId>
+        <version>1.1.0</version>
         <relativePath />
     </parent>
 
     <prerequisites>
-        <maven>3.0.5</maven>
+        <maven>3.1.1</maven>
     </prerequisites>
 
-    <groupId>net.revelc.code</groupId>
-    <artifactId>formatter-maven-plugin</artifactId>
-    <version>0.5.3-SNAPSHOT</version>
-    <packaging>maven-plugin</packaging>
-    <name>formatter-maven-plugin</name>
+    <groupId>net.revelc.code.formatter</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.6.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>parent</name>
 
-    <description>Plugin for formatting Java source code</description>
-    <url>http://code.revelc.net/formatter-maven-plugin</url>
+    <description>Plugin for formatting source code</description>
+    <url>https://github.com/revelc/formatter-maven-plugin/</url>
     <inceptionYear>2010</inceptionYear>
+
+    <modules>
+        <module>formatters</module>
+        <module>maven-plugin</module>
+        <module>m2e-configurator</module>
+        <module>support</module>
+    </modules>
 
     <licenses>
         <license>
@@ -40,13 +48,14 @@
     <ciManagement>
         <system>travis</system>
         <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
+        <!-- Do we want this? Can we have two? <system>shippable</system> <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url> -->
     </ciManagement>
 
     <scm>
         <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
-        <tag>formatter-maven-plugin-0.5</tag>
         <url>https://github.com/revelc/formatter-maven-plugin</url>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
@@ -59,6 +68,11 @@
             <id>matt.blanchette</id>
             <name>Matt Blanchette</name>
             <email>matt.blanchette@gmail.com</email>
+        </developer>
+        <developer>
+            <id>velo</id>
+            <name>Marvin Froeder</name>
+            <email>velo.br@gmail.com</email>
         </developer>
         <developer>
             <id>jlandis</id>
@@ -94,6 +108,11 @@
     </contributors>
 
     <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
         <site>
             <id>gh-pages</id>
             <name>Formatter Maven Plugin GitHub Pages</name>
@@ -102,83 +121,14 @@
     </distributionManagement>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <maven.min-version>3.0.5</maven.min-version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.min-version>3.1.1</maven.min-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.parentdir>.</project.parentdir>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>org.eclipse.jdt.core</artifactId>
-                <version>3.10.0.v20140604-1726</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.text</groupId>
-                <artifactId>org.eclipse.text</artifactId>
-                <version>3.5.101</version>
-                <scope>compile</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>3.2.5</version> <!-- 3.3.1 required jdk7 -->
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugin-tools</groupId>
-            <artifactId>maven-plugin-annotations</artifactId>
-            <version>3.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>org.eclipse.jdt.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.text</groupId>
-            <artifactId>org.eclipse.text</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-digester3</artifactId>
-            <version>3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-io</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-resources</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>3.0.22</version>
-        </dependency>
-    </dependencies>
 
     <reporting>
         <plugins>
@@ -226,20 +176,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.4</version>
-                    <executions>
-                        <execution>
-                            <id>mojo-descriptor</id>
-                            <goals>
-                                <goal>descriptor</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>help-goal</id>
-                            <goals>
-                                <goal>helpmojo</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -310,6 +246,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.18.1</version>
+                    <configuration>
+                        <argLine>${utCoverage}</argLine>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -351,7 +290,7 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>2.11</version>
                     <configuration>
-                        <header>copyright.txt</header>
+                        <header>${project.parentdir}/copyright.txt</header>
                         <excludes>
                             <exclude>target/**</exclude>
                             <exclude>**/.gitignore</exclude>
@@ -393,6 +332,37 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.5.201505241946</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/revelc/*</include>
+                            </includes>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <propertyName>utCoverage</propertyName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.5</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <executions>
@@ -407,9 +377,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <!-- NOTE: Due to Sonatype usage of version at unmanaged 
-                    level, it wins out so we must override here so we win out. -->
-                <version>1.4</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -438,6 +405,108 @@
 
     <profiles>
         <profile>
+            <id>sonatype-oss-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.2</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>coveralls</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.basedir}</directory>
+                        <includes>
+                            <include>**/target/classes/**/*.class</include>
+                        </includes>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <configuration>
+                            <scanForSources>true</scanForSources>
+                            <sourceDirectories>
+                                <sourceDirectory>${project.basedir}</sourceDirectory>
+                            </sourceDirectories>
+                            <jacocoReports>
+                                <report>${project.build.directory}/coverage-reports/jacoco.xml</report>
+                            </jacocoReports>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>**/*.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                            <includes>
+                                <include>**/revelc/**</include>
+                            </includes>
+                            <destFile>${project.build.directory}/jacoco.exec</destFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>eclipse</id>
             <activation>
                 <property>
@@ -447,8 +516,8 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <!--This plugin's configuration is used to store 
-                            Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It 
+                            has no influence on the Maven build itself. -->
                         <plugin>
                             <groupId>org.eclipse.m2e</groupId>
                             <artifactId>lifecycle-mapping</artifactId>
@@ -477,6 +546,19 @@
                                                 <versionRange>[1.4,)</versionRange>
                                                 <goals>
                                                     <goal>enforce</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.jacoco</groupId>
+                                                <artifactId>jacoco-maven-plugin</artifactId>
+                                                <versionRange>[0.7.5.201505241946,)</versionRange>
+                                                <goals>
+                                                    <goal>prepare-agent</goal>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
