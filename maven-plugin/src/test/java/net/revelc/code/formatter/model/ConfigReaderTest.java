@@ -23,9 +23,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import net.revelc.code.formatter.model.ConfigReadException;
-import net.revelc.code.formatter.model.ConfigReader;
-
 /**
  * Test class for {@link ConfigReader}.
  * 
@@ -48,9 +45,8 @@ public class ConfigReaderTest {
 		Assert.assertNotNull(config);
 		Assert.assertEquals(264, config.keySet().size());
 		// test get one of the entry in the file
-		Assert.assertEquals(
-				"true",
-				config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+		Assert.assertEquals("true", config
+				.get("org.eclipse.jdt.core.formatter.comment.format_html"));
 		in.close();
 	}
 

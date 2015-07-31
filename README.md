@@ -27,7 +27,7 @@ before using this plugin.
 ##How to use
 
 View the Maven site documentation for the latest release [here](http://code.revelc.net/formatter-maven-plugin/)
-http://code.revelc.net/formatter-maven-plugin/0.4/
+http://code.revelc.net/formatter-maven-plugin/
 
 ##Eclipse Compatibility
 
@@ -37,11 +37,15 @@ Plugin Version	| Eclipse Version
 0.1.0           |	3.3.0
 0.2.0 - 0.3.1   |	3.5.2
 0.4             |	3.8.1 
+0.5.2           |	4.4.1
 1.0.0           |	3.8.3
 1.1.0           |	3.8.3
 1.2.0           |	3.8.3
 1.3.0           |	3.8.3
 1.4.0           |	4.4.0 (luna)
 1.6.0.RC1       |	4.5.0.RC1 (mars)
+1.6.0.RC2       |	4.5.0.RC2 (mars)
+1.6.0.RC3       |	4.5.0.RC3 (mars)
+1.6.0.RC4       |	4.5.0.RC4 (mars)
 
 [1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/

@@ -16,8 +16,8 @@
  */
 package net.revelc.code.formatter.model;
 
-import org.apache.commons.digester.Digester;
-import org.apache.commons.digester.RuleSetBase;
+import org.apache.commons.digester3.Digester;
+import org.apache.commons.digester3.RuleSetBase;
 
 /**
  * An Apache Commons Digester RuleSet for configuring a digester to parse the
