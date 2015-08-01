@@ -16,8 +16,8 @@
  */
 package net.revelc.code.formatter.model;
 
-import org.apache.commons.digester.Digester;
-import org.apache.commons.digester.RuleSetBase;
+import org.apache.commons.digester3.Digester;
+import org.apache.commons.digester3.RuleSetBase;
 
 /**
  * An Apache Commons Digester RuleSet for configuring a digester to parse the
@@ -32,7 +32,7 @@ class RuleSet extends RuleSetBase {
 	 * Adds the rule instances.
 	 *
 	 * @param digester the digester
-	 * @see org.apache.commons.digester.RuleSetBase#addRuleInstances(org.apache.commons.digester.Digester)
+	 * @see org.apache.commons.digester3.RuleSetBase#addRuleInstances(org.apache.commons.digester.Digester)
 	 */
 	@Override
 	public void addRuleInstances(Digester digester) {
