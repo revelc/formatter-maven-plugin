@@ -40,7 +40,7 @@ public final class Template {
 	 * @return Formatted string
 	 */
 	public String format(String... args) {
-		return String.format(content, (Object[]) args);
+		return String.format(this.content, (Object[]) args);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public final class Template {
 	 * @return Formatted string
 	 */
 	public String formatWithLocale(Locale locale, String... args) {
-		return String.format(locale, content, (Object[]) args);
+		return String.format(locale, this.content, (Object[]) args);
 	}
 
 	/**

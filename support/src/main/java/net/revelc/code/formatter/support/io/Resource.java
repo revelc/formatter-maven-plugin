@@ -81,7 +81,7 @@ public abstract class Resource {
 	 * @return Resource path
 	 */
 	public final String getPath() {
-		return path;
+		return this.path;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public abstract class Resource {
 	 * @return Native path
 	 */
 	public final String getNativePath() {
-		return nativePath;
+		return this.nativePath;
 	}
 
 	/**

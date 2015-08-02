@@ -261,11 +261,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			} else { // Using defaults of source main and test dirs
 				if (this.sourceDirectory != null && this.sourceDirectory.exists()
 						&& this.sourceDirectory.isDirectory()) {
-				files.addAll(addCollectionFiles(sourceDirectory));
+				files.addAll(addCollectionFiles(this.sourceDirectory));
 				}
 				if (this.testSourceDirectory != null && this.testSourceDirectory.exists()
 						&& this.testSourceDirectory.isDirectory()) {
-				files.addAll(addCollectionFiles(testSourceDirectory));
+				files.addAll(addCollectionFiles(this.testSourceDirectory));
 				}
 			}
 		} catch (IOException e) {
@@ -490,7 +490,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	private String md5hash(String str) throws UnsupportedEncodingException {
-		return Hashing.md5().hashBytes(str.getBytes(encoding)).toString();
+		return Hashing.md5().hashBytes(str.getBytes(this.encoding)).toString();
 	}
 
 	/**
@@ -641,26 +641,26 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	@Override
   public String getCompilerSources() {
-		return compilerSource;
+		return this.compilerSource;
 	}
 
 	@Override
   public String getCompilerCompliance() {
-		return compilerCompliance;
+		return this.compilerCompliance;
 	}
 
 	@Override
   public String getCompilerCodegenTargetPlatform() {
-		return compilerTargetPlatform;
+		return this.compilerTargetPlatform;
 	}
 
 	@Override
   public File getTargetDirectory() {
-		return targetDirectory;
+		return this.targetDirectory;
 	}
 
 	@Override
   public Charset getEncoding() {
-		return Charset.forName(encoding);
+		return Charset.forName(this.encoding);
 	}
 }

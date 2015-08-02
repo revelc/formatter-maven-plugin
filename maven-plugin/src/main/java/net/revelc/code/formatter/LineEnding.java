@@ -35,7 +35,7 @@ public enum LineEnding {
 	}
 
 	public String getChars() {
-		return chars;
+		return this.chars;
 	}
 
 	/**
