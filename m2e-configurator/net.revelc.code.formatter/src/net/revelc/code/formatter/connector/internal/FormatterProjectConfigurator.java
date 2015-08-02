@@ -106,9 +106,8 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 	private Xpp3Dom[] parseConfigurationFile(
 			ProjectConfigurationRequest request, IProgressMonitor monitor)
 			throws CoreException {
-		InputStream content = readConfigFile(Formatter.JAVA, request, monitor);
 		Xpp3Dom dom;
-		try {
+		try (InputStream content = readConfigFile(Formatter.JAVA, request, monitor)) {
 			dom = Xpp3DomBuilder.build(content, "UTF-8");
 		} catch (XmlPullParserException e) {
 			throw new CoreException(new Status(Status.ERROR,
@@ -158,11 +157,9 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 			e1.printStackTrace();
 		}
 
-		try {
-			File f = new File("tree.txt");
-			FileWriter fw = new FileWriter(f);
+		File f = new File("tree.txt");
+		try (final FileWriter fw = new FileWriter(f)) {
 			fw.write(sb.toString().toCharArray());
-			fw.close();
 			f.getAbsolutePath();
 		} catch (IOException e1) {
 			e1.printStackTrace();

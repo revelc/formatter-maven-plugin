@@ -351,9 +351,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 */
 	private void storeFileHashCache(Properties props) {
 		File cacheFile = new File(this.targetDirectory, CACHE_PROPERTIES_FILENAME);
-		try {
-			OutputStream out = new BufferedOutputStream(new FileOutputStream(
-					cacheFile));
+		try (OutputStream out = new BufferedOutputStream(new FileOutputStream(cacheFile))) {
 			props.store(out, null);
 		} catch (FileNotFoundException e) {
 			getLog().warn("Cannot store file hash cache properties file", e);
@@ -383,8 +381,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			return props;
 		}
 
-		try {
-			props.load(new BufferedInputStream(new FileInputStream(cacheFile)));
+		try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(cacheFile))) {
+			props.load(stream);
 		} catch (FileNotFoundException e) {
 			log.warn("Cannot load file hash cache properties file", e);
 		} catch (IOException e) {
