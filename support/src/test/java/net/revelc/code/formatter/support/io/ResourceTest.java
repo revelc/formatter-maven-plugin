@@ -75,7 +75,7 @@ public class ResourceTest {
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
 			.next();
 
-		assertEquals("alpha\nbeta", result);
+		assertEquals("alpha" + System.getProperty("line.separator") + "beta", result);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class ResourceTest {
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
 			.next();
 		
-		assertEquals("alpha subpackage\nbeta subpackage", result);
+		assertEquals("alpha subpackage" + System.getProperty("line.separator") + "beta subpackage", result);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class ResourceTest {
 	@Test
 	public void testAsString() throws UnknownResourceException {
 		String result = forPath(SUBPACKAGE_TEST_FILE).asString();
-		assertEquals("alpha subpackage\nbeta subpackage", result);
+		assertEquals("alpha subpackage" + System.getProperty("line.separator") + "beta subpackage", result);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class ResourceTest {
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
 			.next();
 
-		assertEquals("alpha subpackage\nbeta subpackage", result);
+		assertEquals("alpha subpackage" + System.getProperty("line.separator") + "beta subpackage", result);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class ResourceTest {
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
 			.next();
 
-		assertEquals("alpha\nbeta", result);
+		assertEquals("alpha" + System.getProperty("line.separator") + "beta", result);
 	}
 
 	/**
@@ -230,6 +230,6 @@ public class ResourceTest {
 	@Test
 	public void testForPath() throws UnknownResourceException {
 		String result = forPath(ROOT_TEST_FILE).asString();
-		assertEquals("alpha\nbeta", result);
+		assertEquals("alpha" + System.getProperty("line.separator") + "beta", result);
 	}
 }
