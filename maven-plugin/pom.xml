@@ -42,6 +42,10 @@
         </developer>
     </developers>
 
+    <properties>
+        <parent.dir>..</parent.dir>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>

@@ -127,6 +127,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <parent.dir>.</parent.dir>
     </properties>
 
     <reporting>
@@ -289,7 +291,7 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>2.11</version>
                     <configuration>
-                        <header>copyright.txt</header>
+                        <header>${parent.dir}/copyright.txt</header>
                         <excludes>
                             <exclude>target/**</exclude>
                             <exclude>**/.gitignore</exclude>
