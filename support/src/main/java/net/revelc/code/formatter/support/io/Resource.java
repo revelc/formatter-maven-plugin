@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
+ * Copyright 2010-2015. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,9 +38,9 @@ public abstract class Resource {
 
 	private final String nativePath;
 
-	protected Resource(final String path) {
-		this.path = requireNonNull(path, "path shall not be null");
-		nativePath = path.substring(getPrefix().length() + 1);
+	protected Resource(final String newPath) {
+		this.path = requireNonNull(newPath, "path shall not be null");
+		this.nativePath = newPath.substring(getPrefix().length() + 1);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public abstract class Resource {
 	 * @return Resource path
 	 */
 	public final String getPath() {
-		return path;
+		return this.path;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public abstract class Resource {
 	 * @return Native path
 	 */
 	public final String getNativePath() {
-		return nativePath;
+		return this.nativePath;
 	}
 
 	/**

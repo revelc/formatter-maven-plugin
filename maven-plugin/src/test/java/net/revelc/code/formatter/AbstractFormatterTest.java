@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
+ * Copyright 2010-2015. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,6 @@ package net.revelc.code.formatter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,37 +38,43 @@ import com.google.common.io.Files;
 public abstract class AbstractFormatterTest extends TestCase {
 
 	protected void doTestFormat(Formatter formatter, String fileUnderTest,
-			String expectedSha1) throws IOException, NoSuchAlgorithmException {
+			String expectedSha1) throws IOException {
 		File originalSourceFile = new File("src/test/resources/", fileUnderTest);
 		File sourceFile = new File("target/test-classes/", fileUnderTest);
 
 		Files.copy(originalSourceFile, sourceFile);
 
-		Map<String, String> options = new HashMap<String, String>();
+		Map<String, String> options = new HashMap<>();
 		final File targetDir = new File("target/testoutput");
 		targetDir.mkdirs();
 		formatter.init(options, new ConfigurationSource() {
 
+			@Override
 			public File getTargetDirectory() {
 				return targetDir;
 			}
 
+			@Override
 			public Log getLog() {
 				return new SystemStreamLog();
 			}
 
+			@Override
 			public Charset getEncoding() {
 				return Charsets.UTF_8;
 			}
 
+			@Override
 			public String getCompilerSources() {
 				return "1.8";
 			}
 
+			@Override
 			public String getCompilerCompliance() {
 				return "1.8";
 			}
 
+			@Override
 			public String getCompilerCodegenTargetPlatform() {
 				return "1.8";
 			}

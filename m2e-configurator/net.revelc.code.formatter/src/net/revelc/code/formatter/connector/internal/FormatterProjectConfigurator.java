@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
+ * Copyright 2010-2015. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.maven.plugin.MojoExecution;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
@@ -53,9 +52,9 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		private final String configuratioName;
 		private final String defaultPath;
 
-		private Formatter(String configuratioName, String defaultPath) {
-			this.configuratioName = configuratioName;
-			this.defaultPath = defaultPath;
+		private Formatter(String newConfiguratioName, String newDefaultPath) {
+			this.configuratioName = newConfiguratioName;
+			this.defaultPath = newDefaultPath;
 		}
 
 		public String getConfigurationName() {
@@ -106,20 +105,18 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 	private Xpp3Dom[] parseConfigurationFile(
 			ProjectConfigurationRequest request, IProgressMonitor monitor)
 			throws CoreException {
-		InputStream content = readConfigFile(Formatter.JAVA, request, monitor);
 		Xpp3Dom dom;
-		try {
+		try (InputStream content = readConfigFile(Formatter.JAVA, request, monitor)) {
 			dom = Xpp3DomBuilder.build(content, "UTF-8");
 		} catch (XmlPullParserException e) {
-			throw new CoreException(new Status(Status.ERROR,
+			throw new CoreException(new Status(IStatus.ERROR,
 					FormatterCore.PLUGIN_ID, "Invalid configuration XML", e));
 		} catch (IOException e) {
-			throw new CoreException(new Status(Status.ERROR,
+			throw new CoreException(new Status(IStatus.ERROR,
 					FormatterCore.PLUGIN_ID,
 					"Unable to read configuration XML", e));
 		}
-		Xpp3Dom[] settings = dom.getChild("profile").getChildren("setting");
-		return settings;
+		return dom.getChild("profile").getChildren("setting");
 	}
 
 	private InputStream readConfigFile(Formatter formatter,
@@ -136,17 +133,18 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 				.getValue();
 		if (javaConfigFile == null
 				|| javaConfigFile.equalsIgnoreCase("${"
-						+ formatter.getConfigurationName() + "}"))
+						+ formatter.getConfigurationName() + "}")) {
 			javaConfigFile = formatter.getDefaultPath();
+		}
 
 		IFile cfgFile = request.getProject().getFile(javaConfigFile);
 
-		if (!cfgFile.exists())
+		if (!cfgFile.exists()) {
 			throw new CoreException(new Status(IStatus.CANCEL,
 					FormatterCore.PLUGIN_ID, "Configuration file not found!"));
+		}
 
-		InputStream content = cfgFile.getContents();
-		return content;
+		return cfgFile.getContents();
 	}
 
 	private void printSettings() {
@@ -155,18 +153,14 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		try {
 			eval(prefs, "\t", sb);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		try {
-			File f = new File("tree.txt");
-			FileWriter fw = new FileWriter(f);
+		File f = new File("tree.txt");
+		try (final FileWriter fw = new FileWriter(f)) {
 			fw.write(sb.toString().toCharArray());
-			fw.close();
 			f.getAbsolutePath();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -185,14 +179,9 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		}
 	}
 
-	private Map<? extends String, ? extends String> readFromCfg() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public void mavenProjectChanged(MavenProjectChangedEvent event,
 			IProgressMonitor monitor) throws CoreException {
-		// TODO remover formatador do projeto
+		// Not Implemented
 	}
 }

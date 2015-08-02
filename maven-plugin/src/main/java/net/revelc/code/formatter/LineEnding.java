@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
+ * Copyright 2010-2015. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,12 +30,12 @@ public enum LineEnding {
 
 	private final String chars;
 
-	LineEnding(String chars) {
-		this.chars = chars;
+	LineEnding(String value) {
+		this.chars = value;
 	}
 
 	public String getChars() {
-		return chars;
+		return this.chars;
 	}
 
 	/**

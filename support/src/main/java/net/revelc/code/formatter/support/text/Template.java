@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
+ * Copyright 2010-2015. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,8 +30,8 @@ public final class Template {
 	 */
 	private String content;
 
-	private Template(String content) {
-		this.content = requireNonNull(content, "content shall not be null");
+	private Template(String newContent) {
+		this.content = requireNonNull(newContent, "content shall not be null");
 	}
 
 	/**
@@ -40,7 +40,7 @@ public final class Template {
 	 * @return Formatted string
 	 */
 	public String format(String... args) {
-		return String.format(content, (Object[]) args);
+		return String.format(this.content, (Object[]) args);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public final class Template {
 	 * @return Formatted string
 	 */
 	public String formatWithLocale(Locale locale, String... args) {
-		return String.format(locale, content, (Object[]) args);
+		return String.format(locale, this.content, (Object[]) args);
 	}
 
 	/**
