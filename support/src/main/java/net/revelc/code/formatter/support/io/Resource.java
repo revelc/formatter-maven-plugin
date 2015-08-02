@@ -38,9 +38,9 @@ public abstract class Resource {
 
 	private final String nativePath;
 
-	protected Resource(final String path) {
-		this.path = requireNonNull(path, "path shall not be null");
-		nativePath = path.substring(getPrefix().length() + 1);
+	protected Resource(final String newPath) {
+		this.path = requireNonNull(newPath, "path shall not be null");
+		this.nativePath = newPath.substring(getPrefix().length() + 1);
 	}
 
 	/**

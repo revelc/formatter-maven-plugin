@@ -312,13 +312,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	List<File> addCollectionFiles(File basedir) throws IOException {
 		final DirectoryScanner ds = new DirectoryScanner();
 		ds.setBasedir( basedir );
-		if (includes != null && includes.length > 0) {
-			ds.setIncludes(includes);
+		if (this.includes != null && this.includes.length > 0) {
+			ds.setIncludes(this.includes);
 		} else {
 			ds.setIncludes(DEFAULT_INCLUDES);
 		}
 
-		ds.setExcludes( excludes );
+		ds.setExcludes( this.excludes );
 		ds.addDefaultExcludes();
 		ds.setCaseSensitive( false );
 		ds.setFollowSymlinks( false );
@@ -452,9 +452,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 		Result r;
 		if (file.getName().endsWith(".java")) {
-			r = javaFormatter.formatFile(file, lineEnding, dryRun);
+			r = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
 		} else {
-			r = jsFormatter.formatFile(file, lineEnding, dryRun);
+			r = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
 		}
 
 		switch (r) {
@@ -549,23 +549,23 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		Resource configJsFileResource = null;
 
 		try {
-			if (configFile != null) {
-				configFileResource = Resource.forPath(configFile);
+			if (this.configFile != null) {
+				configFileResource = Resource.forPath(this.configFile);
 			}
 		} catch (Resource.UnknownResourceException e) {
 			throw new MojoExecutionException("Error loading Java config", e);
 		}
 
 		try {
-			if (configJsFile != null) {
-				configJsFileResource = Resource.forPath(configJsFile);
+			if (this.configJsFile != null) {
+				configJsFileResource = Resource.forPath(this.configJsFile);
 			}
 		} catch (Resource.UnknownResourceException e) {
 			throw new MojoExecutionException("Error loading JS config", e);
 		}
 
-		javaFormatter.init(getFormattingOptions(configFileResource), this);
-		jsFormatter.init(getFormattingOptions(configJsFileResource), this);
+		this.javaFormatter.init(getFormattingOptions(configFileResource), this);
+		this.jsFormatter.init(getFormattingOptions(configJsFileResource), this);
 	}
 
 	/**

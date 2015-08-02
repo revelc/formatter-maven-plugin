@@ -53,9 +53,9 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		private final String configuratioName;
 		private final String defaultPath;
 
-		private Formatter(String configuratioName, String defaultPath) {
-			this.configuratioName = configuratioName;
-			this.defaultPath = defaultPath;
+		private Formatter(String newConfiguratioName, String newDefaultPath) {
+			this.configuratioName = newConfiguratioName;
+			this.defaultPath = newDefaultPath;
 		}
 
 		public String getConfigurationName() {

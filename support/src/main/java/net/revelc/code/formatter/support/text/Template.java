@@ -30,8 +30,8 @@ public final class Template {
 	 */
 	private String content;
 
-	private Template(String content) {
-		this.content = requireNonNull(content, "content shall not be null");
+	private Template(String newContent) {
+		this.content = requireNonNull(newContent, "content shall not be null");
 	}
 
 	/**
