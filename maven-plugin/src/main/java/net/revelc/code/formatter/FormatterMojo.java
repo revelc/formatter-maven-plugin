@@ -64,7 +64,6 @@ import net.revelc.code.formatter.javascript.JavascriptFormatter;
 import net.revelc.code.formatter.model.ConfigReadException;
 import net.revelc.code.formatter.model.ConfigReader;
 import net.revelc.code.formatter.support.io.Resource;
-import net.revelc.code.formatter.support.io.Resource.UnknownResourceException;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -250,7 +249,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		}
 
 		
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 		try {
 			if (this.directories != null) {
 				for (File directory : this.directories) {
@@ -324,7 +323,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		ds.setFollowSymlinks( false );
 		ds.scan();
 
-		List<File> foundFiles = new ArrayList<File>();
+		List<File> foundFiles = new ArrayList<>();
 		for (String filename : ds.getIncludedFiles()) {
 			foundFiles.add(new File(basedir, filename));
 		}
@@ -579,7 +578,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			return getOptionsFromConfigFile(configFile);
 		}
 
-		Map<String, String> options = new HashMap<String, String>();
+		Map<String, String> options = new HashMap<>();
 		options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,

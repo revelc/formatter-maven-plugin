@@ -30,8 +30,8 @@ public enum LineEnding {
 
 	private final String chars;
 
-	LineEnding(String chars) {
-		this.chars = chars;
+	LineEnding(String value) {
+		this.chars = value;
 	}
 
 	public String getChars() {

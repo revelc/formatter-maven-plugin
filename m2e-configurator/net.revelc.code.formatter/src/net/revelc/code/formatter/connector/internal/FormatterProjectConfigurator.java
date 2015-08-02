@@ -21,7 +21,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.maven.plugin.MojoExecution;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
@@ -110,15 +109,14 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		try (InputStream content = readConfigFile(Formatter.JAVA, request, monitor)) {
 			dom = Xpp3DomBuilder.build(content, "UTF-8");
 		} catch (XmlPullParserException e) {
-			throw new CoreException(new Status(Status.ERROR,
+			throw new CoreException(new Status(IStatus.ERROR,
 					FormatterCore.PLUGIN_ID, "Invalid configuration XML", e));
 		} catch (IOException e) {
-			throw new CoreException(new Status(Status.ERROR,
+			throw new CoreException(new Status(IStatus.ERROR,
 					FormatterCore.PLUGIN_ID,
 					"Unable to read configuration XML", e));
 		}
-		Xpp3Dom[] settings = dom.getChild("profile").getChildren("setting");
-		return settings;
+		return dom.getChild("profile").getChildren("setting");
 	}
 
 	private InputStream readConfigFile(Formatter formatter,
@@ -135,17 +133,18 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 				.getValue();
 		if (javaConfigFile == null
 				|| javaConfigFile.equalsIgnoreCase("${"
-						+ formatter.getConfigurationName() + "}"))
+						+ formatter.getConfigurationName() + "}")) {
 			javaConfigFile = formatter.getDefaultPath();
+		}
 
 		IFile cfgFile = request.getProject().getFile(javaConfigFile);
 
-		if (!cfgFile.exists())
+		if (!cfgFile.exists()) {
 			throw new CoreException(new Status(IStatus.CANCEL,
 					FormatterCore.PLUGIN_ID, "Configuration file not found!"));
+		}
 
-		InputStream content = cfgFile.getContents();
-		return content;
+		return cfgFile.getContents();
 	}
 
 	private void printSettings() {
@@ -180,13 +179,9 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		}
 	}
 
-	private Map<? extends String, ? extends String> readFromCfg() {
-		return null;
-	}
-
 	@Override
 	public void mavenProjectChanged(MavenProjectChangedEvent event,
 			IProgressMonitor monitor) throws CoreException {
-		// TODO remover formatador do projeto
+		// Not Implemented
 	}
 }
