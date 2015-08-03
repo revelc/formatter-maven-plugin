@@ -47,10 +47,10 @@ public class JavascriptFormatter extends AbstractCacheableFormatter
 	@Override
 	public String doFormat(String code, LineEnding ending) throws IOException,
 			BadLocationException {
-		TextEdit te = formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code,
+		TextEdit te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code,
 				0, code.length(), 0, ending.getChars());
 		if (te == null) {
-			log.debug("Code cannot be formatted. Possible cause "
+			this.log.debug("Code cannot be formatted. Possible cause "
 					+ "is unmatched source/target/compliance version.");
 			return null;
 		}

@@ -80,6 +80,7 @@ import net.revelc.code.formatter.support.io.Resource;
  */
 @Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
+
 	/** The Constant CACHE_PROPERTIES_FILENAME. */
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 	/** The Constant DEFAULT_INCLUDES. */
@@ -308,9 +309,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @param files the files
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	List<File> addCollectionFiles(File basedir) throws IOException {
+	List<File> addCollectionFiles(File newBasedir) throws IOException {
 		final DirectoryScanner ds = new DirectoryScanner();
-		ds.setBasedir( basedir );
+		ds.setBasedir(newBasedir);
 		if (this.includes != null && this.includes.length > 0) {
 			ds.setIncludes(this.includes);
 		} else {
@@ -325,7 +326,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 		List<File> foundFiles = new ArrayList<>();
 		for (String filename : ds.getIncludedFiles()) {
-			foundFiles.add(new File(basedir, filename));
+			foundFiles.add(new File(newBasedir, filename));
 		}
 		return foundFiles;
 	}
@@ -464,6 +465,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			case FAIL :
 				rc.failCount++;
 				break;
+			default:
+				break;
 		}
 
 		String formattedCode = readFileAsString(file);
@@ -572,10 +575,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the formatting options
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getFormattingOptions(Resource configFile)
+	private Map<String, String> getFormattingOptions(Resource newConfigFile)
 			throws MojoExecutionException {
-		if (configFile != null)	{
-			return getOptionsFromConfigFile(configFile);
+		if (newConfigFile != null)	{
+			return getOptionsFromConfigFile(newConfigFile);
 		}
 
 		Map<String, String> options = new HashMap<>();

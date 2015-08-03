@@ -31,7 +31,7 @@ public class Profile {
 	private String kind;
 	
 	/** The settings. */
-	private Map<String, String> settings = new HashMap<String, String>();
+	private Map<String, String> settings = new HashMap<>();
 
 	/**
 	 * Adds the setting.
@@ -63,9 +63,9 @@ public class Profile {
 	/**
 	 * Sets the kind.
 	 *
-	 * @param kind the new kind
+	 * @param value the new kind
 	 */
-	public void setKind(String kind) {
-		this.kind = kind;
+	public void setKind(String value) {
+		this.kind = value;
 	}
 }
