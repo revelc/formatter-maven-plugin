@@ -28,8 +28,4 @@
         <!-- <module>net.revelc.code.formatter.tests</module> -->
     </modules>
 
-    <properties>
-        <parent.dir>..</parent.dir>
-    </properties>
-
 </project>

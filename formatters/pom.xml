@@ -17,10 +17,6 @@
         <module>jsdt-core</module>
     </modules>
 
-    <properties>
-        <parent.dir>..</parent.dir>
-    </properties>
-
     <profiles>
         <profile>
             <id>formatter-jars</id>

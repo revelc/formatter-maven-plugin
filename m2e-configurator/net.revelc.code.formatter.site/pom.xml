@@ -16,8 +16,6 @@
         <serverIdInSettingsXml>ossrh</serverIdInSettingsXml>
         <repositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repositoryUrl>
         <repositoryPathId>net/revelc/code/formatter/net.revelc.code.formatter.feature</repositoryPathId>
-
-        <parent.dir>../..</parent.dir>
     </properties>
 
 </project>

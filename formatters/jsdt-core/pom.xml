@@ -12,8 +12,4 @@
     <artifactId>jsdt-core</artifactId>
     <packaging>eclipse-plugin</packaging>
 
-    <properties>
-        <parent.dir>../..</parent.dir>
-    </properties>
-
 </project>

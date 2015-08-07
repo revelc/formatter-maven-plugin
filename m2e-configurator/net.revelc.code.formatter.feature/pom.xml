@@ -12,8 +12,4 @@
     <artifactId>net.revelc.code.formatter.feature</artifactId>
     <packaging>eclipse-feature</packaging>
 
-    <properties>
-        <parent.dir>../..</parent.dir>
-    </properties>
-
 </project>
