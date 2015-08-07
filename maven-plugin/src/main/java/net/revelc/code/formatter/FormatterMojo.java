@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *	  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -63,7 +63,6 @@ import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
 import net.revelc.code.formatter.model.ConfigReadException;
 import net.revelc.code.formatter.model.ConfigReader;
-import net.revelc.code.formatter.support.io.Resource;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -80,6 +79,7 @@ import net.revelc.code.formatter.support.io.Resource;
  */
 @Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
+
 	/** The Constant CACHE_PROPERTIES_FILENAME. */
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 	/** The Constant DEFAULT_INCLUDES. */
@@ -94,7 +94,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	/**
 	 * Project's source directory as specified in the POM.
 	 */
-	@Parameter(defaultValue = "${project.build.sourceDirectory}", property = "sourceDirectory", required = true)
+	@Parameter(defaultValue = "${project.build.sourceDirectory}", readonly = true, required = true)
 	private File sourceDirectory;
 
 	/**
@@ -215,7 +215,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	private JavaFormatter javaFormatter = new JavaFormatter();
 	private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
-
 	/**
 	 * Execute.
 	 *
@@ -308,9 +307,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @param files the files
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	List<File> addCollectionFiles(File basedir) throws IOException {
+	List<File> addCollectionFiles(File newBasedir) throws IOException {
 		final DirectoryScanner ds = new DirectoryScanner();
-		ds.setBasedir( basedir );
+		ds.setBasedir(newBasedir);
 		if (this.includes != null && this.includes.length > 0) {
 			ds.setIncludes(this.includes);
 		} else {
@@ -325,7 +324,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 		List<File> foundFiles = new ArrayList<>();
 		for (String filename : ds.getIncludedFiles()) {
-			foundFiles.add(new File(basedir, filename));
+			foundFiles.add(new File(newBasedir, filename));
 		}
 		return foundFiles;
 	}
@@ -464,6 +463,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			case FAIL :
 				rc.failCount++;
 				break;
+			default:
+				break;
 		}
 
 		String formattedCode = readFileAsString(file);
@@ -542,27 +543,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
-		Resource configFileResource = null;
-		Resource configJsFileResource = null;
-
-		try {
-			if (this.configFile != null) {
-				configFileResource = Resource.forPath(this.configFile);
-			}
-		} catch (Resource.UnknownResourceException e) {
-			throw new MojoExecutionException("Error loading Java config", e);
-		}
-
-		try {
-			if (this.configJsFile != null) {
-				configJsFileResource = Resource.forPath(this.configJsFile);
-			}
-		} catch (Resource.UnknownResourceException e) {
-			throw new MojoExecutionException("Error loading JS config", e);
-		}
-
-		this.javaFormatter.init(getFormattingOptions(configFileResource), this);
-		this.jsFormatter.init(getFormattingOptions(configJsFileResource), this);
+		this.javaFormatter.init(getFormattingOptions(this.configFile), this);
+		this.jsFormatter.init(getFormattingOptions(this.configJsFile), this);
 	}
 
 	/**
@@ -572,10 +554,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the formatting options
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getFormattingOptions(Resource configFile)
+	private Map<String, String> getFormattingOptions(String newConfigFile)
 			throws MojoExecutionException {
-		if (configFile != null)	{
-			return getOptionsFromConfigFile(configFile);
+		if (newConfigFile != null)  {
+			return getOptionsFromConfigFile(newConfigFile);
 		}
 
 		Map<String, String> options = new HashMap<>();
@@ -593,7 +575,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the options from config file
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getOptionsFromConfigFile(Resource configFile)
+	private Map<String, String> getOptionsFromConfigFile(String newConfigFile)
 			throws MojoExecutionException {
 
 		InputStream configInput = null;
@@ -601,7 +583,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		try {
 			this.resourceManager.addSearchPath(FileResourceLoader.ID,
 							this.basedir.getAbsolutePath());
-			configInput = this.resourceManager.getResourceAsInputStream(this.configFile);
+			configInput = this.resourceManager.getResourceAsInputStream(newConfigFile);
 		} catch (ResourceNotFoundException e) {
 			throw new MojoExecutionException("Config file [" + this.configFile
 					+ "] cannot be found", e);
@@ -637,27 +619,27 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	}
 
 	@Override
-  public String getCompilerSources() {
+	public String getCompilerSources() {
 		return this.compilerSource;
 	}
 
 	@Override
-  public String getCompilerCompliance() {
+	public String getCompilerCompliance() {
 		return this.compilerCompliance;
 	}
 
 	@Override
-  public String getCompilerCodegenTargetPlatform() {
+	public String getCompilerCodegenTargetPlatform() {
 		return this.compilerTargetPlatform;
 	}
 
 	@Override
-  public File getTargetDirectory() {
+	public File getTargetDirectory() {
 		return this.targetDirectory;
 	}
 
 	@Override
-  public Charset getEncoding() {
+	public Charset getEncoding() {
 		return Charset.forName(this.encoding);
 	}
 }

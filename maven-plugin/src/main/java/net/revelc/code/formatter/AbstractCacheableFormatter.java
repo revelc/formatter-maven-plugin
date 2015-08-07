@@ -49,43 +49,48 @@ public abstract class AbstractCacheableFormatter {
 
 	public Result formatFile(File file, LineEnding ending, boolean dryRun) {
 		try {
-			log.debug("Processing file: " + file);
-			String code = FileUtils.fileRead(file, encoding.name());
+			this.log.debug("Processing file: " + file);
+			String code = FileUtils.fileRead(file, this.encoding.name());
 			String formattedCode = doFormat(code, ending);
 
-			if (formattedCode == null)
+			if (formattedCode == null) {
 				formattedCode = fixLineEnding(code, ending);
+			}
 
 			if (formattedCode == null) {
-				log.debug("Equal code. Not writing result to file.");
+				this.log.debug("Equal code. Not writing result to file.");
 				return Result.SKIPPED;
 			}
 
-			if (!dryRun)
-				FileUtils.fileWrite(file, encoding.name(), formattedCode);
+			if (!dryRun) {
+				FileUtils.fileWrite(file, this.encoding.name(), formattedCode);
+			}
 
 			return Result.SUCCESS;
 		} catch (IOException e) {
-			log.warn(e);
+			this.log.warn(e);
 			return Result.FAIL;
 		} catch (MalformedTreeException e) {
-			log.warn(e);
+			this.log.warn(e);
 			return Result.FAIL;
 		} catch (BadLocationException e) {
-			log.warn(e);
+			this.log.warn(e);
 			return Result.FAIL;
 		}
 	}
 
 	private String fixLineEnding(String code, LineEnding ending) {
-		if (ending == LineEnding.KEEP)
+		if (ending == LineEnding.KEEP) {
 			return null;
+		}
 
 		LineEnding current = LineEnding.determineLineEnding(code);
-		if (current == LineEnding.UNKNOW)
+		if (current == LineEnding.UNKNOW) {
 			return null;
-		if (current == ending)
+		}
+		if (current == ending) {
 			return null;
+		}
 
 		return code.replace(current.getChars(), ending.getChars());
 	}

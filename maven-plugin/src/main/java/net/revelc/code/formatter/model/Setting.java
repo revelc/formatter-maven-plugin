@@ -42,10 +42,10 @@ public class Setting {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param newId the new id
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String newId) {
+		this.id = newId;
 	}
 
 	/**
@@ -60,9 +60,9 @@ public class Setting {
 	/**
 	 * Sets the value.
 	 *
-	 * @param value the new value
+	 * @param newValue the new value
 	 */
-	public void setValue(String value) {
-		this.value = value;
+	public void setValue(String newValue) {
+		this.value = newValue;
 	}
 }
