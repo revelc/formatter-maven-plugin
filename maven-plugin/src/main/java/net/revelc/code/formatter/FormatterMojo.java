@@ -63,6 +63,7 @@ import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
 import net.revelc.code.formatter.model.ConfigReadException;
 import net.revelc.code.formatter.model.ConfigReader;
+import net.revelc.code.formatter.support.io.Resource;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -213,6 +214,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	private JavaFormatter javaFormatter = new JavaFormatter();
 	private JavascriptFormatter jsFormatter = new JavascriptFormatter();
+
 
 	/**
 	 * Execute.
@@ -530,8 +532,27 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
 	private void createCodeFormatter() throws MojoExecutionException {
-		this.javaFormatter.init(getFormattingOptions(this.configFile), this);
-		this.jsFormatter.init(getFormattingOptions(this.configJsFile), this);
+		Resource configFileResource = null;
+		Resource configJsFileResource = null;
+
+		try {
+			if (this.configFile != null) {
+				configFileResource = Resource.forPath(this.configFile);
+			}
+		} catch (Resource.UnknownResourceException e) {
+			throw new MojoExecutionException("Error loading Java config", e);
+		}
+
+		try {
+			if (this.configJsFile != null) {
+				configJsFileResource = Resource.forPath(this.configJsFile);
+			}
+		} catch (Resource.UnknownResourceException e) {
+			throw new MojoExecutionException("Error loading JS config", e);
+		}
+
+		this.javaFormatter.init(getFormattingOptions(configFileResource), this);
+		this.jsFormatter.init(getFormattingOptions(configJsFileResource), this);
 	}
 
 	/**
@@ -541,7 +562,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the formatting options
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getFormattingOptions(String newConfigFile) throws MojoExecutionException {
+	private Map<String, String> getFormattingOptions(Resource newConfigFile) throws MojoExecutionException {
 		if (newConfigFile != null) {
 			return getOptionsFromConfigFile(newConfigFile);
 		}
@@ -560,7 +581,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the options from config file
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getOptionsFromConfigFile(String newConfigFile) throws MojoExecutionException {
+	private Map<String, String> getOptionsFromConfigFile(Resource configFile) throws MojoExecutionException {
 
 		InputStream configInput = null;
 
