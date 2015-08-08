@@ -1,37 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.takari.tycho</groupId>
         <artifactId>tycho-support</artifactId>
         <version>1.1.0</version>
-        <relativePath />
+        <relativePath></relativePath>
     </parent>
-
-    <prerequisites>
-        <maven>3.1.1</maven>
-    </prerequisites>
-
     <groupId>net.revelc.code.formatter</groupId>
     <artifactId>parent</artifactId>
     <version>1.6.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>parent</name>
-
     <description>Plugin for formatting source code</description>
     <url>https://github.com/revelc/formatter-maven-plugin/</url>
     <inceptionYear>2010</inceptionYear>
-
-    <modules>
-        <module>formatters</module>
-        <module>maven-plugin</module>
-        <module>m2e-configurator</module>
-        <module>support</module>
-    </modules>
-
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -40,24 +23,6 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
-
-    <issueManagement>
-        <system>Github</system>
-        <url>https://github.com/revelc/formatter-maven-plugin/issues</url>
-    </issueManagement>
-    <ciManagement>
-        <system>travis</system>
-        <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
-        <!-- Do we want this? Can we have two? <system>shippable</system> <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url> -->
-    </ciManagement>
-
-    <scm>
-        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
-        <url>https://github.com/revelc/formatter-maven-plugin</url>
-        <tag>HEAD</tag>
-    </scm>
-
     <developers>
         <developer>
             <id>jecki.go</id>
@@ -106,7 +71,30 @@
             </properties>
         </contributor>
     </contributors>
-
+    <prerequisites>
+        <maven>3.1.1</maven>
+    </prerequisites>
+    <modules>
+        <module>formatters</module>
+        <module>maven-plugin</module>
+        <module>m2e-configurator</module>
+        <module>support</module>
+    </modules>
+    <scm>
+        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/revelc/formatter-maven-plugin</url>
+    </scm>
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/revelc/formatter-maven-plugin/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>travis</system>
+        <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
+        <!-- Do we want this? Can we have two? <system>shippable</system> <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url> -->
+    </ciManagement>
     <distributionManagement>
         <repository>
             <id>ossrh</id>
@@ -119,7 +107,6 @@
             <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.git?gh-pages#</url>
         </site>
     </distributionManagement>
-
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
@@ -128,53 +115,14 @@
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-plugin-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>2.9</version>
-            </extension>
-        </extensions>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.2</version> <!-- drop back from 3.3.3 as it breaks on lineEndings.java -->
+                    <version>3.2</version>
+                    <!-- drop back from 3.3.3 as it breaks on lineEndings.java -->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -367,10 +315,10 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>compile</phase>
                         <goals>
                             <goal>format</goal>
                         </goals>
+                        <phase>compile</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -386,23 +334,78 @@
                     </execution>
                     <execution>
                         <id>enforce-clean</id>
-                        <phase>pre-clean</phase>
                         <goals>
                             <goal>enforce</goal>
                         </goals>
+                        <phase>pre-clean</phase>
                     </execution>
                     <execution>
                         <id>enforce-site</id>
-                        <phase>pre-site</phase>
                         <goals>
                             <goal>enforce</goal>
                         </goals>
+                        <phase>pre-site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.ekryd.sortpom</groupId>
+                <artifactId>sortpom-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <configuration>
+                    <nrOfIndentSpace>4</nrOfIndentSpace>
+                    <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                    <keepBlankLines>true</keepBlankLines>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.9</version>
+            </extension>
+        </extensions>
     </build>
-
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
     <profiles>
         <profile>
             <id>sonatype-oss-release</id>
@@ -441,17 +444,16 @@
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
-                                <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>coveralls</id>
             <build>
@@ -536,7 +538,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore />
+                                                <ignore></ignore>
                                             </action>
                                         </pluginExecution>
                                         <pluginExecution>
@@ -549,7 +551,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore />
+                                                <ignore></ignore>
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>
@@ -561,5 +563,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>

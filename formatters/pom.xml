@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>net.revelc.code.formatter</groupId>
         <artifactId>parent</artifactId>
         <version>1.6.0-SNAPSHOT</version>
     </parent>
-
     <artifactId>formatters</artifactId>
     <packaging>pom</packaging>
-
     <modules>
         <module>jdt-core</module>
         <module>jsdt-core</module>
     </modules>
-
     <profiles>
         <profile>
             <id>formatter-jars</id>
@@ -26,17 +21,16 @@
                 </file>
             </activation>
             <build>
-
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>prepare-package</phase>
                                 <goals>
                                     <goal>unpack-dependencies</goal>
                                 </goals>
+                                <phase>prepare-package</phase>
                                 <configuration>
                                     <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                                     <excludes>META-INF/*</excludes>
@@ -48,14 +42,6 @@
                         <groupId>com.github.wvengen</groupId>
                         <artifactId>proguard-maven-plugin</artifactId>
                         <version>2.0.10</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>proguard</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                         <configuration>
                             <obfuscate>false</obfuscate>
                             <injar>${project.build.finalName}.jar</injar>
@@ -67,10 +53,17 @@
                             </libs>
                             <attach>true</attach>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>proguard</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
 </project>
