@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>net.revelc.code.formatter</groupId>
         <artifactId>parent</artifactId>
         <version>1.6.0-SNAPSHOT</version>
     </parent>
-
     <artifactId>formatter-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-
     <developers>
         <developer>
             <id>jecki.go</id>
@@ -41,7 +37,6 @@
             </roles>
         </developer>
     </developers>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -94,7 +89,6 @@
             <artifactId>plexus-utils</artifactId>
             <version>3.0.22</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -102,7 +96,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -111,5 +104,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

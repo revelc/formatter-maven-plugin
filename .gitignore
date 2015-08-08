@@ -33,3 +33,4 @@ nb-configuration.xml
 .idea/
 *.ipr
 *.iws
+pom.xml.bak
