@@ -40,14 +40,12 @@ public class ResourceTest {
 	/**
 	 * File in the class-path under a layer of packages.
 	 */
-	private static final String SUBPACKAGE_TEST_FILE =
-		"classpath:/net/revelc/code/formatter/support/io/other_test_file";
+	private static final String SUBPACKAGE_TEST_FILE = "classpath:/net/revelc/code/formatter/support/io/other_test_file";
 
 	/**
 	 * Path to a file that does not exist.
 	 */
-	private static final String INVALID_PACKAGE_TEST_FILE =
-		"classpath:/this/is/intentionally/invalid/test_file";
+	private static final String INVALID_PACKAGE_TEST_FILE = "classpath:/this/is/intentionally/invalid/test_file";
 
 	/**
 	 * File in the class-path under a the default package.
@@ -57,8 +55,7 @@ public class ResourceTest {
 	/**
 	 * File in the file-system under a the default package.
 	 */
-	private static final String FILE_ROOT_TEST_FILE =
-		"file:src/test/resources/test_file";
+	private static final String FILE_ROOT_TEST_FILE = "file:src/test/resources/test_file";
 
 	/**
 	 * Test method for {@link Resource#asInputStream()}.
@@ -69,11 +66,9 @@ public class ResourceTest {
 	 */
 	@SuppressWarnings("resource")
 	@Test
-	public void testAsInputStreamValidDefaultPackageResource()
-		throws UnknownResourceException {
+	public void testAsInputStreamValidDefaultPackageResource() throws UnknownResourceException {
 		InputStream stream = forPath(ROOT_TEST_FILE).toInputStream();
-		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
-			.next();
+		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha\nbeta", result);
 	}
@@ -87,12 +82,10 @@ public class ResourceTest {
 	 */
 	@SuppressWarnings("resource")
 	@Test
-	public void testAsInputStreamValidSubpackageResource()
-		throws UnknownResourceException {
+	public void testAsInputStreamValidSubpackageResource() throws UnknownResourceException {
 		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).toInputStream();
-		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
-			.next();
-		
+		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
+
 		assertEquals("alpha subpackage\nbeta subpackage", result);
 	}
 
@@ -103,9 +96,8 @@ public class ResourceTest {
 	 * @throws IOException 
 	 * @throws UnknownResourceException 
 	 */
-	@Test(expected=UnknownResourceException.class)
-	public void testAsInputStreamInvalidResource()
-		throws UnknownResourceException {
+	@Test(expected = UnknownResourceException.class)
+	public void testAsInputStreamInvalidResource() throws UnknownResourceException {
 		forPath(INVALID_PACKAGE_TEST_FILE).toInputStream();
 	}
 
@@ -133,8 +125,7 @@ public class ResourceTest {
 	@Test
 	public void testLoadInputStreamClasspath() throws UnknownResourceException {
 		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).toInputStream();
-		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
-			.next();
+		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha subpackage\nbeta subpackage", result);
 	}
@@ -150,8 +141,7 @@ public class ResourceTest {
 	@Test
 	public void testLoadInputStreamFile() throws UnknownResourceException {
 		InputStream stream = forPath(FILE_ROOT_TEST_FILE).toInputStream();
-		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A")
-			.next();
+		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha\nbeta", result);
 	}

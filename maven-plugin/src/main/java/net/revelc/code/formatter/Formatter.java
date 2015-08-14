@@ -36,8 +36,7 @@ public interface Formatter {
 	 * @param targetDirectory
 	 * @throws MojoExecutionException
 	 */
-	public abstract void init(Map<String, String> options,
-			ConfigurationSource cfg);
+	public abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
 	/**
 	 * Format individual file.
@@ -50,7 +49,6 @@ public interface Formatter {
 	 * @throws IOException
 	 * @throws BadLocationException
 	 */
-	public abstract Result formatFile(File file, LineEnding ending,
-			boolean dryRun);
+	public abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
 
 }
