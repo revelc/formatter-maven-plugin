@@ -29,7 +29,7 @@ public class Profile {
 
 	/** The kind. */
 	private String kind;
-	
+
 	/** The settings. */
 	private Map<String, String> settings = new HashMap<>();
 

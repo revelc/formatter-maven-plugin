@@ -26,7 +26,7 @@ public class Setting {
 
 	/** The id. */
 	private String id;
-	
+
 	/** The value. */
 	private String value;
 

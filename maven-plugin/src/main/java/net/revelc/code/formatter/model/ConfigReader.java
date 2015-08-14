@@ -44,8 +44,7 @@ public class ConfigReader {
 	 * @throws SAXException the SAX exception
 	 * @throws ConfigReadException the config read exception
 	 */
-	public Map<String, String> read(InputStream input) throws IOException,
-			SAXException, ConfigReadException {
+	public Map<String, String> read(InputStream input) throws IOException, SAXException, ConfigReadException {
 		Digester digester = new Digester();
 		digester.addRuleSet(new RuleSet());
 
@@ -57,8 +56,7 @@ public class ConfigReader {
 		Profiles profiles = (Profiles) result;
 		List<Map<String, String>> list = profiles.getProfiles();
 		if (list.size() == 0) {
-			throw new ConfigReadException("No profile in config file of kind: "
-					+ Profiles.PROFILE_KIND);
+			throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
 		}
 
 		return list.get(0);

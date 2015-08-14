@@ -36,7 +36,7 @@ public class TemplateTest {
 	public final void testFormatStringArray() {
 		Template specimen = Template.as("one: %s, two: %s");
 		String result = specimen.format("alpha", "beta");
-		
+
 		assertEquals("one: alpha, two: beta", result);
 	}
 
@@ -47,7 +47,7 @@ public class TemplateTest {
 	public final void testFormatWithLocaleStringArray() {
 		Template specimen = Template.as("one: %s, two: %s");
 		String result = specimen.formatWithLocale(Locale.US, "alpha", "beta");
-		
+
 		assertEquals("one: alpha, two: beta", result);
 	}
 
@@ -59,7 +59,7 @@ public class TemplateTest {
 	@Test
 	public final void testCreateValidTemplate() {
 		Template result = Template.as("one: %s, two: %s");
-		
+
 		assertNotNull(result);
 	}
 
@@ -68,7 +68,7 @@ public class TemplateTest {
 	 * <p />
 	 * This test case assumes a null template string.
 	 */
-	@Test(expected=NullPointerException.class)
+	@Test(expected = NullPointerException.class)
 	public final void testCreateNullTemplate() {
 		Template.as(null);
 	}

@@ -32,8 +32,7 @@ import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 
-public class JavaFormatter extends AbstractCacheableFormatter implements
-		Formatter {
+public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
 	CodeFormatter formatter;
 
@@ -41,10 +40,8 @@ public class JavaFormatter extends AbstractCacheableFormatter implements
 	public void init(Map<String, String> options, ConfigurationSource cfg) {
 		if (options.isEmpty()) {
 			options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-			options.put(JavaCore.COMPILER_COMPLIANCE,
-					cfg.getCompilerCompliance());
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
-					cfg.getCompilerCodegenTargetPlatform());
+			options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
+			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
 		}
 
 		super.initCfg(cfg);
@@ -53,13 +50,12 @@ public class JavaFormatter extends AbstractCacheableFormatter implements
 	}
 
 	@Override
-	public String doFormat(String code, LineEnding ending) throws IOException,
-			BadLocationException {
-		TextEdit te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code,
-				0, code.length(), 0, ending.getChars());
+	public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
+		TextEdit te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
+				ending.getChars());
 		if (te == null) {
-			this.log.debug("Code cannot be formatted. Possible cause "
-					+ "is unmatched source/target/compliance version.");
+			this.log.debug(
+					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 			return null;
 		}
 

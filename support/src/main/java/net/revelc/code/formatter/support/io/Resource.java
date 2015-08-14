@@ -60,9 +60,7 @@ public abstract class Resource {
 	public final String asString() throws UnknownResourceException {
 		String result = null;
 
-		try (
-			final InputStream stream = asInputStream();
-			Scanner scanner = new Scanner(stream, UTF_8.name())) {
+		try (final InputStream stream = asInputStream(); Scanner scanner = new Scanner(stream, UTF_8.name())) {
 			result = scanner.useDelimiter("\\A").next();
 		} catch (IOException e) {
 			throw new UnknownResourceException("Error loading resource", e);
@@ -71,8 +69,7 @@ public abstract class Resource {
 		return result;
 	}
 
-	protected abstract InputStream toInputStream()
-		throws UnknownResourceException;
+	protected abstract InputStream toInputStream() throws UnknownResourceException;
 
 	protected abstract String getPrefix();
 
@@ -99,8 +96,7 @@ public abstract class Resource {
 	 * @throws UnknownResourceException If the supplied path can not be resolved
 	 *         to a resource
 	 */
-	public static Resource forPath(final String path)
-		throws UnknownResourceException {
+	public static Resource forPath(final String path) throws UnknownResourceException {
 
 		Resource resource = null;
 
@@ -133,12 +129,10 @@ public abstract class Resource {
 
 		@Override
 		protected InputStream toInputStream() throws UnknownResourceException {
-			final InputStream is = getClass()
-				.getResourceAsStream(getNativePath());
+			final InputStream is = getClass().getResourceAsStream(getNativePath());
 
 			if (is == null) {
-				throw new UnknownResourceException("Unknown resource at " +
-					getPath());
+				throw new UnknownResourceException("Unknown resource at " + getPath());
 			}
 
 			return is;

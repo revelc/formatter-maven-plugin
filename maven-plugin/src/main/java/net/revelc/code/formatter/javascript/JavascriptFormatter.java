@@ -31,9 +31,7 @@ import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 
-public class JavascriptFormatter extends AbstractCacheableFormatter
-		implements
-			Formatter {
+public class JavascriptFormatter extends AbstractCacheableFormatter implements Formatter {
 
 	private CodeFormatter formatter;
 
@@ -45,13 +43,12 @@ public class JavascriptFormatter extends AbstractCacheableFormatter
 	}
 
 	@Override
-	public String doFormat(String code, LineEnding ending) throws IOException,
-			BadLocationException {
-		TextEdit te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code,
-				0, code.length(), 0, ending.getChars());
+	public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
+		TextEdit te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
+				ending.getChars());
 		if (te == null) {
-			this.log.debug("Code cannot be formatted. Possible cause "
-					+ "is unmatched source/target/compliance version.");
+			this.log.debug(
+					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 			return null;
 		}
 

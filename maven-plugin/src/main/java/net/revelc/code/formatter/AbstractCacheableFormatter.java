@@ -39,8 +39,7 @@ public abstract class AbstractCacheableFormatter {
 		super();
 	}
 
-	protected abstract void init(Map<String, String> options,
-			ConfigurationSource cfg);
+	protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
 	protected void initCfg(ConfigurationSource cfg) {
 		this.log = cfg.getLog();
@@ -95,7 +94,6 @@ public abstract class AbstractCacheableFormatter {
 		return code.replace(current.getChars(), ending.getChars());
 	}
 
-	protected abstract String doFormat(String code, LineEnding ending)
-			throws IOException, BadLocationException;
+	protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
 
 }

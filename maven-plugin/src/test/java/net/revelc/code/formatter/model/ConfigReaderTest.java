@@ -48,8 +48,7 @@ public class ConfigReaderTest {
 			Assert.assertNotNull(config);
 			Assert.assertEquals(264, config.keySet().size());
 			// test get one of the entry in the file
-			Assert.assertEquals("true",
-				config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+			Assert.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
 		}
 	}
 

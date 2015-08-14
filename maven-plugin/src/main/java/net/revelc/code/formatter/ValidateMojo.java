@@ -54,15 +54,12 @@ public class ValidateMojo extends FormatterMojo {
 	}
 
 	@Override
-	protected void doFormatFile(File file, ResultCollector rc,
-			Properties hashCache, String basedirPath, boolean dryRun)
-			throws IOException, MojoFailureException, BadLocationException,
-			MojoExecutionException {
+	protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
+			throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
 		super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
 		if (rc.successCount != 0) {
-			throw new MojoFailureException("File '" + file
-					+ "' format doesn't match!");
+			throw new MojoFailureException("File '" + file + "' format doesn't match!");
 		}
 		if (rc.failCount != 0) {
 			throw new MojoExecutionException("Error formating '" + file + "' ");
