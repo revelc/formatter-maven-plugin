@@ -1,10 +1,11 @@
 # maven-java-formatter-plugin
 ======================
-[![Build Status](https://api.shippable.com/projects/54cfaf705ab6cc13528a8b4c/badge?branchName=master)](https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest)  
-[![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/velo/maven-formatter-plugin?branch=master)  
+[![Linux Build Status](https://travis-ci.org/revelc/formatter-maven-plugin.svg)](https://travis-ci.org/revelc/formatter-maven-plugin)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/j3cd0dwqlyu0iv2y?svg=true)](https://ci.appveyor.com/project/velo/formatter-maven-plugin)
+[![Coverage Status](https://coveralls.io/repos/revelc/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/maven-formatter-plugin?branch=master)  
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/) 
 [![Issues](https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/issues) 
-[![Forks](https://img.shields.io/github/forks/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/network) 
+[![Forks](https://img.shields.io/github/forks/revelc/maven-formatter-plugin.svg)](https://github.com/revelc/maven-formatter-plugin/network) 
 [![Stars](https://img.shields.io/github/stars/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/stargazers)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/license.txt)
 
@@ -17,7 +18,7 @@ Here I aim to provide file formatting accross languages.  So far, java and javas
 Also, this project also provides m2e configurator.  So you can be sure the IDE form the entire development team is properly configured.
 
 M2e configurator update site:
-http://velo.github.io/maven-formatter-plugin/p2/1.5.0
+http://revelc.github.io/maven-formatter-plugin/p2/1.6.0
 
 
 This software is provided WITHOUT ANY WARRANTY.  Any loss of codes caused by the usage of this plugin is not
