@@ -5,3 +5,5 @@ jdk:
   - oraclejdk7
   - openjdk7
 
+after_success:
+  - mvn resources:resources jacoco:merge jacoco:report coveralls:report -DrepoToken=OL0MbvrGAzu589jSHioduc5jAOhDxqwGe -Pcoveralls -N -B
