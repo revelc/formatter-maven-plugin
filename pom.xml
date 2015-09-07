@@ -142,7 +142,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>1.4.1</version>
                     <configuration>
                         <rules>
                             <requireMavenVersion>
@@ -572,7 +572,7 @@
                                             <pluginExecutionFilter>
                                                 <groupId>org.apache.maven.plugins</groupId>
                                                 <artifactId>maven-enforcer-plugin</artifactId>
-                                                <versionRange>[1.4,)</versionRange>
+                                                <versionRange>[1.4.1,)</versionRange>
                                                 <goals>
                                                     <goal>enforce</goal>
                                                 </goals>
