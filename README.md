@@ -28,7 +28,6 @@ before using this plugin.
 ##How to use
 
 View the Maven site documentation for the latest release [here](http://code.revelc.net/formatter-maven-plugin/)
-http://code.revelc.net/formatter-maven-plugin/0.4/
 
 ##Eclipse Compatibility
 
