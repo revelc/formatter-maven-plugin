@@ -568,20 +568,20 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
 			configInput = this.resourceManager.getResourceAsInputStream(newConfigFile);
 		} catch (ResourceNotFoundException e) {
-			throw new MojoExecutionException("Config file [" + this.configFile + "] cannot be found", e);
+			throw new MojoExecutionException("Config file [" + newConfigFile + "] cannot be found", e);
 		}
 
 		if (configInput == null) {
-			throw new MojoExecutionException("Config file [" + this.configFile + "] does not exist");
+			throw new MojoExecutionException("Config file [" + newConfigFile + "] does not exist");
 		}
 		try {
 
 			ConfigReader configReader = new ConfigReader();
 			return configReader.read(configInput);
 		} catch (IOException e) {
-			throw new MojoExecutionException("Cannot read config file [" + this.configFile + "]", e);
+			throw new MojoExecutionException("Cannot read config file [" + newConfigFile + "]", e);
 		} catch (SAXException e) {
-			throw new MojoExecutionException("Cannot parse config file [" + this.configFile + "]", e);
+			throw new MojoExecutionException("Cannot parse config file [" + newConfigFile + "]", e);
 		} catch (ConfigReadException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
