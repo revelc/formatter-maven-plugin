@@ -22,7 +22,6 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
@@ -30,12 +29,13 @@ import net.revelc.code.formatter.Result;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
+import org.junit.Assert;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
-public abstract class AbstractFormatterTest extends TestCase {
+public abstract class AbstractFormatterTest {
 
 	protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1) throws IOException {
 		File originalSourceFile = new File("src/test/resources/", fileUnderTest);
@@ -79,7 +79,7 @@ public abstract class AbstractFormatterTest extends TestCase {
 			}
 		});
 		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
-		assertEquals(Result.SUCCESS, r);
+		Assert.assertEquals(Result.SUCCESS, r);
 
 		byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
 		StringBuffer sb = new StringBuffer("");
@@ -87,7 +87,7 @@ public abstract class AbstractFormatterTest extends TestCase {
 			sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
 		}
 
-		assertEquals(expectedSha1, sb.toString());
+		Assert.assertEquals(expectedSha1, sb.toString());
 	}
 
 }
