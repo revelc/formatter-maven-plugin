@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.FileUtils;
@@ -88,6 +89,9 @@ public abstract class AbstractCacheableFormatter {
 			return null;
 		}
 		if (current == ending) {
+			return null;
+		}
+		if (ending == LineEnding.AUTO && Objects.equals(current.getChars(), ending.getChars())) {
 			return null;
 		}
 
