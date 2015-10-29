@@ -376,7 +376,7 @@
                         <exclude>**/src/test/resources/**</exclude>
                         <exclude>**/target/**</exclude>
                     </excludes>
-                    <lineEnding>LF</lineEnding>
+                    <lineEnding>AUTO</lineEnding>
                 </configuration>
                 <dependencies>
                     <dependency>
