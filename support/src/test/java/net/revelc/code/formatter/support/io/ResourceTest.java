@@ -57,6 +57,9 @@ public class ResourceTest {
 	 */
 	private static final String FILE_ROOT_TEST_FILE = "file:src/test/resources/test_file";
 
+	/** System line endings */
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
 	/**
 	 * Test method for {@link Resource#asInputStream()}.
 	 * <p />
@@ -70,7 +73,7 @@ public class ResourceTest {
 		InputStream stream = forPath(ROOT_TEST_FILE).toInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
-		assertEquals("alpha\nbeta", result);
+		assertEquals("alpha" + ResourceTest.LINE_SEPARATOR + "beta", result);
 	}
 
 	/**
@@ -86,7 +89,7 @@ public class ResourceTest {
 		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).toInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
-		assertEquals("alpha subpackage\nbeta subpackage", result);
+		assertEquals("alpha subpackage" + ResourceTest.LINE_SEPARATOR + "beta subpackage", result);
 	}
 
 	/**
@@ -111,7 +114,7 @@ public class ResourceTest {
 	@Test
 	public void testAsString() throws UnknownResourceException {
 		String result = forPath(SUBPACKAGE_TEST_FILE).asString();
-		assertEquals("alpha subpackage\nbeta subpackage", result);
+		assertEquals("alpha subpackage" + ResourceTest.LINE_SEPARATOR + "beta subpackage", result);
 	}
 
 	/**
@@ -127,7 +130,7 @@ public class ResourceTest {
 		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).toInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
-		assertEquals("alpha subpackage\nbeta subpackage", result);
+		assertEquals("alpha subpackage" + ResourceTest.LINE_SEPARATOR + "beta subpackage", result);
 	}
 
 	/**
@@ -143,7 +146,7 @@ public class ResourceTest {
 		InputStream stream = forPath(FILE_ROOT_TEST_FILE).toInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
-		assertEquals("alpha\nbeta", result);
+		assertEquals("alpha" + ResourceTest.LINE_SEPARATOR + "beta", result);
 	}
 
 	/**
@@ -220,6 +223,6 @@ public class ResourceTest {
 	@Test
 	public void testForPath() throws UnknownResourceException {
 		String result = forPath(ROOT_TEST_FILE).asString();
-		assertEquals("alpha\nbeta", result);
+		assertEquals("alpha" + ResourceTest.LINE_SEPARATOR + "beta", result);
 	}
 }
