@@ -285,10 +285,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 			long endClock = System.currentTimeMillis();
 
-			log.info("Successfully formatted: " + rc.successCount + " file(s)");
-			log.info("Fail to format		: " + rc.failCount + " file(s)");
-			log.info("Skipped				: " + rc.skippedCount + " file(s)");
-			log.info("Approximate time taken: " + ((endClock - startClock) / 1000) + "s");
+			log.info("Successfully formatted:          " + rc.successCount + " file(s)");
+			log.info("Fail to format:                  " + rc.failCount + " file(s)");
+			log.info("Skipped:                         " + rc.skippedCount + " file(s)");
+			log.info("Approximate time taken:          " + ((endClock - startClock) / 1000) + "s");
 		}
 	}
 
