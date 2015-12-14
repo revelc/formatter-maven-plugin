@@ -26,9 +26,9 @@ import net.revelc.code.formatter.java.JavaFormatter;
  */
 public class JavaFormatterTest extends AbstractFormatterTest {
 
-	@Test
-	public void testDoFormatFile() throws Exception {
-		doTestFormat(new JavaFormatter(), "AnyClass.java", "782bb452c7080a7e0bd2eed57d4d2ce2b7febaa3");
-	}
+    @Test
+    public void testDoFormatFile() throws Exception {
+        doTestFormat(new JavaFormatter(), "AnyClass.java", "782bb452c7080a7e0bd2eed57d4d2ce2b7febaa3");
+    }
 
 }

@@ -34,60 +34,60 @@ import net.revelc.code.formatter.model.ConfigReader;
  */
 public class ConfigReaderTest {
 
-	/**
-	 * Test successfully read a config file.
-	 *
-	 * @throws Exception the exception
-	 */
-	@Test
-	public void test_success_read_config() throws Exception {
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		try (InputStream in = cl.getResourceAsStream("sample-config.xml")) {
-			ConfigReader configReader = new ConfigReader();
-			Map<String, String> config = configReader.read(in);
-			Assert.assertNotNull(config);
-			Assert.assertEquals(264, config.keySet().size());
-			// test get one of the entry in the file
-			Assert.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
-		}
-	}
+    /**
+     * Test successfully read a config file.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void test_success_read_config() throws Exception {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try (InputStream in = cl.getResourceAsStream("sample-config.xml")) {
+            ConfigReader configReader = new ConfigReader();
+            Map<String, String> config = configReader.read(in);
+            Assert.assertNotNull(config);
+            Assert.assertEquals(264, config.keySet().size());
+            // test get one of the entry in the file
+            Assert.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+        }
+    }
 
-	/**
-	 * Test reading an invalid config file.
-	 *
-	 * @throws Exception the exception
-	 */
-	@Test
-	public void test_read_invalid_config() throws Exception {
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
-			ConfigReader configReader = new ConfigReader();
-			try {
-				configReader.read(in);
-				Assert.fail("Expected SAXException to be thrown");
-			} catch (SAXException e) {
-				// ignore
-			}
-		}
-	}
+    /**
+     * Test reading an invalid config file.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void test_read_invalid_config() throws Exception {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
+            ConfigReader configReader = new ConfigReader();
+            try {
+                configReader.read(in);
+                Assert.fail("Expected SAXException to be thrown");
+            } catch (SAXException e) {
+                // ignore
+            }
+        }
+    }
 
-	/**
-	 * Test reading an invalid config file.
-	 *
-	 * @throws Exception the exception
-	 */
-	@Test
-	public void test_read_invalid_config2() throws Exception {
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
-			ConfigReader configReader = new ConfigReader();
-			try {
-				configReader.read(in);
-				Assert.fail("Expected ConfigReadException to be thrown");
-			} catch (ConfigReadException e) {
-				// ignore
-			}
-		}
-	}
+    /**
+     * Test reading an invalid config file.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void test_read_invalid_config2() throws Exception {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
+            ConfigReader configReader = new ConfigReader();
+            try {
+                configReader.read(in);
+                Assert.fail("Expected ConfigReadException to be thrown");
+            } catch (ConfigReadException e) {
+                // ignore
+            }
+        }
+    }
 
 }

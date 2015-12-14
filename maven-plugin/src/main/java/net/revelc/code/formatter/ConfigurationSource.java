@@ -26,16 +26,16 @@ import org.apache.maven.plugin.logging.Log;
  */
 public interface ConfigurationSource {
 
-	Log getLog();
+    Log getLog();
 
-	String getCompilerSources();
+    String getCompilerSources();
 
-	String getCompilerCompliance();
+    String getCompilerCompliance();
 
-	String getCompilerCodegenTargetPlatform();
+    String getCompilerCodegenTargetPlatform();
 
-	File getTargetDirectory();
+    File getTargetDirectory();
 
-	Charset getEncoding();
+    Charset getEncoding();
 
 }

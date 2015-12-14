@@ -24,45 +24,45 @@ package net.revelc.code.formatter.model;
  */
 public class Setting {
 
-	/** The id. */
-	private String id;
+    /** The id. */
+    private String id;
 
-	/** The value. */
-	private String value;
+    /** The value. */
+    private String value;
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public String getId() {
-		return this.id;
-	}
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public String getId() {
+        return this.id;
+    }
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param newId the new id
-	 */
-	public void setId(String newId) {
-		this.id = newId;
-	}
+    /**
+     * Sets the id.
+     *
+     * @param newId the new id
+     */
+    public void setId(String newId) {
+        this.id = newId;
+    }
 
-	/**
-	 * Gets the value.
-	 *
-	 * @return the value
-	 */
-	public String getValue() {
-		return this.value;
-	}
+    /**
+     * Gets the value.
+     *
+     * @return the value
+     */
+    public String getValue() {
+        return this.value;
+    }
 
-	/**
-	 * Sets the value.
-	 *
-	 * @param newValue the new value
-	 */
-	public void setValue(String newValue) {
-		this.value = newValue;
-	}
+    /**
+     * Sets the value.
+     *
+     * @param newValue the new value
+     */
+    public void setValue(String newValue) {
+        this.value = newValue;
+    }
 }

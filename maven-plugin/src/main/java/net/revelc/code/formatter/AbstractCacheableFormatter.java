@@ -32,72 +32,72 @@ import org.eclipse.text.edits.MalformedTreeException;
  */
 public abstract class AbstractCacheableFormatter {
 
-	protected Log log;
+    protected Log log;
 
-	protected Charset encoding;
+    protected Charset encoding;
 
-	public AbstractCacheableFormatter() {
-		super();
-	}
+    public AbstractCacheableFormatter() {
+        super();
+    }
 
-	protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
+    protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
-	protected void initCfg(ConfigurationSource cfg) {
-		this.log = cfg.getLog();
-		this.encoding = cfg.getEncoding();
-	}
+    protected void initCfg(ConfigurationSource cfg) {
+        this.log = cfg.getLog();
+        this.encoding = cfg.getEncoding();
+    }
 
-	public Result formatFile(File file, LineEnding ending, boolean dryRun) {
-		try {
-			this.log.debug("Processing file: " + file);
-			String code = FileUtils.fileRead(file, this.encoding.name());
-			String formattedCode = doFormat(code, ending);
+    public Result formatFile(File file, LineEnding ending, boolean dryRun) {
+        try {
+            this.log.debug("Processing file: " + file);
+            String code = FileUtils.fileRead(file, this.encoding.name());
+            String formattedCode = doFormat(code, ending);
 
-			if (formattedCode == null) {
-				formattedCode = fixLineEnding(code, ending);
-			}
+            if (formattedCode == null) {
+                formattedCode = fixLineEnding(code, ending);
+            }
 
-			if (formattedCode == null) {
-				this.log.debug("Equal code. Not writing result to file.");
-				return Result.SKIPPED;
-			}
+            if (formattedCode == null) {
+                this.log.debug("Equal code. Not writing result to file.");
+                return Result.SKIPPED;
+            }
 
-			if (!dryRun) {
-				FileUtils.fileWrite(file, this.encoding.name(), formattedCode);
-			}
+            if (!dryRun) {
+                FileUtils.fileWrite(file, this.encoding.name(), formattedCode);
+            }
 
-			return Result.SUCCESS;
-		} catch (IOException e) {
-			this.log.warn(e);
-			return Result.FAIL;
-		} catch (MalformedTreeException e) {
-			this.log.warn(e);
-			return Result.FAIL;
-		} catch (BadLocationException e) {
-			this.log.warn(e);
-			return Result.FAIL;
-		}
-	}
+            return Result.SUCCESS;
+        } catch (IOException e) {
+            this.log.warn(e);
+            return Result.FAIL;
+        } catch (MalformedTreeException e) {
+            this.log.warn(e);
+            return Result.FAIL;
+        } catch (BadLocationException e) {
+            this.log.warn(e);
+            return Result.FAIL;
+        }
+    }
 
-	private String fixLineEnding(String code, LineEnding ending) {
-		if (ending == LineEnding.KEEP) {
-			return null;
-		}
+    private String fixLineEnding(String code, LineEnding ending) {
+        if (ending == LineEnding.KEEP) {
+            return null;
+        }
 
-		LineEnding current = LineEnding.determineLineEnding(code);
-		if (current == LineEnding.UNKNOW) {
-			return null;
-		}
-		if (current == ending) {
-			return null;
-		}
-		if (ending == LineEnding.AUTO && Objects.equals(current.getChars(), ending.getChars())) {
-			return null;
-		}
+        LineEnding current = LineEnding.determineLineEnding(code);
+        if (current == LineEnding.UNKNOW) {
+            return null;
+        }
+        if (current == ending) {
+            return null;
+        }
+        if (ending == LineEnding.AUTO && Objects.equals(current.getChars(), ending.getChars())) {
+            return null;
+        }
 
-		return code.replace(current.getChars(), ending.getChars());
-	}
+        return code.replace(current.getChars(), ending.getChars());
+    }
 
-	protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
+    protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
 
 }

@@ -29,47 +29,47 @@ import net.revelc.code.formatter.support.text.Template;
  */
 public class TemplateTest {
 
-	/**
-	 * Test method for {@link Template#format(java.lang.String[])}.
-	 */
-	@Test
-	public final void testFormatStringArray() {
-		Template specimen = Template.as("one: %s, two: %s");
-		String result = specimen.format("alpha", "beta");
+    /**
+     * Test method for {@link Template#format(java.lang.String[])}.
+     */
+    @Test
+    public final void testFormatStringArray() {
+        Template specimen = Template.as("one: %s, two: %s");
+        String result = specimen.format("alpha", "beta");
 
-		assertEquals("one: alpha, two: beta", result);
-	}
+        assertEquals("one: alpha, two: beta", result);
+    }
 
-	/**
-	 * Test method for {@link Template#format(Locale, java.lang.String[])}.
-	 */
-	@Test
-	public final void testFormatWithLocaleStringArray() {
-		Template specimen = Template.as("one: %s, two: %s");
-		String result = specimen.formatWithLocale(Locale.US, "alpha", "beta");
+    /**
+     * Test method for {@link Template#format(Locale, java.lang.String[])}.
+     */
+    @Test
+    public final void testFormatWithLocaleStringArray() {
+        Template specimen = Template.as("one: %s, two: %s");
+        String result = specimen.formatWithLocale(Locale.US, "alpha", "beta");
 
-		assertEquals("one: alpha, two: beta", result);
-	}
+        assertEquals("one: alpha, two: beta", result);
+    }
 
-	/**
-	 * Test method for {@link Template#as(java.lang.String)}.
-	 * <p />
-	 * This test case assumes a valid template string.
-	 */
-	@Test
-	public final void testCreateValidTemplate() {
-		Template result = Template.as("one: %s, two: %s");
+    /**
+     * Test method for {@link Template#as(java.lang.String)}.
+     * <p />
+     * This test case assumes a valid template string.
+     */
+    @Test
+    public final void testCreateValidTemplate() {
+        Template result = Template.as("one: %s, two: %s");
 
-		assertNotNull(result);
-	}
+        assertNotNull(result);
+    }
 
-	/**
-	 * Test method for {@link Template#as(java.lang.String)}.
-	 * <p />
-	 * This test case assumes a null template string.
-	 */
-	@Test(expected = NullPointerException.class)
-	public final void testCreateNullTemplate() {
-		Template.as(null);
-	}
+    /**
+     * Test method for {@link Template#as(java.lang.String)}.
+     * <p />
+     * This test case assumes a null template string.
+     */
+    @Test(expected = NullPointerException.class)
+    public final void testCreateNullTemplate() {
+        Template.as(null);
+    }
 }
