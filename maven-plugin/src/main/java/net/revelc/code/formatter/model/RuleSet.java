@@ -28,24 +28,24 @@ import org.apache.commons.digester3.RuleSetBase;
  */
 class RuleSet extends RuleSetBase {
 
-	/**
-	 * Adds the rule instances.
-	 *
-	 * @param digester the digester
-	 * @see org.apache.commons.digester3.RuleSetBase#addRuleInstances(org.apache.commons.digester.Digester)
-	 */
-	@Override
-	public void addRuleInstances(Digester digester) {
-		digester.addObjectCreate("profiles", Profiles.class);
-		digester.addObjectCreate("profiles/profile", Profile.class);
-		digester.addObjectCreate("profiles/profile/setting", Setting.class);
+    /**
+     * Adds the rule instances.
+     *
+     * @param digester the digester
+     * @see org.apache.commons.digester3.RuleSetBase#addRuleInstances(org.apache.commons.digester.Digester)
+     */
+    @Override
+    public void addRuleInstances(Digester digester) {
+        digester.addObjectCreate("profiles", Profiles.class);
+        digester.addObjectCreate("profiles/profile", Profile.class);
+        digester.addObjectCreate("profiles/profile/setting", Setting.class);
 
-		digester.addSetNext("profiles/profile", "addProfile");
-		digester.addSetNext("profiles/profile/setting", "addSetting");
+        digester.addSetNext("profiles/profile", "addProfile");
+        digester.addSetNext("profiles/profile/setting", "addSetting");
 
-		digester.addSetProperties("profiles/profile", "kind", "kind");
-		digester.addSetProperties("profiles/profile/setting", "id", "id");
-		digester.addSetProperties("profiles/profile/setting", "value", "value");
-	}
+        digester.addSetProperties("profiles/profile", "kind", "kind");
+        digester.addSetProperties("profiles/profile/setting", "id", "id");
+        digester.addSetProperties("profiles/profile/setting", "value", "value");
+    }
 
 }

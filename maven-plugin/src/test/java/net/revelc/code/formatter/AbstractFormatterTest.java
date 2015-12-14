@@ -37,57 +37,57 @@ import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest {
 
-	protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1) throws IOException {
-		File originalSourceFile = new File("src/test/resources/", fileUnderTest);
-		File sourceFile = new File("target/test-classes/", fileUnderTest);
+    protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1) throws IOException {
+        File originalSourceFile = new File("src/test/resources/", fileUnderTest);
+        File sourceFile = new File("target/test-classes/", fileUnderTest);
 
-		Files.copy(originalSourceFile, sourceFile);
+        Files.copy(originalSourceFile, sourceFile);
 
-		Map<String, String> options = new HashMap<>();
-		final File targetDir = new File("target/testoutput");
-		targetDir.mkdirs();
-		formatter.init(options, new ConfigurationSource() {
+        Map<String, String> options = new HashMap<>();
+        final File targetDir = new File("target/testoutput");
+        targetDir.mkdirs();
+        formatter.init(options, new ConfigurationSource() {
 
-			@Override
-			public File getTargetDirectory() {
-				return targetDir;
-			}
+            @Override
+            public File getTargetDirectory() {
+                return targetDir;
+            }
 
-			@Override
-			public Log getLog() {
-				return new SystemStreamLog();
-			}
+            @Override
+            public Log getLog() {
+                return new SystemStreamLog();
+            }
 
-			@Override
-			public Charset getEncoding() {
-				return Charsets.UTF_8;
-			}
+            @Override
+            public Charset getEncoding() {
+                return Charsets.UTF_8;
+            }
 
-			@Override
-			public String getCompilerSources() {
-				return "1.8";
-			}
+            @Override
+            public String getCompilerSources() {
+                return "1.8";
+            }
 
-			@Override
-			public String getCompilerCompliance() {
-				return "1.8";
-			}
+            @Override
+            public String getCompilerCompliance() {
+                return "1.8";
+            }
 
-			@Override
-			public String getCompilerCodegenTargetPlatform() {
-				return "1.8";
-			}
-		});
-		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
-		Assert.assertEquals(Result.SUCCESS, r);
+            @Override
+            public String getCompilerCodegenTargetPlatform() {
+                return "1.8";
+            }
+        });
+        Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
+        Assert.assertEquals(Result.SUCCESS, r);
 
-		byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
-		StringBuffer sb = new StringBuffer("");
-		for (int i = 0; i < sha1.length; i++) {
-			sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
-		}
+        byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
+        StringBuffer sb = new StringBuffer("");
+        for (int i = 0; i < sha1.length; i++) {
+            sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
+        }
 
-		Assert.assertEquals(expectedSha1, sb.toString());
-	}
+        Assert.assertEquals(expectedSha1, sb.toString());
+    }
 
 }

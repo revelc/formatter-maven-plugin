@@ -32,34 +32,34 @@ import org.xml.sax.SAXException;
  */
 public class ConfigReader {
 
-	/**
-	 * Read from the <code>input</code> and return it's configuration settings
-	 * as a {@link Map}.
-	 *
-	 * @param input the input
-	 * @return return {@link Map} with all the configurations read from the
-	 *         config file, or throws an exception if there's a problem reading
-	 *         the input, e.g.: invalid XML.
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws SAXException the SAX exception
-	 * @throws ConfigReadException the config read exception
-	 */
-	public Map<String, String> read(InputStream input) throws IOException, SAXException, ConfigReadException {
-		Digester digester = new Digester();
-		digester.addRuleSet(new RuleSet());
+    /**
+     * Read from the <code>input</code> and return it's configuration settings
+     * as a {@link Map}.
+     *
+     * @param input the input
+     * @return return {@link Map} with all the configurations read from the
+     *         config file, or throws an exception if there's a problem reading
+     *         the input, e.g.: invalid XML.
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws SAXException the SAX exception
+     * @throws ConfigReadException the config read exception
+     */
+    public Map<String, String> read(InputStream input) throws IOException, SAXException, ConfigReadException {
+        Digester digester = new Digester();
+        digester.addRuleSet(new RuleSet());
 
-		Object result = digester.parse(input);
-		if (result == null || !(result instanceof Profiles)) {
-			throw new ConfigReadException("No profiles found in config file");
-		}
+        Object result = digester.parse(input);
+        if (result == null || !(result instanceof Profiles)) {
+            throw new ConfigReadException("No profiles found in config file");
+        }
 
-		Profiles profiles = (Profiles) result;
-		List<Map<String, String>> list = profiles.getProfiles();
-		if (list.size() == 0) {
-			throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
-		}
+        Profiles profiles = (Profiles) result;
+        List<Map<String, String>> list = profiles.getProfiles();
+        if (list.size() == 0) {
+            throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
+        }
 
-		return list.get(0);
-	}
+        return list.get(0);
+    }
 
 }

@@ -38,32 +38,32 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false)
 public class ValidateMojo extends FormatterMojo {
 
-	@Parameter(defaultValue = "false", property = "aggregator", required = true)
-	private boolean aggregator;
+    @Parameter(defaultValue = "false", property = "aggregator", required = true)
+    private boolean aggregator;
 
-	@Parameter(defaultValue = "${project.executionRoot}", required = true)
-	private boolean executionRoot;
+    @Parameter(defaultValue = "${project.executionRoot}", required = true)
+    private boolean executionRoot;
 
-	@Override
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		if (this.aggregator && !this.executionRoot) {
-			return;
-		}
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (this.aggregator && !this.executionRoot) {
+            return;
+        }
 
-		super.execute();
-	}
+        super.execute();
+    }
 
-	@Override
-	protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
-			throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
-		super.doFormatFile(file, rc, hashCache, basedirPath, true);
+    @Override
+    protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
+            throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
+        super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
-		if (rc.successCount != 0) {
-			throw new MojoFailureException("File '" + file + "' format doesn't match!");
-		}
-		if (rc.failCount != 0) {
-			throw new MojoExecutionException("Error formating '" + file + "' ");
-		}
-	}
+        if (rc.successCount != 0) {
+            throw new MojoFailureException("File '" + file + "' format doesn't match!");
+        }
+        if (rc.failCount != 0) {
+            throw new MojoExecutionException("Error formating '" + file + "' ");
+        }
+    }
 
 }

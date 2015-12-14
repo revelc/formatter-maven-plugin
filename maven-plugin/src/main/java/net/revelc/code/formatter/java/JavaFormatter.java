@@ -34,39 +34,39 @@ import net.revelc.code.formatter.LineEnding;
 
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
-	CodeFormatter formatter;
+    CodeFormatter formatter;
 
-	@Override
-	public void init(Map<String, String> options, ConfigurationSource cfg) {
-		if (options.isEmpty()) {
-			options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-			options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
-		}
+    @Override
+    public void init(Map<String, String> options, ConfigurationSource cfg) {
+        if (options.isEmpty()) {
+            options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
+            options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
+            options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
+        }
 
-		super.initCfg(cfg);
+        super.initCfg(cfg);
 
-		this.formatter = ToolFactory.createCodeFormatter(options);
-	}
+        this.formatter = ToolFactory.createCodeFormatter(options);
+    }
 
-	@Override
-	public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
-		TextEdit te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
-				ending.getChars());
-		if (te == null) {
-			this.log.debug(
-					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
-			return null;
-		}
+    @Override
+    public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
+        TextEdit te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
+                ending.getChars());
+        if (te == null) {
+            this.log.debug(
+                    "Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
+            return null;
+        }
 
-		IDocument doc = new Document(code);
-		te.apply(doc);
-		String formattedCode = doc.get();
+        IDocument doc = new Document(code);
+        te.apply(doc);
+        String formattedCode = doc.get();
 
-		if (code.equals(formattedCode)) {
-			return null;
-		}
-		return formattedCode;
-	}
+        if (code.equals(formattedCode)) {
+            return null;
+        }
+        return formattedCode;
+    }
 
 }

@@ -46,123 +46,123 @@ import net.revelc.code.formatter.connector.FormatterCore;
 
 public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 
-	public enum Formatter {
-		JAVA("configFile", "src/config/eclipse/formatter/java.xml");
+    public enum Formatter {
+        JAVA("configFile", "src/config/eclipse/formatter/java.xml");
 
-		private final String configuratioName;
-		private final String defaultPath;
+        private final String configuratioName;
+        private final String defaultPath;
 
-		private Formatter(String newConfiguratioName, String newDefaultPath) {
-			this.configuratioName = newConfiguratioName;
-			this.defaultPath = newDefaultPath;
-		}
+        private Formatter(String newConfiguratioName, String newDefaultPath) {
+            this.configuratioName = newConfiguratioName;
+            this.defaultPath = newDefaultPath;
+        }
 
-		public String getConfigurationName() {
-			return this.configuratioName;
-		}
+        public String getConfigurationName() {
+            return this.configuratioName;
+        }
 
-		public String getDefaultPath() {
-			return this.defaultPath;
-		}
-	}
+        public String getDefaultPath() {
+            return this.defaultPath;
+        }
+    }
 
-	@Override
-	public AbstractBuildParticipant getBuildParticipant(IMavenProjectFacade projectFacade, MojoExecution execution,
-			IPluginExecutionMetadata executionMetadata) {
-		// nothing to do
-		return null;
-	}
+    @Override
+    public AbstractBuildParticipant getBuildParticipant(IMavenProjectFacade projectFacade, MojoExecution execution,
+            IPluginExecutionMetadata executionMetadata) {
+        // nothing to do
+        return null;
+    }
 
-	@Override
-	public void configure(ProjectConfigurationRequest request, IProgressMonitor monitor) throws CoreException {
-		IProject eclipseProject = request.getProject();
+    @Override
+    public void configure(ProjectConfigurationRequest request, IProgressMonitor monitor) throws CoreException {
+        IProject eclipseProject = request.getProject();
 
-		printSettings();
-		if (eclipseProject.hasNature(JavaCore.NATURE_ID)) {
-			Xpp3Dom[] settings = parseConfigurationFile(request, monitor);
+        printSettings();
+        if (eclipseProject.hasNature(JavaCore.NATURE_ID)) {
+            Xpp3Dom[] settings = parseConfigurationFile(request, monitor);
 
-			for (Xpp3Dom setting : settings) {
-				Platform.getPreferencesService().getRootNode().node("project").node(eclipseProject.getName())
-						.node(JavaCore.PLUGIN_ID).put(setting.getAttribute("id"), setting.getAttribute("value"));
-			}
+            for (Xpp3Dom setting : settings) {
+                Platform.getPreferencesService().getRootNode().node("project").node(eclipseProject.getName())
+                        .node(JavaCore.PLUGIN_ID).put(setting.getAttribute("id"), setting.getAttribute("value"));
+            }
 
-			Platform.getPreferencesService().getRootNode().node("project").node(eclipseProject.getName())
-					.node("org.eclipse.jdt.ui").put("cleanup.format_source_code", "true");
-		}
+            Platform.getPreferencesService().getRootNode().node("project").node(eclipseProject.getName())
+                    .node("org.eclipse.jdt.ui").put("cleanup.format_source_code", "true");
+        }
 
-		// jsdtConfigFile = cfg.getChild("configJsFile").getValue();
-		// src/config/eclipse/formatter/javascript.xml
-	}
+        // jsdtConfigFile = cfg.getChild("configJsFile").getValue();
+        // src/config/eclipse/formatter/javascript.xml
+    }
 
-	private Xpp3Dom[] parseConfigurationFile(ProjectConfigurationRequest request, IProgressMonitor monitor)
-			throws CoreException {
-		Xpp3Dom dom;
-		try (InputStream content = readConfigFile(Formatter.JAVA, request, monitor)) {
-			dom = Xpp3DomBuilder.build(content, "UTF-8");
-		} catch (XmlPullParserException e) {
-			throw new CoreException(new Status(IStatus.ERROR, FormatterCore.PLUGIN_ID, "Invalid configuration XML", e));
-		} catch (IOException e) {
-			throw new CoreException(
-					new Status(IStatus.ERROR, FormatterCore.PLUGIN_ID, "Unable to read configuration XML", e));
-		}
-		return dom.getChild("profile").getChildren("setting");
-	}
+    private Xpp3Dom[] parseConfigurationFile(ProjectConfigurationRequest request, IProgressMonitor monitor)
+            throws CoreException {
+        Xpp3Dom dom;
+        try (InputStream content = readConfigFile(Formatter.JAVA, request, monitor)) {
+            dom = Xpp3DomBuilder.build(content, "UTF-8");
+        } catch (XmlPullParserException e) {
+            throw new CoreException(new Status(IStatus.ERROR, FormatterCore.PLUGIN_ID, "Invalid configuration XML", e));
+        } catch (IOException e) {
+            throw new CoreException(
+                    new Status(IStatus.ERROR, FormatterCore.PLUGIN_ID, "Unable to read configuration XML", e));
+        }
+        return dom.getChild("profile").getChildren("setting");
+    }
 
-	private InputStream readConfigFile(Formatter formatter, ProjectConfigurationRequest request,
-			IProgressMonitor monitor) throws CoreException {
-		IMavenProjectFacade mavenProject = request.getMavenProjectFacade();
-		List<MojoExecution> executions = mavenProject.getMojoExecutions("net.revelc.code.formatter",
-				"formatter-maven-plugin", monitor, "validate");
+    private InputStream readConfigFile(Formatter formatter, ProjectConfigurationRequest request,
+            IProgressMonitor monitor) throws CoreException {
+        IMavenProjectFacade mavenProject = request.getMavenProjectFacade();
+        List<MojoExecution> executions = mavenProject.getMojoExecutions("net.revelc.code.formatter",
+                "formatter-maven-plugin", monitor, "validate");
 
-		MojoExecution execution = executions.get(0);
-		Xpp3Dom cfg = execution.getConfiguration();
-		String javaConfigFile = cfg.getChild(formatter.getConfigurationName()).getValue();
-		if (javaConfigFile == null || javaConfigFile.equalsIgnoreCase("${" + formatter.getConfigurationName() + "}")) {
-			javaConfigFile = formatter.getDefaultPath();
-		}
+        MojoExecution execution = executions.get(0);
+        Xpp3Dom cfg = execution.getConfiguration();
+        String javaConfigFile = cfg.getChild(formatter.getConfigurationName()).getValue();
+        if (javaConfigFile == null || javaConfigFile.equalsIgnoreCase("${" + formatter.getConfigurationName() + "}")) {
+            javaConfigFile = formatter.getDefaultPath();
+        }
 
-		IFile cfgFile = request.getProject().getFile(javaConfigFile);
+        IFile cfgFile = request.getProject().getFile(javaConfigFile);
 
-		if (!cfgFile.exists()) {
-			throw new CoreException(
-					new Status(IStatus.CANCEL, FormatterCore.PLUGIN_ID, "Configuration file not found!"));
-		}
+        if (!cfgFile.exists()) {
+            throw new CoreException(
+                    new Status(IStatus.CANCEL, FormatterCore.PLUGIN_ID, "Configuration file not found!"));
+        }
 
-		return cfgFile.getContents();
-	}
+        return cfgFile.getContents();
+    }
 
-	private void printSettings() {
-		StringBuilder sb = new StringBuilder();
-		Preferences prefs = Platform.getPreferencesService().getRootNode();
-		try {
-			eval(prefs, "\t", sb);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+    private void printSettings() {
+        StringBuilder sb = new StringBuilder();
+        Preferences prefs = Platform.getPreferencesService().getRootNode();
+        try {
+            eval(prefs, "\t", sb);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 
-		File f = new File("tree.txt");
-		try (final FileWriter fw = new FileWriter(f)) {
-			fw.write(sb.toString().toCharArray());
-			f.getAbsolutePath();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
+        File f = new File("tree.txt");
+        try (final FileWriter fw = new FileWriter(f)) {
+            fw.write(sb.toString().toCharArray());
+            f.getAbsolutePath();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 
-	private void eval(Preferences prefs, String spacer, StringBuilder sb) throws Exception {
-		String[] children = prefs.childrenNames();
-		for (String child : children) {
-			sb.append(spacer).append(child).append("\n");
-			eval(prefs.node(child), spacer + "\t", sb);
-		}
-		String[] keys = prefs.keys();
-		for (String key : keys) {
-			sb.append(spacer).append(" * ").append(key).append(": ").append(prefs.get(key, null)).append("\n");
-		}
-	}
+    private void eval(Preferences prefs, String spacer, StringBuilder sb) throws Exception {
+        String[] children = prefs.childrenNames();
+        for (String child : children) {
+            sb.append(spacer).append(child).append("\n");
+            eval(prefs.node(child), spacer + "\t", sb);
+        }
+        String[] keys = prefs.keys();
+        for (String key : keys) {
+            sb.append(spacer).append(" * ").append(key).append(": ").append(prefs.get(key, null)).append("\n");
+        }
+    }
 
-	@Override
-	public void mavenProjectChanged(MavenProjectChangedEvent event, IProgressMonitor monitor) throws CoreException {
-		// Not Implemented
-	}
+    @Override
+    public void mavenProjectChanged(MavenProjectChangedEvent event, IProgressMonitor monitor) throws CoreException {
+        // Not Implemented
+    }
 }

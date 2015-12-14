@@ -25,42 +25,42 @@ import java.util.Locale;
  */
 public final class Template {
 
-	/**
-	 * Template context text.
-	 */
-	private String content;
+    /**
+     * Template context text.
+     */
+    private String content;
 
-	private Template(String newContent) {
-		this.content = requireNonNull(newContent, "content shall not be null");
-	}
+    private Template(String newContent) {
+        this.content = requireNonNull(newContent, "content shall not be null");
+    }
 
-	/**
-	 * Formats the applied args into the template content.
-	 * @param args Arguments to use as source data
-	 * @return Formatted string
-	 */
-	public String format(String... args) {
-		return String.format(this.content, (Object[]) args);
-	}
+    /**
+     * Formats the applied args into the template content.
+     * @param args Arguments to use as source data
+     * @return Formatted string
+     */
+    public String format(String... args) {
+        return String.format(this.content, (Object[]) args);
+    }
 
-	/**
-	 * Formats the applied args into the template content.
-	 * <p />
-	 * The supplied locale is used to format the text.
-	 * @param locale Locale to use for formatting
-	 * @param args Arguments to use as source data
-	 * @return Formatted string
-	 */
-	public String formatWithLocale(Locale locale, String... args) {
-		return String.format(locale, this.content, (Object[]) args);
-	}
+    /**
+     * Formats the applied args into the template content.
+     * <p />
+     * The supplied locale is used to format the text.
+     * @param locale Locale to use for formatting
+     * @param args Arguments to use as source data
+     * @return Formatted string
+     */
+    public String formatWithLocale(Locale locale, String... args) {
+        return String.format(locale, this.content, (Object[]) args);
+    }
 
-	/**
-	 * Provides a template string as a {@link Template} instance.
-	 * @param content template content to wrap
-	 * @return Template instance
-	 */
-	public static Template as(String content) {
-		return new Template(content);
-	}
+    /**
+     * Provides a template string as a {@link Template} instance.
+     * @param content template content to wrap
+     * @return Template instance
+     */
+    public static Template as(String content) {
+        return new Template(content);
+    }
 }
