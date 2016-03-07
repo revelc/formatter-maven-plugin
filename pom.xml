@@ -5,7 +5,6 @@
         <groupId>io.takari.tycho</groupId>
         <artifactId>tycho-support</artifactId>
         <version>1.1.0</version>
-        <relativePath></relativePath>
     </parent>
     <groupId>net.revelc.code.formatter</groupId>
     <artifactId>parent</artifactId>
@@ -72,7 +71,7 @@
         </contributor>
     </contributors>
     <prerequisites>
-        <maven>3.2.5</maven>
+        <maven>${maven.min-version}</maven>
     </prerequisites>
     <modules>
         <module>formatters</module>
@@ -110,9 +109,9 @@
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.min-version>3.2.5</maven.min-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.min-version>3.0.5</maven.min-version>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <build>
@@ -122,6 +121,22 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.4</version>
+                    <executions>
+                        <execution>
+                            <id>default-descriptor</id>
+                            <goals>
+                                <goal>descriptor</goal>
+                            </goals>
+                            <phase>process-classes</phase>
+                        </execution>
+                        <execution>
+                            <id>help-descriptor</id>
+                            <goals>
+                                <goal>helpmojo</goal>
+                            </goals>
+                            <phase>process-classes</phase>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -343,6 +358,7 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
+                <inherited>false</inherited>
                 <executions>
                     <execution>
                         <goals>
@@ -384,16 +400,29 @@
                 <artifactId>sortpom-maven-plugin</artifactId>
                 <version>2.4.0</version>
                 <configuration>
+                    <createBackupFile>false</createBackupFile>
+                    <expandEmptyElements>false</expandEmptyElements>
+                    <lineSeparator>\n</lineSeparator>
                     <nrOfIndentSpace>4</nrOfIndentSpace>
                     <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-                    <keepBlankLines>true</keepBlankLines>
+                    <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                    <sortProperties>true</sortProperties>
+                    <verifyFail>Stop</verifyFail>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>sort-pom</id>
                         <goals>
                             <goal>sort</goal>
                         </goals>
-                        <phase>verify</phase>
+                        <phase>process-sources</phase>
+                    </execution>
+                    <execution>
+                        <id>verify-pom</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                        <phase>process-resources</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -438,10 +467,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.4</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
                 <configuration>
                     <failOnError>false</failOnError>
                 </configuration>
@@ -449,18 +480,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.8.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.19.1</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
+                <version>2.2</version>
             </plugin>
         </plugins>
     </reporting>
@@ -596,7 +631,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore></ignore>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                         <pluginExecution>
@@ -609,7 +644,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore></ignore>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>

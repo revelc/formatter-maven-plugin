@@ -9,8 +9,8 @@
     <artifactId>net.revelc.code.formatter.site</artifactId>
     <packaging>eclipse-repository</packaging>
     <properties>
-        <serverIdInSettingsXml>ossrh</serverIdInSettingsXml>
-        <repositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repositoryUrl>
         <repositoryPathId>net/revelc/code/formatter/net.revelc.code.formatter.feature</repositoryPathId>
+        <repositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repositoryUrl>
+        <serverIdInSettingsXml>ossrh</serverIdInSettingsXml>
     </properties>
 </project>
