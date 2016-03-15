@@ -55,7 +55,7 @@ public class ConfigReader {
 
         Profiles profiles = (Profiles) result;
         List<Map<String, String>> list = profiles.getProfiles();
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
         }
 

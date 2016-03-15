@@ -19,4 +19,7 @@ package net.revelc.code.formatter.connector;
 public class FormatterCore {
     public static final String PLUGIN_ID = "net.revelc.code.formatter.connector";
 
+    private FormatterCore() {
+        throw new InstantiationError("Must not instantiate this class.");
+    }
 }
