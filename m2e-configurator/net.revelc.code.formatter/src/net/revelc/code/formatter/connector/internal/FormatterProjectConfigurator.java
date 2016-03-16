@@ -17,11 +17,14 @@
 package net.revelc.code.formatter.connector.internal;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.List;
-
+import java.util.logging.Logger;
 import org.apache.maven.plugin.MojoExecution;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
@@ -46,6 +49,7 @@ import net.revelc.code.formatter.connector.FormatterCore;
 
 public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 
+    private static final Logger LOGGER = Logger.getLogger(FormatterProjectConfigurator.class.getName());
     public enum Formatter {
         JAVA("configFile", "src/config/eclipse/formatter/java.xml");
 
@@ -137,15 +141,15 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
         try {
             eval(prefs, "\t", sb);
         } catch (Exception e1) {
-            e1.printStackTrace();
+            LOGGER.info("Exception in eval " + e1.getMessage());
         }
 
         File f = new File("tree.txt");
-        try (final FileWriter fw = new FileWriter(f)) {
-            fw.write(sb.toString().toCharArray());
+        try (final OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(f), Charset.forName("UTF-8"))) {
+            osw.write(sb.toString().toCharArray());
             f.getAbsolutePath();
         } catch (IOException e1) {
-            e1.printStackTrace();
+            LOGGER.info("Exception in writing in tree.txt " + e1.getMessage());
         }
     }
 
