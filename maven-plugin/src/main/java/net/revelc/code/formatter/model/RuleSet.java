@@ -28,6 +28,9 @@ import org.apache.commons.digester3.RuleSetBase;
  */
 class RuleSet extends RuleSetBase {
 
+    
+    private static final String PROFILES_PROFILE = "profiles/profile";
+    private static final String PROFILES_PROFILE_SETTING = PROFILES_PROFILE + "/setting";
     /**
      * Adds the rule instances.
      *
@@ -37,15 +40,15 @@ class RuleSet extends RuleSetBase {
     @Override
     public void addRuleInstances(Digester digester) {
         digester.addObjectCreate("profiles", Profiles.class);
-        digester.addObjectCreate("profiles/profile", Profile.class);
-        digester.addObjectCreate("profiles/profile/setting", Setting.class);
+        digester.addObjectCreate(PROFILES_PROFILE, Profile.class);
+        digester.addObjectCreate(PROFILES_PROFILE_SETTING, Setting.class);
 
-        digester.addSetNext("profiles/profile", "addProfile");
-        digester.addSetNext("profiles/profile/setting", "addSetting");
+        digester.addSetNext(PROFILES_PROFILE, "addProfile");
+        digester.addSetNext(PROFILES_PROFILE_SETTING, "addSetting");
 
-        digester.addSetProperties("profiles/profile", "kind", "kind");
-        digester.addSetProperties("profiles/profile/setting", "id", "id");
-        digester.addSetProperties("profiles/profile/setting", "value", "value");
+        digester.addSetProperties(PROFILES_PROFILE, "kind", "kind");
+        digester.addSetProperties(PROFILES_PROFILE_SETTING, "id", "id");
+        digester.addSetProperties(PROFILES_PROFILE_SETTING, "value", "value");
     }
 
 }

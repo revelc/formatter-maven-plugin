@@ -80,6 +80,7 @@ import net.revelc.code.formatter.model.ConfigReader;
 @Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
+    private static final String FILE_S = " file(s)";
     /** The Constant CACHE_PROPERTIES_FILENAME. */
     private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
     /** The Constant DEFAULT_INCLUDES. */
@@ -285,9 +286,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
             long endClock = System.currentTimeMillis();
 
-            log.info("Successfully formatted:          " + rc.successCount + " file(s)");
-            log.info("Fail to format:                  " + rc.failCount + " file(s)");
-            log.info("Skipped:                         " + rc.skippedCount + " file(s)");
+            log.info("Successfully formatted:          " + rc.successCount + FILE_S);
+            log.info("Fail to format:                  " + rc.failCount + FILE_S);
+            log.info("Skipped:                         " + rc.skippedCount + FILE_S);
             log.info("Approximate time taken:          " + ((endClock - startClock) / 1000) + "s");
         }
     }

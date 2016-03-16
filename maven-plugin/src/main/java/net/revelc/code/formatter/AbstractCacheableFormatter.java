@@ -79,7 +79,7 @@ public abstract class AbstractCacheableFormatter {
         }
     }
 
-    private String fixLineEnding(String code, LineEnding ending) {
+    private static String fixLineEnding(String code, LineEnding ending) {
         if (ending == LineEnding.KEEP) {
             return null;
         }

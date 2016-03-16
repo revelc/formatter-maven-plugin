@@ -149,7 +149,7 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
         }
     }
 
-    private void eval(Preferences prefs, String spacer, StringBuilder sb) throws Exception {
+    private static void eval(Preferences prefs, String spacer, StringBuilder sb) throws Exception {
         String[] children = prefs.childrenNames();
         for (String child : children) {
             sb.append(spacer).append(child).append("\n");
