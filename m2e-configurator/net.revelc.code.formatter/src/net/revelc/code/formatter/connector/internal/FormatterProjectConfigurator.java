@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2015. All work is copyrighted to their respective
+ * Copyright 2010-2016. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,6 +50,7 @@ import net.revelc.code.formatter.connector.FormatterCore;
 public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 
     private static final Logger LOGGER = Logger.getLogger(FormatterProjectConfigurator.class.getName());
+
     public enum Formatter {
         JAVA("configFile", "src/config/eclipse/formatter/java.xml");
 
