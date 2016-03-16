@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2015. All work is copyrighted to their respective
+ * Copyright 2010-2016. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,9 +28,9 @@ import org.apache.commons.digester3.RuleSetBase;
  */
 class RuleSet extends RuleSetBase {
 
-    
     private static final String PROFILES_PROFILE = "profiles/profile";
     private static final String PROFILES_PROFILE_SETTING = PROFILES_PROFILE + "/setting";
+
     /**
      * Adds the rule instances.
      *
