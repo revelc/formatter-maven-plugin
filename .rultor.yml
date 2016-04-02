@@ -14,3 +14,4 @@ release:
 
 friends:
   - velo/*
+  - velo/feign-jsonpath
