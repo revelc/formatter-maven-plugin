@@ -1,6 +1,6 @@
 # maven-java-formatter-plugin
 ======================
-[![Build Status](https://api.shippable.com/projects/54cfaf705ab6cc13528a8b4c/badge?branchName=master)](https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest)  
+[![Build Status](https://travis-ci.org/${owner}/${name}.svg?branch=master)](https://travis-ci.org/${owner}/${name}?branch=master) 
 [![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/velo/maven-formatter-plugin?branch=master)  
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/) 
 [![Issues](https://img.shields.io/github/issues/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/issues) 

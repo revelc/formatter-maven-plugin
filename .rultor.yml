@@ -1,17 +1,42 @@
-decrypt:
-  settings.xml: "repo/.rultor/settings.xml.asc"
-  pubring.gpg: "repo/.rultor/pubring.gpg.asc"
-  secring.gpg: "repo/.rultor/secring.gpg.asc"
+#
+# Copyright (C) 2016 Marvin H Froeder (marvin@marvinformatics.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+architect:
+- velo
+
+assets:
+  secring.gpg: velo/.assets#maven/secring.gpg
+  settings.xml: velo/.assets#maven/settings.xml
+  pubring.gpg: velo/.assets#maven/pubring.gpg
 
 merge:
-  script:
-    - mvn install -B -T10
+  commanders:
+  - velo
+  script: |-
+    mvn install dependency:go-offline -Pskip-formatter -DskipTests=true -q --settings ../settings.xml -Dgpg.homedir=..
+    mvn install -Pci -B -T10 --settings ../settings.xml
+
+env:
+  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 
 release:
-  script:
-    - mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${tag}
-    - mvn clean deploy -Psonatype-oss-release --settings /home/r/settings.xml -Dgpg.homedir=/home/r/
-
-friends:
-  - velo/*
-  - velo/feign-jsonpath
+  script: |-
+    mvn install dependency:go-offline -Pskip-formatter -DskipTests=true -q --settings ../settings.xml -Dgpg.homedir=..
+    mvn org.eclipse.tycho:tycho-versions-plugin:set-version "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn deploy -Pci -B -T10 -Prelease --settings ../settings.xml -Dgpg.homedir=..
+  commanders:
+  - velo
