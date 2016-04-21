@@ -21,6 +21,18 @@
     <!-- <module>com.marvinformatics.formatter.tests</module> -->
   </modules>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <configuration>
+          <failOnWarning>false</failOnWarning>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
   <repositories>
     <repository>
       <id>m2e-tests</id>

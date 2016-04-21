@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,8 +38,7 @@ public abstract class AbstractCacheableFormatter {
 		super();
 	}
 
-	protected abstract void init(Map<String, String> options,
-			ConfigurationSource cfg);
+	protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
 	protected void initCfg(ConfigurationSource cfg) {
 		this.log = cfg.getLog();
@@ -90,7 +88,6 @@ public abstract class AbstractCacheableFormatter {
 		return code.replace(current.getChars(), ending.getChars());
 	}
 
-	protected abstract String doFormat(String code, LineEnding ending)
-			throws IOException, BadLocationException;
+	protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
 
 }

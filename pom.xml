@@ -97,23 +97,6 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.10</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>unpack-dependencies</goal>
-              </goals>
-              <phase>prepare-package</phase>
-              <configuration>
-                <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                <excludes>META-INF/*</excludes>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
           <configuration>
@@ -134,7 +117,7 @@
             </execution>
           </executions>
         </plugin>
-	  </plugins>
+      </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
@@ -270,6 +253,7 @@
         <groupId>com.marvinformatics.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
         <version>1.6.0.RC4</version>
+        <inherited>false</inherited>
         <configuration>
           <sourceDirectory>${project.basedir}</sourceDirectory>
           <excludes>
@@ -345,11 +329,9 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.10</version>
         <configuration>
           <failOnWarning>true</failOnWarning>
         </configuration>
@@ -362,7 +344,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 
@@ -380,7 +361,6 @@
 
   <inceptionYear>2010</inceptionYear>
 
-
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -395,10 +375,10 @@
       <id>velo</id>
       <name>Marvin Herman Froeder</name>
       <email>velo br at gmail dot com</email>
+      <url>about.me/velo</url>
       <roles>
         <role>owner</role>
       </roles>
-      <url>about.me/velo</url>
     </developer>
   </developers>
   <contributors>
@@ -448,23 +428,21 @@
     <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url>
   </ciManagement>
 
-
   <distributionManagement>
     <repository>
       <id>ossrh</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
     <site>
       <id>gh-pages</id>
       <name>Formatter Maven Plugin GitHub Pages</name>
       <url>git:ssh://git@github.com/velo/formatter-maven-plugin.get?gh-pages#</url>
     </site>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
   </distributionManagement>
-
 
   <profiles>
     <profile>

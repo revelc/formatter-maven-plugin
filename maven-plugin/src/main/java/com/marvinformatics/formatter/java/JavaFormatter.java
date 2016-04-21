@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +31,7 @@ import com.marvinformatics.formatter.ConfigurationSource;
 import com.marvinformatics.formatter.Formatter;
 import com.marvinformatics.formatter.LineEnding;
 
-public class JavaFormatter extends AbstractCacheableFormatter implements
-		Formatter {
+public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
 	CodeFormatter formatter;
 
@@ -41,10 +39,8 @@ public class JavaFormatter extends AbstractCacheableFormatter implements
 	public void init(Map<String, String> options, ConfigurationSource cfg) {
 		if (options.isEmpty()) {
 			options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-			options.put(JavaCore.COMPILER_COMPLIANCE,
-					cfg.getCompilerCompliance());
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
-					cfg.getCompilerCodegenTargetPlatform());
+			options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
+			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
 		}
 
 		super.initCfg(cfg);
@@ -53,13 +49,10 @@ public class JavaFormatter extends AbstractCacheableFormatter implements
 	}
 
 	@Override
-	public String doFormat(String code, LineEnding ending) throws IOException,
-			BadLocationException {
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code,
-				0, code.length(), 0, ending.getChars());
+	public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
+		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, ending.getChars());
 		if (te == null) {
-			log.debug("Code cannot be formatted. Possible cause "
-					+ "is unmatched source/target/compliance version.");
+			log.debug("Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 			return null;
 		}
 

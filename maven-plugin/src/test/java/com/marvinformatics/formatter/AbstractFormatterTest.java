@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +33,8 @@ import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest extends TestCase {
 
-	protected void doTestFormat(Formatter formatter, String fileUnderTest,
-			String expectedSha1) throws IOException, NoSuchAlgorithmException {
+	protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1)
+			throws IOException, NoSuchAlgorithmException {
 		File originalSourceFile = new File("src/test/resources/", fileUnderTest);
 		File sourceFile = new File("target/test-classes/", fileUnderTest);
 
@@ -73,11 +72,10 @@ public abstract class AbstractFormatterTest extends TestCase {
 		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
 		assertEquals(Result.SUCCESS, r);
 
-		byte[] sha1 = Files.hash( sourceFile, Hashing.sha1()).asBytes();
+		byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
 		StringBuffer sb = new StringBuffer("");
 		for (int i = 0; i < sha1.length; i++) {
-			sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(
-					1));
+			sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
 		}
 
 		assertEquals(expectedSha1, sb.toString());

@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +78,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	/** The Constant CACHE_PROPERTIES_FILENAME. */
 	private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 	/** The Constant DEFAULT_INCLUDES. */
-	private static final String[] DEFAULT_INCLUDES = new String[]{"**/*.java","**/*.js"};
+	private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js" };
 
 	/**
 	 * Project's source directory as specified in the POM.
@@ -185,7 +184,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 */
 	@Parameter(defaultValue = "src/config/eclipse/formatter/java.xml", property = "configfile", required = true)
 	private String configFile;
-	
+
 	/**
 	 * File or classpath location of an Eclipse code formatter configuration xml
 	 * file to use in formatting.
@@ -193,7 +192,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	@Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
 	private String configJsFile;
 
-	
 	/**
 	 * Whether the formatting is skipped.
 	 *
@@ -204,7 +202,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	private JavaFormatter javaFormatter = new JavaFormatter();
 	private JavascriptFormatter jsFormatter = new JavascriptFormatter();
-
 
 	/**
 	 * Execute.
@@ -223,22 +220,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 		if (StringUtils.isEmpty(this.encoding)) {
 			this.encoding = ReaderFactory.FILE_ENCODING;
-			getLog().warn(
-					"File encoding has not been set, using platform encoding ("
-							+ this.encoding
-							+ ") to format source files, i.e. build is platform dependent!");
+			getLog().warn("File encoding has not been set, using platform encoding (" + this.encoding
+					+ ") to format source files, i.e. build is platform dependent!");
 		} else {
 			try {
 				"Test Encoding".getBytes(this.encoding);
 			} catch (UnsupportedEncodingException e) {
-				throw new MojoExecutionException("Encoding '" + this.encoding
-						+ "' is not supported");
+				throw new MojoExecutionException("Encoding '" + this.encoding + "' is not supported");
 			}
-			getLog().info(
-					"Using '" + this.encoding + "' encoding to format source files.");
+			getLog().info("Using '" + this.encoding + "' encoding to format source files.");
 		}
 
-		
 		List<File> files = new ArrayList<File>();
 		try {
 			if (this.directories != null) {
@@ -250,16 +242,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			} else { // Using defaults of source main and test dirs
 				if (this.sourceDirectory != null && this.sourceDirectory.exists()
 						&& this.sourceDirectory.isDirectory()) {
-				files.addAll(addCollectionFiles(sourceDirectory));
+					files.addAll(addCollectionFiles(sourceDirectory));
 				}
 				if (this.testSourceDirectory != null && this.testSourceDirectory.exists()
 						&& this.testSourceDirectory.isDirectory()) {
-				files.addAll(addCollectionFiles(testSourceDirectory));
+					files.addAll(addCollectionFiles(testSourceDirectory));
 				}
 			}
 		} catch (IOException e) {
-			throw new MojoExecutionException(
-					"Unable to find files using includes/excludes", e);
+			throw new MojoExecutionException("Unable to find files using includes/excludes", e);
 		}
 
 		int numberOfFiles = files.size();
@@ -274,10 +265,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			String basedirPath = getBasedirPath();
 			for (int i = 0, n = files.size(); i < n; i++) {
 				File file = files.get(i);
-				if(file.exists())
-        {
-          formatFile(file, rc, hashCache, basedirPath);
-        }
+				if (file.exists()) {
+					formatFile(file, rc, hashCache, basedirPath);
+				}
 			}
 
 			storeFileHashCache(hashCache);
@@ -287,11 +277,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			log.info("Successfully formatted: " + rc.successCount + " file(s)");
 			log.info("Fail to format        : " + rc.failCount + " file(s)");
 			log.info("Skipped               : " + rc.skippedCount + " file(s)");
-			log.info("Approximate time taken: "
-					+ ((endClock - startClock) / 1000) + "s");
+			log.info("Approximate time taken: " + ((endClock - startClock) / 1000) + "s");
 		}
 	}
-
 
 	/**
 	 * Add source files to the files list.
@@ -300,24 +288,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	List<File> addCollectionFiles(File basedir) throws IOException {
-        final DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( basedir );
-		if (includes != null && includes.length > 0)
-    {
-      ds.setIncludes(includes);
-    }
-    else
-    {
-      ds.setIncludes(DEFAULT_INCLUDES);
-    }
+		final DirectoryScanner ds = new DirectoryScanner();
+		ds.setBasedir(basedir);
+		if (includes != null && includes.length > 0) {
+			ds.setIncludes(includes);
+		} else {
+			ds.setIncludes(DEFAULT_INCLUDES);
+		}
 
-        ds.setExcludes( excludes );
-        ds.addDefaultExcludes();
-        ds.setCaseSensitive( false );
-        ds.setFollowSymlinks( false );
-        ds.scan();
+		ds.setExcludes(excludes);
+		ds.addDefaultExcludes();
+		ds.setCaseSensitive(false);
+		ds.setFollowSymlinks(false);
+		ds.scan();
 
-        List<File> foundFiles = new ArrayList<File>();
+		List<File> foundFiles = new ArrayList<File>();
 		for (String filename : ds.getIncludedFiles()) {
 			foundFiles.add(new File(basedir, filename));
 		}
@@ -345,8 +330,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	private void storeFileHashCache(Properties props) {
 		File cacheFile = new File(this.targetDirectory, CACHE_PROPERTIES_FILENAME);
 		try {
-			OutputStream out = new BufferedOutputStream(new FileOutputStream(
-					cacheFile));
+			OutputStream out = new BufferedOutputStream(new FileOutputStream(cacheFile));
 			props.store(out, null);
 		} catch (FileNotFoundException e) {
 			getLog().warn("Cannot store file hash cache properties file", e);
@@ -366,8 +350,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		if (!this.targetDirectory.exists()) {
 			this.targetDirectory.mkdirs();
 		} else if (!this.targetDirectory.isDirectory()) {
-			log.warn("Something strange here as the "
-					+ "supposedly target directory is not a directory.");
+			log.warn("Something strange here as the " + "supposedly target directory is not a directory.");
 			return props;
 		}
 
@@ -396,8 +379,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoFailureException
 	 * @throws MojoExecutionException
 	 */
-	private void formatFile(File file, ResultCollector rc,
-			Properties hashCache, String basedirPath)
+	private void formatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath)
 			throws MojoFailureException, MojoExecutionException {
 		try {
 			doFormatFile(file, rc, hashCache, basedirPath, false);
@@ -425,10 +407,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoFailureException
 	 * @throws MojoExecutionException
 	 */
-	protected void doFormatFile(File file, ResultCollector rc,
-			Properties hashCache, String basedirPath, boolean dryRun)
-			throws IOException, BadLocationException, MojoFailureException,
-			MojoExecutionException  {
+	protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
+			throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
 		Log log = getLog();
 		log.debug("Processing file: " + file);
 		String code = readFileAsString(file);
@@ -451,15 +431,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		}
 
 		switch (r) {
-			case SKIPPED :
-				rc.skippedCount++;
-				break;
-			case SUCCESS :
-				rc.successCount++;
-				break;
-			case FAIL :
-				rc.failCount++;
-				break;
+		case SKIPPED:
+			rc.skippedCount++;
+			break;
+		case SUCCESS:
+			rc.successCount++;
+			break;
+		case FAIL:
+			rc.failCount++;
+			break;
 		}
 
 		String formattedCode = readFileAsString(file);
@@ -568,18 +548,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the formatting options
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getFormattingOptions(Resource configFile)
-			throws MojoExecutionException {
-		if (configFile != null)
-    {
-      return getOptionsFromConfigFile(configFile);
-    }
+	private Map<String, String> getFormattingOptions(Resource configFile) throws MojoExecutionException {
+		if (configFile != null) {
+			return getOptionsFromConfigFile(configFile);
+		}
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
 		options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
-		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
-				this.compilerTargetPlatform);
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
 
 		return options;
 	}
@@ -590,22 +567,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @return the options from config file
 	 * @throws MojoExecutionException the mojo execution exception
 	 */
-	private Map<String, String> getOptionsFromConfigFile(Resource configFile)
-			throws MojoExecutionException {
+	private Map<String, String> getOptionsFromConfigFile(Resource configFile) throws MojoExecutionException {
 
 		InputStream configInput = null;
-		
+
 		try {
 			configInput = configFile.asInputStream();
-			
+
 			ConfigReader configReader = new ConfigReader();
 			return configReader.read(configInput);
 		} catch (IOException e) {
-			throw new MojoExecutionException("Cannot read config file ["
-					+ this.configFile + "]", e);
+			throw new MojoExecutionException("Cannot read config file [" + this.configFile + "]", e);
 		} catch (SAXException e) {
-			throw new MojoExecutionException("Cannot parse config file ["
-					+ this.configFile + "]", e);
+			throw new MojoExecutionException("Cannot parse config file [" + this.configFile + "]", e);
 		} catch (ConfigReadException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (UnknownResourceException e) {
@@ -624,27 +598,27 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	}
 
 	@Override
-  public String getCompilerSources() {
+	public String getCompilerSources() {
 		return compilerSource;
 	}
 
 	@Override
-  public String getCompilerCompliance() {
+	public String getCompilerCompliance() {
 		return compilerCompliance;
 	}
 
 	@Override
-  public String getCompilerCodegenTargetPlatform() {
+	public String getCompilerCodegenTargetPlatform() {
 		return compilerTargetPlatform;
 	}
 
 	@Override
-  public File getTargetDirectory() {
+	public File getTargetDirectory() {
 		return targetDirectory;
 	}
 
 	@Override
-  public Charset getEncoding() {
+	public Charset getEncoding() {
 		return Charset.forName(encoding);
 	}
 }

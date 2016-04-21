@@ -47,6 +47,11 @@
       <artifactId>guava</artifactId>
       <version>18.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>3.0.22</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -61,6 +66,15 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <configuration>
+          <ignoredUsedUndeclaredDependencies>
+            <dep>org.apache.maven:*</dep>
+            <dep>org.codehaus.plexus:*</dep>
+          </ignoredUsedUndeclaredDependencies>
+        </configuration>
       </plugin>
     </plugins>
   </build>

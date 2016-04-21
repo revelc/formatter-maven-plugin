@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +20,7 @@ package com.marvinformatics.formatter;
  */
 public enum LineEnding {
 
-	AUTO(System.getProperty("line.separator")),
-	KEEP(null),
-	LF("\n"),
-	CRLF("\r\n"),
-	CR("\r"),
-	UNKNOW(null);
+	AUTO(System.getProperty("line.separator")), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOW(null);
 
 	private final String chars;
 
@@ -51,8 +45,7 @@ public enum LineEnding {
 		for (int i = 0; i < fileDataString.length(); i++) {
 			char c = fileDataString.charAt(i);
 			if (c == '\r') {
-				if ((i + 1) < fileDataString.length()
-						&& fileDataString.charAt(i + 1) == '\n') {
+				if ((i + 1) < fileDataString.length() && fileDataString.charAt(i + 1) == '\n') {
 					crlfCount++;
 					i++;
 				} else {

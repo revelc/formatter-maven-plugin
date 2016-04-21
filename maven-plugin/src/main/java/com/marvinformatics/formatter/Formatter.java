@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +35,7 @@ public interface Formatter {
 	 * @param targetDirectory
 	 * @throws MojoExecutionException
 	 */
-	public abstract void init(Map<String, String> options,
-			ConfigurationSource cfg);
+	public abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
 	/**
 	 * Format individual file.
@@ -50,7 +48,6 @@ public interface Formatter {
 	 * @throws IOException
 	 * @throws BadLocationException
 	 */
-	public abstract Result formatFile(File file, LineEnding ending,
-			boolean dryRun);
+	public abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
 
 }

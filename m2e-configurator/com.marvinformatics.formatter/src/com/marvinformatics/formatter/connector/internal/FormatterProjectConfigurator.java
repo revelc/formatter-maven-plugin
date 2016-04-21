@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,16 +67,14 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 	}
 
 	@Override
-	public AbstractBuildParticipant getBuildParticipant(
-			IMavenProjectFacade projectFacade, MojoExecution execution,
+	public AbstractBuildParticipant getBuildParticipant(IMavenProjectFacade projectFacade, MojoExecution execution,
 			IPluginExecutionMetadata executionMetadata) {
 		// nothing to do
 		return null;
 	}
 
 	@Override
-	public void configure(ProjectConfigurationRequest request,
-			IProgressMonitor monitor) throws CoreException {
+	public void configure(ProjectConfigurationRequest request, IProgressMonitor monitor) throws CoreException {
 		IProject eclipseProject = request.getProject();
 
 		printSettings();
@@ -85,65 +82,51 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 			Xpp3Dom[] settings = parseConfigurationFile(request, monitor);
 
 			for (Xpp3Dom setting : settings) {
-				Platform.getPreferencesService()
-						.getRootNode()
-						.node("project")
-						.node(eclipseProject.getName())
-						.node(JavaCore.PLUGIN_ID)
-						.put(setting.getAttribute("id"),
-								setting.getAttribute("value"));
+				Platform.getPreferencesService().getRootNode().node("project").node(eclipseProject.getName())
+						.node(JavaCore.PLUGIN_ID).put(setting.getAttribute("id"), setting.getAttribute("value"));
 			}
 
-			Platform.getPreferencesService().getRootNode().node("project")
-					.node(eclipseProject.getName()).node("org.eclipse.jdt.ui")
-					.put("cleanup.format_source_code", "true");
+			Platform.getPreferencesService().getRootNode().node("project").node(eclipseProject.getName())
+					.node("org.eclipse.jdt.ui").put("cleanup.format_source_code", "true");
 		}
 
 		// jsdtConfigFile = cfg.getChild("configJsFile").getValue();
 		// src/config/eclipse/formatter/javascript.xml
 	}
 
-	private Xpp3Dom[] parseConfigurationFile(
-			ProjectConfigurationRequest request, IProgressMonitor monitor)
+	private Xpp3Dom[] parseConfigurationFile(ProjectConfigurationRequest request, IProgressMonitor monitor)
 			throws CoreException {
 		InputStream content = readConfigFile(Formatter.JAVA, request, monitor);
 		Xpp3Dom dom;
 		try {
 			dom = Xpp3DomBuilder.build(content, "UTF-8");
 		} catch (XmlPullParserException e) {
-			throw new CoreException(new Status(Status.ERROR,
-					FormatterCore.PLUGIN_ID, "Invalid configuration XML", e));
+			throw new CoreException(new Status(Status.ERROR, FormatterCore.PLUGIN_ID, "Invalid configuration XML", e));
 		} catch (IOException e) {
-			throw new CoreException(new Status(Status.ERROR,
-					FormatterCore.PLUGIN_ID,
-					"Unable to read configuration XML", e));
+			throw new CoreException(
+					new Status(Status.ERROR, FormatterCore.PLUGIN_ID, "Unable to read configuration XML", e));
 		}
 		Xpp3Dom[] settings = dom.getChild("profile").getChildren("setting");
 		return settings;
 	}
 
-	private InputStream readConfigFile(Formatter formatter,
-			ProjectConfigurationRequest request, IProgressMonitor monitor)
-			throws CoreException {
+	private InputStream readConfigFile(Formatter formatter, ProjectConfigurationRequest request,
+			IProgressMonitor monitor) throws CoreException {
 		IMavenProjectFacade mavenProject = request.getMavenProjectFacade();
-		List<MojoExecution> executions = mavenProject.getMojoExecutions(
-				"com.marvinformatics.formatter", "formatter-maven-plugin",
-				monitor, "validate");
+		List<MojoExecution> executions = mavenProject.getMojoExecutions("com.marvinformatics.formatter",
+				"formatter-maven-plugin", monitor, "validate");
 
 		MojoExecution execution = executions.get(0);
 		Xpp3Dom cfg = execution.getConfiguration();
-		String javaConfigFile = cfg.getChild(formatter.getConfigurationName())
-				.getValue();
-		if (javaConfigFile == null
-				|| javaConfigFile.equalsIgnoreCase("${"
-						+ formatter.getConfigurationName() + "}"))
+		String javaConfigFile = cfg.getChild(formatter.getConfigurationName()).getValue();
+		if (javaConfigFile == null || javaConfigFile.equalsIgnoreCase("${" + formatter.getConfigurationName() + "}"))
 			javaConfigFile = formatter.getDefaultPath();
 
 		IFile cfgFile = request.getProject().getFile(javaConfigFile);
 
 		if (!cfgFile.exists())
-			throw new CoreException(new Status(IStatus.CANCEL,
-					FormatterCore.PLUGIN_ID, "Configuration file not found!"));
+			throw new CoreException(
+					new Status(IStatus.CANCEL, FormatterCore.PLUGIN_ID, "Configuration file not found!"));
 
 		InputStream content = cfgFile.getContents();
 		return content;
@@ -171,8 +154,7 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		}
 	}
 
-	private void eval(Preferences prefs, String spacer, StringBuilder sb)
-			throws Exception {
+	private void eval(Preferences prefs, String spacer, StringBuilder sb) throws Exception {
 		String[] children = prefs.childrenNames();
 		for (String child : children) {
 			sb.append(spacer).append(child).append("\n");
@@ -180,8 +162,7 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 		}
 		String[] keys = prefs.keys();
 		for (String key : keys) {
-			sb.append(spacer).append(" * ").append(key).append(": ")
-					.append(prefs.get(key, null)).append("\n");
+			sb.append(spacer).append(" * ").append(key).append(": ").append(prefs.get(key, null)).append("\n");
 		}
 	}
 
@@ -191,8 +172,7 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
 	}
 
 	@Override
-	public void mavenProjectChanged(MavenProjectChangedEvent event,
-			IProgressMonitor monitor) throws CoreException {
+	public void mavenProjectChanged(MavenProjectChangedEvent event, IProgressMonitor monitor) throws CoreException {
 		// TODO remover formatador do projeto
 	}
 }

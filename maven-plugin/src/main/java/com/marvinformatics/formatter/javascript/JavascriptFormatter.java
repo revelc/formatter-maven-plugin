@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,9 +30,7 @@ import com.marvinformatics.formatter.ConfigurationSource;
 import com.marvinformatics.formatter.Formatter;
 import com.marvinformatics.formatter.LineEnding;
 
-public class JavascriptFormatter extends AbstractCacheableFormatter
-		implements
-			Formatter {
+public class JavascriptFormatter extends AbstractCacheableFormatter implements Formatter {
 
 	private CodeFormatter formatter;
 
@@ -45,13 +42,10 @@ public class JavascriptFormatter extends AbstractCacheableFormatter
 	}
 
 	@Override
-	public String doFormat(String code, LineEnding ending) throws IOException,
-			BadLocationException {
-		TextEdit te = formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code,
-				0, code.length(), 0, ending.getChars());
+	public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
+		TextEdit te = formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0, ending.getChars());
 		if (te == null) {
-			log.debug("Code cannot be formatted. Possible cause "
-					+ "is unmatched source/target/compliance version.");
+			log.debug("Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 			return null;
 		}
 

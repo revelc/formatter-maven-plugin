@@ -1,6 +1,5 @@
 /**
- * Copyright 2010-2014. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
+ * Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,15 +52,12 @@ public class ValidateMojo extends FormatterMojo {
 	}
 
 	@Override
-	protected void doFormatFile(File file, ResultCollector rc,
-			Properties hashCache, String basedirPath, boolean dryRun)
-			throws IOException, MojoFailureException, BadLocationException,
-			MojoExecutionException {
+	protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
+			throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
 		super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
 		if (rc.successCount != 0)
-			throw new MojoFailureException("File '" + file
-					+ "' format doesn't match!");
+			throw new MojoFailureException("File '" + file + "' format doesn't match!");
 		if (rc.failCount != 0)
 			throw new MojoExecutionException("Error formating '" + file + "' ");
 	}
