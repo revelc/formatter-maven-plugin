@@ -7,7 +7,6 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
-  - openjdk6
 
 install:
   - mvn install dependency:go-offline -Pskip-formatter -DskipTests=true -q
