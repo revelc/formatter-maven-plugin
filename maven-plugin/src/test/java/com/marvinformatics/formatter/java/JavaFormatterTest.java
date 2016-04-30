@@ -23,7 +23,7 @@ import com.marvinformatics.formatter.AbstractFormatterTest;
 public class JavaFormatterTest extends AbstractFormatterTest {
 
 	public void testDoFormatFile() throws Exception {
-		doTestFormat(new JavaFormatter(), "AnyClass.java", "c178cea8d43d16a4741dffc9be4e1b0a2931e897");
+		doTestFormat(new JavaFormatter(), "AnyClass.java", "f9a3b848cabd96767fb861bdd76d14fda7289f5e");
 	}
 
 }

@@ -47,7 +47,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <coveralls.token>vKI3jOGF4ASoegEXtnQZaz0ZAjWdYjg3t</coveralls.token>
     <plugin.version>3.2</plugin.version>
     <java.version>1.7</java.version>
   </properties>
@@ -199,24 +198,6 @@
               <goal>prepare-agent</goal>
               <goal>report</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.eluder.coveralls</groupId>
-        <artifactId>coveralls-maven-plugin</artifactId>
-        <version>4.1.0</version>
-        <configuration>
-          <skip>${skipTests}</skip>
-          <repoToken>${coveralls.token}</repoToken>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <phase>verify</phase>
           </execution>
         </executions>
       </plugin>
