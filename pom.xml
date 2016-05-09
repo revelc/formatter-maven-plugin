@@ -183,7 +183,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.5</version>
+                    <version>3.5.1</version>
                     <dependencies>
                         <dependency>
                             <groupId>net.trajano.wagon</groupId>
