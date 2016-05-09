@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2016 Marvin H Froeder (marvin@marvinformatics.com)
+    Copyright (C) 2010 Marvin Herman Froeder (marvin@marvinformatics.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-            http://www.apache.org/licenses/LICENSE-2.0
+         http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -116,6 +116,40 @@
             </execution>
           </executions>
         </plugin>
+
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>2.11</version>
+          <configuration>
+            <header>LICENSE.txt</header>
+            <properties>
+              <owner>Marvin Herman Froeder</owner>
+              <email>marvin@marvinformatics.com</email>
+            </properties>
+            <excludes>
+              <exclude>target/**</exclude>
+              <exclude>**/README</exclude>
+              <exclude>**/src/test/resources/**</exclude>
+              <exclude>**/src/main/resources/**</exclude>
+            </excludes>
+            <useDefaultExcludes>false</useDefaultExcludes>
+            <includes>
+              <include>**/pom.xml</include>
+              <include>**/*.xml</include>
+              <include>**/*.xsd</include>
+              <include>**/*.xjb</include>
+              <include>**/*.mdo</include>
+              <include>**/*.properties</include>
+              <include>**/*.java</include>
+              <include>**/*.groovy</include>
+              <include>**/*.scala</include>
+              <include>**/*.aj</include>
+              <include>**/*.js</include>
+              <include>**/*.css</include>
+            </includes>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -145,38 +179,7 @@
           <argLine>${utCoverage}</argLine>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <version>2.11</version>
-        <inherited>false</inherited>
-        <configuration>
-          <header>copyright.txt</header>
-          <excludes>
-            <exclude>target/**</exclude>
-            <exclude>**/.gitignore</exclude>
-            <exclude>**/*.txt</exclude>
-            <exclude>**/*.xml</exclude>
-            <exclude>**/*.properties</exclude>
-            <exclude>**/*.html</exclude>
-            <exclude>**/*.css</exclude>
-          </excludes>
-          <includes>
-            <include>**/*.java</include>
-          </includes>
-          <mapping>
-            <java>JAVADOC_STYLE</java>
-          </mapping>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>format</goal>
-            </goals>
-            <phase>compile</phase>
-          </execution>
-        </executions>
-      </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -276,19 +279,7 @@
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
-        <version>2.11</version>
-        <configuration>
-          <header>LICENSE.txt</header>
-          <properties>
-            <owner>Marvin Herman Froeder</owner>
-            <email>marvin@marvinformatics.com</email>
-          </properties>
-          <excludes>
-            <exclude>**/README</exclude>
-            <exclude>src/test/resources/**</exclude>
-            <exclude>src/main/resources/**</exclude>
-          </excludes>
-        </configuration>
+        <inherited>false</inherited>
         <executions>
           <execution>
             <id>format</id>
