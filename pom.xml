@@ -49,6 +49,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <plugin.version>3.2</plugin.version>
     <java.version>1.7</java.version>
+    <tychoVersion>0.24.0</tychoVersion>
   </properties>
 
   <dependencyManagement>
@@ -128,7 +129,7 @@
               <email>marvin@marvinformatics.com</email>
             </properties>
             <excludes>
-              <exclude>target/**</exclude>
+              <exclude>**/target/**</exclude>
               <exclude>**/README</exclude>
               <exclude>**/src/test/resources/**</exclude>
               <exclude>**/src/main/resources/**</exclude>
