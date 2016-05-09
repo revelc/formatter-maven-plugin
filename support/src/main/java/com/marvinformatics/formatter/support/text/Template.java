@@ -44,7 +44,7 @@ public final class Template {
 
 	/**
 	 * Formats the applied args into the template content.
-	 * <p />
+	 * 
 	 * The supplied locale is used to format the text.
 	 * @param locale Locale to use for formatting
 	 * @param args Arguments to use as source data

@@ -20,7 +20,35 @@ package com.marvinformatics.formatter;
  */
 public enum LineEnding {
 
-	AUTO(System.getProperty("line.separator")), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOW(null);
+	/**
+	 * Use java default line separator for current OS
+	 */
+	AUTO(System.getProperty("line.separator")),
+
+	/**
+	 * Don't change line endings
+	 */
+	KEEP(null),
+
+	/**
+	 * Linux line endings
+	 */
+	LF("\n"),
+
+	/**
+	 * Windows line endings
+	 */
+	CRLF("\r\n"),
+
+	/**
+	 * OSx line endings
+	 */
+	CR("\r"),
+
+	/**
+	 * Unable to determine line ending
+	 */
+	UNKNOW(null);
 
 	private final String chars;
 

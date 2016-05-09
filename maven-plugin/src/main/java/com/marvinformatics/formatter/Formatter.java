@@ -16,12 +16,9 @@
 package com.marvinformatics.formatter;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
-import org.eclipse.jface.text.BadLocationException;
 
 /**
  * @author marvin.froeder
@@ -31,9 +28,8 @@ public interface Formatter {
 	/**
 	 * Initialize the {@link CodeFormatter} instance to be used by this component.
 	 * 
-	 * @param log
-	 * @param targetDirectory
-	 * @throws MojoExecutionException
+	 * @param options
+	 * @param cfg
 	 */
 	public abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
@@ -41,12 +37,9 @@ public interface Formatter {
 	 * Format individual file.
 	 * 
 	 * @param file
-	 * @param rc
-	 * @param hashCache
-	 * @param basedirPath
+	 * @param ending
+	 * @param dryRun
 	 * @return
-	 * @throws IOException
-	 * @throws BadLocationException
 	 */
 	public abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
 
