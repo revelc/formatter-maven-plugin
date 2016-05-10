@@ -48,8 +48,6 @@ public class LineEndingTest {
 
     /**
      * Test successfully determining CRLF line ending.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_success_read_line_endings_crlf() throws Exception {
@@ -60,8 +58,6 @@ public class LineEndingTest {
 
     /**
      * Test successfully determining LF line ending.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_success_read_line_endings_lf() throws Exception {
@@ -72,8 +68,6 @@ public class LineEndingTest {
 
     /**
      * Test successfully determining CR line ending.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_success_read_line_endings_cr() throws Exception {
@@ -84,8 +78,6 @@ public class LineEndingTest {
 
     /**
      * Test successfully determining LF line ending with mixed endings.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_success_read_line_endings_mixed_lf() throws Exception {
@@ -97,8 +89,6 @@ public class LineEndingTest {
     /**
      * Test successfully determining AUTO line ending with mixed endings and no
      * clear majority.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_success_read_line_endings_mixed_auto() throws Exception {
@@ -109,8 +99,6 @@ public class LineEndingTest {
 
     /**
      * Test successfully determining AUTO line ending with no endings.
-     * 
-     * @throws Exception
      */
     @Test
     public void test_success_read_line_endings_none_auto() throws Exception {

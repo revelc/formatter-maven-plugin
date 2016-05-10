@@ -387,8 +387,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @param rc the rc
      * @param hashCache the hash cache
      * @param basedirPath the basedir path
-     * @throws MojoFailureException
-     * @throws MojoExecutionException
      */
     private void formatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath)
             throws MojoFailureException, MojoExecutionException {
@@ -415,8 +413,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @param basedirPath the basedir path
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws BadLocationException the bad location exception
-     * @throws MojoFailureException
-     * @throws MojoExecutionException
      */
     protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {

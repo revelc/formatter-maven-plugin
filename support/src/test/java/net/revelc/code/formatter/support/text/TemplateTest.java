@@ -41,7 +41,7 @@ public class TemplateTest {
     }
 
     /**
-     * Test method for {@link Template#format(Locale, java.lang.String[])}.
+     * Test method for {@link Template#formatWithLocale(Locale, String...)}.
      */
     @Test
     public final void testFormatWithLocaleStringArray() {
@@ -53,7 +53,7 @@ public class TemplateTest {
 
     /**
      * Test method for {@link Template#as(java.lang.String)}.
-     * <p />
+     * <p>
      * This test case assumes a valid template string.
      */
     @Test
@@ -65,7 +65,7 @@ public class TemplateTest {
 
     /**
      * Test method for {@link Template#as(java.lang.String)}.
-     * <p />
+     * <p>
      * This test case assumes a null template string.
      */
     @Test(expected = NullPointerException.class)
