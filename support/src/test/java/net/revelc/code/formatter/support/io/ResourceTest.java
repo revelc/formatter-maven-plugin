@@ -23,7 +23,6 @@ import static net.revelc.code.formatter.support.io.Resource.forPath;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -62,10 +61,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#asInputStream()}.
-     * <p />
+     * <p>
      * This test case assumes a valid resource path in the default package.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @SuppressWarnings("resource")
     @Test
@@ -78,10 +75,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#asInputStream()}.
-     * <p />
+     * <p>
      * This test case assumes a valid resource path in a sub-package.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @SuppressWarnings("resource")
     @Test
@@ -94,10 +89,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#asInputStream()}.
-     * <p />
+     * <p>
      * This test case assumes an invalid resource path that will induce failure.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @Test(expected = UnknownResourceException.class)
     public void testAsInputStreamInvalidResource() throws UnknownResourceException {
@@ -106,10 +99,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#asString()}.
-     * <p />
+     * <p>
      * This test case assumes a valid resource path.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @Test
     public void testAsString() throws UnknownResourceException {
@@ -119,10 +110,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#toInputStream()}.
-     * <p />
+     * <p>
      * This test case assumes a valid resource path.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @SuppressWarnings("resource")
     @Test
@@ -135,10 +124,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#toInputStream()}.
-     * <p />
+     * <p>
      * This test case assumes a valid resource path.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @SuppressWarnings("resource")
     @Test
@@ -151,10 +138,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#getPrefix()}.
-     * <p />
+     * <p>
      * This test case assumes a classpath resource
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @Test
     public void testGetPrefixClasspath() throws UnknownResourceException {
@@ -164,10 +149,8 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#getPrefix()}.
-     * <p />
+     * <p>
      * This test case assumes a file resource
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @Test
     public void testGetPrefixFile() throws UnknownResourceException {
@@ -177,7 +160,6 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#getPath()}.
-     * @throws UnknownResourceException 
      */
     @Test
     public void testGetPathClasspath() throws UnknownResourceException {
@@ -187,7 +169,6 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#getPath()}.
-     * @throws UnknownResourceException 
      */
     @Test
     public void testGetPathFile() throws UnknownResourceException {
@@ -197,7 +178,6 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#getNativePath()}.
-     * @throws UnknownResourceException 
      */
     @Test
     public void testGetNativePathClasspath() throws UnknownResourceException {
@@ -207,7 +187,6 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#getNativePath()}.
-     * @throws UnknownResourceException 
      */
     @Test
     public void testGetNativePathFile() throws UnknownResourceException {
@@ -217,8 +196,6 @@ public class ResourceTest {
 
     /**
      * Test method for {@link Resource#forPath(java.lang.String)}.
-     * @throws IOException 
-     * @throws UnknownResourceException 
      */
     @Test
     public void testForPath() throws UnknownResourceException {
