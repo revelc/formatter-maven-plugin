@@ -205,6 +205,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String configJsFile;
 
     /**
+     * specify the javascript formatting is also performed
+     */
+    @Parameter(defaultValue = "false", property = "formatjs", required = true)
+    private boolean formatJs;
+
+    /**
      * Whether the formatting is skipped.
      *
      * @since 0.5
@@ -433,8 +439,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         Result r;
         if (file.getName().endsWith(".java")) {
             r = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
-        } else {
+        } else if (formatJs) {
             r = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+        } else {
+            r = Result.SKIPPED;
         }
 
         switch (r) {
@@ -528,7 +536,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private void createCodeFormatter() throws MojoExecutionException {
         this.javaFormatter.init(getFormattingOptions(this.configFile), this);
-        this.jsFormatter.init(getFormattingOptions(this.configJsFile), this);
+        if (formatJs) {
+            this.jsFormatter.init(getFormattingOptions(this.configJsFile), this);
+        }
     }
 
     /**
