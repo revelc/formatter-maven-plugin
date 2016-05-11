@@ -274,6 +274,9 @@
                     <inherited>false</inherited>
                     <configuration>
                         <header>${project.basedir}/copyright.txt</header>
+                        <excludes>
+                            <exclude>**/*build.properties</exclude>
+                        </excludes>
                     </configuration>
                     <dependencies>
                         <dependency>
