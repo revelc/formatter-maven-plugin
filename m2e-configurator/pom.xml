@@ -18,7 +18,7 @@
     <repositories>
         <repository>
             <id>m2e-tests</id>
-            <url>https://repository.sonatype.org/content/sites/forge-sites/m2e/1.1.0/N/1.1.0.20120622-0806/</url>
+            <url>https://repository.sonatype.org/content/sites/forge-sites/m2e/1.3.0/N/1.3.0.20121023-1108/</url>
             <layout>p2</layout>
         </repository>
     </repositories>
