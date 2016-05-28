@@ -28,7 +28,7 @@ public class JavaFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        doTestFormat(new JavaFormatter(), "AnyClass.java", "782bb452c7080a7e0bd2eed57d4d2ce2b7febaa3");
+        doTestFormat(new JavaFormatter(), "AnyClass.java", "c731dfe964279840da44f9c0f05b2020a7bbe606");
     }
 
 }
