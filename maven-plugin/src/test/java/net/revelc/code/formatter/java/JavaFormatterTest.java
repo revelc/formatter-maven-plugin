@@ -16,6 +16,12 @@
  */
 package net.revelc.code.formatter.java;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+
 import org.junit.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
@@ -29,6 +35,16 @@ public class JavaFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         doTestFormat(new JavaFormatter(), "AnyClass.java", "c731dfe964279840da44f9c0f05b2020a7bbe606");
+    }
+
+    @Test
+    public void testIsIntialized() throws Exception {
+        JavaFormatter javaFormatter = new JavaFormatter();
+        assertFalse(javaFormatter.isInitialized());
+        final File targetDir = new File("target/testoutput");
+        targetDir.mkdirs();
+        javaFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
+        assertTrue(javaFormatter.isInitialized());
     }
 
 }

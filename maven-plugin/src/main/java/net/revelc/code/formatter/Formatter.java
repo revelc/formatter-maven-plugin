@@ -19,8 +19,6 @@ package net.revelc.code.formatter;
 import java.io.File;
 import java.util.Map;
 
-import org.eclipse.jdt.core.formatter.CodeFormatter;
-
 /**
  * @author marvin.froeder
  */
@@ -35,5 +33,10 @@ public interface Formatter {
      * Format individual file.
      */
     public abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
+
+    /**
+     * return true if this formatter have been initialized
+     */
+    boolean isInitialized();
 
 }

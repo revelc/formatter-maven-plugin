@@ -37,6 +37,51 @@ import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest {
 
+    public static class TestConfigurationSource implements ConfigurationSource {
+
+        /**
+         * 
+         */
+        private final File targetDir;
+
+        /**
+         * @param targetDir
+         */
+        public TestConfigurationSource(File targetDir) {
+            this.targetDir = targetDir;
+        }
+
+        @Override
+        public File getTargetDirectory() {
+            return this.targetDir;
+        }
+
+        @Override
+        public Log getLog() {
+            return new SystemStreamLog();
+        }
+
+        @Override
+        public Charset getEncoding() {
+            return Charsets.UTF_8;
+        }
+
+        @Override
+        public String getCompilerSources() {
+            return "1.8";
+        }
+
+        @Override
+        public String getCompilerCompliance() {
+            return "1.8";
+        }
+
+        @Override
+        public String getCompilerCodegenTargetPlatform() {
+            return "1.8";
+        }
+    }
+
     protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1) throws IOException {
         File originalSourceFile = new File("src/test/resources/", fileUnderTest);
         File sourceFile = new File("target/test-classes/", fileUnderTest);
@@ -46,38 +91,7 @@ public abstract class AbstractFormatterTest {
         Map<String, String> options = new HashMap<>();
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
-        formatter.init(options, new ConfigurationSource() {
-
-            @Override
-            public File getTargetDirectory() {
-                return targetDir;
-            }
-
-            @Override
-            public Log getLog() {
-                return new SystemStreamLog();
-            }
-
-            @Override
-            public Charset getEncoding() {
-                return Charsets.UTF_8;
-            }
-
-            @Override
-            public String getCompilerSources() {
-                return "1.8";
-            }
-
-            @Override
-            public String getCompilerCompliance() {
-                return "1.8";
-            }
-
-            @Override
-            public String getCompilerCodegenTargetPlatform() {
-                return "1.8";
-            }
-        });
+        formatter.init(options, new TestConfigurationSource(targetDir));
         Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
         Assert.assertEquals(Result.SUCCESS, r);
 

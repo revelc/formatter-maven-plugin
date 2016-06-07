@@ -69,4 +69,9 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
         return formattedCode;
     }
 
+    @Override
+    public boolean isInitialized() {
+        return formatter != null;
+    }
+
 }

@@ -62,4 +62,9 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
         return formattedCode;
     }
 
+    @Override
+    public boolean isInitialized() {
+        return formatter != null;
+    }
+
 }
