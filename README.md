@@ -1,12 +1,6 @@
 # maven-formatter-plugin
 ======================
-[![Build Status](https://travis-ci.org/velo/maven-formatter-plugin.svg?branch=master)](https://travis-ci.org/velo/maven-formatter-plugin?branch=master) 
-[![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/velo/maven-formatter-plugin?branch=master)  
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/) 
-[![Issues](https://img.shields.io/github/issues/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/issues) 
-[![Forks](https://img.shields.io/github/forks/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/network) 
-[![Stars](https://img.shields.io/github/stars/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/stargazers)
-[![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/velo/maven-formatter-plugin/blob/master/license.txt)
+[![Build Status](https://travis-ci.org/velo/maven-formatter-plugin.svg?branch=master)](https://travis-ci.org/velo/maven-formatter-plugin) [![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/velo/maven-formatter-plugin?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/) [![Issues](https://img.shields.io/github/issues/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/issues) [![Forks](https://img.shields.io/github/forks/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/network) [![Stars](https://img.shields.io/github/stars/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/stargazers) [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/velo/maven-formatter-plugin/blob/master/license.txt)
 
 forked from http://code.google.com/p/maven-java-formatter-plugin/
 It was started after having read an article posted [here][1] (thanks to John for writing such a helpful article).
