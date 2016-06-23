@@ -57,7 +57,7 @@
                 <phase>prepare-package</phase>
                 <configuration>
                   <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                  <excludes>META-INF/*</excludes>
+                  <excludes>META-INF/*,com/ibm/icu/impl/data/icudt56b/**/*</excludes>
                 </configuration>
               </execution>
             </executions>
