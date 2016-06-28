@@ -17,6 +17,9 @@
 architect:
 - velo
 
+docker:
+  image: "velo/rultor8"
+
 assets:
   secring.gpg: velo/.assets#maven/secring.gpg
   settings.xml: velo/.assets#maven/settings.xml
