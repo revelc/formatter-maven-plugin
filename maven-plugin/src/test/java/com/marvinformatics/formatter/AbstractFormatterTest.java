@@ -58,15 +58,15 @@ public abstract class AbstractFormatterTest extends TestCase {
 			}
 
 			public String getCompilerSources() {
-				return "1.8";
+				return "1.9";
 			}
 
 			public String getCompilerCompliance() {
-				return "1.8";
+				return "1.9";
 			}
 
 			public String getCompilerCodegenTargetPlatform() {
-				return "1.8";
+				return "1.9";
 			}
 		});
 		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);

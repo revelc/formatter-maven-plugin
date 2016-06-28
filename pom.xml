@@ -48,7 +48,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <plugin.version>3.3</plugin.version>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <tychoVersion>0.24.0</tychoVersion>
   </properties>
 
@@ -389,6 +389,14 @@
     <system>shippable</system>
     <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url>
   </ciManagement>
+
+  <repositories>
+    <repository>
+      <id>neon</id>
+      <url>http://download.eclipse.org/releases/neon/</url>
+      <layout>p2</layout>
+    </repository>
+  </repositories>
 
   <distributionManagement>
     <repository>
