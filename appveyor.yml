@@ -29,4 +29,3 @@ install:
 
 build_script:
   - mvn install -Pci -B
-
