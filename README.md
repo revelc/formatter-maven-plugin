@@ -11,7 +11,7 @@ Here I aim to provide file formatting accross languages.  So far, java and javas
 Also, this project also provides m2e configurator.  So you can be sure the IDE form the entire development team is properly configured.
 
 M2e configurator update site:
-http://velo.github.io/maven-formatter-plugin/p2/1.6.0
+http://velo.github.io/maven-formatter-plugin/p2/1.8.0
 
 
 This software is provided WITHOUT ANY WARRANTY.  Any loss of codes caused by the usage of this plugin is not
@@ -37,6 +37,7 @@ Plugin Version	| Eclipse Version
 1.3.0           |	3.8.3
 1.4.0           |	4.4.0 (luna)
 1.6.0.RC1       |	4.5.0.RC1 (mars)
-1.6.0       	|	4.5.0 (mars)
+1.6.0           |	4.5.0 (mars)
+1.8.0           |	4.6.0 (neon)
 
 [1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
