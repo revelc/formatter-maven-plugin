@@ -438,7 +438,7 @@
             <plugin>
                 <groupId>com.marvinformatics.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <version>1.6.0</version>
+                <version>1.8.0</version>
                 <configuration>
                     <sourceDirectory>${project.basedir}</sourceDirectory>
                     <excludes>
