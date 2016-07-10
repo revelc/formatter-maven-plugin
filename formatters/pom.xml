@@ -59,7 +59,7 @@
                     <plugin>
                         <groupId>com.github.wvengen</groupId>
                         <artifactId>proguard-maven-plugin</artifactId>
-                        <version>2.0.12</version>
+                        <version>2.0.13</version>
                         <configuration>
                             <obfuscate>false</obfuscate>
                             <injar>${project.build.finalName}.jar</injar>
