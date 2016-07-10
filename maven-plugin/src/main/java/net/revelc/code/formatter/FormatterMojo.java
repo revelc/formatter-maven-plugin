@@ -81,8 +81,10 @@ import net.revelc.code.formatter.model.ConfigReader;
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     private static final String FILE_S = " file(s)";
+
     /** The Constant CACHE_PROPERTIES_FILENAME. */
     private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
+
     /** The Constant DEFAULT_INCLUDES. */
     private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js" };
 
@@ -213,6 +215,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private Boolean skipFormatting;
 
     private JavaFormatter javaFormatter = new JavaFormatter();
+
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
     /**
@@ -323,7 +326,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /**
      * Gets the basedir path.
-    
+     * 
      * @return the basedir path
      */
     private String getBasedirPath() {
@@ -431,10 +434,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         Result r;
-        if (file.getName().endsWith(".java")) {
+        if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
             r = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
-        } else {
+        } else if (jsFormatter.isInitialized()) {
             r = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+        } else {
+            r = Result.SKIPPED;
         }
 
         switch (r) {
@@ -527,15 +532,25 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException the mojo execution exception
      */
     private void createCodeFormatter() throws MojoExecutionException {
-        this.javaFormatter.init(getFormattingOptions(this.configFile), this);
-        this.jsFormatter.init(getFormattingOptions(this.configJsFile), this);
+        Map<String, String> javaFormattingOptions = getFormattingOptions(this.configFile);
+        if (javaFormattingOptions != null) {
+            this.javaFormatter.init(javaFormattingOptions, this);
+        }
+        Map<String, String> jsFormattingOptions = getFormattingOptions(this.configJsFile);
+        if (jsFormattingOptions != null) {
+            this.jsFormatter.init(jsFormattingOptions, this);
+        }
+        //stop the porcess if not config files where found
+        if (javaFormattingOptions == null && jsFormattingOptions == null) {
+            throw new MojoExecutionException("You must provide a Java or Javascript configuration file.");
+        }
     }
 
     /**
      * Return the options to be passed when creating {@link CodeFormatter}
      * instance.
      *
-     * @return the formatting options
+     * @return the formatting options or null if not config file found
      * @throws MojoExecutionException the mojo execution exception
      */
     private Map<String, String> getFormattingOptions(String newConfigFile) throws MojoExecutionException {
@@ -554,7 +569,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Read config file and return the config as {@link Map}.
      *
-     * @return the options from config file
+     * @return the options from config file or null if not config file found
      * @throws MojoExecutionException the mojo execution exception
      */
     private Map<String, String> getOptionsFromConfigFile(String newConfigFile) throws MojoExecutionException {
@@ -565,7 +580,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
             configInput = this.resourceManager.getResourceAsInputStream(newConfigFile);
         } catch (ResourceNotFoundException e) {
-            throw new MojoExecutionException("Config file [" + newConfigFile + "] cannot be found", e);
+            getLog().debug("Config file [" + newConfigFile + "] cannot be found", e);
+            return null;
         }
 
         if (configInput == null) {
@@ -587,6 +603,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     class ResultCollector {
+
         int successCount;
 
         int failCount;
