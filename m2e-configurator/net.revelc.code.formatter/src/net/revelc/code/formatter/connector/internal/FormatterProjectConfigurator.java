@@ -17,6 +17,8 @@
 package net.revelc.code.formatter.connector.internal;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +30,6 @@ import org.apache.maven.plugin.MojoExecution;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -125,14 +126,20 @@ public class FormatterProjectConfigurator extends AbstractProjectConfigurator {
             javaConfigFile = formatter.getDefaultPath();
         }
 
-        IFile cfgFile = request.getProject().getFile(javaConfigFile);
-
-        if (!cfgFile.exists()) {
-            throw new CoreException(
-                    new Status(IStatus.CANCEL, FormatterCore.PLUGIN_ID, "Configuration file not found!"));
+        File cfgFile = new File(javaConfigFile);
+        if (!cfgFile.isAbsolute()) {
+            cfgFile = request.getProject().getLocation().append(javaConfigFile).toFile();
         }
 
-        return cfgFile.getContents();
+        if (!cfgFile.exists())
+            throw new CoreException(new Status(IStatus.CANCEL, FormatterCore.PLUGIN_ID,
+                    "Configuration file '" + javaConfigFile + "' not found!"));
+
+        try {
+            return new FileInputStream(cfgFile);
+        } catch (FileNotFoundException e) {
+            throw new CoreException(new Status(IStatus.CANCEL, FormatterCore.PLUGIN_ID, e.getMessage()));
+        }
     }
 
     private void printSettings() {
