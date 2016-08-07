@@ -238,9 +238,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             getLog().warn("File encoding has not been set, using platform encoding (" + this.encoding
                     + ") to format source files, i.e. build is platform dependent!");
         } else {
-            try {
-                "Test Encoding".getBytes(this.encoding);
-            } catch (UnsupportedEncodingException e) {
+            if (!Charset.isSupported(this.encoding)) {
                 throw new MojoExecutionException("Encoding '" + this.encoding + "' is not supported");
             }
             getLog().info("Using '" + this.encoding + "' encoding to format source files.");
