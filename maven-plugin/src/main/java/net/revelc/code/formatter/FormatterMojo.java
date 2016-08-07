@@ -476,9 +476,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private String readFileAsString(File file) throws java.io.IOException {
         StringBuilder fileData = new StringBuilder(1000);
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding));
+        try (BufferedReader reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding))) {
             char[] buf = new char[1024];
             int numRead = 0;
             while ((numRead = reader.read(buf)) != -1) {
@@ -486,8 +484,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 fileData.append(readData);
                 buf = new char[1024];
             }
-        } finally {
-            IOUtil.close(reader);
         }
         return fileData.toString();
     }
@@ -504,12 +500,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(WriterFactory.newWriter(file, this.encoding));
+        try (BufferedWriter bw = new BufferedWriter(WriterFactory.newWriter(file, this.encoding))) {
             bw.write(str);
-        } finally {
-            IOUtil.close(bw);
         }
     }
 
