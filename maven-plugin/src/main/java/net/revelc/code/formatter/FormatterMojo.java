@@ -329,7 +329,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String getBasedirPath() {
         try {
             return this.basedir.getCanonicalPath();
-        } catch (Exception e) {
+        } catch (IOException e) {
             return "";
         }
     }
