@@ -46,7 +46,6 @@ import org.codehaus.plexus.resource.ResourceManager;
 import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.DirectoryScanner;
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.WriterFactory;
@@ -553,31 +552,20 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private Map<String, String> getOptionsFromConfigFile(String newConfigFile) throws MojoExecutionException {
 
-        InputStream configInput = null;
+        this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
+        this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
 
-        try {
-            this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
-            configInput = this.resourceManager.getResourceAsInputStream(newConfigFile);
+        try (InputStream configInput = this.resourceManager.getResourceAsInputStream(newConfigFile)) {
+            return new ConfigReader().read(configInput);
         } catch (ResourceNotFoundException e) {
             getLog().debug("Config file [" + newConfigFile + "] cannot be found", e);
             return null;
-        }
-
-        if (configInput == null) {
-            throw new MojoExecutionException("Config file [" + newConfigFile + "] does not exist");
-        }
-        try {
-
-            ConfigReader configReader = new ConfigReader();
-            return configReader.read(configInput);
         } catch (IOException e) {
             throw new MojoExecutionException("Cannot read config file [" + newConfigFile + "]", e);
         } catch (SAXException e) {
             throw new MojoExecutionException("Cannot parse config file [" + newConfigFile + "]", e);
         } catch (ConfigReadException e) {
             throw new MojoExecutionException(e.getMessage(), e);
-        } finally {
-            IOUtil.close(configInput);
         }
     }
 
