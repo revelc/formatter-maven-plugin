@@ -420,16 +420,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        Result r;
+        Result result;
         if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
-            r = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
+            result = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
         } else if (jsFormatter.isInitialized()) {
-            r = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+            result = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
         } else {
-            r = Result.SKIPPED;
+            result = Result.SKIPPED;
         }
 
-        switch (r) {
+        switch (result) {
         case SKIPPED:
             rc.skippedCount++;
             break;
