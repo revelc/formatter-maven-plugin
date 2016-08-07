@@ -67,13 +67,7 @@ public abstract class AbstractCacheableFormatter {
             }
 
             return Result.SUCCESS;
-        } catch (IOException e) {
-            this.log.warn(e);
-            return Result.FAIL;
-        } catch (MalformedTreeException e) {
-            this.log.warn(e);
-            return Result.FAIL;
-        } catch (BadLocationException e) {
+        } catch (IOException | MalformedTreeException | BadLocationException e) {
             this.log.warn(e);
             return Result.FAIL;
         }
