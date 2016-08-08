@@ -16,10 +16,10 @@
  */
 package net.revelc.code.formatter.java;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Test;
