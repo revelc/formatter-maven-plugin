@@ -519,7 +519,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (jsFormattingOptions != null) {
             this.jsFormatter.init(jsFormattingOptions, this);
         }
-        //stop the porcess if not config files where found
+        //stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null) {
             throw new MojoExecutionException("You must provide a Java or Javascript configuration file.");
         }
