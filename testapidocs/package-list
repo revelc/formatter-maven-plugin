@@ -1,1 +1,6 @@
-com.relativitas.maven.plugins.formatter
+net.revelc.code.formatter
+net.revelc.code.formatter.java
+net.revelc.code.formatter.javascript
+net.revelc.code.formatter.model
+net.revelc.code.formatter.support.io
+net.revelc.code.formatter.support.text
