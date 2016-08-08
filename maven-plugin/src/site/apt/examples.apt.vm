@@ -1,9 +1,9 @@
  ---
  Examples
  ---
- Matt Blanchette
+ Formatter Maven Plugin Team
  ---
- 2013-08-11
+ 2016-08-08
 
 Examples
 
@@ -19,7 +19,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -37,7 +37,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -60,7 +60,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -89,7 +89,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -109,7 +109,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -122,7 +122,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
 </plugin>
@@ -171,7 +171,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -188,7 +188,7 @@ Examples
 
 +---+
 <plugin>
-  <groupId>net.revelc.code</groupId>
+  <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
@@ -254,7 +254,7 @@ multiproject
   <build>
     <plugins>
       <plugin>
-        <groupId>net.revelc.code</groupId>
+        <groupId>net.revelc.code.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -269,9 +269,9 @@ multiproject
         </configuration>
         <dependencies>
           <dependency>
-            <groupId>com.googlecode.example.multiproject</groupId>
+            <groupId>com.github.hazendaz</groupId>
             <artifactId>build-tools</artifactId>
-            <version>1.0</version>
+            <version>1.1.2</version>
           </dependency>
         </dependencies>
       </plugin>
