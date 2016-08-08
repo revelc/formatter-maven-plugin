@@ -36,10 +36,6 @@ public abstract class AbstractCacheableFormatter {
 
     protected Charset encoding;
 
-    public AbstractCacheableFormatter() {
-        super();
-    }
-
     protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
     protected void initCfg(ConfigurationSource cfg) {
