@@ -25,7 +25,7 @@ import java.util.Map;
 public interface Formatter {
 
     /**
-     * Initialize the {@link CodeFormatter} instance to be used by this component.
+     * Initialize the {@link org.eclipse.jdt.core.formatter.CodeFormatter} instance to be used by this component.
      */
     public abstract void init(Map<String, String> options, ConfigurationSource cfg);
 

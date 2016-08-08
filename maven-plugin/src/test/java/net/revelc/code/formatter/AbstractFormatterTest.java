@@ -39,14 +39,8 @@ public abstract class AbstractFormatterTest {
 
     public static class TestConfigurationSource implements ConfigurationSource {
 
-        /**
-         * 
-         */
         private final File targetDir;
 
-        /**
-         * @param targetDir
-         */
         public TestConfigurationSource(File targetDir) {
             this.targetDir = targetDir;
         }
