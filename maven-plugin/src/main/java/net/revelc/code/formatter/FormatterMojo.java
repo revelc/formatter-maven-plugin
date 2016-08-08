@@ -276,7 +276,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             String basedirPath = getBasedirPath();
             for (int i = 0, n = files.size(); i < n; i++) {
                 File file = files.get(i);
-                if (file.exists()) {
+                if (file.exists() && file.canWrite()) {
                     formatFile(file, rc, hashCache, basedirPath);
                 }
             }
@@ -315,7 +315,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         List<File> foundFiles = new ArrayList<>();
         for (String filename : ds.getIncludedFiles()) {
-            foundFiles.add(new File(newBasedir, filename));
+            File foundFile = new File(newBasedir, filename);
+            if(foundFile.canWrite()){
+                foundFiles.add(foundFile);
+            }
         }
         return foundFiles;
     }
