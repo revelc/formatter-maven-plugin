@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -562,6 +563,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
         this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
+
+        // Add parents
+        File parent = new File(Paths.get(this.basedir.toURI()).getParent() + File.separator + "pom.xml");
+        this.getLog().debug("Probing pom at: " + parent.getAbsolutePath());
+        while (parent.exists()) {
+            this.getLog().debug("Using search path at: " + parent.getParent());
+            this.resourceManager.addSearchPath(FileResourceLoader.ID, parent.getParent());
+
+            parent = new File(Paths.get(parent.toURI()).getParent().getParent() + File.separator + "pom.xml");
+            this.getLog().debug("Probing pom at: " + parent.getAbsolutePath());
+        }
 
         try (InputStream configInput = this.resourceManager.getResourceAsInputStream(newConfigFile)) {
             return new ConfigReader().read(configInput);
