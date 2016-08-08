@@ -22,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -238,9 +237,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             getLog().warn("File encoding has not been set, using platform encoding (" + this.encoding
                     + ") to format source files, i.e. build is platform dependent!");
         } else {
-            try {
-                "Test Encoding".getBytes(this.encoding);
-            } catch (UnsupportedEncodingException e) {
+            if (!Charset.isSupported(this.encoding)) {
                 throw new MojoExecutionException("Encoding '" + this.encoding + "' is not supported");
             }
             getLog().info("Using '" + this.encoding + "' encoding to format source files.");
@@ -332,7 +329,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String getBasedirPath() {
         try {
             return this.basedir.getCanonicalPath();
-        } catch (Exception e) {
+        } catch (IOException e) {
             return "";
         }
     }
@@ -346,8 +343,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         File cacheFile = new File(this.targetDirectory, CACHE_PROPERTIES_FILENAME);
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(cacheFile))) {
             props.store(out, null);
-        } catch (FileNotFoundException e) {
-            getLog().warn("Cannot store file hash cache properties file", e);
         } catch (IOException e) {
             getLog().warn("Cannot store file hash cache properties file", e);
         }
@@ -375,8 +370,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(cacheFile))) {
             props.load(stream);
-        } catch (FileNotFoundException e) {
-            log.warn("Cannot load file hash cache properties file", e);
         } catch (IOException e) {
             log.warn("Cannot load file hash cache properties file", e);
         }
@@ -395,13 +388,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throws MojoFailureException, MojoExecutionException {
         try {
             doFormatFile(file, rc, hashCache, basedirPath, false);
-        } catch (IOException e) {
-            rc.failCount++;
-            getLog().warn(e);
-        } catch (MalformedTreeException e) {
-            rc.failCount++;
-            getLog().warn(e);
-        } catch (BadLocationException e) {
+        } catch (IOException | MalformedTreeException | BadLocationException e) {
             rc.failCount++;
             getLog().warn(e);
         }
@@ -433,16 +420,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        Result r;
+        Result result;
         if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
-            r = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
+            result = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
         } else if (jsFormatter.isInitialized()) {
-            r = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+            result = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
         } else {
-            r = Result.SKIPPED;
+            result = Result.SKIPPED;
         }
 
-        switch (r) {
+        switch (result) {
         case SKIPPED:
             rc.skippedCount++;
             break;
@@ -489,9 +476,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private String readFileAsString(File file) throws java.io.IOException {
         StringBuilder fileData = new StringBuilder(1000);
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding));
+        try (BufferedReader reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding))) {
             char[] buf = new char[1024];
             int numRead = 0;
             while ((numRead = reader.read(buf)) != -1) {
@@ -499,8 +484,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 fileData.append(readData);
                 buf = new char[1024];
             }
-        } finally {
-            IOUtil.close(reader);
         }
         return fileData.toString();
     }
@@ -517,12 +500,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(WriterFactory.newWriter(file, this.encoding));
+        try (BufferedWriter bw = new BufferedWriter(WriterFactory.newWriter(file, this.encoding))) {
             bw.write(str);
-        } finally {
-            IOUtil.close(bw);
         }
     }
 
@@ -540,7 +519,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (jsFormattingOptions != null) {
             this.jsFormatter.init(jsFormattingOptions, this);
         }
-        //stop the porcess if not config files where found
+        //stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null) {
             throw new MojoExecutionException("You must provide a Java or Javascript configuration file.");
         }

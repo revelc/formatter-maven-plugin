@@ -36,10 +36,6 @@ public abstract class AbstractCacheableFormatter {
 
     protected Charset encoding;
 
-    public AbstractCacheableFormatter() {
-        super();
-    }
-
     protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
     protected void initCfg(ConfigurationSource cfg) {
@@ -67,13 +63,7 @@ public abstract class AbstractCacheableFormatter {
             }
 
             return Result.SUCCESS;
-        } catch (IOException e) {
-            this.log.warn(e);
-            return Result.FAIL;
-        } catch (MalformedTreeException e) {
-            this.log.warn(e);
-            return Result.FAIL;
-        } catch (BadLocationException e) {
+        } catch (IOException | MalformedTreeException | BadLocationException e) {
             this.log.warn(e);
             return Result.FAIL;
         }
