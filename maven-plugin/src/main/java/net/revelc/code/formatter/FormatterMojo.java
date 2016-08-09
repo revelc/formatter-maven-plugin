@@ -277,7 +277,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             for (int i = 0, n = files.size(); i < n; i++) {
                 File file = files.get(i);
                 if (file.exists()) {
-                    formatFile(file, rc, hashCache, basedirPath);
+                    if (file.canWrite()) {
+                        formatFile(file, rc, hashCache, basedirPath);
+                    } else {
+                        rc.readOnlyCount++;
+                    }
+                } else {
+                    rc.failCount++;
                 }
             }
 
@@ -288,6 +294,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             log.info("Successfully formatted:          " + rc.successCount + FILE_S);
             log.info("Fail to format:                  " + rc.failCount + FILE_S);
             log.info("Skipped:                         " + rc.skippedCount + FILE_S);
+            log.info("Read only skipped:               " + rc.readOnlyCount + FILE_S);
             log.info("Approximate time taken:          " + ((endClock - startClock) / 1000) + "s");
         }
     }
@@ -577,6 +584,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         int failCount;
 
         int skippedCount;
+
+        int readOnlyCount;
     }
 
     @Override
