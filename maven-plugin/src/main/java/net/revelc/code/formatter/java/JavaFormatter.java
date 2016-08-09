@@ -34,7 +34,7 @@ import net.revelc.code.formatter.LineEnding;
 
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    CodeFormatter formatter;
+    private CodeFormatter formatter;
 
     @Override
     public void init(Map<String, String> options, ConfigurationSource cfg) {

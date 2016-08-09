@@ -98,7 +98,7 @@ public abstract class Resource {
      */
     public static Resource forPath(final String path) throws UnknownResourceException {
 
-        Resource resource = null;
+        Resource resource;
 
         if (path.startsWith(ClasspathResource.PREFIX + ":")) {
             resource = new ClasspathResource(path);
