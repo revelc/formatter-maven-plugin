@@ -1,9 +1,9 @@
  ---
  Plugin Usage
  ---
- Matt Blanchette
+ Formatter Maven Plugin Team
  ---
- 2010-09-24
+ 2016-08-08
 
 Plugin Usage
 
@@ -16,7 +16,7 @@ Plugin Usage
     ...
     <plugins>
       <plugin>
-        <groupId>net.revelc.code</groupId>
+        <groupId>net.revelc.code.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
         <version>${project.version}</version>
       </plugin>
@@ -43,7 +43,7 @@ mvn java-formatter:format
     ...
     <plugins>
       <plugin>
-        <groupId>net.revelc.code</groupId>
+        <groupId>net.revelc.code.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
