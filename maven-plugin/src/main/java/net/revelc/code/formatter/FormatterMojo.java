@@ -358,7 +358,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (!this.targetDirectory.exists()) {
             this.targetDirectory.mkdirs();
         } else if (!this.targetDirectory.isDirectory()) {
-            log.warn("Something strange here as the " + "supposedly target directory is not a directory.");
+            log.warn("Something strange here as the '" + this.targetDirectory.getPath()
+                    + "' supposedly target directory is not a directory.");
             return props;
         }
 
