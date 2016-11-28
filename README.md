@@ -1,5 +1,5 @@
-# maven-java-formatter-plugin
-======================
+# formatter-maven-plugin
+========================
 [![Linux Build Status](https://travis-ci.org/revelc/formatter-maven-plugin.svg)](https://travis-ci.org/revelc/formatter-maven-plugin)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/j3cd0dwqlyu0iv2y?svg=true)](https://ci.appveyor.com/project/velo/formatter-maven-plugin)
 [![Coverage Status](https://coveralls.io/repos/revelc/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/maven-formatter-plugin?branch=master)  
