@@ -19,42 +19,16 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>net.revelc.code.formatter</groupId>
         <artifactId>parent</artifactId>
         <version>1.6.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>formatter-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <developers>
-        <developer>
-            <id>jecki.go</id>
-            <name>Jecki</name>
-            <email>jecki.go@gmail.com</email>
-            <roles>
-                <role>maven-java-formatter-plugin</role>
-                <role>owner</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>matt.blanchette</id>
-            <name>Matt Blanchette</name>
-            <email>matt.blanchette@gmail.com</email>
-            <roles>
-                <role>maven-java-formatter-plugin</role>
-                <role>owner</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>velo</id>
-            <name>Marvin Froeder</name>
-            <email>velo.br@gmail.com</email>
-            <roles>
-                <role>maven-formatter-plugin</role>
-                <role>owner</role>
-            </roles>
-        </developer>
-    </developers>
+
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -109,6 +83,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

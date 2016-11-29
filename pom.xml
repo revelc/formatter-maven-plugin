@@ -19,19 +19,24 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>io.takari.tycho</groupId>
         <artifactId>tycho-support</artifactId>
         <version>1.1.0</version>
     </parent>
+
     <groupId>net.revelc.code.formatter</groupId>
     <artifactId>parent</artifactId>
     <version>1.6.0-SNAPSHOT</version>
+
     <packaging>pom</packaging>
     <name>parent</name>
+
     <description>Plugin for formatting source code</description>
     <url>https://github.com/revelc/formatter-maven-plugin/</url>
     <inceptionYear>2010</inceptionYear>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -40,6 +45,7 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <id>jecki.go</id>
@@ -72,6 +78,7 @@
             </properties>
         </developer>
     </developers>
+
     <contributors>
         <contributor>
             <name>Jeremy Landis</name>
@@ -88,20 +95,24 @@
             </properties>
         </contributor>
     </contributors>
+
     <prerequisites>
         <maven>${maven.min-version}</maven>
     </prerequisites>
+
     <modules>
         <module>formatters</module>
         <module>maven-plugin</module>
         <module>m2e-configurator</module>
     </modules>
+
     <scm>
-        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
         <url>https://github.com/revelc/formatter-maven-plugin</url>
+        <tag>HEAD</tag>
     </scm>
+
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/revelc/formatter-maven-plugin/issues</url>
@@ -111,22 +122,32 @@
         <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
         <!-- Do we want this? Can we have two? <system>shippable</system> <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url> -->
     </ciManagement>
+
     <distributionManagement>
         <repository>
             <id>ossrh</id>
             <name>Nexus Release Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <site>
             <id>gh-pages</id>
             <name>Formatter Maven Plugin GitHub Pages</name>
             <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.git?gh-pages#</url>
         </site>
     </distributionManagement>
+
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.testSource>1.7</maven.compiler.testSource>
+        <maven.compiler.testTarget>1.7</maven.compiler.testTarget>
+        
         <maven.min-version>3.0.5</maven.min-version>
+
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -134,6 +155,17 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
@@ -200,18 +232,18 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.5.1</version>
+                    <version>3.6</version>
                     <dependencies>
                         <dependency>
                             <groupId>net.trajano.wagon</groupId>
                             <artifactId>wagon-git</artifactId>
-                            <version>2.0.3</version>
+                            <version>2.0.3</version> <!-- Do not upgrade to 2.0.4 as it does not work -->
                         </dependency>
                         <!-- For reporting only of versions -->
                         <dependency>
                             <groupId>org.apache.maven.skins</groupId>
                             <artifactId>maven-fluido-skin</artifactId>
-                            <version>1.5</version>
+                            <version>1.6</version>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.wagon</groupId>
@@ -334,13 +366,33 @@
                         </environments>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.7.7.201606060606</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.ekryd.sortpom</groupId>
+                    <artifactId>sortpom-maven-plugin</artifactId>
+                    <version>2.4.0</version> <!-- Do not update past 2.4.0 as it requires jdk8 -->
+                    <configuration>
+                        <createBackupFile>false</createBackupFile>
+                        <expandEmptyElements>false</expandEmptyElements>
+                        <lineSeparator>\n</lineSeparator>
+                        <nrOfIndentSpace>4</nrOfIndentSpace>
+                        <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                        <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                        <sortProperties>true</sortProperties>
+                        <verifyFail>Stop</verifyFail>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.7.201606060606</version>
                 <executions>
                     <execution>
                         <id>pre-unit-test</id>
@@ -356,17 +408,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
             </plugin>
             <!-- Find maven root -->
             <plugin>
@@ -423,21 +464,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Do not update past 2.4.0 as it requires jdk8 -->
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
-                <version>2.4.0</version>
-                <configuration>
-                    <createBackupFile>false</createBackupFile>
-                    <expandEmptyElements>false</expandEmptyElements>
-                    <lineSeparator>\n</lineSeparator>
-                    <nrOfIndentSpace>4</nrOfIndentSpace>
-                    <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-                    <sortDependencies>scope,groupId,artifactId</sortDependencies>
-                    <sortProperties>true</sortProperties>
-                    <verifyFail>Stop</verifyFail>
-                </configuration>
                 <executions>
                     <execution>
                         <id>sort-pom</id>
@@ -455,6 +484,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- TODO: Switch to self(-1) after release -->
             <plugin>
                 <groupId>com.marvinformatics.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
@@ -483,6 +513,7 @@
                 </executions>
             </plugin>
         </plugins>
+
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
@@ -491,6 +522,7 @@
             </extension>
         </extensions>
     </build>
+
     <reporting>
         <plugins>
             <plugin>
@@ -525,6 +557,7 @@
             </plugin>
         </plugins>
     </reporting>
+
     <profiles>
         <profile>
             <id>sonatype-oss-release</id>
@@ -573,6 +606,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>jdk8</id>
             <activation>
@@ -593,6 +627,7 @@
                 </pluginManagement>
             </build>
         </profile>
+
         <profile>
             <id>coveralls</id>
             <build>
@@ -647,6 +682,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>eclipse</id>
             <activation>
@@ -684,7 +720,7 @@
                                             <pluginExecutionFilter>
                                                 <groupId>org.commonjava.maven.plugins</groupId>
                                                 <artifactId>directory-maven-plugin</artifactId>
-                                                <versionRange>[0.1,)</versionRange>
+                                                <versionRange>[0,)</versionRange>
                                                 <goals>
                                                     <goal>highest-basedir</goal>
                                                 </goals>
