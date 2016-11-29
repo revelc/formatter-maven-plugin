@@ -162,6 +162,7 @@
 
         <tychoVersion>1.0.0</tychoVersion>
     </properties>
+
     <build>
         <pluginManagement>
             <plugins>
