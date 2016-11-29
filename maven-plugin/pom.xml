@@ -28,35 +28,6 @@
 
     <artifactId>formatter-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <developers>
-        <developer>
-            <id>jecki.go</id>
-            <name>Jecki</name>
-            <email>jecki.go@gmail.com</email>
-            <roles>
-                <role>maven-java-formatter-plugin</role>
-                <role>owner</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>matt.blanchette</id>
-            <name>Matt Blanchette</name>
-            <email>matt.blanchette@gmail.com</email>
-            <roles>
-                <role>maven-java-formatter-plugin</role>
-                <role>owner</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>velo</id>
-            <name>Marvin Froeder</name>
-            <email>velo.br@gmail.com</email>
-            <roles>
-                <role>maven-formatter-plugin</role>
-                <role>owner</role>
-            </roles>
-        </developer>
-    </developers>
 
     <dependencies>
         <dependency>
