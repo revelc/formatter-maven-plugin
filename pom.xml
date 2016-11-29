@@ -371,6 +371,21 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.7.7.201606060606</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.github.ekryd.sortpom</groupId>
+                    <artifactId>sortpom-maven-plugin</artifactId>
+                    <version>2.4.0</version> <!-- Do not update past 2.4.0 as it requires jdk8 -->
+                    <configuration>
+                        <createBackupFile>false</createBackupFile>
+                        <expandEmptyElements>false</expandEmptyElements>
+                        <lineSeparator>\n</lineSeparator>
+                        <nrOfIndentSpace>4</nrOfIndentSpace>
+                        <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                        <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                        <sortProperties>true</sortProperties>
+                        <verifyFail>Stop</verifyFail>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -449,21 +464,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Do not update past 2.4.0 as it requires jdk8 -->
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
-                <version>2.4.0</version>
-                <configuration>
-                    <createBackupFile>false</createBackupFile>
-                    <expandEmptyElements>false</expandEmptyElements>
-                    <lineSeparator>\n</lineSeparator>
-                    <nrOfIndentSpace>4</nrOfIndentSpace>
-                    <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-                    <sortDependencies>scope,groupId,artifactId</sortDependencies>
-                    <sortProperties>true</sortProperties>
-                    <verifyFail>Stop</verifyFail>
-                </configuration>
                 <executions>
                     <execution>
                         <id>sort-pom</id>
