@@ -72,11 +72,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.revelc.code.formatter</groupId>
-            <artifactId>support</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-digester3</artifactId>
             <version>3.2</version>
