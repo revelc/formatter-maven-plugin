@@ -151,6 +151,8 @@
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <tychoVersion>0.24.0</tychoVersion>
     </properties>
     <build>
         <pluginManagement>
@@ -346,7 +348,7 @@
                 <plugin>
                     <groupId>org.eclipse.tycho</groupId>
                     <artifactId>target-platform-configuration</artifactId>
-                    <version>${tycho-version}</version>
+                    <version>${tychoVersion}</version>
                     <configuration>
                         <environments>
                             <environment>
