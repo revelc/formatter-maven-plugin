@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.marvinformatics.formatter;  import java.io.IOException; import java.io.InputStream; import java.util.List; import java.util.Map; import org.apache.commons.digester3.Digester; import org.xml.sax.SAXException; import com.marvinformatics.formatter.xml.Profiles; 
+package net.revelc.code.formatter;  import java.io.IOException; import java.io.InputStream; import java.util.List; import java.util.Map; import org.apache.commons.digester3.Digester; import org.xml.sax.SAXException; import net.revelc.code.formatter.xml.Profiles; 
 
 
 
