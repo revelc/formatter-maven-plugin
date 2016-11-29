@@ -109,8 +109,8 @@
     <scm>
         <connection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
-        <url>https://github.com/revelc/formatter-maven-plugin</url>
         <tag>HEAD</tag>
+        <url>https://github.com/revelc/formatter-maven-plugin</url>
     </scm>
 
     <issueManagement>
@@ -145,7 +145,7 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.testSource>1.7</maven.compiler.testSource>
         <maven.compiler.testTarget>1.7</maven.compiler.testTarget>
-        
+
         <maven.min-version>3.0.5</maven.min-version>
 
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
@@ -237,7 +237,8 @@
                         <dependency>
                             <groupId>net.trajano.wagon</groupId>
                             <artifactId>wagon-git</artifactId>
-                            <version>2.0.3</version> <!-- Do not upgrade to 2.0.4 as it does not work -->
+                            <!-- Do not upgrade to 2.0.4 as it does not work -->
+                            <version>2.0.3</version>
                         </dependency>
                         <!-- For reporting only of versions -->
                         <dependency>
@@ -374,11 +375,13 @@
                 <plugin>
                     <groupId>com.github.ekryd.sortpom</groupId>
                     <artifactId>sortpom-maven-plugin</artifactId>
-                    <version>2.4.0</version> <!-- Do not update past 2.4.0 as it requires jdk8 -->
+                    <!-- Do not update past 2.4.0 as it requires jdk8 -->
+                    <version>2.4.0</version>
                     <configuration>
                         <createBackupFile>false</createBackupFile>
                         <expandEmptyElements>false</expandEmptyElements>
                         <lineSeparator>\n</lineSeparator>
+                        <keepBlankLines>true</keepBlankLines>
                         <nrOfIndentSpace>4</nrOfIndentSpace>
                         <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
                         <sortDependencies>scope,groupId,artifactId</sortDependencies>
