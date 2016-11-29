@@ -336,6 +336,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         try {
             return this.basedir.getCanonicalPath();
         } catch (IOException e) {
+            getLog().debug("", e);
             return "";
         }
     }
