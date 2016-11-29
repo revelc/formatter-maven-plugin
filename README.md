@@ -39,14 +39,14 @@ Plugin Version	| Eclipse Version
 0.4             | 3.8.1 
 0.5.2           | 4.4.1
 1.0.0           | 3.8.3 (velo fork)
-1.1.0           | 3.8.3
-1.2.0           | 3.8.3
-1.3.0           | 3.8.3
-1.4.0           | 4.4.0 (luna)
-1.6.0.RC1       | 4.5.0.RC1 (mars)
-1.6.0.RC2       | 4.5.0.RC2 (mars)
-1.6.0.RC3       | 4.5.0.RC3 (mars)
-1.6.0.RC4       | 4.5.0.RC4 (mars)
-2.0.0           | 4.5.0 (merged forks - mars)
+1.1.0           | 3.8.3 (velo fork)
+1.2.0           | 3.8.3 (velo fork)
+1.3.0           | 3.8.3 (velo fork)
+1.4.0           | 4.4.0 (velo fork - luna)
+1.6.0.RC1       | 4.5.0.RC1 (velo fork - mars)
+1.6.0.RC2       | 4.5.0.RC2 (velo fork - mars)
+1.6.0.RC3       | 4.5.0.RC3 (velo fork - mars)
+1.6.0.RC4       | 4.5.0.RC4 (velo fork - mars)
+2.0.0           | 4.5.2 (merged forks - mars)
 
 [1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
