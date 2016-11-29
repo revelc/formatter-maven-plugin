@@ -107,10 +107,10 @@
     </modules>
 
     <scm>
-        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:revelc/formatter-maven-plugin.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
         <url>https://github.com/revelc/formatter-maven-plugin</url>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
