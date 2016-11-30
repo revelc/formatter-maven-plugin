@@ -156,7 +156,7 @@
 
         <tagNameFormat>formatter-maven-plugin-@{project.version}</tagNameFormat>
 
-        <tychoVersion>0.26.0</tychoVersion>
+        <tychoVersion>0.24.0</tychoVersion>
     </properties>
     <build>
         <pluginManagement>
