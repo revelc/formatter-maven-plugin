@@ -1,0 +1,153 @@
+package viz;
+
+import static com.google.common.base.Charsets.UTF_8;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
+import org.xml.sax.SAXException;
+
+import com.marvinformatics.formatter.model.ConfigReadException;
+import com.marvinformatics.formatter.model.ConfigReader;
+
+public class MultiThreadedFileTreeWalk
+{
+  private static class RecursiveWalk extends RecursiveAction
+  {
+    private static final long serialVersionUID = 6913234076030245489L;
+    private final Path dir;
+    private ThreadLocal<CodeFormatter> formatter;
+    private AtomicInteger formatted;
+
+    public RecursiveWalk(ThreadLocal<CodeFormatter> formatter, AtomicInteger formatted, Path dir)
+    {
+      this.dir = dir;
+      this.formatter = formatter;
+      this.formatted = formatted;
+    }
+
+    @Override
+    protected void compute()
+    {
+      final List<RecursiveWalk> walks = new ArrayList<>();
+      try
+      {
+        Files.walkFileTree(dir, new SimpleFileVisitor<Path>()
+        {
+          @Override
+          public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
+          {
+            if (!dir.equals(RecursiveWalk.this.dir))
+            {
+              RecursiveWalk w = new RecursiveWalk(formatter, formatted, dir);
+              w.fork();
+              walks.add(w);
+
+              return FileVisitResult.SKIP_SUBTREE;
+            }
+            else
+            {
+              return FileVisitResult.CONTINUE;
+            }
+          }
+
+          @Override
+          public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
+          {
+            String name = file.getName(file.getNameCount() - 1).toString();
+            if (!name.endsWith(".java"))
+              return FileVisitResult.CONTINUE;
+            String code = new String(Files.readAllBytes(file), UTF_8);
+            TextEdit te = formatter.get().format(CodeFormatter.K_COMPILATION_UNIT, code,
+                0, code.length(), 0, "\n");
+
+            IDocument doc = new Document(code);
+            try
+            {
+              te.apply(doc);
+            }
+            catch (MalformedTreeException | BadLocationException e)
+            {
+              throw new IOException(e);
+            }
+            String formattedCode = doc.get();
+
+            if (!code.equals(formattedCode))
+            {
+              Files.write(file, formattedCode.getBytes(UTF_8));
+              formatted.addAndGet(1);
+            }
+            return FileVisitResult.CONTINUE;
+          }
+        });
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+
+      for (RecursiveWalk w : walks)
+      {
+        w.join();
+      }
+    }
+  }
+
+  public static void main(String[] args) throws IOException, SAXException, ConfigReadException
+  {
+    long start = System.currentTimeMillis();
+
+    final Map<String, String> options;
+    try (InputStream configInput = new FileInputStream("c:/java.xml");)
+    {
+      ConfigReader configReader = new ConfigReader();
+      options = configReader.read(configInput);
+    }
+
+    ThreadLocal<CodeFormatter> formatter = new ThreadLocal<CodeFormatter>()
+    {
+      @Override
+      public CodeFormatter get()
+      {
+        CodeFormatter fmt = super.get();
+        if (fmt == null)
+        {
+          fmt = ToolFactory.createCodeFormatter(options);
+          super.set(fmt);
+        }
+        return fmt;
+      }
+    };
+
+    final AtomicInteger formatted = new AtomicInteger();
+
+    RecursiveWalk w = new RecursiveWalk(formatter, formatted, Paths.get(args[0]));
+    ForkJoinPool p = new ForkJoinPool(8);
+    p.invoke(w);
+
+    long end = System.currentTimeMillis();
+    System.out.println("Formated " + formatted.get() + " files took: " + TimeUnit.MILLISECONDS.toSeconds(end - start) + "s");
+  }
+
+}
