@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: net.revelc.code.formatter.tests
-Bundle-Version: 2.0.0
+Bundle-Version: 2.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.m2e.tests.common;bundle-version"[1.0.0,10.0.0)",
  org.junit;bundle-version="[1.0.0,10.0.0)",
