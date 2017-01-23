@@ -19,6 +19,7 @@ package net.revelc.code.formatter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,6 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.Assert;
 
-import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
@@ -57,7 +57,7 @@ public abstract class AbstractFormatterTest {
 
         @Override
         public Charset getEncoding() {
-            return Charsets.UTF_8;
+            return StandardCharsets.UTF_8;
         }
 
         @Override
