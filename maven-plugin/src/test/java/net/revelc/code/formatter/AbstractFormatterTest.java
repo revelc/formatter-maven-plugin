@@ -89,7 +89,7 @@ public abstract class AbstractFormatterTest {
         Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
         Assert.assertEquals(Result.SUCCESS, r);
 
-        byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
+        byte[] sha1 = Files.hash(sourceFile, Hashing.sha256()).asBytes();
         StringBuffer sb = new StringBuffer("");
         for (int i = 0; i < sha1.length; i++) {
             sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
