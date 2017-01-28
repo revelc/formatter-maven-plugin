@@ -1,5 +1,20 @@
 # maven-formatter-plugin
 ======================
+
+If you find this project useful and wanna support it, don't be ashamed, donate!
+
+<span style="overflow: hidden; border: 1px solid black; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; padding: 4px; padding-left: 0px; font-family: Arial; font-size: 12px; font-weight: bold; background-color: white;">
+	<span style="padding: 4px; padding-left: 8px; background-color: #E98A0A; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; color: white;">
+		<a href="http://www.bitcoin.org/" style="text-decoration: none; color: white;">
+			<span style="-webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; font-weight: normal; color: white; font-size: 15px; background-color: white; color: #E98A0A; padding: 1px 5px; padding-top: 0px;">&#3647;</span>
+			Donate using Bitcoin!
+		</a>
+	</span>
+	<span style="padding: 5px;">
+		1J5Y8jD1Vxwhc1QSC8RG6MuzM4WnS9k2gP
+	</span>
+</span>
+
 [![Build Status](https://travis-ci.org/velo/maven-formatter-plugin.svg?branch=master)](https://travis-ci.org/velo/maven-formatter-plugin) [![Coverage Status](https://coveralls.io/repos/velo/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/velo/maven-formatter-plugin?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.marvinformatics.formatter/formatter-maven-plugin/) [![Issues](https://img.shields.io/github/issues/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/issues) [![Forks](https://img.shields.io/github/forks/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/network) [![Stars](https://img.shields.io/github/stars/velo/maven-formatter-plugin.svg)](https://github.com/velo/maven-formatter-plugin/stargazers) [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/velo/maven-formatter-plugin/blob/master/license.txt)
 
 forked from http://code.google.com/p/maven-java-formatter-plugin/
