@@ -15,15 +15,32 @@
  */
 package com.marvinformatics.formatter.java;
 
+import java.util.Map;
+
 import com.marvinformatics.formatter.AbstractFormatterTest;
+import com.marvinformatics.formatter.Formatter;
 
 /**
  * @author marvin.froeder
  */
 public class JavaFormatterTest extends AbstractFormatterTest {
 
-	public void testDoFormatFile() throws Exception {
-		doTestFormat(new JavaFormatter(), "AnyClass.java", "f9a3b848cabd96767fb861bdd76d14fda7289f5e");
+	@Override
+	public Formatter createFormatter() {
+		return new JavaFormatter();
+	}
+
+	@Override
+	public void tuneDefaultConfigs(Map<String, String> options) {
+		options.put("org.eclipse.jdt.core.formatter.tabulation.char", "tab");
+		options.put("org.eclipse.jdt.core.formatter.blank_lines_before_imports", "1");
+		options.put("org.eclipse.jdt.core.formatter.blank_lines_after_imports", "1");
+		options.put("org.eclipse.jdt.core.formatter.blank_lines_before_method", "1");
+	}
+
+	@Override
+	public String fileUnderTest() {
+		return "AnyClass.java";
 	}
 
 }

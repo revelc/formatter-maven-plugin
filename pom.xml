@@ -226,12 +226,11 @@
       <plugin>
         <groupId>com.marvinformatics.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
-        <version>1.6.0.RC4</version>
+        <version>1.7.0</version>
         <inherited>false</inherited>
         <configuration>
           <sourceDirectory>${project.basedir}</sourceDirectory>
           <excludes>
-            <exclude>**/src/test/resources/**</exclude>
             <exclude>**/target/**</exclude>
           </excludes>
           <lineEnding>LF</lineEnding>

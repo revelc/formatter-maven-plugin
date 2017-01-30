@@ -20,27 +20,30 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
-public abstract class AbstractFormatterTest extends TestCase {
+public abstract class AbstractFormatterTest {
 
-	protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1)
-			throws IOException, NoSuchAlgorithmException {
-		File originalSourceFile = new File("src/test/resources/", fileUnderTest);
-		File sourceFile = new File("target/test-classes/", fileUnderTest);
+	private Formatter formatter;
 
-		Files.copy(originalSourceFile, sourceFile);
-
+	@Before
+	public void setup() {
+		this.formatter = createFormatter();
 		Map<String, String> options = new HashMap<String, String>();
+		tuneDefaultConfigs(options);
 		final File targetDir = new File("target/testoutput");
 		targetDir.mkdirs();
 		formatter.init(options, new ConfigurationSource() {
@@ -69,16 +72,64 @@ public abstract class AbstractFormatterTest extends TestCase {
 				return "1.9";
 			}
 		});
-		Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
+	}
+
+	public void tuneDefaultConfigs(Map<String, String> options) {
+	}
+
+	public abstract Formatter createFormatter();
+
+	@Test
+	public void doTestFormat() throws IOException, NoSuchAlgorithmException {
+		File originalSourceFile = new File("src/test/resources/", fileUnderTest());
+		File sourceFile = createUnformatedFile(originalSourceFile);
+
+		Result r = formatter.formatFile(sourceFile, LineEnding.LF, false);
 		assertEquals(Result.SUCCESS, r);
 
-		byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
-		StringBuffer sb = new StringBuffer("");
-		for (int i = 0; i < sha1.length; i++) {
-			sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
-		}
+		String originalContent = Files.toString(originalSourceFile, Charsets.UTF_8);
+		String formattedContent = Files.toString(sourceFile, Charsets.UTF_8);
 
-		assertEquals(expectedSha1, sb.toString());
+		String msg = "Files: \n-" + originalSourceFile.getAbsolutePath() + "\n-" + sourceFile.getAbsolutePath();
+		assertEquals(msg, originalContent, formattedContent);
+
+		String expectedSha1 = Files.hash(originalSourceFile, Hashing.sha1()).toString();
+		String sha1 = Files.hash(sourceFile, Hashing.sha1()).toString();
+
+		assertEquals(msg, expectedSha1, sha1);
+	}
+
+	public abstract String fileUnderTest();
+
+	private File createUnformatedFile(File originalSourceFile) throws IOException {
+		File unformatedFile = new File("target/test-classes/", fileUnderTest());
+
+		Files.copy(originalSourceFile, unformatedFile);
+
+		List<String> content = Files.readLines(unformatedFile, Charsets.UTF_8);
+
+		StringBuilder messedContent = new StringBuilder();
+		for (String line : content)
+			if (line.contains("*"))
+				// headers dont reformat that well
+				messedContent.append(line).append("\n");
+			else
+				messedContent.append(randomSeparator()).append(line.trim()).append(randomSeparator());
+
+		Files.write(messedContent, unformatedFile, Charsets.UTF_8);
+
+		return unformatedFile;
+	}
+
+	private StringBuilder randomSeparator() {
+		Random random = new Random();
+		int spaces = random.nextInt(10);
+
+		StringBuilder separator = new StringBuilder();
+		for (int i = 0; i < spaces; i++)
+			separator.append(' ');
+
+		return separator;
 	}
 
 }
