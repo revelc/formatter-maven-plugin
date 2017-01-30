@@ -15,13 +15,11 @@
  */
 package com.marvinformatics.formatter;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.maven.plugin.logging.Log;
-import org.codehaus.plexus.util.FileUtils;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 
@@ -30,37 +28,28 @@ import org.eclipse.text.edits.MalformedTreeException;
  */
 public abstract class AbstractCacheableFormatter {
 
-	protected Log log;
+	protected final Log log;
 
-	protected Charset encoding;
+	protected final ConfigurationSource configurationSource;
 
-	public AbstractCacheableFormatter() {
-		super();
-	}
-
-	protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
-
-	protected void initCfg(ConfigurationSource cfg) {
+	public AbstractCacheableFormatter(ConfigurationSource cfg) {
+		this.configurationSource = cfg;
 		this.log = cfg.getLog();
-		this.encoding = cfg.getEncoding();
 	}
 
-	public Result formatFile(File file, LineEnding ending, boolean dryRun) {
+	public Result formatFile(Path file) {
 		try {
 			log.debug("Processing file: " + file);
-			String code = FileUtils.fileRead(file, encoding.name());
-			String formattedCode = doFormat(code, ending);
+			String code = new String(Files.readAllBytes(file), configurationSource.getEncoding());
+			String formattedCode = fixLineEnding(doFormat(code));
 
-			if (formattedCode == null)
-				formattedCode = fixLineEnding(code, ending);
-
-			if (formattedCode == null) {
+			if (code.equals(formattedCode)) {
 				log.debug("Equal code. Not writing result to file.");
 				return Result.SKIPPED;
 			}
 
-			if (!dryRun)
-				FileUtils.fileWrite(file, encoding.name(), formattedCode);
+			if (!configurationSource.isDryRun())
+				Files.write(file, formattedCode.getBytes(configurationSource.getEncoding()));
 
 			return Result.SUCCESS;
 		} catch (IOException e) {
@@ -75,19 +64,10 @@ public abstract class AbstractCacheableFormatter {
 		}
 	}
 
-	private String fixLineEnding(String code, LineEnding ending) {
-		if (ending == LineEnding.KEEP)
-			return null;
-
-		LineEnding current = LineEnding.determineLineEnding(code);
-		if (current == LineEnding.UNKNOW)
-			return null;
-		if (current == ending)
-			return null;
-
-		return code.replace(current.getChars(), ending.getChars());
+	private String fixLineEnding(String code) {
+		return configurationSource.lineEnding().fix(code);
 	}
 
-	protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
+	protected abstract String doFormat(String code) throws IOException, BadLocationException;
 
 }

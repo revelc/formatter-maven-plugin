@@ -61,8 +61,10 @@ public enum LineEnding {
 	}
 
 	/**
-	 * Returns the most occurring line-ending characters in the file text or null if no line-ending occurs the most.
+	 * Returns the most occurring line-ending characters in the file text or
+	 * null if no line-ending occurs the most.
 	 * 
+	 * @param fileDataString
 	 * @return
 	 */
 	public static LineEnding determineLineEnding(String fileDataString) {
@@ -92,6 +94,26 @@ public enum LineEnding {
 			return CR;
 		}
 		return UNKNOW;
+	}
+
+	/**
+	 * Apply line ending to text
+	 * 
+	 * @param text
+	 * @return
+	 */
+	public String fix(String text) {
+		if (this == LineEnding.KEEP)
+			return text;
+
+		LineEnding current = LineEnding.determineLineEnding(text);
+		if (current == LineEnding.UNKNOW)
+			return text.replaceAll("(\\r\\n)|(\\n)|(\\r)", this.getChars());
+
+		if (this == current)
+			return text;
+
+		return text.replace(current.getChars(), this.getChars());
 	}
 
 }

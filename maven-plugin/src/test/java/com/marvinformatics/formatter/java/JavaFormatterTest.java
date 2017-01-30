@@ -18,6 +18,7 @@ package com.marvinformatics.formatter.java;
 import java.util.Map;
 
 import com.marvinformatics.formatter.AbstractFormatterTest;
+import com.marvinformatics.formatter.ConfigurationSource;
 import com.marvinformatics.formatter.Formatter;
 
 /**
@@ -26,8 +27,8 @@ import com.marvinformatics.formatter.Formatter;
 public class JavaFormatterTest extends AbstractFormatterTest {
 
 	@Override
-	public Formatter createFormatter() {
-		return new JavaFormatter();
+	public Formatter createFormatter(Map<String, String> options, ConfigurationSource configurationSource) {
+		return new JavaFormatter(options, configurationSource);
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class LineEndingTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test_success_read_line_endings_crlf() throws Exception {
+	public void success_read_line_endings_crlf() throws Exception {
 		String fileData = "Test\r\nTest\r\nTest\r\n";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
 		assertEquals(LineEnding.CRLF, lineEnd);
@@ -62,7 +62,7 @@ public class LineEndingTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test_success_read_line_endings_lf() throws Exception {
+	public void success_read_line_endings_lf() throws Exception {
 		String fileData = "Test\nTest\nTest\n";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
 		assertEquals(LineEnding.LF, lineEnd);
@@ -74,7 +74,7 @@ public class LineEndingTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test_success_read_line_endings_cr() throws Exception {
+	public void success_read_line_endings_cr() throws Exception {
 		String fileData = "Test\rTest\rTest\r";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
 		assertEquals(LineEnding.CR, lineEnd);
@@ -86,7 +86,7 @@ public class LineEndingTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test_success_read_line_endings_mixed_lf() throws Exception {
+	public void success_read_line_endings_mixed_lf() throws Exception {
 		String fileData = "Test\r\nTest\rTest\nTest\nTest\r\nTest\n";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
 		assertEquals(LineEnding.LF, lineEnd);
@@ -99,7 +99,7 @@ public class LineEndingTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test_success_read_line_endings_mixed_auto() throws Exception {
+	public void success_read_line_endings_mixed_auto() throws Exception {
 		String fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
 		assertEquals(LineEnding.UNKNOW, lineEnd);
@@ -111,10 +111,35 @@ public class LineEndingTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test_success_read_line_endings_none_auto() throws Exception {
+	public void success_read_line_endings_none_auto() throws Exception {
 		String fileData = "TestTestTestTest";
 		LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
 		assertEquals(LineEnding.UNKNOW, lineEnd);
+	}
+
+	@Test
+	public void keepLineEnding() throws Exception {
+		String result = LineEnding.KEEP.fix("a\r\na\na\ra");
+		assertEquals("a\r\na\na\ra", result);
+	}
+
+	@Test
+	public void fixUnknowLineEnding() throws Exception {
+		String result = LineEnding.LF.fix("a\r\na\na\ra");
+		assertEquals("a\na\na\na", result);
+	}
+
+	@Test
+	public void fixWindowsToLinux() throws Exception {
+		String result = LineEnding.LF.fix("a\r\na\r\na");
+		assertEquals("a\na\na", result);
+	}
+
+	@Test
+	public void skipChange() throws Exception {
+		String result = LineEnding.LF.fix("a\na\na");
+		assertEquals("a\na\na", result);
+		assertTrue("a\na\na" == result);
 	}
 
 }

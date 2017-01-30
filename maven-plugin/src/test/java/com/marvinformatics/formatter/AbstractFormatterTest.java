@@ -15,6 +15,8 @@
  */
 package com.marvinformatics.formatter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -23,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import static org.junit.Assert.*;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
@@ -41,12 +41,11 @@ public abstract class AbstractFormatterTest {
 
 	@Before
 	public void setup() {
-		this.formatter = createFormatter();
 		Map<String, String> options = new HashMap<String, String>();
 		tuneDefaultConfigs(options);
 		final File targetDir = new File("target/testoutput");
 		targetDir.mkdirs();
-		formatter.init(options, new ConfigurationSource() {
+		this.formatter = createFormatter(options, new ConfigurationSource() {
 
 			public File getTargetDirectory() {
 				return targetDir;
@@ -71,20 +70,30 @@ public abstract class AbstractFormatterTest {
 			public String getCompilerCodegenTargetPlatform() {
 				return "1.9";
 			}
+
+			@Override
+			public LineEnding lineEnding() {
+				return LineEnding.LF;
+			}
+
+			@Override
+			public boolean isDryRun() {
+				return false;
+			}
 		});
 	}
 
 	public void tuneDefaultConfigs(Map<String, String> options) {
 	}
 
-	public abstract Formatter createFormatter();
+	public abstract Formatter createFormatter(Map<String, String> options, ConfigurationSource configurationSource);
 
 	@Test
 	public void doTestFormat() throws IOException, NoSuchAlgorithmException {
 		File originalSourceFile = new File("src/test/resources/", fileUnderTest());
 		File sourceFile = createUnformatedFile(originalSourceFile);
 
-		Result r = formatter.formatFile(sourceFile, LineEnding.LF, false);
+		Result r = formatter.formatFile(sourceFile.toPath());
 		assertEquals(Result.SUCCESS, r);
 
 		String originalContent = Files.toString(originalSourceFile, Charsets.UTF_8);

@@ -37,4 +37,8 @@ public interface ConfigurationSource {
 
 	Charset getEncoding();
 
+	LineEnding lineEnding();
+
+	boolean isDryRun();
+
 }

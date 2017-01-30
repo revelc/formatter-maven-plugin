@@ -15,10 +15,7 @@
  */
 package com.marvinformatics.formatter;
 
-import java.io.File;
-import java.util.Map;
-
-import org.eclipse.jdt.core.formatter.CodeFormatter;
+import java.nio.file.Path;
 
 /**
  * @author marvin.froeder
@@ -26,21 +23,11 @@ import org.eclipse.jdt.core.formatter.CodeFormatter;
 public interface Formatter {
 
 	/**
-	 * Initialize the {@link CodeFormatter} instance to be used by this component.
-	 * 
-	 * @param options
-	 * @param cfg
-	 */
-	public abstract void init(Map<String, String> options, ConfigurationSource cfg);
-
-	/**
 	 * Format individual file.
 	 * 
 	 * @param file
-	 * @param ending
-	 * @param dryRun
 	 * @return
 	 */
-	public abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
+	public abstract Result formatFile(Path file);
 
 }

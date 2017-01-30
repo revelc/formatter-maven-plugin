@@ -15,17 +15,13 @@
  */
 package com.marvinformatics.formatter;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Properties;
-
-import org.eclipse.jface.text.BadLocationException;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+
+import com.google.common.base.Stopwatch;
 
 /**
  * This mojo is very similar to Formatter mojo, but it is focused on CI servers.
@@ -52,14 +48,18 @@ public class ValidateMojo extends FormatterMojo {
 	}
 
 	@Override
-	protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
-			throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
-		super.doFormatFile(file, rc, hashCache, basedirPath, true);
+	protected void report(Stopwatch watch, ResultCollector rc) throws MojoFailureException, MojoExecutionException {
+		super.report(watch, rc);
 
-		if (rc.successCount != 0)
-			throw new MojoFailureException("File '" + file + "' format doesn't match!");
-		if (rc.failCount != 0)
-			throw new MojoExecutionException("Error formating '" + file + "' ");
+		if (rc.successCount() != 0)
+			throw new MojoFailureException("Format doesn't match!");
+		if (rc.failCount() != 0)
+			throw new MojoExecutionException("Error formating files ");
+	}
+
+	@Override
+	public boolean isDryRun() {
+		return true;
 	}
 
 }
