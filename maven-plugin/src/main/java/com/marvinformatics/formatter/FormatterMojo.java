@@ -22,9 +22,11 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -34,13 +36,17 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.codehaus.plexus.util.AbstractScanner;
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.MatchPatterns;
 import org.codehaus.plexus.util.ReaderFactory;
+import org.codehaus.plexus.util.SelectorUtils;
 import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
 import com.marvinformatics.formatter.java.JavaFormatter;
 import com.marvinformatics.formatter.javascript.JavascriptFormatter;
 import com.marvinformatics.formatter.model.ConfigReadException;
@@ -221,13 +227,42 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 		ResultCollector rc = new ResultCollector();
 		RecursiveWalk w = new RecursiveWalk(createJavaFormatter(), createJsFormatter(), rc,
-				pathsToScan.filter(file -> isValidDirectory(file)).map(file -> file.toPath()));
+				pathsToScan.filter(file -> isValidDirectory(file)).map(file -> file.toPath()), excludes());
 		ForkJoinPool p = new ForkJoinPool(8);
 		p.invoke(w);
 
 		watch.stop();
 
 		report(watch, rc);
+	}
+
+	private MatchPatterns excludes() {
+		List<String> excludes;
+		if (this.excludes != null)
+			excludes = Lists.newArrayList(this.excludes);
+		else
+			excludes = Lists.newArrayList();
+		excludes.addAll(Lists.newArrayList(AbstractScanner.DEFAULTEXCLUDES));
+
+		return MatchPatterns.from(new StreamIterable<>(excludes.stream().map(pattern -> normalize(pattern))));
+	}
+
+	private String normalize(String pattern) {
+		pattern = pattern.trim();
+
+		if (pattern.startsWith(SelectorUtils.REGEX_HANDLER_PREFIX)) {
+			if (File.separatorChar == '\\')
+				pattern = StringUtils.replace(pattern, "/", "\\\\");
+			else
+				pattern = StringUtils.replace(pattern, "\\\\", "/");
+		} else {
+			pattern = pattern.replace(File.separatorChar == '/' ? '\\' : '/', File.separatorChar);
+
+			if (pattern.endsWith(File.separator))
+				pattern += "**";
+		}
+
+		return pattern;
 	}
 
 	protected void report(Stopwatch watch, ResultCollector rc) throws MojoFailureException, MojoExecutionException {

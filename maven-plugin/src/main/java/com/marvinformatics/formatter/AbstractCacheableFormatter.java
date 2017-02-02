@@ -52,14 +52,8 @@ public abstract class AbstractCacheableFormatter {
 				Files.write(file, formattedCode.getBytes(configurationSource.getEncoding()));
 
 			return Result.SUCCESS;
-		} catch (IOException e) {
-			log.warn(e);
-			return Result.FAIL;
-		} catch (MalformedTreeException e) {
-			log.warn(e);
-			return Result.FAIL;
-		} catch (BadLocationException e) {
-			log.warn(e);
+		} catch (Exception e) {
+			log.warn("Error formating: " + file.toAbsolutePath(), e);
 			return Result.FAIL;
 		}
 	}

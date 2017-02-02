@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.concurrent.RecursiveAction;
 import java.util.stream.Stream;
 
+import org.codehaus.plexus.util.MatchPatterns;
+
 import com.marvinformatics.formatter.java.JavaFormatter;
 import com.marvinformatics.formatter.javascript.JavascriptFormatter;
 
@@ -36,19 +38,21 @@ public class RecursiveWalk extends RecursiveAction {
 	private final ThreadLocal<JavaFormatter> javaFormatter;
 	private final ResultCollector resultCollector;
 	private final ThreadLocal<JavascriptFormatter> jsFormatter;
+	private final MatchPatterns excludes;
 
 	public RecursiveWalk(ThreadLocal<JavaFormatter> javaFormatter, ThreadLocal<JavascriptFormatter> jsFormatter,
-			ResultCollector resultCollector, Stream<Path> stream) {
+			ResultCollector resultCollector, Stream<Path> stream, MatchPatterns excludes) {
 		super();
 		this.paths = stream;
 		this.javaFormatter = javaFormatter;
 		this.jsFormatter = jsFormatter;
 		this.resultCollector = resultCollector;
+		this.excludes = excludes;
 	}
 
 	public RecursiveWalk(ThreadLocal<JavaFormatter> javaFormatter, ThreadLocal<JavascriptFormatter> jsFormatter,
-			ResultCollector resultCollector, Path path) {
-		this(javaFormatter, jsFormatter, resultCollector, Collections.singletonList(path).stream());
+			ResultCollector resultCollector, Path path, MatchPatterns excludes) {
+		this(javaFormatter, jsFormatter, resultCollector, Collections.singletonList(path).stream(), excludes);
 	}
 
 	@Override
@@ -59,8 +63,12 @@ public class RecursiveWalk extends RecursiveAction {
 				Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
 					@Override
 					public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+						if (matchExclusions(dir))
+							return FileVisitResult.SKIP_SUBTREE;
+
 						if (!dir.equals(path)) {
-							RecursiveWalk w = new RecursiveWalk(javaFormatter, jsFormatter, resultCollector, dir);
+							RecursiveWalk w = new RecursiveWalk(javaFormatter, jsFormatter, resultCollector, dir,
+									excludes);
 							w.fork();
 							walks.add(w);
 
@@ -74,8 +82,13 @@ public class RecursiveWalk extends RecursiveAction {
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 						String name = file.getName(file.getNameCount() - 1).toString();
 
+						if (matchExclusions(file))
+							return FileVisitResult.CONTINUE;
+
 						if (name.endsWith(".java"))
 							resultCollector.collect(javaFormatter.get().formatFile(file));
+						if (name.endsWith(".js"))
+							resultCollector.collect(jsFormatter.get().formatFile(file));
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -88,5 +101,9 @@ public class RecursiveWalk extends RecursiveAction {
 		for (RecursiveWalk w : walks) {
 			w.join();
 		}
+	}
+
+	private boolean matchExclusions(Path path) {
+		return excludes.matches(path.toAbsolutePath().toString(), true);
 	}
 }

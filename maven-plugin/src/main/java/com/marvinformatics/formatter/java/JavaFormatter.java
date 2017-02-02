@@ -50,10 +50,9 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 	public String doFormat(String code) throws IOException, BadLocationException {
 		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
 				configurationSource.lineEnding().getChars());
-		if (te == null) {
-			log.debug("Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
-			return null;
-		}
+		if (te == null)
+			throw new IllegalArgumentException(
+					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 
 		IDocument doc = new Document(code);
 		te.apply(doc);
