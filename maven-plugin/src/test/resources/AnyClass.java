@@ -27,7 +27,10 @@ public class ConfigReader {
 	public Map<String, String> read(InputStream input) throws IOException, SAXException, ConfigReadException {
 		Digester digester = new Digester();
 		digester.addRuleSet(new RuleSet());
-		Object result = digester.parse(input);
+		Object result;
+		try (input) {
+			result = digester.parse(input);
+		}
 		if (result == null && !(result instanceof Profiles)) {
 			throw new ConfigReadException("No profiles found in config file");
 		}

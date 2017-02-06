@@ -28,7 +28,7 @@
 
   <groupId>com.marvinformatics.formatter</groupId>
   <artifactId>parent</artifactId>
-  <version>1.6.0-SNAPSHOT</version>
+  <version>1.9.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <description>Plugin for formatting source code</description>
@@ -157,33 +157,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.4.201502262128</version>
-        <executions>
-          <execution>
-            <id>pre-unit-test</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-            <configuration>
-              <includes>
-                <include>**/marvinformatics/*</include>
-              </includes>
-              <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-              <propertyName>utCoverage</propertyName>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>${utCoverage}</argLine>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.6.201602180812</version>
         <executions>
           <execution>
@@ -193,6 +166,13 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <includes>
+            <include>**/marvinformatics/*</include>
+          </includes>
+          <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+          <propertyName>utCoverage</propertyName>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -200,27 +180,8 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <argLine>${argLine} -Xmx2G</argLine>
+          <argLine>${utCoverage} -Xmx2G</argLine>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <configuration>
-          <forkedProcessTimeoutInSeconds>0</forkedProcessTimeoutInSeconds>
-          <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <argLine>${argLine} -Xmx2G</argLine>
-          <reuseForks>false</reuseForks>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
 
       <plugin>
@@ -393,7 +354,12 @@
   <repositories>
     <repository>
       <id>neon</id>
-      <url>http://download.eclipse.org/releases/neon/</url>
+      <url>http://download.eclipse.org/releases/oxygen/</url>
+      <layout>p2</layout>
+    </repository>
+    <repository>
+      <id>jdk9</id>
+      <url>http://download.eclipse.org/eclipse/updates/4.7-P-builds/</url>
       <layout>p2</layout>
     </repository>
   </repositories>

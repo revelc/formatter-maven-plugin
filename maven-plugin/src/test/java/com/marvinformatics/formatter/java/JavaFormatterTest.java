@@ -17,6 +17,8 @@ package com.marvinformatics.formatter.java;
 
 import java.util.Map;
 
+import org.eclipse.jdt.core.JavaCore;
+
 import com.marvinformatics.formatter.AbstractFormatterTest;
 import com.marvinformatics.formatter.ConfigurationSource;
 import com.marvinformatics.formatter.Formatter;
@@ -37,6 +39,9 @@ public class JavaFormatterTest extends AbstractFormatterTest {
 		options.put("org.eclipse.jdt.core.formatter.blank_lines_before_imports", "1");
 		options.put("org.eclipse.jdt.core.formatter.blank_lines_after_imports", "1");
 		options.put("org.eclipse.jdt.core.formatter.blank_lines_before_method", "1");
+		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_9);
+		options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_9);
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_9);
 	}
 
 	@Override

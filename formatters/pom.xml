@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.marvinformatics.formatter</groupId>
     <artifactId>parent</artifactId>
-    <version>1.6.0-SNAPSHOT</version>
+    <version>1.9.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>formatters</artifactId>
@@ -57,6 +57,16 @@
                 <configuration>
                   <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                   <excludes>META-INF/*,com/ibm/icu/impl/data/icudt56b/**/*</excludes>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy</id>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/libraries</outputDirectory>
                 </configuration>
               </execution>
             </executions>
