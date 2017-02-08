@@ -188,24 +188,18 @@
       <plugin>
         <groupId>com.marvinformatics.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
-        <version>1.7.0</version>
+        <version>1.9.0</version>
         <inherited>false</inherited>
         <configuration>
           <sourceDirectory>${project.basedir}</sourceDirectory>
           <excludes>
             <exclude>**/target/**</exclude>
+            <exclude>**/src/test/projects/**</exclude>
           </excludes>
           <lineEnding>LF</lineEnding>
           <configFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configFile>
           <configJsFile>${project.basedir}/src/config/eclipse/formatter/javascript.xml</configJsFile>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>3.0.22</version>
-          </dependency>
-        </dependencies>
         <executions>
           <execution>
             <id>format</id>
