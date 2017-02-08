@@ -43,14 +43,19 @@ public class FormatterTest {
 	@Test
 	public void simpleFormat() throws Exception {
 		File basedir = resources.getBasedir("format");
-		maven.forProject(basedir).withCliOption("-X").execute("formatter:format").assertErrorFreeLog()
+		maven.forProject(basedir)
+				.withCliOption("-X")
+				.execute("formatter:format")
+				.assertErrorFreeLog()
 				.assertLogText("Successfully formatted: 1 file(s)");
 	}
 
 	@Test
 	public void validate() throws Exception {
 		File basedir = resources.getBasedir("format");
-		maven.forProject(basedir).withCliOption("-X").execute("formatter:validate")
+		maven.forProject(basedir)
+				.withCliOption("-X")
+				.execute("formatter:validate")
 				.assertLogText("Format doesn't match!");
 	}
 }
