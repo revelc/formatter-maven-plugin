@@ -159,6 +159,13 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.6.201602180812</version>
+        <configuration>
+          <includes>
+            <include>**/marvinformatics/*</include>
+          </includes>
+          <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+          <propertyName>utCoverage</propertyName>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -167,13 +174,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <includes>
-            <include>**/marvinformatics/*</include>
-          </includes>
-          <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-          <propertyName>utCoverage</propertyName>
-        </configuration>
       </plugin>
 
       <plugin>
@@ -258,6 +258,7 @@
         <version>3.0.0</version>
         <configuration>
           <failOnWarning>true</failOnWarning>
+          <ignoreNonCompile>true</ignoreNonCompile>
         </configuration>
         <executions>
           <execution>
@@ -265,6 +266,7 @@
             <goals>
               <goal>analyze-only</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
