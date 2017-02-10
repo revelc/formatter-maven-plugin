@@ -32,7 +32,6 @@
         <configuration>
           <encoding>UTF-8</encoding>
           <configFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configFile>
-          <configJsFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configJsFile>
         </configuration>
       </plugin>
     </plugins>

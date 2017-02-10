@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -36,12 +36,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.codehaus.plexus.util.AbstractScanner;
-import org.codehaus.plexus.util.IOUtil;
-import org.codehaus.plexus.util.MatchPatterns;
-import org.codehaus.plexus.util.ReaderFactory;
-import org.codehaus.plexus.util.SelectorUtils;
-import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.*;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.xml.sax.SAXException;
 
@@ -274,13 +269,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	}
 
 	private ThreadLocal<JavaFormatter> createJavaFormatter() throws MojoExecutionException {
-		Map<String, String> javaFormattingOptions = getFormattingOptions(configFile);
-		return ThreadLocal.withInitial(() -> new JavaFormatter(javaFormattingOptions, FormatterMojo.this));
+		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(configFile);
+		return ThreadLocal.withInitial(() -> new JavaFormatter(lazyConfig.get(), FormatterMojo.this));
 	}
 
 	private ThreadLocal<JavascriptFormatter> createJsFormatter() throws MojoExecutionException {
-		Map<String, String> jsFormattingOptions = getFormattingOptions(configJsFile);
-		return ThreadLocal.withInitial(() -> new JavascriptFormatter(jsFormattingOptions, FormatterMojo.this));
+		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(configJsFile);
+		return ThreadLocal.withInitial(() -> new JavascriptFormatter(lazyConfig.get(), FormatterMojo.this));
 	}
 
 	private boolean isValidDirectory(File file) {
@@ -295,14 +290,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * @throws MojoExecutionException
 	 *             the mojo execution exception
 	 */
-	private Map<String, String> getFormattingOptions(String cfgFile) throws MojoExecutionException {
+	private Map<String, String> getFormattingOptions(String cfgFile) {
 		if (cfgFile == null)
 			return new HashMap<String, String>();
 
 		try {
 			return getOptionsFromConfigFile(Resource.forPath(cfgFile));
-		} catch (Resource.UnknownResourceException e) {
-			throw new MojoExecutionException("Error loading Java config", e);
+		} catch (Resource.UnknownResourceException | MojoExecutionException e) {
+			throw new IllegalStateException("Error loading Java config", e);
 		}
 	}
 
@@ -314,23 +309,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 *             the mojo execution exception
 	 */
 	private Map<String, String> getOptionsFromConfigFile(Resource configFile) throws MojoExecutionException {
-		InputStream configInput = null;
 
-		try {
-			configInput = configFile.asInputStream();
-
+		try (InputStream configInput = configFile.asInputStream();) {
 			ConfigReader configReader = new ConfigReader();
 			return configReader.read(configInput);
-		} catch (IOException e) {
-			throw new MojoExecutionException("Cannot read config file [" + this.configFile + "]", e);
-		} catch (SAXException e) {
+		} catch (IOException | SAXException e) {
 			throw new MojoExecutionException("Cannot parse config file [" + this.configFile + "]", e);
-		} catch (ConfigReadException e) {
+		} catch (ConfigReadException | UnknownResourceException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
-		} catch (UnknownResourceException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} finally {
-			IOUtil.close(configInput);
 		}
 	}
 
