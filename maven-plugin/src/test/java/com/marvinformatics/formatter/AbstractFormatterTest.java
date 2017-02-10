@@ -28,6 +28,7 @@ import java.util.Random;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
+import org.eclipse.jdt.core.JavaCore;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,15 +61,15 @@ public abstract class AbstractFormatterTest {
 			}
 
 			public String getCompilerSources() {
-				return "1.9";
+				return JavaCore.VERSION_9;
 			}
 
 			public String getCompilerCompliance() {
-				return "1.9";
+				return JavaCore.VERSION_9;
 			}
 
 			public String getCompilerCodegenTargetPlatform() {
-				return "1.9";
+				return JavaCore.VERSION_9;
 			}
 
 			@Override

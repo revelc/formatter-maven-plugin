@@ -37,11 +37,9 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 	public JavaFormatter(Map<String, String> options, ConfigurationSource cfg) {
 		super(cfg);
 
-		if (options.isEmpty()) {
-			options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-			options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
-		}
+		options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
+		options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
 
 		formatter = ToolFactory.createCodeFormatter(options);
 	}
