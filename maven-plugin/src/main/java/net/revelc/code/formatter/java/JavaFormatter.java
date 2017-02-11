@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,11 +51,16 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 
     @Override
     public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
-        TextEdit te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
-                ending.getChars());
-        if (te == null) {
-            this.log.debug(
-                    "Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
+        TextEdit te;
+        try {
+            te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, ending.getChars());
+            if (te == null) {
+                this.log.debug(
+                        "Code cannot be formatted. Possible cause is unmatched source/target/compliance version.");
+                return null;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            this.log.debug("Code cannot be formatted for text -->" + code + "<--", e);
             return null;
         }
 
