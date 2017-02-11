@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,8 @@ public class JavascriptFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        doTestFormat(new JavascriptFormatter(), "AnyJS.js", "21b93e8beab08640dccf4d104940ec9b1490c5ea");
+        doTestFormat(new JavascriptFormatter(), "AnyJS.js",
+                "fe7b158ba66063c604a1eae80f03c2188a5d1bb72e7725bfee1a3527abc190c7");
     }
 
     @Test

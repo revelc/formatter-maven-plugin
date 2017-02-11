@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,8 @@ public class JavaFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        doTestFormat(new JavaFormatter(), "AnyClass.java", "513f0335398b0148ea77edafa73387b04b5e0664");
+        doTestFormat(new JavaFormatter(), "AnyClass.java",
+                "2b1c62613d4874680ad2a9ba48f589aaea08a929b4b595b7d575c3fe534d1699");
     }
 
     @Test

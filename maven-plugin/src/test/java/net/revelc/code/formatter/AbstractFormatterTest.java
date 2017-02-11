@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -89,10 +89,10 @@ public abstract class AbstractFormatterTest {
         Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
         Assert.assertEquals(Result.SUCCESS, r);
 
-        byte[] sha1 = Files.hash(sourceFile, Hashing.sha1()).asBytes();
-        StringBuffer sb = new StringBuffer("");
-        for (int i = 0; i < sha1.length; i++) {
-            sb.append(Integer.toString((sha1[i] & 0xff) + 0x100, 16).substring(1));
+        byte[] sha256 = Files.hash(sourceFile, Hashing.sha256()).asBytes();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < sha256.length; i++) {
+            sb.append(Integer.toString((sha256[i] & 0xff) + 0x100, 16).substring(1));
         }
 
         Assert.assertEquals(expectedSha1, sb.toString());
