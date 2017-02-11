@@ -2,10 +2,10 @@
 ========================
 [![Linux Build Status](https://travis-ci.org/revelc/formatter-maven-plugin.svg)](https://travis-ci.org/revelc/formatter-maven-plugin)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/j3cd0dwqlyu0iv2y?svg=true)](https://ci.appveyor.com/project/velo/formatter-maven-plugin)
-[![Coverage Status](https://coveralls.io/repos/revelc/maven-formatter-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/maven-formatter-plugin?branch=master)  
+[![Coverage Status](https://coveralls.io/repos/revelc/formatter-maven-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/formatter-maven-plugin?branch=master)  
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/) 
 [![Issues](https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/issues) 
-[![Forks](https://img.shields.io/github/forks/revelc/maven-formatter-plugin.svg)](https://github.com/revelc/maven-formatter-plugin/network) 
+[![Forks](https://img.shields.io/github/forks/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/network) 
 [![Stars](https://img.shields.io/github/stars/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/stargazers)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/license.txt)
 
@@ -18,7 +18,7 @@ Here I aim to provide file formatting accross languages.  So far, java and javas
 Also, this project also provides m2e configurator.  So you can be sure the IDE form the entire development team is properly configured.
 
 M2e configurator update site:
-http://revelc.github.io/maven-formatter-plugin/p2/1.6.0
+http://revelc.github.io/formatter-maven-plugin/p2/2.0.0
 
 
 This software is provided WITHOUT ANY WARRANTY.  Any loss of codes caused by the usage of this plugin is not
@@ -47,6 +47,6 @@ Plugin Version	| Eclipse Version
 1.6.0.RC2       | 4.5.0.RC2 (velo fork - mars)
 1.6.0.RC3       | 4.5.0.RC3 (velo fork - mars)
 1.6.0.RC4       | 4.5.0.RC4 (velo fork - mars)
-2.0.0           | 4.5.2 (merged forks - mars)
+2.0.0 - 2.0.1   | 4.5.2 (merged forks - mars)
 
 [1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
