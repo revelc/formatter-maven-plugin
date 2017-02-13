@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -417,7 +417,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         Log log = getLog();
         log.debug("Processing file: " + file);
         String code = readFileAsString(file);
-        String originalHash = md5hash(code);
+        String originalHash = sha512hash(code);
 
         String canonicalPath = file.getCanonicalPath();
         String path = canonicalPath.substring(basedirPath.length());
@@ -452,7 +452,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         String formattedCode = readFileAsString(file);
-        String formattedHash = md5hash(formattedCode);
+        String formattedHash = sha512hash(formattedCode);
         hashCache.setProperty(path, formattedHash);
 
         if (originalHash.equals(formattedHash)) {
@@ -465,14 +465,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     /**
-     * Md5hash.
+     * sha512hash.
      *
      * @param str the str
      * @return the string
      * @throws UnsupportedEncodingException the unsupported encoding exception
      */
-    private String md5hash(String str) throws UnsupportedEncodingException {
-        return Hashing.md5().hashBytes(str.getBytes(this.encoding)).toString();
+    private String sha512hash(String str) throws UnsupportedEncodingException {
+        return Hashing.sha512().hashBytes(str.getBytes(this.encoding)).toString();
     }
 
     /**
