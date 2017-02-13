@@ -76,7 +76,7 @@ public abstract class AbstractFormatterTest {
         }
     }
 
-    protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha1) throws IOException {
+    protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha512) throws IOException {
         File originalSourceFile = new File("src/test/resources/", fileUnderTest);
         File sourceFile = new File("target/test-classes/", fileUnderTest);
 
@@ -86,16 +86,17 @@ public abstract class AbstractFormatterTest {
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
         formatter.init(options, new TestConfigurationSource(targetDir));
-        Result r = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
-        Assert.assertEquals(Result.SUCCESS, r);
+        Result result = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
+        Assert.assertEquals(Result.SUCCESS, result);
 
-        byte[] sha256 = Files.hash(sourceFile, Hashing.sha256()).asBytes();
+        // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
+        byte[] sha512 = Files.hash(sourceFile, Hashing.sha512()).asBytes();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < sha256.length; i++) {
-            sb.append(Integer.toString((sha256[i] & 0xff) + 0x100, 16).substring(1));
+        for (int i = 0; i < sha512.length; i++) {
+            sb.append(Integer.toString((sha512[i] & 0xff) + 0x100, 16).substring(1));
         }
 
-        Assert.assertEquals(expectedSha1, sb.toString());
+        Assert.assertEquals(expectedSha512, sb.toString());
     }
 
 }
