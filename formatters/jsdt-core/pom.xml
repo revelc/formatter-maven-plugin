@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2010-2016. All work is copyrighted to their respective
+    Copyright 2010-2017. All work is copyrighted to their respective
     author(s), unless otherwise stated.
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,7 @@
     <parent>
         <groupId>net.revelc.code.formatter</groupId>
         <artifactId>formatters</artifactId>
-        <version>2.0.1-SNAPSHOT</version>
+        <version>2.0.1</version>
     </parent>
 
     <artifactId>jsdt-core</artifactId>
