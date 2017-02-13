@@ -31,9 +31,13 @@ ver 0.5.2 (2015-06-04)
 - deployed gh-pages
   -- Site page using bootstrap look and feel
 
-ver 2.0.0 (2016-11.28)
+ver 2.0.0 (2016-11-28)
 ======================
 - Version increase to indicate master repo
 - Supporting Eclipse Mars
 - First release with velo/formatter-maven-plugin merged
 - First supporting javascript from velo/formatter-maven-plugin
+
+ver 2.0.1 (2017-02-12)
+======================
+- Trap bug in mars formatting with index out of bounds allowing formatting to continue.
