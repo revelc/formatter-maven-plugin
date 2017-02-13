@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,17 +57,13 @@ public class ConfigReaderTest {
      *
      * @throws Exception the exception
      */
-    @Test
+    @Test(expected = SAXException.class)
     public void test_read_invalid_config() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
             ConfigReader configReader = new ConfigReader();
-            try {
-                configReader.read(in);
-                Assert.fail("Expected SAXException to be thrown");
-            } catch (SAXException e) {
-                // ignore
-            }
+            configReader.read(in);
+            Assert.fail("Expected SAXException to be thrown");
         }
     }
 
@@ -76,17 +72,13 @@ public class ConfigReaderTest {
      *
      * @throws Exception the exception
      */
-    @Test
+    @Test(expected = ConfigReadException.class)
     public void test_read_invalid_config2() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
             ConfigReader configReader = new ConfigReader();
-            try {
-                configReader.read(in);
-                Assert.fail("Expected ConfigReadException to be thrown");
-            } catch (ConfigReadException e) {
-                // ignore
-            }
+            configReader.read(in);
+            Assert.fail("Expected ConfigReadException to be thrown");
         }
     }
 
