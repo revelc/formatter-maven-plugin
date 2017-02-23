@@ -15,13 +15,12 @@
  */
 package com.marvinformatics.formatter;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-
-import com.google.common.base.Stopwatch;
 
 /**
  * This mojo is very similar to Formatter mojo, but it is focused on CI servers.
@@ -33,23 +32,16 @@ import com.google.common.base.Stopwatch;
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false)
 public class ValidateMojo extends FormatterMojo {
 
-	@Parameter(defaultValue = "false", property = "aggregator", required = true)
-	private boolean aggregator;
-
-	@Parameter(defaultValue = "${project.executionRoot}", required = true)
-	private boolean executionRoot;
-
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		if (aggregator && !executionRoot)
 			return;
 
-		super.execute();
-	}
-
-	@Override
-	protected void report(Stopwatch watch, ResultCollector rc) throws MojoFailureException, MojoExecutionException {
-		super.report(watch, rc);
+		ResultCollector rc = new FormatterExecuter(this).execute();
+		getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
+		getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
+		getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");
+		getLog().info("Approximate time taken: " + rc.getWatch().elapsed(TimeUnit.SECONDS) + "s");
 
 		if (rc.successCount() != 0)
 			throw new MojoFailureException("Format doesn't match!");

@@ -21,7 +21,6 @@ import java.nio.file.Path;
 
 import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.text.edits.MalformedTreeException;
 
 /**
  * @author marvin.froeder

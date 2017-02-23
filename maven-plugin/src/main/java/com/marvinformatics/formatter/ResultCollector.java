@@ -17,6 +17,8 @@ package com.marvinformatics.formatter;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.google.common.base.Stopwatch;
+
 public class ResultCollector {
 
 	private final AtomicInteger successCount = new AtomicInteger();
@@ -24,6 +26,13 @@ public class ResultCollector {
 	private final AtomicInteger failCount = new AtomicInteger();
 
 	private final AtomicInteger skippedCount = new AtomicInteger();
+
+	private final Stopwatch watch;
+
+	public ResultCollector(Stopwatch watch) {
+		super();
+		this.watch = watch;
+	}
 
 	public void collect(Result result) {
 		switch (result) {
@@ -49,6 +58,10 @@ public class ResultCollector {
 
 	public int skippedCount() {
 		return skippedCount.get();
+	}
+
+	public Stopwatch getWatch() {
+		return watch;
 	}
 
 }
