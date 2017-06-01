@@ -212,6 +212,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "false", alias = "skip", property = "formatter.skip")
     private Boolean skipFormatting;
 
+
+    /**
+     * If you want to fail a build if any files were found not adhering to the formatter, you can
+     * do so with this flag.
+     * This is useful if you want to fail builds in continuous build environments.
+     */
+    @Parameter(defaultValue = "false", property = "failIfNotFormatted")
+    private Boolean failIfNotFormatted;
+
     private JavaFormatter javaFormatter = new JavaFormatter();
 
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
@@ -459,6 +468,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             rc.skippedCount++;
             log.debug("Equal hash code. Not writing result to file.");
             return;
+        }
+
+        if (failIfNotFormatted) {
+            log.debug("Failing the build as one of the files were not properly formatted");
+            throw new MojoFailureException("Failing the build. File " + file.getName() + " required formatting.");
         }
 
         writeStringToFile(formattedCode, file);
