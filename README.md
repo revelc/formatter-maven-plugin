@@ -1,11 +1,12 @@
-# formatter-maven-plugin
-========================
+formatter-maven-plugin
+======================
+
 [![Linux Build Status](https://travis-ci.org/revelc/formatter-maven-plugin.svg)](https://travis-ci.org/revelc/formatter-maven-plugin)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/j3cd0dwqlyu0iv2y?svg=true)](https://ci.appveyor.com/project/velo/formatter-maven-plugin)
-[![Coverage Status](https://coveralls.io/repos/revelc/formatter-maven-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/formatter-maven-plugin?branch=master)  
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/) 
-[![Issues](https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/issues) 
-[![Forks](https://img.shields.io/github/forks/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/network) 
+[![Coverage Status](https://coveralls.io/repos/revelc/formatter-maven-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/formatter-maven-plugin?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/)
+[![Issues](https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/issues)
+[![Forks](https://img.shields.io/github/forks/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/network)
 [![Stars](https://img.shields.io/github/stars/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/stargazers)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/license.txt)
 
@@ -25,11 +26,11 @@ This software is provided WITHOUT ANY WARRANTY.  Any loss of codes caused by the
 the responsibility of the author(s).  Be sure to use some source repository management system such as GIT
 before using this plugin.
 
-##How to use
+## How to use
 
 View the Maven site documentation for the latest release [here](http://code.revelc.net/formatter-maven-plugin/)
 
-##Eclipse Compatibility
+## Eclipse Compatibility
 
 -------------------------------------
 Plugin Version	| Eclipse Version
