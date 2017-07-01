@@ -35,7 +35,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  * 
  * @author marvin.froeder
  */
-@Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false)
+@Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false, threadSafe = true)
 public class ValidateMojo extends FormatterMojo {
 
     @Parameter(defaultValue = "false", property = "aggregator", required = true)
