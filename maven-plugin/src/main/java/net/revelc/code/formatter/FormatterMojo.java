@@ -75,7 +75,7 @@ import net.revelc.code.formatter.model.ConfigReader;
  * @author Matt Blanchette
  * @author marvin.froeder
  */
-@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false)
+@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false, threadSafe = true)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     private static final String FILE_S = " file(s)";
