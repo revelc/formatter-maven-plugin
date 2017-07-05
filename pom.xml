@@ -322,7 +322,11 @@
                     <configuration>
                         <header>${main.basedir}/copyright.txt</header>
                         <excludes>
+                            <exclude>**/*target/**</exclude>
                             <exclude>**/*build.properties</exclude>
+                            <exclude>**/*maven-wrapper.properties</exclude>
+                            <exclude>mvnw</exclude>
+                            <exclude>mvnw.cmd</exclude>
                         </excludes>
                     </configuration>
                     <dependencies>
