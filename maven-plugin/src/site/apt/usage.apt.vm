@@ -3,7 +3,7 @@
  ---
  Formatter Maven Plugin Team
  ---
- 2016-08-08
+ 2017-07-04
 
 Plugin Usage
 
@@ -66,6 +66,34 @@ mvn java-formatter:format
 +-----+
 mvn compile
 +-----+
+
++-----+
+mvn java-formatter:validate
++-----+
+
+ In order to validate the source files during the build, include the <<<validate>>> goal 
+ in the plugin executions.
+
++---+
+<project ...>
+    ...
+    <plugins>
+      <plugin>
+        <groupId>net.revelc.code.formatter</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    ...
+</project>
++---+
 
  If you want to override the default plugin behavior, check out
  {{{./examples.html}custom configurations}} and {{{./plugin-info.html}how to configure}} it.
