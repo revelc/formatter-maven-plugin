@@ -160,7 +160,7 @@
 
         <tagNameFormat>formatter-maven-plugin-@{project.version}</tagNameFormat>
 
-        <tychoVersion>0.24.0</tychoVersion>
+        <tychoVersion>1.0.0</tychoVersion>
     </properties>
     <build>
         <pluginManagement>
