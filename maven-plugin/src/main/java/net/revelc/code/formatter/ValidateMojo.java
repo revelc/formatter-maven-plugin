@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -59,7 +59,8 @@ public class ValidateMojo extends FormatterMojo {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
         if (rc.successCount != 0) {
-            throw new MojoFailureException("File '" + file + "' format doesn't match!");
+            throw new MojoFailureException("File '" + file
+                    + "' has not been previously formatted.  Please format file and commit before running validation!");
         }
         if (rc.failCount != 0) {
             throw new MojoExecutionException("Error formating '" + file + "' ");
