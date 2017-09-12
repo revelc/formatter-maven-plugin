@@ -59,6 +59,7 @@ import com.google.common.hash.Hashing;
 import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
+import net.revelc.code.formatter.json.JsonFormatter;
 import net.revelc.code.formatter.model.ConfigReadException;
 import net.revelc.code.formatter.model.ConfigReader;
 import net.revelc.code.formatter.xml.XMLFormatter;
@@ -85,7 +86,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 
     /** The Constant DEFAULT_INCLUDES. */
-    private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html", "**/*.xml" };
+    private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html", "**/*.xml",
+            "**/*.json" };
 
     /**
      * ResourceManager for retrieving the configFile resource.
@@ -230,6 +232,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private Boolean skipXmlFormatting;
 
     /**
+     * Whether the json formatting is skipped.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.json.skip")
+    private Boolean skipJsonFormatting;
+
+    /**
      * Whether the formatting is skipped.
      *
      * @since 0.5
@@ -244,6 +252,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private HTMLFormatter htmlFormatter = new HTMLFormatter();
 
     private XMLFormatter xmlFormatter = new XMLFormatter();
+
+    private JsonFormatter jsonFormatter = new JsonFormatter();
 
     /**
      * Execute.
@@ -475,6 +485,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 result = Result.SKIPPED;
             } else {
                 result = this.xmlFormatter.formatFile(file, this.lineEnding, dryRun);
+            }
+        } else if (file.getName().endsWith(".json") && jsonFormatter.isInitialized()) {
+            if (skipJsonFormatting) {
+                getLog().info("json formatting is skipped");
+                result = Result.SKIPPED;
+            } else {
+                result = this.jsonFormatter.formatFile(file, this.lineEnding, dryRun);
             }
         } else {
             result = Result.SKIPPED;
