@@ -56,7 +56,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
 import com.google.common.hash.Hashing;
-
+import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
 import net.revelc.code.formatter.model.ConfigReadException;
@@ -84,7 +84,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 
     /** The Constant DEFAULT_INCLUDES. */
-    private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js" };
+    private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html" };
 
     /**
      * ResourceManager for retrieving the configFile resource.
@@ -203,6 +203,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
     private String configJsFile;
+    /**
+     * File or classpath location of an jsoup code formatter configuration xml
+     * file to use in formatting.
+     */
+    @Parameter(defaultValue = "src/config/jsoup/formatter/html.properties", property = "confightmlfile", required = true)
+    private String configHtmlFile;
+
+    /**
+     * Whether the html formatting is skipped.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.html.skip")
+    private Boolean skipHtmlFormatting;
 
     /**
      * Whether the formatting is skipped.
@@ -215,6 +227,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private JavaFormatter javaFormatter = new JavaFormatter();
 
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
+
+    private HTMLFormatter htmlFormatter = new HTMLFormatter();
 
     /**
      * Execute.
@@ -433,6 +447,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             result = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
         } else if (file.getName().endsWith(".js") && jsFormatter.isInitialized()) {
             result = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+        } else if (file.getName().endsWith(".html") && htmlFormatter.isInitialized()) {
+            if (skipHtmlFormatting) {
+                getLog().info("Html formatting is skipped");
+            } else {
+                result = this.htmlFormatter.formatFile(file, this.lineEnding, dryRun);
+            }
         } else {
             result = Result.SKIPPED;
         }
@@ -527,9 +547,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (jsFormattingOptions != null) {
             this.jsFormatter.init(jsFormattingOptions, this);
         }
-        //stop the process if not config files where found
-        if (javaFormattingOptions == null && jsFormattingOptions == null) {
-            throw new MojoExecutionException("You must provide a Java or Javascript configuration file.");
+        if (configHtmlFile != null) {
+            this.htmlFormatter.setFilename(configHtmlFile);
+        }
+        // stop the process if not config files where found
+        if (javaFormattingOptions == null && jsFormattingOptions == null && configHtmlFile == null) {
+            throw new MojoExecutionException("You must provide a Java, Javascript or HTML configuration file.");
         }
     }
 
