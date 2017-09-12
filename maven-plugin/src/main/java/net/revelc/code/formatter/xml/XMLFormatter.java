@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.revelc.code.formatter.html;
+package net.revelc.code.formatter.xml;
 
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.JsoupBasedFormatter;
@@ -27,11 +27,11 @@ import java.io.UnsupportedEncodingException;
  * @author yoshiman
  *
  */
-public class HTMLFormatter extends JsoupBasedFormatter implements Formatter {
+public class XMLFormatter extends JsoupBasedFormatter implements Formatter {
 
     @Override
     public String doFormat(String code, LineEnding ending) throws UnsupportedEncodingException {
-        return super.doFormat(code, Syntax.html);
+        return super.doFormat(code, Syntax.xml);
     }
 
 }

@@ -61,6 +61,7 @@ import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
 import net.revelc.code.formatter.model.ConfigReadException;
 import net.revelc.code.formatter.model.ConfigReader;
+import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
@@ -84,7 +85,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
 
     /** The Constant DEFAULT_INCLUDES. */
-    private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html" };
+    private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html", "**/*.xml" };
 
     /**
      * ResourceManager for retrieving the configFile resource.
@@ -204,17 +205,29 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
     private String configJsFile;
     /**
-     * File or classpath location of an jsoup code formatter configuration xml
-     * file to use in formatting.
+     * File or classpath location of an jsoup code formatter configuration file to
+     * use in html formatting.
      */
     @Parameter(defaultValue = "src/config/jsoup/formatter/html.properties", property = "confightmlfile", required = true)
     private String configHtmlFile;
+    /**
+     * File or classpath location of an jsoup code formatter configuration file to
+     * use in xml formatting.
+     */
+    @Parameter(defaultValue = "src/config/jsoup/formatter/xml.properties", property = "configxmlfile", required = true)
+    private String configXmlFile;
 
     /**
      * Whether the html formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.html.skip")
     private Boolean skipHtmlFormatting;
+
+    /**
+     * Whether the xml formatting is skipped.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.xml.skip")
+    private Boolean skipXmlFormatting;
 
     /**
      * Whether the formatting is skipped.
@@ -229,6 +242,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
     private HTMLFormatter htmlFormatter = new HTMLFormatter();
+
+    private XMLFormatter xmlFormatter = new XMLFormatter();
 
     /**
      * Execute.
@@ -450,8 +465,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         } else if (file.getName().endsWith(".html") && htmlFormatter.isInitialized()) {
             if (skipHtmlFormatting) {
                 getLog().info("Html formatting is skipped");
+                result = Result.SKIPPED;
             } else {
                 result = this.htmlFormatter.formatFile(file, this.lineEnding, dryRun);
+            }
+        } else if (file.getName().endsWith(".xml") && xmlFormatter.isInitialized()) {
+            if (skipXmlFormatting) {
+                getLog().info("Xml formatting is skipped");
+                result = Result.SKIPPED;
+            } else {
+                result = this.xmlFormatter.formatFile(file, this.lineEnding, dryRun);
             }
         } else {
             result = Result.SKIPPED;
@@ -550,9 +573,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (configHtmlFile != null) {
             this.htmlFormatter.setFilename(configHtmlFile);
         }
+        if (configXmlFile != null) {
+            this.xmlFormatter.setFilename(configXmlFile);
+        }
         // stop the process if not config files where found
-        if (javaFormattingOptions == null && jsFormattingOptions == null && configHtmlFile == null) {
-            throw new MojoExecutionException("You must provide a Java, Javascript or HTML configuration file.");
+        if (javaFormattingOptions == null && jsFormattingOptions == null && configHtmlFile == null
+                && configXmlFile == null) {
+            throw new MojoExecutionException("You must provide a Java, Javascript, HTML or XML configuration file.");
         }
     }
 
