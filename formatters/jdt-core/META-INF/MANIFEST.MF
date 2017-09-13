@@ -3,5 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse JDT core
 Bundle-SymbolicName: jdt-core
 Bundle-Version: 1.9.0.qualifier
-Require-Bundle: org.eclipse.jdt.core;bundle-version="[3.13.0.v20170207-0925_BETA_JAVA9,3.13.0.v20170207-0925_BETA_JAVA9]"
+Require-Bundle: org.eclipse.jdt.core;bundle-version="[3.13.0.v20170826-0521_BETA_JAVA9,3.13.0.v20170826-0521_BETA_JAVA9]"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
