@@ -56,6 +56,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
 import com.google.common.hash.Hashing;
+import net.revelc.code.formatter.css.CssFormatter;
 import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
@@ -87,7 +88,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /** The Constant DEFAULT_INCLUDES. */
     private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html", "**/*.xml",
-            "**/*.json" };
+            "**/*.json", "**/*.css" };
 
     /**
      * ResourceManager for retrieving the configFile resource.
@@ -207,17 +208,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
     private String configJsFile;
     /**
-     * File or classpath location of an jsoup code formatter configuration file to
-     * use in html formatting.
+     * File or classpath location of a properties file to use in html formatting.
      */
     @Parameter(defaultValue = "src/config/jsoup/formatter/html.properties", property = "confightmlfile", required = true)
     private String configHtmlFile;
     /**
-     * File or classpath location of an jsoup code formatter configuration file to
-     * use in xml formatting.
+     * File or classpath location of a properties file to use in xml formatting.
      */
     @Parameter(defaultValue = "src/config/jsoup/formatter/xml.properties", property = "configxmlfile", required = true)
     private String configXmlFile;
+
+    /**
+     * File or classpath location of a properties file to use in css formatting.
+     */
+    @Parameter(defaultValue = "src/config/ph-css/formatter/css.properties", property = "configcssfile", required = true)
+    private String configCssFile;
 
     /**
      * Whether the html formatting is skipped.
@@ -236,6 +241,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Parameter(defaultValue = "false", property = "formatter.json.skip")
     private Boolean skipJsonFormatting;
+    /**
+    * Whether the css formatting is skipped.
+    */
+    @Parameter(defaultValue = "false", property = "formatter.css.skip")
+    private Boolean skipCssFormatting;
 
     /**
      * Whether the formatting is skipped.
@@ -254,6 +264,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private XMLFormatter xmlFormatter = new XMLFormatter();
 
     private JsonFormatter jsonFormatter = new JsonFormatter();
+
+    private CssFormatter cssFormatter = new CssFormatter();
 
     /**
      * Execute.
@@ -493,6 +505,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             } else {
                 result = this.jsonFormatter.formatFile(file, this.lineEnding, dryRun);
             }
+        } else if (file.getName().endsWith(".css") && cssFormatter.isInitialized()) {
+            if (skipCssFormatting) {
+                getLog().info("css formatting is skipped");
+                result = Result.SKIPPED;
+            } else {
+                result = this.cssFormatter.formatFile(file, this.lineEnding, dryRun);
+            }
         } else {
             result = Result.SKIPPED;
         }
@@ -593,10 +612,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (configXmlFile != null) {
             this.xmlFormatter.setFilename(configXmlFile);
         }
+        if (configCssFile != null) {
+            this.cssFormatter.setFilename(configCssFile);
+        }
         // stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null && configHtmlFile == null
-                && configXmlFile == null) {
-            throw new MojoExecutionException("You must provide a Java, Javascript, HTML or XML configuration file.");
+                && configXmlFile == null && configCssFile == null) {
+            throw new MojoExecutionException(
+                    "You must provide a Java, Javascript, HTML, XML or CSS configuration file.");
         }
     }
 
