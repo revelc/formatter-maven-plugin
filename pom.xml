@@ -145,7 +145,7 @@
         <autoVersionSubmodules>true</autoVersionSubmodules>
 
         <eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url>
-        <m2e-core.url>${repoHost}/content/sites/m2e.extras/m2e/1.8.1/N/LATEST</m2e-core.url>
+        <m2e-core.url>${repoHost}/content/sites/m2e.extras/m2e/1.9.0/N/LATEST</m2e-core.url>
 
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
@@ -162,6 +162,7 @@
 
         <tychoVersion>1.0.0</tychoVersion>
     </properties>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -210,7 +211,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>3.7.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -270,7 +271,7 @@
                         <dependency>
                             <groupId>org.apache.maven.wagon</groupId>
                             <artifactId>wagon-ssh</artifactId>
-                            <version>2.12</version>
+                            <version>3.0.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -303,7 +304,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -324,7 +325,7 @@
                 <plugin>
                     <groupId>org.commonjava.maven.plugins</groupId>
                     <artifactId>directory-maven-plugin</artifactId>
-                    <version>0.1</version>
+                    <version>0.2</version>
                 </plugin>
                 <plugin>
                     <groupId>com.mycila</groupId>
@@ -543,7 +544,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>2.12</version>
+                <version>3.0.0</version>
             </extension>
         </extensions>
     </build>

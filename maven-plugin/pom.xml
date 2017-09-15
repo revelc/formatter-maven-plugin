@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>22.0-android</version>
+            <version>23.0-android</version>
         </dependency>
         <dependency>
             <groupId>net.revelc.code.formatter</groupId>
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
-            <version>3.0.24</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
