@@ -90,7 +90,7 @@ public abstract class AbstractFormatterTest {
         Assert.assertEquals(Result.SUCCESS, result);
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
-        byte[] sha512 = Files.hash(sourceFile, Hashing.sha512()).asBytes();
+        byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < sha512.length; i++) {
             sb.append(Integer.toString((sha512[i] & 0xff) + 0x100, 16).substring(1));
