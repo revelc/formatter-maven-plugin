@@ -143,10 +143,10 @@
         <eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url>
         <m2e-core.url>${repoHost}/content/sites/m2e.extras/m2e/1.9.0/N/LATEST</m2e-core.url>
 
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.testSource>1.7</maven.compiler.testSource>
-        <maven.compiler.testTarget>1.7</maven.compiler.testTarget>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.testSource>1.8</maven.compiler.testSource>
+        <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 
         <maven.min-version>3.5.0</maven.min-version>
 
