@@ -97,10 +97,6 @@
         </contributor>
     </contributors>
 
-    <prerequisites>
-        <maven>${maven.min-version}</maven>
-    </prerequisites>
-
     <modules>
         <module>formatters</module>
         <module>maven-plugin</module>
