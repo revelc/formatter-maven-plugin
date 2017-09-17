@@ -29,6 +29,10 @@
     <artifactId>formatter-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
+    <prerequisites>
+        <maven>${maven.min-version}</maven>
+    </prerequisites>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
