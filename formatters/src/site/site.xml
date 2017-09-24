@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2010-2016. All work is copyrighted to their respective
+    Copyright 2010-2017. All work is copyrighted to their respective
     author(s), unless otherwise stated.
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,16 +34,16 @@
         <menu name="Overview">
             <item name="Project Home" href="http://code.revelc.net/formatter-maven-plugin/"/>
             <item name="Introduction" href="index.html"/>
-            <item name="Goals" href="plugin-info.html"/>
-            <item name="Usage" href="usage.html"/>
+            <item name="Goals" href="../formatter-maven-plugin/plugin-info.html"/>
+            <item name="Usage" href="../formatter-maven-plugin/usage.html"/>
         </menu>
         <menu name="Examples">
-            <item name="Source Files" href="examples.html#Setting_Source_Files"/>
-            <item name="Compiler Version" href="examples.html#Setting_Compiler_Version"/>
-            <item name="Line Endings" href="examples.html#System_Independent_Line_Endings"/>
-            <item name="File Encoding" href="examples.html#Source_File_Encoding"/>
-            <item name="Custom Formatting" href="examples.html#Custom_Configuration_File"/>
-            <item name="Multimodule" href="examples.html#Multimodule_Configuration"/>
+            <item name="Source Files" href="../formatter-maven-plugin/examples.html#Setting_Source_Files"/>
+            <item name="Compiler Version" href="../formatter-maven-plugin/examples.html#Setting_Compiler_Version"/>
+            <item name="Line Endings" href="../formatter-maven-plugin/examples.html#System_Independent_Line_Endings"/>
+            <item name="File Encoding" href="../formatter-maven-plugin/examples.html#Source_File_Encoding"/>
+            <item name="Custom Formatting" href="../formatter-maven-plugin/examples.html#Custom_Configuration_File"/>
+            <item name="Multimodule" href="../formatter-maven-plugin/examples.html#Multimodule_Configuration"/>
         </menu>
         <menu ref="reports" />
         <menu ref="parent" inherit="top" />
