@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ package net.revelc.code.formatter;
  */
 public enum LineEnding {
 
-    AUTO(SystemUtil.LINE_SEPARATOR), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOW(null);
+    AUTO(SystemUtil.LINE_SEPARATOR), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOWN(null);
 
     private final String chars;
 
@@ -62,7 +62,7 @@ public enum LineEnding {
         } else if (crCount > lfCount && crCount > crlfCount) {
             return CR;
         }
-        return UNKNOW;
+        return UNKNOWN;
     }
 
 }
