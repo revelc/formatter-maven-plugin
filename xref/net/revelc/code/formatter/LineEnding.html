@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/net/revelc/code/formatter/LineEnding.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright 2010-2016. All work is copyrighted to their respective</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright 2010-2017. All work is copyrighted to their respective</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> * author(s), unless otherwise stated.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * Licensed under the Apache License, Version 2.0 (the "License");</em>
@@ -29,7 +29,7 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">public</strong> enum <a href="../../../../net/revelc/code/formatter/LineEnding.html">LineEnding</a> {
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      AUTO(SystemUtil.LINE_SEPARATOR), KEEP(<strong class="jxr_keyword">null</strong>), LF(<span class="jxr_string">"\n"</span>), CRLF(<span class="jxr_string">"\r\n"</span>), CR(<span class="jxr_string">"\r"</span>), UNKNOW(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      AUTO(SystemUtil.LINE_SEPARATOR), KEEP(<strong class="jxr_keyword">null</strong>), LF(<span class="jxr_string">"\n"</span>), CRLF(<span class="jxr_string">"\r\n"</span>), CR(<span class="jxr_string">"\r"</span>), UNKNOWN(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String chars;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
@@ -70,7 +70,7 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (crCount &gt; lfCount &amp;&amp; crCount &gt; crlfCount) {
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>              <strong class="jxr_keyword">return</strong> CR;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          }
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">return</strong> UNKNOW;
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">return</strong> UNKNOWN;
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  }
