@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,12 +27,12 @@ public interface Formatter {
     /**
      * Initialize the {@link org.eclipse.jdt.core.formatter.CodeFormatter} instance to be used by this component.
      */
-    public abstract void init(Map<String, String> options, ConfigurationSource cfg);
+    abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
     /**
      * Format individual file.
      */
-    public abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
+    abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
 
     /**
      * return true if this formatter have been initialized
