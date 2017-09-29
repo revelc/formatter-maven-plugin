@@ -98,7 +98,7 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          Assert.assertEquals(Result.SUCCESS, result);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>          <em class="jxr_comment">// We are hashing this as set in stone in case for some reason our source file changes unexpectedly.</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>          byte[] sha512 = Files.hash(sourceFile, Hashing.sha512()).asBytes();
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; sha512.length; i++) {
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>              sb.append(Integer.toString((sha512[i] &amp; 0xff) + 0x100, 16).substring(1));
