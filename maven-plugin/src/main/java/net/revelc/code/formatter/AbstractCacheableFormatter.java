@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,7 +75,7 @@ public abstract class AbstractCacheableFormatter {
         }
 
         LineEnding current = LineEnding.determineLineEnding(code);
-        if (current == LineEnding.UNKNOW) {
+        if (current == LineEnding.UNKNOWN) {
             return null;
         }
         if (current == ending) {

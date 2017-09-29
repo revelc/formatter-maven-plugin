@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016. All work is copyrighted to their respective
+ * Copyright 2010-2017. All work is copyrighted to their respective
  * author(s), unless otherwise stated.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -94,7 +94,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_mixed_auto() throws Exception {
         String fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.UNKNOW, lineEnd);
+        Assert.assertEquals(LineEnding.UNKNOWN, lineEnd);
     }
 
     /**
@@ -104,7 +104,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_none_auto() throws Exception {
         String fileData = "TestTestTestTest";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.UNKNOW, lineEnd);
+        Assert.assertEquals(LineEnding.UNKNOWN, lineEnd);
     }
 
 }
