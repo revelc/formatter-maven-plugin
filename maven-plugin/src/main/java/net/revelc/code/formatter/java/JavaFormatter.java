@@ -53,7 +53,8 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
         TextEdit te;
         try {
-            te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, ending.getChars());
+            te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT | CodeFormatter.F_INCLUDE_COMMENTS, code, 0,
+                    code.length(), 0, ending.getChars());
             if (te == null) {
                 this.log.debug(
                         "Code cannot be formatted. Possible cause is unmatched source/target/compliance version.");
