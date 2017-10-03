@@ -294,25 +294,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         List<File> files = new ArrayList<>();
-        try {
-            if (this.directories != null) {
-                for (File directory : this.directories) {
-                    if (directory.exists() && directory.isDirectory()) {
-                        files.addAll(addCollectionFiles(directory));
-                    }
-                }
-            } else { // Using defaults of source main and test dirs
-                if (this.sourceDirectory != null && this.sourceDirectory.exists()
-                        && this.sourceDirectory.isDirectory()) {
-                    files.addAll(addCollectionFiles(this.sourceDirectory));
-                }
-                if (this.testSourceDirectory != null && this.testSourceDirectory.exists()
-                        && this.testSourceDirectory.isDirectory()) {
-                    files.addAll(addCollectionFiles(this.testSourceDirectory));
+        if (this.directories != null) {
+            for (File directory : this.directories) {
+                if (directory.exists() && directory.isDirectory()) {
+                    files.addAll(addCollectionFiles(directory));
                 }
             }
-        } catch (IOException e) {
-            throw new MojoExecutionException("Unable to find files using includes/excludes", e);
+        } else {
+            // Using defaults of source main and test dirs
+            if (this.sourceDirectory != null && this.sourceDirectory.exists() && this.sourceDirectory.isDirectory()) {
+                files.addAll(addCollectionFiles(this.sourceDirectory));
+            }
+            if (this.testSourceDirectory != null && this.testSourceDirectory.exists()
+                    && this.testSourceDirectory.isDirectory()) {
+                files.addAll(addCollectionFiles(this.testSourceDirectory));
+            }
         }
 
         int numberOfFiles = files.size();
@@ -354,9 +350,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Add source files to the files list.
      *
      * @param files the files
-     * @throws IOException Signals that an I/O exception has occurred.
      */
-    List<File> addCollectionFiles(File newBasedir) throws IOException {
+    List<File> addCollectionFiles(File newBasedir) {
         final DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir(newBasedir);
         if (this.includes != null && this.includes.length > 0) {
