@@ -649,14 +649,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException the mojo execution exception
      */
     private Map<String, String> getFormattingOptions(String newConfigFile) throws MojoExecutionException {
-        if (newConfigFile != null) {
-            return getOptionsFromConfigFile(newConfigFile);
-        }
+        Map<String, String> options = getOptionsFromConfigFile(newConfigFile);
 
-        Map<String, String> options = new HashMap<>();
-        options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
-        options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
-        options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
+        if (options.isEmpty()) {
+            // Use defaults only for formatting
+            options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
+            options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
+            options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
+        }
 
         return options;
     }
@@ -676,7 +676,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return new ConfigReader().read(configInput);
         } catch (ResourceNotFoundException e) {
             getLog().debug("Config file [" + newConfigFile + "] cannot be found", e);
-            return null;
+            return new HashMap<>();
         } catch (IOException e) {
             throw new MojoExecutionException("Cannot read config file [" + newConfigFile + "]", e);
         } catch (SAXException e) {
