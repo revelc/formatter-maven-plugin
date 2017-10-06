@@ -253,9 +253,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Parameter(defaultValue = "false", property = "formatter.json.skip")
     private Boolean skipJsonFormatting;
+
     /**
-    * Whether the css formatting is skipped.
-    */
+     * Whether the css formatting is skipped.
+     */
     @Parameter(defaultValue = "false", property = "formatter.css.skip")
     private Boolean skipCssFormatting;
 
