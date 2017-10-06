@@ -225,6 +225,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String configCssFile;
 
     /**
+     * Whether the java formatting is skipped.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.java.skip")
+    private Boolean skipJavaFormatting;
+
+    /**
+     * Whether the javascript formatting is skipped.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.js.skip")
+    private Boolean skipJsFormatting;
+
+    /**
      * Whether the html formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.html.skip")
@@ -476,9 +488,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         Result result;
         if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
-            result = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
+            if (skipJavaFormatting) {
+                getLog().info("Java formatting is skipped");
+                result = Result.SKIPPED;
+            } else {
+                result = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
+            }
         } else if (file.getName().endsWith(".js") && jsFormatter.isInitialized()) {
-            result = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+            if (skipJsFormatting) {
+                getLog().info("Javascript formatting is skipped");
+                result = Result.SKIPPED;
+            } else {
+                result = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+            }
         } else if (file.getName().endsWith(".html") && htmlFormatter.isInitialized()) {
             if (skipHtmlFormatting) {
                 getLog().info("Html formatting is skipped");
