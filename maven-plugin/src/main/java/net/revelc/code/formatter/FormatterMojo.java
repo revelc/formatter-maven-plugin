@@ -154,19 +154,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Java compiler source version.
      */
-    @Parameter(defaultValue = "1.5", property = "maven.compiler.source", required = true)
+    @Parameter(defaultValue = "1.6", property = "maven.compiler.source", required = true)
     private String compilerSource;
 
     /**
      * Java compiler compliance version.
      */
-    @Parameter(defaultValue = "1.5", property = "maven.compiler.source", required = true)
+    @Parameter(defaultValue = "1.6", property = "maven.compiler.source", required = true)
     private String compilerCompliance;
 
     /**
      * Java compiler target version.
      */
-    @Parameter(defaultValue = "1.5", property = "maven.compiler.target", required = true)
+    @Parameter(defaultValue = "1.6", property = "maven.compiler.target", required = true)
     private String compilerTargetPlatform;
 
     /**
@@ -253,9 +253,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Parameter(defaultValue = "false", property = "formatter.json.skip")
     private Boolean skipJsonFormatting;
+
     /**
-    * Whether the css formatting is skipped.
-    */
+     * Whether the css formatting is skipped.
+     */
     @Parameter(defaultValue = "false", property = "formatter.css.skip")
     private Boolean skipCssFormatting;
 
