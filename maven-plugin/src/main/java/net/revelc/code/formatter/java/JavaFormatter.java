@@ -19,7 +19,6 @@ package net.revelc.code.formatter.java;
 import java.io.IOException;
 import java.util.Map;
 
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
@@ -38,12 +37,6 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 
     @Override
     public void init(Map<String, String> options, ConfigurationSource cfg) {
-        if (options.isEmpty()) {
-            options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-            options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
-            options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
-        }
-
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options);
