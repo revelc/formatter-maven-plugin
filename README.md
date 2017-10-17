@@ -56,6 +56,7 @@ Plugin Version	| Eclipse Version
 1.8.0           |	4.6.0 (neon)
 1.8.1           |	4.6.1 (neon)
 1.9.0           |	4.6.2 (neon) + new multi-thread scanner
-1.9.1.RC1       |       4.7.M5 (oxygen) with JAVA9 support
+1.9.1.RC1       |	4.7.M5 (oxygen) with JAVA9 support
+1.9.2           |	4.7.1 (oxygen) with JAVA9 support
 
 [1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/

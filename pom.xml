@@ -350,13 +350,8 @@
 
   <repositories>
     <repository>
-      <id>neon</id>
+      <id>oxygen</id>
       <url>http://download.eclipse.org/releases/oxygen/</url>
-      <layout>p2</layout>
-    </repository>
-    <repository>
-      <id>jdk9</id>
-      <url>http://download.eclipse.org/eclipse/updates/4.7-P-builds/</url>
       <layout>p2</layout>
     </repository>
   </repositories>
