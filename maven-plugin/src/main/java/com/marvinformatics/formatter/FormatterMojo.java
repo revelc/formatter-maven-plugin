@@ -19,36 +19,28 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.codehaus.plexus.util.*;
-import org.eclipse.jdt.core.formatter.CodeFormatter;
-import org.xml.sax.SAXException;
-
-import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code
  * formatter.
- * 
+ *
  * Mojo parameters allow customizing formatting by specifying the config XML
  * file, line endings, compiler version, and source code locations. Reformatting
  * source files is avoided using an md5 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
- * 
+ *
  * @author jecki
  * @author Matt Blanchette
  * @author marvin.froeder
  */
-@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false)
+@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = false, threadSafe = true)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
 	/**
@@ -79,7 +71,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * Location of the Java source files to format. Defaults to source main and
 	 * test directories if not set. Deprecated in version 0.3. Reintroduced in
 	 * 0.4.
-	 * 
+	 *
 	 * @since 0.4
 	 */
 	@Parameter
@@ -90,7 +82,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * formatting. Patterns are relative to the project source and test source
 	 * directories. When not specified, the default include is
 	 * <code>**&#47;*.java</code>
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	@Parameter(property = "formatter.includes")
@@ -100,7 +92,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * List of fileset patterns for Java source locations to exclude from
 	 * formatting. Patterns are relative to the project source and test source
 	 * directories. When not specified, there is no default exclude.
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	@Parameter
@@ -127,7 +119,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	/**
 	 * The file encoding used to read and write source files. When not specified
 	 * and sourceEncoding also not set, default is platform file encoding.
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	@Parameter(property = "project.build.sourceEncoding", required = true)
@@ -143,7 +135,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * <li><b>"CRLF"</b> - Use DOS and Windows style line endings</li>
 	 * <li><b>"CR"</b> - Use early Mac style line endings</li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 0.2.0
 	 */
 	@Parameter(defaultValue = "AUTO", property = "lineending", required = true)
@@ -187,7 +179,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			return;
 		}
 
-		ResultCollector rc = new FormatterExecuter(this).execute();
+		final ResultCollector rc = new FormatterExecuter(this).execute();
 		getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
 		getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
 		getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");

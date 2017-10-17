@@ -24,12 +24,12 @@ import org.apache.maven.plugins.annotations.Mojo;
 
 /**
  * This mojo is very similar to Formatter mojo, but it is focused on CI servers.
- * 
+ *
  * If the code ain't formatted as expected this mojo will fail the build
- * 
+ *
  * @author marvin.froeder
  */
-@Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false)
+@Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = false, threadSafe = true)
 public class ValidateMojo extends FormatterMojo {
 
 	@Override
@@ -37,7 +37,7 @@ public class ValidateMojo extends FormatterMojo {
 		if (aggregator && !executionRoot)
 			return;
 
-		ResultCollector rc = new FormatterExecuter(this).execute();
+		final ResultCollector rc = new FormatterExecuter(this).execute();
 		getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
 		getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
 		getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");
