@@ -32,7 +32,7 @@ Plugin Usage
  Run the plugin with the <<<format>>> goal.
 
 +-----+
-mvn java-formatter:format
+mvn formatter:format
 +-----+
 
  In order to format the source files during the build, include the <<<format>>> goal 
@@ -68,7 +68,7 @@ mvn compile
 +-----+
 
 +-----+
-mvn java-formatter:validate
+mvn formatter:validate
 +-----+
 
  In order to validate the source files during the build, include the <<<validate>>> goal 
