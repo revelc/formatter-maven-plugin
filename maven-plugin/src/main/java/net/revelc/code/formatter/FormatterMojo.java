@@ -84,7 +84,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private static final String FILE_S = " file(s)";
 
     /** The Constant CACHE_PROPERTIES_FILENAME. */
-    private static final String CACHE_PROPERTIES_FILENAME = "maven-java-formatter-cache.properties";
+    private static final String CACHE_PROPERTIES_FILENAME = "formatter-maven-cache.properties";
 
     /** The Constant DEFAULT_INCLUDES. */
     private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.java", "**/*.js", "**/*.html", "**/*.xml",
