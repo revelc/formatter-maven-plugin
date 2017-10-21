@@ -207,11 +207,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
     private String configJsFile;
+
     /**
      * File or classpath location of a properties file to use in html formatting.
      */
     @Parameter(defaultValue = "src/config/jsoup/formatter/html.properties", property = "confightmlfile", required = true)
     private String configHtmlFile;
+
     /**
      * File or classpath location of a properties file to use in xml formatting.
      */
@@ -267,6 +269,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Parameter(defaultValue = "false", alias = "skip", property = "formatter.skip")
     private Boolean skipFormatting;
+
+    /**
+     * Use eclipse defaults when set to true for java and javascript.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.useEclipseDefaults")
+    private Boolean useEclipseDefaults;
 
     private JavaFormatter javaFormatter = new JavaFormatter();
 
@@ -649,16 +657,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException the mojo execution exception
      */
     private Map<String, String> getFormattingOptions(String newConfigFile) throws MojoExecutionException {
-        Map<String, String> options = getOptionsFromConfigFile(newConfigFile);
-
-        if (options.isEmpty()) {
+        if (this.useEclipseDefaults) {
+            getLog().info("Using Ecipse Defaults");
             // Use defaults only for formatting
+            Map<String, String> options = new HashMap<>();
             options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
             options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
             options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
+            return options;
         }
 
-        return options;
+        return getOptionsFromConfigFile(newConfigFile);
     }
 
     /**
