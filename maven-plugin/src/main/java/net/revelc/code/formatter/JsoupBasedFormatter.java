@@ -18,17 +18,14 @@ package net.revelc.code.formatter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Document.OutputSettings;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
 import org.jsoup.nodes.Entities.EscapeMode;
 import org.jsoup.parser.Parser;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author yoshiman
@@ -36,18 +33,24 @@ import java.util.Properties;
  */
 public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    private String filename;
+    private OutputSettings formatter;
 
     @Override
     public void init(Map<String, String> options, ConfigurationSource cfg) {
-        if (cfg != null) {
-            super.initCfg(cfg);
-        }
+        super.initCfg(cfg);
+
+        formatter = new OutputSettings();
+        formatter.charset(Charset.forName(options.getOrDefault("charset", StandardCharsets.UTF_8.name())));
+        formatter.escapeMode(EscapeMode.valueOf(options.getOrDefault("escapeMode", EscapeMode.xhtml.name())));
+        formatter.indentAmount(Integer.parseInt(options.getOrDefault("indentAmount", "4")));
+        formatter.outline(Boolean.parseBoolean(options.getOrDefault("outlineMode", Boolean.TRUE.toString())));
+        formatter.prettyPrint(Boolean.parseBoolean(options.getOrDefault("pretty", Boolean.TRUE.toString())));
+        formatter.syntax(Syntax.valueOf(options.getOrDefault("syntax", Syntax.html.name())));
     }
 
-    public String doFormat(String code, Syntax syntax) {
+    public String doFormat(String code, LineEnding ending) {
         Document document;
-        switch (syntax) {
+        switch (formatter.syntax()) {
         case html:
             document = Jsoup.parse(code, "", Parser.htmlParser());
             break;
@@ -55,27 +58,9 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
             document = Jsoup.parse(code, "", Parser.xmlParser());
             break;
         default:
-            throw new IllegalArgumentException(syntax + " is not allowed as syntax");
+            throw new IllegalArgumentException(formatter.syntax() + " is not allowed as syntax");
         }
-        try {
-            Properties properties = new Properties();
-            properties.load(Files.newInputStream(Paths.get(filename)));
-            Charset charset = Charset.forName(properties.getProperty("charset", StandardCharsets.UTF_8.name()));
-            EscapeMode escapeMode = EscapeMode.valueOf(properties.getProperty("escapeMode", EscapeMode.xhtml.name()));
-            int indentAmount = Integer.parseInt(properties.getProperty("indentAmount", "1"));
-            boolean outlineMode = Boolean.parseBoolean(properties.getProperty("outlineMode", Boolean.toString(true)));
-            boolean pretty = Boolean.parseBoolean(properties.getProperty("pretty", Boolean.toString(true)));
-            document.outputSettings() //
-                    .charset(charset) //
-                    .escapeMode(escapeMode) //
-                    .indentAmount(indentAmount) //
-                    .outline(outlineMode) //
-                    .prettyPrint(pretty) //
-                    .syntax(syntax);
-
-        } catch (IOException e) {
-            this.log.error(e);
-        }
+        document.outputSettings(formatter);
 
         String formattedCode = document.outerHtml();
         if (code.equals(formattedCode)) {
@@ -86,15 +71,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
 
     @Override
     public boolean isInitialized() {
-        return filename != null;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
+        return formatter != null;
     }
 
 }

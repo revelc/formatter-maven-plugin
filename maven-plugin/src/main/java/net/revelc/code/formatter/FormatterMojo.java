@@ -221,6 +221,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String configXmlFile;
 
     /**
+     * File or classpath location of a properties file to use in json formatting.
+     */
+    @Parameter(defaultValue = "src/config/gson/formatter/json.properties", property = "configjsonfile", required = true)
+    private String configJsonFile;
+
+    /**
      * File or classpath location of a properties file to use in css formatting.
      */
     @Parameter(defaultValue = "src/config/ph-css/formatter/css.properties", property = "configcssfile", required = true)
@@ -633,19 +639,22 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             this.jsFormatter.init(jsFormattingOptions, this);
         }
         if (configHtmlFile != null) {
-            this.htmlFormatter.setFilename(configHtmlFile);
+            this.htmlFormatter.init(getOptionsFromPropertiesFile(configHtmlFile), this);
         }
         if (configXmlFile != null) {
-            this.xmlFormatter.setFilename(configXmlFile);
+            this.xmlFormatter.init(getOptionsFromPropertiesFile(configXmlFile), this);
+        }
+        if (configJsonFile != null) {
+            this.jsonFormatter.init(getOptionsFromPropertiesFile(configJsonFile), this);
         }
         if (configCssFile != null) {
-            this.cssFormatter.setFilename(configCssFile);
+            this.cssFormatter.init(getOptionsFromPropertiesFile(configCssFile), this);
         }
         // stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null && configHtmlFile == null
                 && configXmlFile == null && configCssFile == null) {
             throw new MojoExecutionException(
-                    "You must provide a Java, Javascript, HTML, XML or CSS configuration file.");
+                    "You must provide a Java, Javascript, HTML, XML, JSON, or CSS configuration file.");
         }
     }
 
@@ -693,6 +702,34 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         } catch (ConfigReadException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Read properties file and return the properties as {@link Map}.
+     *
+     * @return the options from properties file or null if not properties file found
+     * @throws MojoExecutionException the mojo execution exception
+     */
+    private Map<String, String> getOptionsFromPropertiesFile(String newPropertiesFile) throws MojoExecutionException {
+
+        this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
+        this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
+
+        Properties properties = new Properties();
+        try {
+            properties.load(this.resourceManager.getResourceAsInputStream(newPropertiesFile));
+        } catch (ResourceNotFoundException e) {
+            getLog().debug("Property file [" + newPropertiesFile + "] cannot be found", e);
+            return new HashMap<>();
+        } catch (IOException e) {
+            throw new MojoExecutionException("Cannot read config file [" + newPropertiesFile + "]", e);
+        }
+
+        final Map<String, String> map = new HashMap<>();
+        for (final String name : properties.stringPropertyNames()) {
+            map.put(name, properties.getProperty(name));
+        }
+        return map;
     }
 
     class ResultCollector {
