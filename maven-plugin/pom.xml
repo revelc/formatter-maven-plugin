@@ -109,6 +109,27 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <resources>
+                        <!-- Pickup our default config files -->
+                        <resource>
+                            <directory>${main.basedir}/src/config</directory>
+                            <targetPath>${project.build.directory}/classes/src/config</targetPath>
+                        </resource>
+
+                        <!-- Retain original resources -->
+                        <resource>
+                            <directory>${project.basedir}/src/main/resources</directory>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/src/test/resources</directory>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
