@@ -443,7 +443,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return props;
         }
 
-        try (final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(cacheFile))) {
+        try (BufferedInputStream stream = new BufferedInputStream(new FileInputStream(cacheFile))) {
             props.load(stream);
         } catch (IOException e) {
             log.warn("Cannot load file hash cache properties file", e);
