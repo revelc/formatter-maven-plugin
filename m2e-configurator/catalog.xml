@@ -20,7 +20,7 @@
   <catalogItems>
     <catalogItem>
       <categoryId>org.eclipse.m2e.discovery.category.lifecycles</categoryId>
-      <m2e-versions>2.0.2.qualifier</m2e-versions>
+      <m2e-versions>2.1.0.RC1</m2e-versions>
       <description>formatter</description>
       <groupId>lifecycles</groupId>
       <id>net.revelc.code.formatter.connector</id>
@@ -29,7 +29,7 @@
       <name>formatter</name>
       <provider>code.revelc.net</provider>
       <p2>
-        <repositoryUrl>https://revelc.github.io/formatter-maven-plugin/p2/2.0.2.qualifier/</repositoryUrl>
+        <repositoryUrl>https://revelc.github.io/formatter-maven-plugin/p2/2.1.0.RC1/</repositoryUrl>
         <iuId>net.revelc.code.formatter.feature.feature.group</iuId>
         <lifecycleMappingIU>
           <iuId>net.revelc.code.formatter</iuId>
