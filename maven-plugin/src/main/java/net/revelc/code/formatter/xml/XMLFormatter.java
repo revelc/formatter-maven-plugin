@@ -17,8 +17,8 @@
 package net.revelc.code.formatter.xml;
 
 import net.revelc.code.formatter.Formatter;
-import net.revelc.code.formatter.JsoupBasedFormatter;
 import net.revelc.code.formatter.LineEnding;
+import net.revelc.code.formatter.jsoup.JsoupBasedFormatter;
 
 /**
  * @author yoshiman
