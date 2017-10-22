@@ -31,7 +31,7 @@ public class JsonFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         doTestFormat(new JsonFormatter(), "someFile.json",
-                "478edd57b917235d00f16611505060460758e7e0f4b53938941226dca183d09be7e946d9a14dbac492a200592d5a6fa5f463e60fd1c3d3dbf05c08c3c869a36b");
+                "ce94186dfe66fe2813fab37d2f4f9eb6e4ca21ee6351051cd971652798b6760be75de0c7ff92913f55378003ffb72fc3ee5289aa213773144a643de891e3cb3a");
     }
 
     @Test

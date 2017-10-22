@@ -16,13 +16,16 @@
  */
 package net.revelc.code.formatter.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.base.Strings;
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
+import net.revelc.code.formatter.SystemUtil;
 
 import java.io.IOException;
 import java.util.Map;
@@ -33,27 +36,31 @@ import java.util.Map;
  */
 public class JsonFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    private Gson formatter;
-
-    private JsonParser jsonParser;
+    private ObjectMapper formatter;
 
     @Override
     public void init(Map<String, String> options, ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        boolean printPrinting = Boolean.parseBoolean(options.getOrDefault("prettyPrinting", Boolean.TRUE.toString()));
+        int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
+        String lineEnding = options.getOrDefault("lineending", SystemUtil.LINE_SEPARATOR);
 
-        if (printPrinting) {
-            formatter = new GsonBuilder().setPrettyPrinting().create();
-        } else {
-            formatter = new GsonBuilder().create();
-        }
-        jsonParser = new JsonParser();
+        formatter = new ObjectMapper();
+
+        // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
+        DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(Strings.repeat(" ", indent), lineEnding);
+        DefaultPrettyPrinter printer = new DefaultPrettyPrinter();
+        printer.indentObjectsWith(indenter);
+        printer.indentArraysWith(indenter);
+        formatter.setDefaultPrettyPrinter(printer);
+        formatter.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     @Override
     protected String doFormat(String code, LineEnding ending) throws IOException {
-        String formattedCode = formatter.toJson(jsonParser.parse(code));
+        // note: line ending set in init for this usecase
+        Object json = formatter.readValue(code, Object.class);
+        String formattedCode = formatter.writer().writeValueAsString(json);
         if (code.equals(formattedCode)) {
             return null;
         }
