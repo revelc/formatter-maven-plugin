@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.revelc.code.formatter;
+package net.revelc.code.formatter.jsoup;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,6 +22,11 @@ import org.jsoup.nodes.Document.OutputSettings;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
 import org.jsoup.nodes.Entities.EscapeMode;
 import org.jsoup.parser.Parser;
+
+import net.revelc.code.formatter.AbstractCacheableFormatter;
+import net.revelc.code.formatter.ConfigurationSource;
+import net.revelc.code.formatter.Formatter;
+import net.revelc.code.formatter.LineEnding;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
