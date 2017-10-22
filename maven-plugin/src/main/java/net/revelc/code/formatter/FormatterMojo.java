@@ -223,7 +223,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * File or classpath location of a properties file to use in json formatting.
      */
-    @Parameter(defaultValue = "src/config/gson/formatter/json.properties", property = "configjsonfile", required = true)
+    @Parameter(defaultValue = "src/config/jackson/formatter/json.properties", property = "configjsonfile", required = true)
     private String configJsonFile;
 
     /**
@@ -645,7 +645,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             this.xmlFormatter.init(getOptionsFromPropertiesFile(configXmlFile), this);
         }
         if (configJsonFile != null) {
-            this.jsonFormatter.init(getOptionsFromPropertiesFile(configJsonFile), this);
+            Map<String, String> jsonFormattingOptions = getOptionsFromPropertiesFile(configJsonFile);
+            jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
+            this.jsonFormatter.init(jsonFormattingOptions, this);
         }
         if (configCssFile != null) {
             this.cssFormatter.init(getOptionsFromPropertiesFile(configCssFile), this);
