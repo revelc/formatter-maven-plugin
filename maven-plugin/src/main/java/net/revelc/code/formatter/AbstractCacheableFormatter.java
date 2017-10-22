@@ -63,6 +63,9 @@ public abstract class AbstractCacheableFormatter {
                 FileUtils.fileWrite(file, this.encoding.name(), formattedCode);
             }
 
+            // readme: Uncomment this when having build issues with hashCodes when nothing
+            // changed. The issue is likely copyright dating issues.
+            // this.log.debug("formatted code: " + formattedCode);
             return Result.SUCCESS;
         } catch (IOException | MalformedTreeException | BadLocationException e) {
             this.log.warn(e);
