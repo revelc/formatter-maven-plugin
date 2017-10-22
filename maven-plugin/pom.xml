@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>23.1-android</version>
+            <version>23.2-jre</version>
         </dependency>
         <dependency>
             <groupId>net.revelc.code.formatter</groupId>
