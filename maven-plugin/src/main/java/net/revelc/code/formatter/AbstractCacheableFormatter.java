@@ -50,6 +50,7 @@ public abstract class AbstractCacheableFormatter {
             String formattedCode = doFormat(code, ending);
 
             if (formattedCode == null) {
+                this.log.debug("Nothing formatted. Try to fix line endings.");
                 formattedCode = fixLineEnding(code, ending);
             }
 
