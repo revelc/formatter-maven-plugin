@@ -32,7 +32,7 @@ public class JavascriptFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         doTestFormat(new JavascriptFormatter(), "AnyJS.js",
-                "2da03c725541ad3be44394e7b615c4982b5497c602c4b1fe8b017deae4910f1655791b304b4cc8d977b4e1b98fed628c8907e731cd8df9769316c9f9a395980c");
+                "91e699e0ed0d20c63a5f151035b93b3ed948e807da7ee360bb9df6b3ddff413fcfd0df7d643608d8f936871a01a3498b68e14d47d76594c0741aba3f096949f5");
     }
 
     @Test
