@@ -18,7 +18,7 @@
 
 -->
 <site>
-   <feature url="features/net.revelc.code.formatter.feature_2.1.0.RC1.jar" id="net.revelc.code.formatter.feature" version="2.1.0.RC1">
+   <feature url="features/net.revelc.code.formatter.feature_2.1.0.qualifier.jar" id="net.revelc.code.formatter.feature" version="2.1.0.qualifier">
       <category name="m2eclipse-formatter"/>
    </feature>
    <category-def name="m2eclipse-formatter" label="M2E Formatter Maven Plugin Connector"/>
