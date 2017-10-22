@@ -45,7 +45,7 @@ public abstract class AbstractCacheableFormatter {
 
     public Result formatFile(File file, LineEnding ending, boolean dryRun) {
         try {
-            this.log.debug("Processing file: " + file);
+            this.log.debug("Processing file: " + file + " with line ending: " + ending);
             String code = FileUtils.fileRead(file, this.encoding.name());
             String formattedCode = doFormat(code, ending);
 
