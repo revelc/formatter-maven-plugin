@@ -19,9 +19,6 @@ package net.revelc.code.formatter.xml;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.JsoupBasedFormatter;
 import net.revelc.code.formatter.LineEnding;
-import org.jsoup.nodes.Document.OutputSettings.Syntax;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * @author yoshiman
@@ -30,8 +27,8 @@ import java.io.UnsupportedEncodingException;
 public class XMLFormatter extends JsoupBasedFormatter implements Formatter {
 
     @Override
-    public String doFormat(String code, LineEnding ending) throws UnsupportedEncodingException {
-        return super.doFormat(code, Syntax.xml);
+    public String doFormat(String code, LineEnding ending) {
+        return super.doFormat(code, ending);
     }
 
 }

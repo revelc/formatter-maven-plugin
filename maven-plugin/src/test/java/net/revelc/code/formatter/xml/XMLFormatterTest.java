@@ -17,6 +17,7 @@
 package net.revelc.code.formatter.xml;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,10 +31,14 @@ public class XMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        XMLFormatter xmlFormatterFormatter = new XMLFormatter();
-        xmlFormatterFormatter.setFilename("src/test/resources/xml.properties");
-        doTestFormat(xmlFormatterFormatter, "someFile.xml",
-                "7066679c7aa8e064c7a1f77e76285759c67d5884bef351cd0aa50e0245abc984612c832cbd4fdbe7a1b303e679a1207c42f5c9fb16094391fa0b7045662b2127");
+        // FIXME Handle linux vs windows since this formatter does not accept line endings
+        if (System.lineSeparator().equals("\n")) {
+            doTestFormat(new XMLFormatter(), "someFile.xml",
+                    "5b37e98476e050998ecad303cc4a3feaca45eb6966e3a7248964df2e670403939b153b45292074e926c1c22c8264df204f0c0011d6c31102652b732186868563");
+        } else {
+            doTestFormat(new XMLFormatter(), "someFile.xml",
+                    "98f896736377248255739514b27e5cad99df44e5daa37664dc8eeb79cdeb3ec113f390247c5573e0713258e8a5da69f8e4078cf2535235e437db451803c2971c");
+        }
     }
 
     @Test
@@ -42,8 +47,7 @@ public class XMLFormatterTest extends AbstractFormatterTest {
         Assert.assertFalse(xmlFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
-        xmlFormatter.setFilename("src/test/resources/xml.properties");
-        xmlFormatter.init(null, null);
+        xmlFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
         Assert.assertTrue(xmlFormatter.isInitialized());
     }
 

@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * @author yoshiman
@@ -29,10 +30,14 @@ public class CssFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        CssFormatter cssFormatter = new CssFormatter();
-        cssFormatter.setFilename("src/test/resources/css.properties");
-        doTestFormat(cssFormatter, "someFile.css",
-                "2e3a00647508e528051f607b29e7e2dc5dc7ba12c1b75b746f490676f51ca27c1c0f26c233b94804d7656434d65138249530bf0969cff4a7e9c2baef0f3c9294");
+        // FIXME Handle linux vs windows since this formatter does not accept line endings
+        if (System.lineSeparator().equals("\n")) {
+            doTestFormat(new CssFormatter(), "someFile.css",
+                    "590c14fa99d8296d7e1c6d4124de96e8fc436ee3f44704445a966befd37488e336b14e60fdb7d26181f6fc0c05848c1cc32701b34f98846f3122d4d057de9605");
+        } else {
+            doTestFormat(new CssFormatter(), "someFile.css",
+                    "c3bdea2e2755c1e773459024ca5114282da1ebf0c46d975d90d2567f39ac16c7c6f227745a80f4912d55049a177699ffe619df444ebb3cffeb8574e41babaf0b");
+        }
     }
 
     @Test
@@ -41,8 +46,7 @@ public class CssFormatterTest extends AbstractFormatterTest {
         Assert.assertFalse(cssFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
-        cssFormatter.setFilename("src/test/resources/css.properties");
-        cssFormatter.init(null, null);
+        cssFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
 
         Assert.assertTrue(cssFormatter.isInitialized());
     }

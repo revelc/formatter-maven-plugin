@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * @author yoshiman
@@ -29,8 +30,7 @@ public class JsonFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        JsonFormatter jsonFormatter = new JsonFormatter();
-        doTestFormat(jsonFormatter, "someFile.json",
+        doTestFormat(new JsonFormatter(), "someFile.json",
                 "478edd57b917235d00f16611505060460758e7e0f4b53938941226dca183d09be7e946d9a14dbac492a200592d5a6fa5f463e60fd1c3d3dbf05c08c3c869a36b");
     }
 
@@ -40,7 +40,7 @@ public class JsonFormatterTest extends AbstractFormatterTest {
         Assert.assertFalse(jsonFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
-        jsonFormatter.init(null, null);
+        jsonFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
         Assert.assertTrue(jsonFormatter.isInitialized());
     }
 

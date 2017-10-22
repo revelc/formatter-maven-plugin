@@ -32,30 +32,37 @@ import java.util.Map;
  *
  */
 public class JsonFormatter extends AbstractCacheableFormatter implements Formatter {
-    private Gson gson;
+
+    private Gson formatter;
+
     private JsonParser jsonParser;
 
     @Override
-    public boolean isInitialized() {
-        return gson != null && jsonParser != null;
-    }
-
-    @Override
     public void init(Map<String, String> options, ConfigurationSource cfg) {
-        if (cfg != null) {
-            super.initCfg(cfg);
+        super.initCfg(cfg);
+
+        boolean printPrinting = Boolean.parseBoolean(options.getOrDefault("prettyPrinting", Boolean.TRUE.toString()));
+
+        if (printPrinting) {
+            formatter = new GsonBuilder().setPrettyPrinting().create();
+        } else {
+            formatter = new GsonBuilder().create();
         }
-        gson = new GsonBuilder().setPrettyPrinting().create();
         jsonParser = new JsonParser();
     }
 
     @Override
     protected String doFormat(String code, LineEnding ending) throws IOException {
-        String formattedCode = gson.toJson(jsonParser.parse(code));
+        String formattedCode = formatter.toJson(jsonParser.parse(code));
         if (code.equals(formattedCode)) {
             return null;
         }
         return formattedCode;
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return formatter != null;
     }
 
 }

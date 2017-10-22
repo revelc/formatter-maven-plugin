@@ -28,40 +28,23 @@ import org.w3c.css.sac.InputSource;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author yoshiman
  *
  */
 public class CssFormatter extends AbstractCacheableFormatter implements Formatter {
-    private String filename;
-    private CSSFormat format;
 
-    @Override
-    public boolean isInitialized() {
-        return filename != null && format != null;
-    }
+    private CSSFormat formatter;
 
     @Override
     public void init(Map<String, String> options, ConfigurationSource cfg) {
-        if (cfg != null) {
-            super.initCfg(cfg);
-        }
-        Properties properties = new Properties();
-        try {
-            properties.load(Files.newInputStream(Paths.get(filename)));
-        } catch (IOException e) {
-            this.log.error("error while reading properties file", e);
-        }
-        int indent = Integer.parseInt(properties.getProperty("indent", "2"));
-        boolean rgbAsHex = Boolean.parseBoolean(properties.getProperty("rgbAsHex", Boolean.toString(true)));
-        format = new CSSFormat();
-        format.setPropertiesInSeparateLines(indent);
-        format.setRgbAsHex(rgbAsHex);
+        super.initCfg(cfg);
+
+        int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
+        boolean rgbAsHex = Boolean.parseBoolean(options.getOrDefault("rgbAsHex", Boolean.TRUE.toString()));
+        formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex);
     }
 
     @Override
@@ -70,7 +53,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         InputSource source = new InputSource(new StringReader(code));
         CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
         CSSStyleSheetImpl sheet = (CSSStyleSheetImpl) parser.parseStyleSheet(source, null, null);
-        String formattedCode = sheet.getCssText(format);
+        String formattedCode = sheet.getCssText(formatter);
 
         if (code.equals(formattedCode)) {
             return null;
@@ -78,12 +61,9 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         return formattedCode;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
+    @Override
+    public boolean isInitialized() {
+        return formatter != null;
     }
 
 }

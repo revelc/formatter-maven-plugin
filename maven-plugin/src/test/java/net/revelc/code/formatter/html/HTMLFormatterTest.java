@@ -17,6 +17,7 @@
 package net.revelc.code.formatter.html;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,10 +31,14 @@ public class HTMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        HTMLFormatter htmlFormatter = new HTMLFormatter();
-        htmlFormatter.setFilename("src/test/resources/html.properties");
-        doTestFormat(htmlFormatter, "someFile.html",
-                "355c8710f25888c803d010fe5e534e5d0d5056954e3d71681a03de5c0334686267188dd43cca1ab5c5b3268f59f663a2f1814e234f31f1b6dc3c50f5879fe421");
+        // FIXME Handle linux vs windows since this formatter does not accept line endings
+        if (System.lineSeparator().equals("\n")) {
+            doTestFormat(new HTMLFormatter(), "someFile.html",
+                    "a96122af3d92a24300e252fd136b24b1a03814f4e8137411956d2305452c3c1fb1782958be591707adfaa26e9ed8e04b16fcf62c7a8f52b1e80f3d0e709b48ad");
+        } else {
+            doTestFormat(new HTMLFormatter(), "someFile.html",
+                    "8e3d98ef0c4d4578ab4fc5e29ce2ac1b5fdfd12b3aff42ef6c8c838c4daf4ac77b473dadce9b53e13c928835533b0a057269bbd6dce8dc301cd108c8bda56d12");
+        }
     }
 
     @Test
@@ -42,8 +47,7 @@ public class HTMLFormatterTest extends AbstractFormatterTest {
         Assert.assertFalse(htmlFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
-        htmlFormatter.setFilename("src/test/resources/html.properties");
-        htmlFormatter.init(null, null);
+        htmlFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
         Assert.assertTrue(htmlFormatter.isInitialized());
     }
 
