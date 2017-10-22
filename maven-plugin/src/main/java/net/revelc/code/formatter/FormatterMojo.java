@@ -71,7 +71,7 @@ import net.revelc.code.formatter.xml.XMLFormatter;
  * 
  * Mojo parameters allow customizing formatting by specifying the config XML
  * file, line endings, compiler version, and source code locations. Reformatting
- * source files is avoided using an md5 hash of the content, comparing to the
+ * source files is avoided using an sha512 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
  * 
  * @author jecki
