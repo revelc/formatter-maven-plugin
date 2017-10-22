@@ -17,6 +17,8 @@
 package net.revelc.code.formatter.css;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.SystemUtil;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,7 +33,7 @@ public class CssFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
-        if (System.lineSeparator().equals("\n")) {
+        if (SystemUtil.LINE_SEPARATOR.equals("\n")) {
             doTestFormat(new CssFormatter(), "someFile.css",
                     "590c14fa99d8296d7e1c6d4124de96e8fc436ee3f44704445a966befd37488e336b14e60fdb7d26181f6fc0c05848c1cc32701b34f98846f3122d4d057de9605");
         } else {

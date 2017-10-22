@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -32,7 +33,7 @@ public class HTMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
-        if (System.lineSeparator().equals("\n")) {
+        if (SystemUtil.LINE_SEPARATOR.equals("\n")) {
             doTestFormat(new HTMLFormatter(), "someFile.html",
                     "a96122af3d92a24300e252fd136b24b1a03814f4e8137411956d2305452c3c1fb1782958be591707adfaa26e9ed8e04b16fcf62c7a8f52b1e80f3d0e709b48ad");
         } else {
