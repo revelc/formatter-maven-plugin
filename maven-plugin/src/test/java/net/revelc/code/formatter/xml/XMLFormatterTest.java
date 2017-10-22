@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -32,7 +33,7 @@ public class XMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
-        if (System.lineSeparator().equals("\n")) {
+        if (SystemUtil.LINE_SEPARATOR.equals("\n")) {
             doTestFormat(new XMLFormatter(), "someFile.xml",
                     "5b37e98476e050998ecad303cc4a3feaca45eb6966e3a7248964df2e670403939b153b45292074e926c1c22c8264df204f0c0011d6c31102652b732186868563");
         } else {
