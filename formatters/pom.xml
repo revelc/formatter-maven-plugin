@@ -61,6 +61,8 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- Unnecessary inclusion never actually used -->
+                    <!-- 
                     <plugin>
                         <groupId>com.github.wvengen</groupId>
                         <artifactId>proguard-maven-plugin</artifactId>
@@ -85,6 +87,7 @@
                             </execution>
                         </executions>
                     </plugin>
+                    -->
                 </plugins>
             </build>
         </profile>
