@@ -30,7 +30,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>jdt-core</module>
+        <!-- No longer necessary -->
+        <!-- <module>jdt-core</module> -->
         <module>jsdt-core</module>
     </modules>
 
