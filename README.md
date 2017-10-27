@@ -10,25 +10,30 @@ formatter-maven-plugin
 [![Stars](https://img.shields.io/github/stars/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/stargazers)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/license.txt)
 
-forked from http://code.google.com/p/maven-java-formatter-plugin/
-It was started after having read an article posted [here][1] (thanks to John for writing such a helpful article).
+This project provides a mechanism to automatically (re)format your [Maven]
+project during a Maven build, or to verify its formatting, so that your project
+can converge on consistent code style regardless of user preferences, IDE
+settings, etc.
 
-The original project aims to provide Java source file formatting using the Eclipse code formatter as a Maven plugin.  
+It began following a post on the topic (which can be found [here][blog]; thanks
+to John for writing such a helpful article). It now uses the [Eclipse] code
+formatter for Java, and has grown to support formatting of other file types as
+well.
 
-Here I aim to provide file formatting accross languages.  So far, java and javascript meet my needs, HTML, XML and Scala are on my plans, but not limited to.
-Also, this project also provides m2e configurator.  So you can be sure the IDE form the entire development team is properly configured.
+This project additionally provides an [m2e] project configurator, so that if
+you import your project into Eclipse as a Maven project using m2e, you can have
+your project settings match the Maven plugin settings.
 
-M2e configurator update site:
-http://revelc.github.io/formatter-maven-plugin/p2/2.0.0
+This software is provided WITHOUT ANY WARRANTY, and is available under the
+Apache License, Version 2. Any code loss caused by using this plugin is not the
+responsibility of the author(s). Be sure to use some source repository
+management system such as GIT before using this plugin.
 
-
-This software is provided WITHOUT ANY WARRANTY.  Any loss of codes caused by the usage of this plugin is not
-the responsibility of the author(s).  Be sure to use some source repository management system such as GIT
-before using this plugin.
+Contributions are welcome.
 
 ## How to use
 
-View the Maven site documentation for the latest release [here](http://code.revelc.net/formatter-maven-plugin/)
+View the Maven plugin documentation for the latest release [here][plugin-docs].
 
 ## Eclipse Compatibility
 
@@ -49,6 +54,14 @@ Plugin Version	| Eclipse Version
 1.6.0.RC3       | 4.5.0.RC3 (velo fork - mars)
 1.6.0.RC4       | 4.5.0.RC4 (velo fork - mars)
 2.0.0 - 2.0.1   | 4.5.2 (merged forks - mars)
-2.1.0           | 4.6.3 (neon)
+2.1.0 - 2.5.0   | 4.6.3 (neon)
 
-[1]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
+[Eclipse]: https://eclipse.org
+[Maven]: https://maven.apache.org
+[m2e]: https://eclipse.org/m2e
+[blog]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
+[plugin-docs]: http://code.revelc.net/formatter-maven-plugin/
+[related1]: http://wiki.eclipse.org/M2E_extension_development_environment
+[related2]: http://wiki.eclipse.org/Submitting_M2E_marketplace_entries
+[related3]: http://www.eclipse.org/forums/index.php/t/478639/0/unread/
+[related4]: http://www.vogella.com/articles/EclipsePreferences/article.html

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests m2e connector for formatter-maven-plugin
 Bundle-SymbolicName: net.revelc.code.formatter.tests
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.5.0.qualifier
 Bundle-Vendor: code.revelc.net
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.m2e.tests.common;bundle-version="[1.0.0,10.0.0)",

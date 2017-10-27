@@ -43,8 +43,15 @@ ver 2.0.1 (2017-02-12)
 - Trap bug in mars formatting with index out of bounds allowing formatting to continue.
 - Internally use sha512 to hash files intead of md5.
 
-ver 2.1.0 (2017-xx-xx)
+ver 2.1.0 (2017-10-22)
 ======================
 - Java 8 required Neon Release
 - Support CSS, JSON, XML, and HTML formatting
 - Small updates throughout
+
+ver 2.5.0
+=========
+- Stop packaging jdt-core and jsdt-core
+- Fix licensing for m2e-configurator
+- Clean up maven POM files
+- Ease releasing by auto-versioning Eclipse plugin files

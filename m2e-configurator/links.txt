@@ -1,4 +1,0 @@
-http://wiki.eclipse.org/M2E_extension_development_environment
-http://wiki.eclipse.org/Submitting_M2E_marketplace_entries
-http://www.eclipse.org/forums/index.php/t/478639/0/unread/
-http://www.vogella.com/articles/EclipsePreferences/article.html
