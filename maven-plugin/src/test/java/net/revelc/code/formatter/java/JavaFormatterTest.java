@@ -1,7 +1,4 @@
-/**
- * Copyright 2010-2017. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
- *
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -35,7 +32,7 @@ public class JavaFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         doTestFormat(new JavaFormatter(), "AnyClass.java",
-                "321e31508fc3a994d5343eea326253b2c219c3d149099ce05b3c15aa3efb427a5ee2d074d22a41997e66c69c047d80c9edadfcc8b98578632a88620bf2b0b121");
+                "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca");
     }
 
     @Test

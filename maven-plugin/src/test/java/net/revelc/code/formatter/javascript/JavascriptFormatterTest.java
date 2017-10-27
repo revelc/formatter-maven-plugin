@@ -1,7 +1,4 @@
-/**
- * Copyright 2010-2017. All work is copyrighted to their respective
- * author(s), unless otherwise stated.
- *
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -32,7 +29,7 @@ public class JavascriptFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         doTestFormat(new JavascriptFormatter(), "AnyJS.js",
-                "91e699e0ed0d20c63a5f151035b93b3ed948e807da7ee360bb9df6b3ddff413fcfd0df7d643608d8f936871a01a3498b68e14d47d76594c0741aba3f096949f5");
+                "33020bfa1ecebd935b6d6ba8e482bc14433ad52899ca63bd892fbb85d20e835ad183dba1e0a6203a72fbbb3d859b6f6872e320a8ea2fa93c9b2ca301ae7c6ec8");
     }
 
     @Test
