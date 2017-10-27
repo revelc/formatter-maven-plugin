@@ -1,8 +1,5 @@
 <!--
 
-    Copyright 2010-2017. All work is copyrighted to their respective
-    author(s), unless otherwise stated.
-
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
@@ -25,7 +22,7 @@
       <groupId>lifecycles</groupId>
       <id>net.revelc.code.formatter.connector</id>
       <kind>lifecycles</kind>
-      <license>EPL</license>
+      <license>ASL 2.0</license>
       <name>formatter</name>
       <provider>code.revelc.net</provider>
       <p2>
