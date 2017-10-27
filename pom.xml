@@ -98,7 +98,6 @@
     </contributors>
 
     <modules>
-        <module>formatters</module>
         <module>maven-plugin</module>
         <module>m2e-configurator</module>
     </modules>
