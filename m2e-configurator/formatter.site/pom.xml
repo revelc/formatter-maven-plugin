@@ -30,7 +30,7 @@
   <properties>
     <repositoryPathId>net/revelc/code/formatter/net.revelc.code.formatter.feature</repositoryPathId>
     <repositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repositoryUrl>
-    <serverIdInSettingsXml>sonatype-oss-staging</serverIdInSettingsXml>
+    <serverIdInSettingsXml>sonatype-nexus-staging</serverIdInSettingsXml>
   </properties>
   <build>
     <plugins>
