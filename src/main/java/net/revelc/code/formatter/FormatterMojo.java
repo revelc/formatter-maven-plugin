@@ -195,38 +195,38 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * File or classpath location of an Eclipse code formatter configuration xml
      * file to use in formatting.
      */
-    @Parameter(defaultValue = "src/config/eclipse/formatter/java.xml", property = "configfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/eclipse/java.xml", property = "configfile", required = true)
     private String configFile;
 
     /**
      * File or classpath location of an Eclipse code formatter configuration xml
      * file to use in formatting.
      */
-    @Parameter(defaultValue = "src/config/eclipse/formatter/javascript.xml", property = "configjsfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/eclipse/javascript.xml", property = "configjsfile", required = true)
     private String configJsFile;
 
     /**
      * File or classpath location of a properties file to use in html formatting.
      */
-    @Parameter(defaultValue = "src/config/jsoup/formatter/html.properties", property = "confightmlfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/jsoup/html.properties", property = "confightmlfile", required = true)
     private String configHtmlFile;
 
     /**
      * File or classpath location of a properties file to use in xml formatting.
      */
-    @Parameter(defaultValue = "src/config/jsoup/formatter/xml.properties", property = "configxmlfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/jsoup/xml.properties", property = "configxmlfile", required = true)
     private String configXmlFile;
 
     /**
      * File or classpath location of a properties file to use in json formatting.
      */
-    @Parameter(defaultValue = "src/config/jackson/formatter/json.properties", property = "configjsonfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/jackson/json.properties", property = "configjsonfile", required = true)
     private String configJsonFile;
 
     /**
      * File or classpath location of a properties file to use in css formatting.
      */
-    @Parameter(defaultValue = "src/config/ph-css/formatter/css.properties", property = "configcssfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/ph-css/css.properties", property = "configcssfile", required = true)
     private String configCssFile;
 
     /**

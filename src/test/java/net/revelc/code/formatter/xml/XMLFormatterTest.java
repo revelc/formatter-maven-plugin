@@ -35,7 +35,7 @@ public class XMLFormatterTest extends AbstractFormatterTest {
                     "ecf687f06e4ada957478267eaf9b3f90461ad2520af37e304400c75e48b3b4daa3e0be60145b76061c496a19df1ce1aa064abc91224d79a725e5cefd12367401");
         } else {
             doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "98f896736377248255739514b27e5cad99df44e5daa37664dc8eeb79cdeb3ec113f390247c5573e0713258e8a5da69f8e4078cf2535235e437db451803c2971c");
+                    "8fb712bdc9068f9f8501f555c9dad182176bc66959812f2977d43f4794bb42b13d160bdc3aeb7f68e8a6c7654f2997cd90e41b006900748a6f0ffb8c0cf5077b");
         }
     }
 
