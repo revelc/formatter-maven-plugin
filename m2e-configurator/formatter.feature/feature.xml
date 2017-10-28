@@ -16,7 +16,7 @@
 -->
 <feature
       id="net.revelc.code.formatter.feature"
-      label="%featureName" version="2.5.0"
+      label="%featureName" version="2.5.1.qualifier"
       provider-name="%providerName"
       plugin="net.revelc.code.formatter">
 
