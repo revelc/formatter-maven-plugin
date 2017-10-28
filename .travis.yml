@@ -7,5 +7,5 @@ cache:
     - $HOME/.m2
 install: echo "Skipping pre-fetch of maven dependencies"
 before_script: mvn validate formatter:validate
-script: mvn clean verify javadoc:jar source:jar site:site
+script: mvn clean verify javadoc:jar source:jar site
 after_success: mvn -Ptravis jacoco:merge jacoco:report coveralls:report
