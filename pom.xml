@@ -103,7 +103,6 @@
   <ciManagement>
     <system>travis</system>
     <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
-    <!-- Do we want this? Can we have two? <system>shippable</system> <url>https://app.shippable.com/projects/54cfaf705ab6cc13528a8b4c/builds/latest</url> -->
   </ciManagement>
 
   <distributionManagement>
@@ -146,11 +145,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-plugin</artifactId>
-          <version>1.9.5</version>
-        </plugin>
         <plugin>
           <groupId>com.google.code.maven-replacer-plugin</groupId>
           <artifactId>replacer</artifactId>
@@ -208,7 +202,7 @@
           <configuration>
             <rules>
               <requireMavenVersion>
-                <version>[3.5.0,)</version>
+                <version>[3.0.5,)</version>
               </requireMavenVersion>
               <requireJavaVersion>
                 <version>[${maven.compiler.source},)</version>
@@ -289,16 +283,6 @@
             <javadocVersion>1.8.0</javadocVersion>
             <additionalparam>-Xdoclint:all,-Xdoclint:-missing</additionalparam>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -480,9 +464,6 @@
               <excludes>
                 <exclude>**/target/**</exclude>
                 <exclude>**/build.properties</exclude>
-                <exclude>**/maven-wrapper.properties</exclude>
-                <exclude>mvnw</exclude>
-                <exclude>mvnw.cmd</exclude>
                 <exclude>NOTICE</exclude>
               </excludes>
               <mapping>
@@ -776,7 +757,7 @@
       <build>
         <pluginManagement>
           <plugins>
-            <!--This plugin's configuration is used to store Eclipse m2e settings only. It 
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It
                             has no influence on the Maven build itself. -->
             <plugin>
               <groupId>org.eclipse.m2e</groupId>

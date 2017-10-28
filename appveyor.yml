@@ -26,4 +26,4 @@ install:
   - cmd: mvn --version
   - cmd: java -version
 build_script:
-  - mvn clean install -B
+  - mvn clean verify

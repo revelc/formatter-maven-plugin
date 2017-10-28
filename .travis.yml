@@ -1,12 +1,11 @@
 language: java
-sudo: false
-
 jdk:
-  - oraclejdk8
   - openjdk8
-
-before_script:
-  - ./mvnw validate formatter:validate
-
-after_success:
-  - ./mvnw resources:resources jacoco:merge jacoco:report coveralls:report -DrepoToken=OL0MbvrGAzu589jSHioduc5jAOhDxqwGe -Pcoveralls -N -B
+cache:
+  directories:
+    - $HOME/.m2
+# skip pre-fetch of maven dependencies by making install step a NOOP
+install: true
+before_script: mvn validate formatter:validate
+script: mvn clean verify
+after_success: mvn resources:resources jacoco:merge jacoco:report coveralls:report -Pcoveralls
