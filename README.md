@@ -8,7 +8,7 @@ formatter-maven-plugin
 [![Issues](https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/issues)
 [![Forks](https://img.shields.io/github/forks/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/network)
 [![Stars](https://img.shields.io/github/stars/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/stargazers)
-[![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/license.txt)
+[![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/LICENSE)
 
 This project provides a mechanism to automatically (re)format your [Maven]
 project during a Maven build, or to verify its formatting, so that your project
@@ -20,9 +20,7 @@ to John for writing such a helpful article). It now uses the [Eclipse] code
 formatter for Java, and has grown to support formatting of other file types as
 well.
 
-This project additionally provides an [m2e] project configurator, so that if
-you import your project into Eclipse as a Maven project using m2e, you can have
-your project settings match the Maven plugin settings.
+For a companion [m2e] project configurator, see [formatter-m2e-configurator].
 
 This software is provided WITHOUT ANY WARRANTY, and is available under the
 Apache License, Version 2. Any code loss caused by using this plugin is not the
@@ -61,6 +59,7 @@ Plugin Version	| Eclipse Version
 [m2e]: https://eclipse.org/m2e
 [blog]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
 [plugin-docs]: http://code.revelc.net/formatter-maven-plugin/
+[formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
 [related1]: http://wiki.eclipse.org/M2E_extension_development_environment
 [related2]: http://wiki.eclipse.org/Submitting_M2E_marketplace_entries
 [related3]: http://www.eclipse.org/forums/index.php/t/478639/0/unread/

@@ -4,8 +4,7 @@ jdk:
 cache:
   directories:
     - $HOME/.m2
-# skip pre-fetch of maven dependencies by making install step a NOOP
-install: true
+install: echo "Skipping pre-fetch of maven dependencies"
 before_script: mvn validate formatter:validate
 script: mvn clean verify
 after_success: mvn resources:resources jacoco:merge jacoco:report coveralls:report -Pcoveralls

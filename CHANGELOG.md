@@ -55,3 +55,7 @@ ver 2.5.0
 - Fix licensing for m2e-configurator
 - Clean up maven POM files
 - Ease releasing by auto-versioning Eclipse plugin files
+
+ver 2.6.0
+=========
+- Separate formatter-m2e-configurator from formatter-maven-plugin

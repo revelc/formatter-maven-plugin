@@ -17,20 +17,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>io.takari.tycho</groupId>
-    <artifactId>tycho-support</artifactId>
-    <version>0.17.0</version>
-  </parent>
-
   <groupId>net.revelc.code.formatter</groupId>
-  <artifactId>parent</artifactId>
-  <version>2.5.1-SNAPSHOT</version>
+  <artifactId>formatter-maven-plugin</artifactId>
+  <version>2.6.0-SNAPSHOT</version>
 
-  <packaging>pom</packaging>
-  <name>parent</name>
+  <packaging>maven-plugin</packaging>
+  <name>formatter-maven-plugin</name>
 
-  <description>Plugin for formatting source code</description>
+  <description>Maven plugin for formatting source code</description>
   <url>https://github.com/revelc/formatter-maven-plugin/</url>
   <inceptionYear>2010</inceptionYear>
 
@@ -79,18 +73,12 @@
     </developer>
   </developers>
 
-  <modules>
-    <module>maven-plugin</module>
-    <module>m2e-configurator/formatter</module>
-    <module>m2e-configurator/formatter.feature</module>
-    <module>m2e-configurator/formatter.site</module>
-    <!--
-    <module>m2e-configurator/formatter.tests</module>
-    -->
-  </modules>
+  <prerequisites>
+    <maven>3.0.5</maven>
+  </prerequisites>
 
   <scm>
-    <connection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</connection>
+    <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
     <tag>HEAD</tag>
     <url>https://github.com/revelc/formatter-maven-plugin</url>
@@ -142,14 +130,79 @@
     <tychoVersion>1.0.0</tychoVersion>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>23.2-jre</version>
+    </dependency>
+    <dependency>
+      <groupId>net.revelc.code.formatter</groupId>
+      <artifactId>jsdt-core</artifactId>
+      <version>2.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.cssparser</groupId>
+      <artifactId>cssparser</artifactId>
+      <version>0.9.23</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-digester3</artifactId>
+      <version>3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>3.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-io</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-resources</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jdt</groupId>
+      <artifactId>org.eclipse.jdt.core</artifactId>
+      <version>3.12.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.10.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>3.5.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>com.google.code.maven-replacer-plugin</groupId>
-          <artifactId>replacer</artifactId>
-          <version>1.5.3</version>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
@@ -180,20 +233,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.7.0</version>
-          <configuration>
-            <!-- ignore takari-lifecycle -->
-            <skip>false</skip>
-            <skipMain>false</skipMain>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
-          <configuration>
-            <!-- ignore takari-lifecycle -->
-            <skip>false</skip>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -219,19 +263,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
-          <configuration>
-            <!-- ignore takari-lifecycle -->
-            <skip>false</skip>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
-          <configuration>
-            <!-- ignore takari-lifecycle -->
-            <skip>false</skip>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -269,17 +305,12 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
-          <configuration>
-            <!-- ignore takari-lifecycle -->
-            <skip>false</skip>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.0.0-M1</version>
           <configuration>
-            <quiet>true</quiet>
             <javadocVersion>1.8.0</javadocVersion>
             <additionalparam>-Xdoclint:all,-Xdoclint:-missing</additionalparam>
           </configuration>
@@ -296,11 +327,6 @@
           <configuration>
             <arguments>-Psonatype-oss-release</arguments>
             <goals>clean deploy</goals>
-            <!-- Bypass build during release, and commit version changes -->
-            <!-- Build will probably not fail during release, so test it with
-                 mvn verify first -->
-            <preparationGoals>-Pcommit-changed-manifests clean scm:add scm:checkin</preparationGoals>
-            <completionGoals>-Pcommit-changed-manifests clean scm:add scm:checkin</completionGoals>
             <localCheckout>true</localCheckout>
             <pushChanges>false</pushChanges>
             <useReleaseProfile>false</useReleaseProfile>
@@ -310,12 +336,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
           <version>3.0.1</version>
-        </plugin>
-        <!-- Find maven root -->
-        <plugin>
-          <groupId>org.commonjava.maven.plugins</groupId>
-          <artifactId>directory-maven-plugin</artifactId>
-          <version>0.2</version>
         </plugin>
         <plugin>
           <groupId>com.mycila</groupId>
@@ -347,7 +367,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.4</version>
+          <version>2.5</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
@@ -399,8 +419,8 @@
           <artifactId>formatter-maven-plugin</artifactId>
           <version>2.0.1</version>
           <configuration>
-            <configFile>${main.basedir}/src/config/eclipse/formatter/java.xml</configFile>
-            <configJsFile>${main.basedir}/src/config/eclipse/formatter/javascript.xml</configJsFile>
+            <configFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configFile>
+            <configJsFile>${project.basedir}/src/config/eclipse/formatter/javascript.xml</configJsFile>
             <sourceDirectory>${project.basedir}</sourceDirectory>
             <excludes>
               <exclude>**/src/test/resources/**</exclude>
@@ -432,23 +452,6 @@
           </execution>
         </executions>
       </plugin>
-      <!-- Find maven root -->
-      <plugin>
-        <groupId>org.commonjava.maven.plugins</groupId>
-        <artifactId>directory-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>directories</id>
-            <goals>
-              <goal>highest-basedir</goal>
-            </goals>
-            <phase>validate</phase>
-            <configuration>
-              <property>main.basedir</property>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
@@ -458,13 +461,14 @@
             <goals>
               <goal>format</goal>
             </goals>
-            <phase>compile</phase>
+            <phase>process-resources</phase>
             <configuration>
-              <header>${main.basedir}/copyright.txt</header>
+              <header>${project.basedir}/src/build/license-header.txt</header>
               <excludes>
                 <exclude>**/target/**</exclude>
-                <exclude>**/build.properties</exclude>
+                <exclude>LICENSE</exclude>
                 <exclude>NOTICE</exclude>
+                <exclude>.gitattributes</exclude>
               </excludes>
               <mapping>
                 <java>SLASHSTAR_STYLE</java>
@@ -530,6 +534,31 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <resources>
+            <!-- Pickup our default config files -->
+            <resource>
+              <directory>${project.basedir}/src/config</directory>
+              <targetPath>${project.build.directory}/classes/src/config</targetPath>
+            </resource>
+
+            <!-- Retain original resources -->
+            <resource>
+              <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+              <directory>${project.basedir}/src/test/resources</directory>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
     </plugins>
 
     <extensions>
@@ -571,7 +600,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
-        <version>2.4</version>
+        <version>2.5</version>
       </plugin>
     </plugins>
   </reporting>
@@ -619,76 +648,6 @@
             </executions>
           </plugin>
         </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>update-manifests</id>
-      <activation>
-        <file>
-          <exists>META-INF/MANIFEST.MF</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.google.code.maven-replacer-plugin</groupId>
-            <artifactId>replacer</artifactId>
-            <executions>
-              <execution>
-                <id>update-manifest-version-from-pom</id>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <phase>pre-clean</phase>
-                <configuration>
-                  <file>${project.basedir}/META-INF/MANIFEST.MF</file>
-                  <replacements>
-                    <replacement>
-                      <token>Bundle-Version:.*</token>
-                      <value>Bundle-Version: ${project.version}</value>
-                    </replacement>
-                  </replacements>
-                </configuration>
-              </execution>
-              <execution>
-                <id>version-with-snapshot-update-manifest</id>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <phase>pre-clean</phase>
-                <configuration>
-                  <file>${project.basedir}/META-INF/MANIFEST.MF</file>
-                  <replacements>
-                    <replacement>
-                      <token>-SNAPSHOT</token>
-                      <value>.qualifier</value>
-                    </replacement>
-                  </replacements>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>commit-changed-manifests</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-scm-plugin</artifactId>
-              <configuration>
-                <includes>m2e-configurator/*/META-INF/MANIFEST.MF,m2e-configurator/formatter.feature/feature.xml,m2e-configurator/formatter.site/category.xml</includes>
-                <message>[maven-release-plugin] increment Bundle-Version for ${project.version}</message>
-                <pushChanges>false</pushChanges>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
 
@@ -774,19 +733,6 @@
                         <goals>
                           <goal>helpmojo</goal>
                           <goal>descriptor</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.commonjava.maven.plugins</groupId>
-                        <artifactId>directory-maven-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>highest-basedir</goal>
                         </goals>
                       </pluginExecutionFilter>
                       <action>
