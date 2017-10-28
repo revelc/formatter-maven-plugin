@@ -17,8 +17,7 @@ import org.apache.commons.digester3.Digester;
 import org.apache.commons.digester3.RuleSetBase;
 
 /**
- * An Apache Commons Digester RuleSet for configuring a digester to parse the
- * Eclipse formatter config XML into objects.
+ * An Apache Commons Digester RuleSet for configuring a digester to parse the Eclipse formatter config XML into objects.
  * 
  * @author jecki
  * @author Matt Blanchette
@@ -31,7 +30,8 @@ class RuleSet extends RuleSetBase {
     /**
      * Adds the rule instances.
      *
-     * @param digester the digester
+     * @param digester
+     *            the digester
      * @see org.apache.commons.digester3.RuleSetBase#addRuleInstances(org.apache.commons.digester3.Digester)
      */
     @Override

@@ -63,12 +63,10 @@ import net.revelc.code.formatter.model.ConfigReader;
 import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
- * A Maven plugin mojo to format Java source code using the Eclipse code
- * formatter.
+ * A Maven plugin mojo to format Java source code using the Eclipse code formatter.
  * 
- * Mojo parameters allow customizing formatting by specifying the config XML
- * file, line endings, compiler version, and source code locations. Reformatting
- * source files is avoided using an sha512 hash of the content, comparing to the
+ * Mojo parameters allow customizing formatting by specifying the config XML file, line endings, compiler version, and
+ * source code locations. Reformatting source files is avoided using an sha512 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
  * 
  * @author jecki
@@ -118,9 +116,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private File basedir;
 
     /**
-     * Location of the Java source files to format. Defaults to source main and
-     * test directories if not set. Deprecated in version 0.3. Reintroduced in
-     * 0.4.
+     * Location of the Java source files to format. Defaults to source main and test directories if not set. Deprecated
+     * in version 0.3. Reintroduced in 0.4.
      * 
      * @since 0.4
      */
@@ -128,10 +125,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private File[] directories;
 
     /**
-     * List of fileset patterns for Java source locations to include in
-     * formatting. Patterns are relative to the project source and test source
-     * directories. When not specified, the default include is
-     * <code>**&#47;*.java</code>
+     * List of fileset patterns for Java source locations to include in formatting. Patterns are relative to the project
+     * source and test source directories. When not specified, the default include is <code>**&#47;*.java</code>
      * 
      * @since 0.3
      */
@@ -139,9 +134,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String[] includes;
 
     /**
-     * List of fileset patterns for Java source locations to exclude from
-     * formatting. Patterns are relative to the project source and test source
-     * directories. When not specified, there is no default exclude.
+     * List of fileset patterns for Java source locations to exclude from formatting. Patterns are relative to the
+     * project source and test source directories. When not specified, there is no default exclude.
      * 
      * @since 0.3
      */
@@ -167,8 +161,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String compilerTargetPlatform;
 
     /**
-     * The file encoding used to read and write source files. When not specified
-     * and sourceEncoding also not set, default is platform file encoding.
+     * The file encoding used to read and write source files. When not specified and sourceEncoding also not set,
+     * default is platform file encoding.
      * 
      * @since 0.3
      */
@@ -179,8 +173,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Sets the line-ending of files after formatting. Valid values are:
      * <ul>
      * <li><b>"AUTO"</b> - Use line endings of current system</li>
-     * <li><b>"KEEP"</b> - Preserve line endings of files, default to AUTO if
-     * ambiguous</li>
+     * <li><b>"KEEP"</b> - Preserve line endings of files, default to AUTO if ambiguous</li>
      * <li><b>"LF"</b> - Use Unix and Mac style line endings</li>
      * <li><b>"CRLF"</b> - Use DOS and Windows style line endings</li>
      * <li><b>"CR"</b> - Use early Mac style line endings</li>
@@ -192,15 +185,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private LineEnding lineEnding;
 
     /**
-     * File or classpath location of an Eclipse code formatter configuration xml
-     * file to use in formatting.
+     * File or classpath location of an Eclipse code formatter configuration xml file to use in formatting.
      */
     @Parameter(defaultValue = "formatter-maven-plugin/eclipse/java.xml", property = "configfile", required = true)
     private String configFile;
 
     /**
-     * File or classpath location of an Eclipse code formatter configuration xml
-     * file to use in formatting.
+     * File or classpath location of an Eclipse code formatter configuration xml file to use in formatting.
      */
     @Parameter(defaultValue = "formatter-maven-plugin/eclipse/javascript.xml", property = "configjsfile", required = true)
     private String configJsFile;
@@ -294,7 +285,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Execute.
      *
-     * @throws MojoExecutionException the mojo execution exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     @Override
@@ -373,7 +365,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Add source files to the files list.
      *
-     * @param files the files
+     * @param files
+     *            the files
      */
     List<File> addCollectionFiles(File newBasedir) {
         final DirectoryScanner ds = new DirectoryScanner();
@@ -414,7 +407,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Store file hash cache.
      *
-     * @param props the props
+     * @param props
+     *            the props
      */
     private void storeFileHashCache(Properties props) {
         File cacheFile = new File(this.targetDirectory, CACHE_PROPERTIES_FILENAME);
@@ -457,10 +451,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Format file.
      *
-     * @param file the file
-     * @param rc the rc
-     * @param hashCache the hash cache
-     * @param basedirPath the basedir path
+     * @param file
+     *            the file
+     * @param rc
+     *            the rc
+     * @param hashCache
+     *            the hash cache
+     * @param basedirPath
+     *            the basedir path
      */
     private void formatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath)
             throws MojoFailureException, MojoExecutionException {
@@ -475,12 +473,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Format individual file.
      *
-     * @param file the file
-     * @param rc the rc
-     * @param hashCache the hash cache
-     * @param basedirPath the basedir path
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws BadLocationException the bad location exception
+     * @param file
+     *            the file
+     * @param rc
+     *            the rc
+     * @param hashCache
+     *            the hash cache
+     * @param basedirPath
+     *            the basedir path
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws BadLocationException
+     *             the bad location exception
      */
     protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
@@ -575,9 +579,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * sha512hash.
      *
-     * @param str the str
+     * @param str
+     *            the str
      * @return the string
-     * @throws UnsupportedEncodingException the unsupported encoding exception
+     * @throws UnsupportedEncodingException
+     *             the unsupported encoding exception
      */
     private String sha512hash(String str) throws UnsupportedEncodingException {
         return Hashing.sha512().hashBytes(str.getBytes(this.encoding)).toString();
@@ -586,9 +592,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Read the given file and return the content as a string.
      *
-     * @param file the file
+     * @param file
+     *            the file
      * @return the string
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     private String readFileAsString(File file) throws java.io.IOException {
         StringBuilder fileData = new StringBuilder(1000);
@@ -607,9 +615,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Write the given string to a file.
      *
-     * @param str the str
-     * @param file the file
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @param str
+     *            the str
+     * @param file
+     *            the file
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     private void writeStringToFile(String str, File file) throws IOException {
         if (!file.exists() && file.isDirectory()) {
@@ -624,7 +635,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Create a {@link CodeFormatter} instance to be used by this mojo.
      *
-     * @throws MojoExecutionException the mojo execution exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      */
     private void createCodeFormatter() throws MojoExecutionException {
         Map<String, String> javaFormattingOptions = getFormattingOptions(this.configFile);
@@ -658,11 +670,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     /**
-     * Return the options to be passed when creating {@link CodeFormatter}
-     * instance.
+     * Return the options to be passed when creating {@link CodeFormatter} instance.
      *
      * @return the formatting options or null if not config file found
-     * @throws MojoExecutionException the mojo execution exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      */
     private Map<String, String> getFormattingOptions(String newConfigFile) throws MojoExecutionException {
         if (this.useEclipseDefaults) {
@@ -682,7 +694,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Read config file and return the config as {@link Map}.
      *
      * @return the options from config file or null if not config file found
-     * @throws MojoExecutionException the mojo execution exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      */
     private Map<String, String> getOptionsFromConfigFile(String newConfigFile) throws MojoExecutionException {
 
@@ -707,7 +720,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Read properties file and return the properties as {@link Map}.
      *
      * @return the options from properties file or null if not properties file found
-     * @throws MojoExecutionException the mojo execution exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      */
     private Map<String, String> getOptionsFromPropertiesFile(String newPropertiesFile) throws MojoExecutionException {
 

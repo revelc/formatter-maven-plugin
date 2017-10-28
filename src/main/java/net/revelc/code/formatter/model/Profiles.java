@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A class representing the profiles XML element in the Eclipse formatter config
- * file, including a List of profile setting Maps with id and value.
+ * A class representing the profiles XML element in the Eclipse formatter config file, including a List of profile
+ * setting Maps with id and value.
  * 
  * @author Matt Blanchette
  */
@@ -34,7 +34,8 @@ public class Profiles {
     /**
      * Adds the profile.
      *
-     * @param profile the profile
+     * @param profile
+     *            the profile
      */
     public void addProfile(Profile profile) {
         if (PROFILE_KIND.equals(profile.getKind())) {

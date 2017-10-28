@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A class representing the profile XML element in the Eclipse formatter config
- * file, including the kind attribute and Map of setting id and value.
+ * A class representing the profile XML element in the Eclipse formatter config file, including the kind attribute and
+ * Map of setting id and value.
  * 
  * @author Matt Blanchette
  */
@@ -33,7 +33,8 @@ public class Profile {
     /**
      * Adds the setting.
      *
-     * @param setting the setting
+     * @param setting
+     *            the setting
      */
     public void addSetting(Setting setting) {
         this.settings.put(setting.getId(), setting.getValue());
@@ -60,7 +61,8 @@ public class Profile {
     /**
      * Sets the kind.
      *
-     * @param value the new kind
+     * @param value
+     *            the new kind
      */
     public void setKind(String value) {
         this.kind = value;

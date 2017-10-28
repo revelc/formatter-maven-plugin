@@ -84,8 +84,7 @@ public class LineEndingTest {
     }
 
     /**
-     * Test successfully determining AUTO line ending with mixed endings and no
-     * clear majority.
+     * Test successfully determining AUTO line ending with mixed endings and no clear majority.
      */
     @Test
     public void test_success_read_line_endings_mixed_auto() throws Exception {

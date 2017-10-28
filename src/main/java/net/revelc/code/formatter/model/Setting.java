@@ -14,8 +14,8 @@
 package net.revelc.code.formatter.model;
 
 /**
- * A class representing the setting XML element in the Eclipse formatter config
- * file, including the id and value attributes.
+ * A class representing the setting XML element in the Eclipse formatter config file, including the id and value
+ * attributes.
  * 
  * @author Matt Blanchette
  */
@@ -39,7 +39,8 @@ public class Setting {
     /**
      * Sets the id.
      *
-     * @param newId the new id
+     * @param newId
+     *            the new id
      */
     public void setId(String newId) {
         this.id = newId;
@@ -57,7 +58,8 @@ public class Setting {
     /**
      * Sets the value.
      *
-     * @param newValue the new value
+     * @param newValue
+     *            the new value
      */
     public void setValue(String newValue) {
         this.value = newValue;

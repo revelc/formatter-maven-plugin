@@ -220,7 +220,7 @@
         <plugin>
           <groupId>net.revelc.code.formatter</groupId>
           <artifactId>formatter-maven-plugin</artifactId>
-          <version>2.0.1</version>
+          <version>2.6.0</version>
           <configuration>
             <configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</configFile>
             <configJsFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/javascript.xml</configJsFile>
@@ -230,6 +230,8 @@
               <exclude>**/target/**</exclude>
             </excludes>
             <lineEnding>AUTO</lineEnding>
+            <skipHtmlFormatting>true</skipHtmlFormatting>
+            <skipXmlFormatting>true</skipXmlFormatting>
           </configuration>
         </plugin>
         <plugin>

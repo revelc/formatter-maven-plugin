@@ -34,7 +34,8 @@ public class ConfigReaderTest {
     /**
      * Test successfully read a config file.
      *
-     * @throws Exception the exception
+     * @throws Exception
+     *             the exception
      */
     @Test
     public void test_success_read_config() throws Exception {
@@ -52,7 +53,8 @@ public class ConfigReaderTest {
     /**
      * Test reading an invalid config file.
      *
-     * @throws Exception the exception
+     * @throws Exception
+     *             the exception
      */
     @Test(expected = SAXException.class)
     public void test_read_invalid_config() throws Exception {
@@ -67,7 +69,8 @@ public class ConfigReaderTest {
     /**
      * Test reading an invalid config file.
      *
-     * @throws Exception the exception
+     * @throws Exception
+     *             the exception
      */
     @Test(expected = ConfigReadException.class)
     public void test_read_invalid_config2() throws Exception {
