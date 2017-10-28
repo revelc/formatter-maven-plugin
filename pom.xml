@@ -111,11 +111,6 @@
       <id>sonatype-nexus-snapshots</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
-    <site>
-      <id>gh-pages</id>
-      <name>Formatter Maven Plugin GitHub Pages</name>
-      <url>git:ssh://git@github.com/revelc/formatter-maven-plugin.git?gh-pages#</url>
-    </site>
   </distributionManagement>
 
   <properties>
@@ -125,6 +120,9 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.testSource>1.8</maven.compiler.testSource>
     <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+
+    <!-- skip standard site deployment, because site is deployed using github plugin instead -->
+    <maven.site.deploy.skip>true</maven.site.deploy.skip>
 
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -321,6 +319,11 @@
           <version>2.10.0</version>
         </plugin>
         <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>site-maven-plugin</artifactId>
+          <version>0.12</version>
+        </plugin>
+        <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <version>3.0</version>
@@ -445,22 +448,11 @@
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
           <dependencies>
-            <dependency>
-              <groupId>net.trajano.wagon</groupId>
-              <artifactId>wagon-git</artifactId>
-              <!-- Do not upgrade to 2.0.4 as it does not work -->
-              <version>2.0.3</version>
-            </dependency>
-            <!-- Fluido is for reporting on version updates only and not used here -->
+            <!-- Fluido is listed here for version update checking only -->
             <dependency>
               <groupId>org.apache.maven.skins</groupId>
               <artifactId>maven-fluido-skin</artifactId>
               <version>1.7</version>
-            </dependency>
-            <dependency>
-              <groupId>org.apache.maven.wagon</groupId>
-              <artifactId>wagon-ssh</artifactId>
-              <version>3.3.3</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -532,6 +524,24 @@
               <goal>verify</goal>
             </goals>
             <phase>process-resources</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-github-pages</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site-deploy</phase>
+            <configuration>
+              <server>github</server>
+              <message>Creating site for ${project.version}</message>
+              <noJekyll>true</noJekyll>
+            </configuration>
           </execution>
         </executions>
       </plugin>
