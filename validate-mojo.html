@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20171028" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>formatter-maven-plugin &#x2013; formatter:format</title>
+    <title>formatter-maven-plugin &#x2013; formatter:validate</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.6.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -128,26 +128,23 @@
 
   
     <div class="section">
-<h2><a name="formatter:format"></a>formatter:format</h2>
+<h2><a name="formatter:validate"></a>formatter:validate</h2>
       
 <p><b>Full name</b>:</p>
       
-<p>net.revelc.code.formatter:formatter-maven-plugin:2.6.0:format</p>
+<p>net.revelc.code.formatter:formatter-maven-plugin:2.6.0:validate</p>
       
 <p><b>Description</b>:</p>
       
-<div>A Maven plugin mojo to format Java source code using the Eclipse
-code formatter. Mojo parameters allow customizing formatting by
-specifying the config XML file, line endings, compiler version, and
-source code locations. Reformatting source files is avoided using
-an sha512 hash of the content, comparing to the original hash to
-the hash after formatting and a cached hash.</div>
+<div>This mojo is very similar to Formatter mojo, but it is focused on
+CI servers. If the code ain't formatted as expected this mojo will
+fail the build</div>
       
 <p><b>Attributes</b>:</p>
       
 <ul>
         
-<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>process-sources</tt>.</li>
+<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>validate</tt>.</li>
       </ul>
       
 <div class="section">
@@ -168,6 +165,17 @@ the hash after formatting and a cached hash.</div>
           
 <tr class="b">
             
+<td><b><a href="#aggregator">aggregator</a></b></td>
+            
+<td><tt>boolean</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>false</tt>.<br /><b>User property is</b>: <tt>aggregator</tt>.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
 <td><b><a href="#compilerCompliance">compilerCompliance</a></b></td>
             
 <td><tt>String</tt></td>
@@ -177,7 +185,7 @@ the hash after formatting and a cached hash.</div>
 <td>Java compiler compliance version.<br /><b>Default value is</b>: <tt>1.6</tt>.<br /><b>User property is</b>: <tt>maven.compiler.source</tt>.<br /></td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#compilerSource">compilerSource</a></b></td>
             
@@ -188,7 +196,7 @@ the hash after formatting and a cached hash.</div>
 <td>Java compiler source version.<br /><b>Default value is</b>: <tt>1.6</tt>.<br /><b>User property is</b>: <tt>maven.compiler.source</tt>.<br /></td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><b><a href="#compilerTargetPlatform">compilerTargetPlatform</a></b></td>
             
@@ -199,7 +207,7 @@ the hash after formatting and a cached hash.</div>
 <td>Java compiler target version.<br /><b>Default value is</b>: <tt>1.6</tt>.<br /><b>User property is</b>: <tt>maven.compiler.target</tt>.<br /></td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#configCssFile">configCssFile</a></b></td>
             
@@ -211,7 +219,7 @@ the hash after formatting and a cached hash.</div>
 formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/ph-css/css.properties</tt>.<br /><b>User property is</b>: <tt>configcssfile</tt>.<br /></td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><b><a href="#configFile">configFile</a></b></td>
             
@@ -223,7 +231,7 @@ formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/ph-css/css.
 configuration xml file to use in formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/eclipse/java.xml</tt>.<br /><b>User property is</b>: <tt>configfile</tt>.<br /></td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#configHtmlFile">configHtmlFile</a></b></td>
             
@@ -235,7 +243,7 @@ configuration xml file to use in formatting.<br /><b>Default value is</b>: <tt>f
 formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/jsoup/html.properties</tt>.<br /><b>User property is</b>: <tt>confightmlfile</tt>.<br /></td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><b><a href="#configJsFile">configJsFile</a></b></td>
             
@@ -247,7 +255,7 @@ formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/jsoup/html.
 configuration xml file to use in formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/eclipse/javascript.xml</tt>.<br /><b>User property is</b>: <tt>configjsfile</tt>.<br /></td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#configJsonFile">configJsonFile</a></b></td>
             
@@ -259,7 +267,7 @@ configuration xml file to use in formatting.<br /><b>Default value is</b>: <tt>f
 formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/jackson/json.properties</tt>.<br /><b>User property is</b>: <tt>configjsonfile</tt>.<br /></td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><b><a href="#configXmlFile">configXmlFile</a></b></td>
             
@@ -271,7 +279,7 @@ formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/jackson/jso
 formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/jsoup/xml.properties</tt>.<br /><b>User property is</b>: <tt>configxmlfile</tt>.<br /></td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#encoding">encoding</a></b></td>
             
@@ -282,6 +290,17 @@ formatting.<br /><b>Default value is</b>: <tt>formatter-maven-plugin/jsoup/xml.p
 <td>The file encoding used to read and write source files. When not
 specified and sourceEncoding also not set, default is platform file
 encoding.<br /><b>User property is</b>: <tt>project.build.sourceEncoding</tt>.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#executionRoot">executionRoot</a></b></td>
+            
+<td><tt>boolean</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>${project.executionRoot}</tt>.<br /></td>
           </tr>
           
 <tr class="b">
@@ -483,6 +502,20 @@ source directories. When not specified, the default include is
 <div class="section">
 <h3><a name="Parameter_Details"></a>Parameter Details</h3>
         
+<p><b><a name="aggregator">aggregator</a>:</b></p>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>boolean</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>User Property</b>: <tt>aggregator</tt></li>
+          
+<li><b>Default</b>: <tt>false</tt></li>
+        </ul><hr />
 <p><b><a name="compilerCompliance">compilerCompliance</a>:</b></p>
         
 <div>Java compiler compliance version.</div>
@@ -659,6 +692,18 @@ exclude.</div>
 <li><b>Since</b>: <tt>0.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr />
+<p><b><a name="executionRoot">executionRoot</a>:</b></p>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>boolean</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>Default</b>: <tt>${project.executionRoot}</tt></li>
         </ul><hr />
 <p><b><a name="includes">includes</a>:</b></p>
         
