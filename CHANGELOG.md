@@ -59,3 +59,7 @@ ver 2.5.0
 ver 2.6.0
 =========
 - Separate formatter-m2e-configurator from formatter-maven-plugin
+
+ver 2.7.0
+=========
+- Eclipse Oxygen release
