@@ -40,7 +40,6 @@
   <modules>
     <module>formatters</module>
     <module>maven-plugin</module>
-    <module>m2e-configurator</module>
     <module>support</module>
     <module>maven-plugin-its</module>
   </modules>
