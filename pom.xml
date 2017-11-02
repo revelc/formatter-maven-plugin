@@ -163,9 +163,9 @@
       <version>3.1.0</version>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jdt</groupId>
+      <groupId>org.eclipse.tycho</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.13.0</version>
+      <version>3.13.50.v20171007-0855</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
