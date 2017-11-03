@@ -15,7 +15,6 @@
  */
 package com.marvinformatics.formatter.java;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.jdt.core.JavaCore;
@@ -24,36 +23,40 @@ import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 
-import com.marvinformatics.formatter.AbstractCacheableFormatter;
-import com.marvinformatics.formatter.ConfigurationSource;
-import com.marvinformatics.formatter.Formatter;
+public class JavaFormatter {
 
-public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
+	private final CodeFormatter formatter;
+	private final String lineEnding;
 
-	CodeFormatter formatter;
-
-	public JavaFormatter(Map<String, String> options, ConfigurationSource cfg) {
-		super(cfg);
-
-		options.put(JavaCore.COMPILER_SOURCE, cfg.getCompilerSources());
-		options.put(JavaCore.COMPILER_COMPLIANCE, cfg.getCompilerCompliance());
-		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, cfg.getCompilerCodegenTargetPlatform());
+	public JavaFormatter(
+			Map<String, String> options,
+			String compilerSources,
+			String compilerCompliance,
+			String compilerCodegenTargetPlatform,
+			String lineEnding) {
+		options.put(JavaCore.COMPILER_SOURCE, compilerSources);
+		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, compilerCodegenTargetPlatform);
 
 		formatter = ToolFactory.createCodeFormatter(options);
+		this.lineEnding = lineEnding;
 	}
 
-	@Override
-	public String doFormat(String code) throws IOException, BadLocationException {
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
-				configurationSource.lineEnding().getChars());
+	public String doFormat(String code) {
+		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, lineEnding);
 		if (te == null)
 			throw new IllegalArgumentException(
 					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 
 		IDocument doc = new Document(code);
-		te.apply(doc);
+		try {
+			te.apply(doc);
+		} catch (MalformedTreeException | BadLocationException e) {
+			throw new IllegalStateException("Code cannot be formatted. original code:\n" + code);
+		}
 		return doc.get();
 	}
 

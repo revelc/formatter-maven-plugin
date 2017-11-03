@@ -15,40 +15,39 @@
  */
 package com.marvinformatics.formatter.javascript;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.wst.jsdt.core.ToolFactory;
 import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 
-import com.marvinformatics.formatter.AbstractCacheableFormatter;
-import com.marvinformatics.formatter.ConfigurationSource;
-import com.marvinformatics.formatter.Formatter;
+public class JavascriptFormatter {
 
-public class JavascriptFormatter extends AbstractCacheableFormatter implements Formatter {
+	private final CodeFormatter formatter;
+	private final String lineEnding;
 
-	private CodeFormatter formatter;
-
-	public JavascriptFormatter(Map<String, String> options, ConfigurationSource cfg) {
-		super(cfg);
-
+	public JavascriptFormatter(Map<String, String> options, String lineEnding) {
 		this.formatter = ToolFactory.createCodeFormatter(options);
+		this.lineEnding = lineEnding;
 	}
 
-	@Override
-	public String doFormat(String code) throws IOException, BadLocationException {
+	public String doFormat(String code) {
 		TextEdit te = formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
-				configurationSource.lineEnding().getChars());
+				lineEnding);
 		if (te == null)
 			throw new IllegalArgumentException(
 					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
 
 		IDocument doc = new Document(code);
-		te.apply(doc);
+		try {
+			te.apply(doc);
+		} catch (MalformedTreeException | BadLocationException e) {
+			throw new IllegalStateException("Code cannot be formatted. original code:\n" + code);
+		}
 		return doc.get();
 	}
 

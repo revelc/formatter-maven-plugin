@@ -15,12 +15,10 @@
  */
 package com.marvinformatics.formatter;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.apache.maven.plugin.logging.Log;
-import org.eclipse.jface.text.BadLocationException;
 
 /**
  * @author marvin.froeder
@@ -61,6 +59,6 @@ public abstract class AbstractCacheableFormatter {
 		return configurationSource.lineEnding().fix(code);
 	}
 
-	protected abstract String doFormat(String code) throws IOException, BadLocationException;
+	protected abstract String doFormat(String code);
 
 }

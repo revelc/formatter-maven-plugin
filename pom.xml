@@ -348,7 +348,8 @@
 
   <repositories>
     <repository>
-      <id>oxygen</id>
+      <!-- must have id luna to override parent pom -->
+      <id>luna</id>
       <url>http://download.eclipse.org/releases/oxygen/</url>
       <layout>p2</layout>
     </repository>

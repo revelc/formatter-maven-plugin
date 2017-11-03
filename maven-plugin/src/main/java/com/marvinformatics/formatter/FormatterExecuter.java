@@ -32,7 +32,6 @@ import org.codehaus.plexus.util.MatchPatterns;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.SelectorUtils;
 import org.codehaus.plexus.util.StringUtils;
-import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Stopwatch;
@@ -54,6 +53,7 @@ public class FormatterExecuter {
 
 	/**
 	 * Execute.
+	 *
 	 * @return
 	 *
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
@@ -115,14 +115,25 @@ public class FormatterExecuter {
 		return pattern;
 	}
 
-	private ThreadLocal<JavaFormatter> createJavaFormatter() {
+	private ThreadLocal<Formatter> createJavaFormatter() {
 		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(config.javaConfig());
-		return ThreadLocal.withInitial(() -> new JavaFormatter(lazyConfig.get(), config));
+		return ThreadLocal.withInitial(() -> {
+			return new CacheableFormatter(config, new JavaFormatter(
+					lazyConfig.get(),
+					config.getCompilerSources(),
+					config.getCompilerCompliance(),
+					config.getCompilerCodegenTargetPlatform(),
+					config.lineEnding().getChars())::doFormat);
+		});
 	}
 
-	private ThreadLocal<JavascriptFormatter> createJsFormatter() {
+	private ThreadLocal<Formatter> createJsFormatter() {
 		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(config.jsConfig());
-		return ThreadLocal.withInitial(() -> new JavascriptFormatter(lazyConfig.get(), config));
+		return ThreadLocal.withInitial(() -> {
+			return new CacheableFormatter(config, new JavascriptFormatter(
+					lazyConfig.get(),
+					config.lineEnding().getChars())::doFormat);
+		});
 	}
 
 	private boolean isValidDirectory(File file) {

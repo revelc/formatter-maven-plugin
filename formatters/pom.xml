@@ -47,50 +47,64 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.0.1</version>
             <executions>
               <execution>
-                <id>unpack</id>
-                <goals>
-                  <goal>unpack-dependencies</goal>
-                </goals>
-                <phase>prepare-package</phase>
-                <configuration>
-                  <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                  <excludes>META-INF/*,com/ibm/icu/impl/data/icudt56b/**/*</excludes>
-                </configuration>
-              </execution>
-              <execution>
-                <id>copy</id>
+                <id>copy-dependencies</id>
                 <goals>
                   <goal>copy-dependencies</goal>
                 </goals>
-                <phase>prepare-package</phase>
+                <phase>package</phase>
                 <configuration>
-                  <outputDirectory>${project.build.directory}/libraries</outputDirectory>
+                  <outputDirectory>${project.build.directory}/libs</outputDirectory>
+                  <overWriteReleases>false</overWriteReleases>
+                  <overWriteSnapshots>false</overWriteSnapshots>
+                  <overWriteIfNewer>true</overWriteIfNewer>
+                  <excludeTransitive>true</excludeTransitive>
                 </configuration>
               </execution>
             </executions>
           </plugin>
           <plugin>
-            <groupId>com.github.wvengen</groupId>
-            <artifactId>proguard-maven-plugin</artifactId>
-            <version>2.0.12</version>
+            <groupId>com.googlecode.addjars-maven-plugin</groupId>
+            <artifactId>addjars-maven-plugin</artifactId>
+            <version>1.0.5</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>add-jars</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/libs</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.1.0</version>
             <configuration>
-              <silent>true</silent>
-              <obfuscate>false</obfuscate>
-              <injar>${project.build.finalName}.jar</injar>
-              <outjar>${project.build.finalName}-small.jar</outjar>
-              <outputDirectory>${project.build.directory}</outputDirectory>
-              <libs>
-                <lib>${java.home}/lib/rt.jar</lib>
-                <lib>${java.home}/lib/jsse.jar</lib>
-              </libs>
-              <attach>true</attach>
+              <minimizeJar>true</minimizeJar>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*</exclude>
+                    <exclude>com/ibm/icu/impl/data/icudt56b/**/*</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
             <executions>
               <execution>
                 <goals>
-                  <goal>proguard</goal>
+                  <goal>shade</goal>
                 </goals>
                 <phase>package</phase>
               </execution>
