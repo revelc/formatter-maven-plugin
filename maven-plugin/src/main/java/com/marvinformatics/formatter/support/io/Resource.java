@@ -103,10 +103,8 @@ public abstract class Resource {
 	 * @param path
 	 *            Path to the resource
 	 * @return Resource instance
-	 * @throws UnknownResourceException
-	 *             If the supplied path can not be resolved to a resource
 	 */
-	public static Resource forPath(final String path) throws UnknownResourceException {
+	public static Resource forPath(final String path) {
 
 		Resource resource = null;
 

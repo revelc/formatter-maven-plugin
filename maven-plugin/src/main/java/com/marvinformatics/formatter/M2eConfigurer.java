@@ -55,22 +55,23 @@ public class M2eConfigurer {
 	}
 
 	private void setupEclipsePrefs(Resource configFile, String prefsPath) throws Exception {
+		// if there is no customized settings, just leave it be and use eclipse default
 		if (configFile.exists()) {
-			Properties jdtCorePrefs = new Properties();
+			Properties prefs = new Properties();
 
 			File prefsFile = new File(config.basedir, prefsPath);
 			if (prefsFile.exists())
 				try (Reader reader = Files.newReader(prefsFile, Charsets.UTF_8)) {
-					jdtCorePrefs.load(reader);
+					prefs.load(reader);
 				}
 
 			try (InputStream configInput = configFile.asInputStream();) {
 				ConfigReader configReader = new ConfigReader();
-				configReader.read(configInput).forEach(jdtCorePrefs::setProperty);
+				configReader.read(configInput).forEach(prefs::setProperty);
 			}
 
 			try (OutputStream output = buildContext.newFileOutputStream(prefsFile);) {
-				jdtCorePrefs.store(output, "This file was touched by formatter-maven-plugin at:");
+				prefs.store(output, "This file was touched by formatter-maven-plugin at:");
 			}
 		}
 	}

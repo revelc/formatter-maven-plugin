@@ -27,7 +27,11 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.codehaus.plexus.util.*;
+import org.codehaus.plexus.util.AbstractScanner;
+import org.codehaus.plexus.util.MatchPatterns;
+import org.codehaus.plexus.util.ReaderFactory;
+import org.codehaus.plexus.util.SelectorUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.xml.sax.SAXException;
 
@@ -137,9 +141,14 @@ public class FormatterExecuter {
 		if (cfgFile == null)
 			return new HashMap<String, String>();
 
+		Resource resource = Resource.forPath(cfgFile);
+		if (resource.exists())
+			//FIXME add a warning
+			return new HashMap<String, String>();
+
 		try {
-			return getOptionsFromConfigFile(Resource.forPath(cfgFile));
-		} catch (Resource.UnknownResourceException | MojoExecutionException e) {
+			return getOptionsFromConfigFile(resource);
+		} catch (MojoExecutionException e) {
 			throw new IllegalStateException("Error loading Java config", e);
 		}
 	}
