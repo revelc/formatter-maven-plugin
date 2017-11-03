@@ -192,7 +192,7 @@
           <sourceDirectory>${project.basedir}</sourceDirectory>
           <excludes>
             <exclude>**/target/**</exclude>
-            <exclude>**/src/test/projects/**</exclude>
+            <exclude>**/src/test/**</exclude>
           </excludes>
           <lineEnding>LF</lineEnding>
           <configFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configFile>
