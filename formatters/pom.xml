@@ -29,8 +29,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>jdt-core</module>
-    <module>jsdt-core</module>
+    <module>java-formatter</module>
+    <module>javascript-formatter</module>
   </modules>
 
   <profiles>

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse JDT core
-Bundle-SymbolicName: jdt-core
+Bundle-SymbolicName: java-formatter
 Bundle-Version: 1.9.0.qualifier
 Require-Bundle: org.eclipse.jdt.core;bundle-version="[3.13.0,10.0.0)",
  org.eclipse.text,

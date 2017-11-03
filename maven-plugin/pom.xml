@@ -51,12 +51,12 @@
     </dependency>
     <dependency>
       <groupId>com.marvinformatics.formatter</groupId>
-      <artifactId>jdt-core</artifactId>
+      <artifactId>java-formatter</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.marvinformatics.formatter</groupId>
-      <artifactId>jsdt-core</artifactId>
+      <artifactId>javascript-formatter</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

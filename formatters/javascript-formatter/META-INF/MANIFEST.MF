@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse JSDT core
-Bundle-SymbolicName: jsdt-core
+Bundle-SymbolicName: javascript-formatter
 Bundle-Version: 1.9.0.qualifier
 Require-Bundle: org.eclipse.wst.jsdt.core;bundle-version="[2.0.0,10.0.0)",
  org.eclipse.jface.text
