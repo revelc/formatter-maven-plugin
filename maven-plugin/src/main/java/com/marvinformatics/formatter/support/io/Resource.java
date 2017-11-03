@@ -43,18 +43,11 @@ public abstract class Resource {
 	}
 
 	/**
-	 * Loads the resource and returns an InputStream from which to load it.
-	 * @return Input stream for the resource
-	 * @throws UnknownResourceException If the resource is not accessible
-	 */
-	public final InputStream asInputStream() throws UnknownResourceException {
-		return toInputStream();
-	}
-
-	/**
 	 * Loads the resource and returns it as a string.
+	 *
 	 * @return String obtained from the resource
-	 * @throws UnknownResourceException If the resource is not accessible
+	 * @throws UnknownResourceException
+	 *             If the resource is not accessible
 	 */
 	public final String asString() throws UnknownResourceException {
 		String result = null;
@@ -68,12 +61,27 @@ public abstract class Resource {
 		return result;
 	}
 
-	protected abstract InputStream toInputStream() throws UnknownResourceException;
+	/**
+	 * Loads the resource and returns an InputStream from which to load it.
+	 *
+	 * @return Input stream for the resource
+	 * @throws UnknownResourceException
+	 *             If the resource is not accessible
+	 */
+	public abstract InputStream asInputStream() throws UnknownResourceException;
+
+	/**
+	 * Check if the resource exists
+	 *
+	 * @return true when the resource exists
+	 */
+	public abstract boolean exists();
 
 	protected abstract String getPrefix();
 
 	/**
 	 * Gets the path to the resource.
+	 *
 	 * @return Resource path
 	 */
 	public final String getPath() {
@@ -82,6 +90,7 @@ public abstract class Resource {
 
 	/**
 	 * Gets the path to the resource in terms native to the resource type.
+	 *
 	 * @return Native path
 	 */
 	public final String getNativePath() {
@@ -90,10 +99,12 @@ public abstract class Resource {
 
 	/**
 	 * Creates an instance for a path prefixed by either classpath: or file:.
-	 * @param path Path to the resource
+	 *
+	 * @param path
+	 *            Path to the resource
 	 * @return Resource instance
-	 * @throws UnknownResourceException If the supplied path can not be resolved
-	 *         to a resource
+	 * @throws UnknownResourceException
+	 *             If the supplied path can not be resolved to a resource
 	 */
 	public static Resource forPath(final String path) throws UnknownResourceException {
 
@@ -127,7 +138,7 @@ public abstract class Resource {
 		}
 
 		@Override
-		protected InputStream toInputStream() throws UnknownResourceException {
+		public InputStream asInputStream() throws UnknownResourceException {
 			final InputStream is = getClass().getResourceAsStream(getNativePath());
 
 			if (is == null) {
@@ -135,6 +146,11 @@ public abstract class Resource {
 			}
 
 			return is;
+		}
+
+		@Override
+		public boolean exists() {
+			return getClass().getResource(getNativePath()) != null;
 		}
 	}
 
@@ -151,8 +167,11 @@ public abstract class Resource {
 
 		public static final String PREFIX = "file";
 
+		private final File file;
+
 		protected FileResource(final String path) {
 			super(path);
+			file = new File(getNativePath());
 		}
 
 		@Override
@@ -161,8 +180,7 @@ public abstract class Resource {
 		}
 
 		@Override
-		protected InputStream toInputStream() throws UnknownResourceException {
-			final File file = new File(getNativePath());
+		public InputStream asInputStream() throws UnknownResourceException {
 
 			if (!file.exists()) {
 				throw new UnknownResourceException(UNKNOWN.format(getPath()));
@@ -186,6 +204,11 @@ public abstract class Resource {
 
 			return stream;
 		}
+
+		@Override
+		public boolean exists() {
+			return file.exists();
+		}
 	}
 
 	/**
@@ -196,8 +219,11 @@ public abstract class Resource {
 
 		/**
 		 * Constructs a new UnknownResourceException instance.
-		 * @param message Error message
-		 * @param cause underlying cause
+		 *
+		 * @param message
+		 *            Error message
+		 * @param cause
+		 *            underlying cause
 		 */
 		public UnknownResourceException(String message, Throwable cause) {
 			super(message, cause);
@@ -205,10 +231,13 @@ public abstract class Resource {
 
 		/**
 		 * Constructs a new UnknownResourceException instance.
-		 * @param message Error message
+		 *
+		 * @param message
+		 *            Error message
 		 */
 		public UnknownResourceException(String message) {
 			super(message);
 		}
 	}
+
 }

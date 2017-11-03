@@ -65,7 +65,7 @@ public class ResourceTest {
 	@SuppressWarnings("resource")
 	@Test
 	public void testAsInputStreamValidDefaultPackageResource() throws UnknownResourceException {
-		InputStream stream = forPath(ROOT_TEST_FILE).toInputStream();
+		InputStream stream = forPath(ROOT_TEST_FILE).asInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha\nbeta", result);
@@ -81,7 +81,7 @@ public class ResourceTest {
 	@SuppressWarnings("resource")
 	@Test
 	public void testAsInputStreamValidSubpackageResource() throws UnknownResourceException {
-		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).toInputStream();
+		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).asInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha subpackage\nbeta subpackage", result);
@@ -96,7 +96,7 @@ public class ResourceTest {
 	 */
 	@Test(expected = UnknownResourceException.class)
 	public void testAsInputStreamInvalidResource() throws UnknownResourceException {
-		forPath(INVALID_PACKAGE_TEST_FILE).toInputStream();
+		forPath(INVALID_PACKAGE_TEST_FILE).asInputStream();
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class ResourceTest {
 	}
 
 	/**
-	 * Test method for {@link Resource#toInputStream()}.
+	 * Test method for {@link Resource#asInputStream()}.
 	 * <p />
 	 * This test case assumes a valid resource path.
 	 * @throws IOException 
@@ -122,14 +122,14 @@ public class ResourceTest {
 	@SuppressWarnings("resource")
 	@Test
 	public void testLoadInputStreamClasspath() throws UnknownResourceException {
-		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).toInputStream();
+		InputStream stream = forPath(SUBPACKAGE_TEST_FILE).asInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha subpackage\nbeta subpackage", result);
 	}
 
 	/**
-	 * Test method for {@link Resource#toInputStream()}.
+	 * Test method for {@link Resource#asInputStream()}.
 	 * <p />
 	 * This test case assumes a valid resource path.
 	 * @throws IOException 
@@ -138,7 +138,7 @@ public class ResourceTest {
 	@SuppressWarnings("resource")
 	@Test
 	public void testLoadInputStreamFile() throws UnknownResourceException {
-		InputStream stream = forPath(FILE_ROOT_TEST_FILE).toInputStream();
+		InputStream stream = forPath(FILE_ROOT_TEST_FILE).asInputStream();
 		String result = new Scanner(stream, UTF_8.name()).useDelimiter("\\A").next();
 
 		assertEquals("alpha\nbeta", result);

@@ -19,12 +19,16 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.sonatype.plexus.build.incremental.BuildContext;
+
 import com.google.common.collect.Lists;
 
 /**
@@ -65,7 +69,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	 * Project's base directory.
 	 */
 	@Parameter(defaultValue = ".", property = "project.basedir", readonly = true, required = true)
-	private File basedir;
+	File basedir;
 
 	/**
 	 * Location of the Java source files to format. Defaults to source main and
@@ -169,6 +173,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 	@Parameter(defaultValue = "${project.executionRoot}", required = true)
 	protected boolean executionRoot;
 
+	@Component
+	private BuildContext buildContext;
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		if (aggregator && !executionRoot)
@@ -179,11 +186,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			return;
 		}
 
-		final ResultCollector rc = new FormatterExecuter(this).execute();
-		getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
-		getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
-		getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");
-		getLog().info("Approximate time taken: " + rc.getWatch().elapsed(TimeUnit.SECONDS) + "s");
+		if (buildContext.getClass().getName().contains("m2e")) {
+			// this means m2e is trying to configure itself
+			new M2eConfigurer(this, buildContext).configure();
+		} else {
+			// regular maven execution, just do the work
+			final ResultCollector rc = new FormatterExecuter(this).execute();
+			getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
+			getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
+			getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");
+			getLog().info("Approximate time taken: " + rc.getWatch().elapsed(TimeUnit.SECONDS) + "s");
+		}
 	}
 
 	@Override

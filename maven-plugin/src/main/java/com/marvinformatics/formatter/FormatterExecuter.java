@@ -50,7 +50,7 @@ public class FormatterExecuter {
 
 	/**
 	 * Execute.
-	 * @return 
+	 * @return
 	 *
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
@@ -70,8 +70,7 @@ public class FormatterExecuter {
 			}
 		}
 
-		Stream<File> pathsToScan;
-		pathsToScan = config.directories().stream();
+		Stream<File> pathsToScan = config.directories().stream();
 
 		RecursiveWalk w = new RecursiveWalk(createJavaFormatter(), createJsFormatter(), rc,
 				pathsToScan.filter(file -> isValidDirectory(file)).map(file -> file.toPath()), excludes());
