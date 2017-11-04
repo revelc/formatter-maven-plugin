@@ -28,4 +28,19 @@
   <artifactId>javascript-formatter</artifactId>
   <packaging>eclipse-plugin</packaging>
 
+  <properties>
+    <formatter.relocation>formatter.javascript.</formatter.relocation>
+    <formatter.exclude>org.eclipse.jsdt.core.**.*.</formatter.exclude>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>formatter-jars</id>
+
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+  </profiles>
+
 </project>

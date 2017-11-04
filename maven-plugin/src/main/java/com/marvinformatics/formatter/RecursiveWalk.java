@@ -32,12 +32,12 @@ import org.codehaus.plexus.util.MatchPatterns;
 public class RecursiveWalk extends RecursiveAction {
 	private static final long serialVersionUID = 6913234076030245489L;
 	private final Stream<Path> paths;
-	private final ThreadLocal<Formatter> javaFormatter;
+	private final ThreadLocal<CacheableFormatter> javaFormatter;
 	private final ResultCollector resultCollector;
-	private final ThreadLocal<Formatter> jsFormatter;
+	private final ThreadLocal<CacheableFormatter> jsFormatter;
 	private final MatchPatterns excludes;
 
-	public RecursiveWalk(ThreadLocal<Formatter> javaFormatter, ThreadLocal<Formatter> jsFormatter,
+	public RecursiveWalk(ThreadLocal<CacheableFormatter> javaFormatter, ThreadLocal<CacheableFormatter> jsFormatter,
 			ResultCollector resultCollector, Stream<Path> stream, MatchPatterns excludes) {
 		super();
 		this.paths = stream;
@@ -47,7 +47,7 @@ public class RecursiveWalk extends RecursiveAction {
 		this.excludes = excludes;
 	}
 
-	public RecursiveWalk(ThreadLocal<Formatter> javaFormatter, ThreadLocal<Formatter> jsFormatter,
+	public RecursiveWalk(ThreadLocal<CacheableFormatter> javaFormatter, ThreadLocal<CacheableFormatter> jsFormatter,
 			ResultCollector resultCollector, Path path, MatchPatterns excludes) {
 		this(javaFormatter, jsFormatter, resultCollector, Collections.singletonList(path).stream(), excludes);
 	}

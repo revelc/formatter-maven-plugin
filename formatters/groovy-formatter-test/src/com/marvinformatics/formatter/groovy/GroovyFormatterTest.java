@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.marvinformatics.formatter.javascript;
+package com.marvinformatics.formatter.groovy;
 
 import java.util.Map;
 
 import com.marvinformatics.formatter.AbstractFormatterTest;
-import com.marvinformatics.formatter.CacheableFormatter;
 import com.marvinformatics.formatter.ConfigurationSource;
 import com.marvinformatics.formatter.Formatter;
+import com.marvinformatics.formatter.groovy.GroovyFormatter;
 
-public class JavascriptFormatterTest extends AbstractFormatterTest {
+/**
+ * @author marvin.froeder
+ */
+public class GroovyFormatterTest extends AbstractFormatterTest {
 
 	@Override
 	public Formatter createFormatter(Map<String, String> options, ConfigurationSource configurationSource) {
-		return new CacheableFormatter(configurationSource, new JavascriptFormatter(
-				options,
-				configurationSource.lineEnding().getChars())::doFormat);
+		return new GroovyFormatter(options);
 	}
 
 	@Override
 	public void tuneDefaultConfigs(Map<String, String> options) {
-		options.put("org.eclipse.wst.jsdt.core.formatter.tabulation.char", "space");
-		options.put("org.eclipse.wst.jsdt.core.formatter.lineSplit", "120");
+		options.put("groovy.formatter.remove.unnecessary.semicolons", "false");
 	}
 
 	@Override
 	public String fileUnderTest() {
-		return "AnyJS.js";
+		return "AnyClass.groovy";
 	}
 
 }

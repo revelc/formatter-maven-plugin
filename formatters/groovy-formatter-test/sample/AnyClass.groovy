@@ -13,21 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.marvinformatics.formatter;
-
-import java.nio.file.Path;
-
 /**
- * @author marvin.froeder
+ * Class description
  */
-public interface Formatter {
+class Foo
+{
+  String foo
 
-	/**
-	 * Format individual file.
-	 * 
-	 * @param file
-	 * @return
-	 */
-	public abstract Result formatFile(Path file);
+  /* Method */
+  def callBar()
+  {
+	new Bar().bar(foo) }
 
-}
+  /** Inner class */
+  class Bar
+  {
+
+	def bar(foo)
+	{
+	  println "${foo}Bar" }}}
+
+def foo = new Foo(foo: 'Foo')
+foo.callBar()

@@ -15,30 +15,17 @@
  */
 package com.marvinformatics.formatter;
 
-import java.io.File;
-import java.nio.charset.Charset;
-
-import org.apache.maven.plugin.logging.Log;
-
 /**
  * @author marvin.froeder
  */
-public interface ConfigurationSource {
+public interface Formatter {
 
-	Log getLog();
-
-	String getCompilerSources();
-
-	String getCompilerCompliance();
-
-	String getCompilerCodegenTargetPlatform();
-
-	File getTargetDirectory();
-
-	Charset getEncoding();
-
-	LineEnding lineEnding();
-
-	boolean isDryRun();
+	/**
+	 * Format individual file.
+	 *
+	 * @param originalCode code to be formatted
+	 * @return formatted code
+	 */
+	String format(String originalCode);
 
 }

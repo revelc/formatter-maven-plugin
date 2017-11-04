@@ -46,7 +46,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <plugin.version>3.3</plugin.version>
+    <plugin.version>3.5</plugin.version>
     <java.version>1.8</java.version>
     <tychoVersion>1.0.0</tychoVersion>
   </properties>
@@ -192,7 +192,7 @@
           <sourceDirectory>${project.basedir}</sourceDirectory>
           <excludes>
             <exclude>**/target/**</exclude>
-            <exclude>**/src/test/**</exclude>
+            <exclude>**/sample/**</exclude>
           </excludes>
           <lineEnding>LF</lineEnding>
           <configFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configFile>

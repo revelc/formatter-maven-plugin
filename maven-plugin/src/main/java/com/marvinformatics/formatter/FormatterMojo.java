@@ -261,4 +261,26 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 		return Lists.newArrayList(this.directories);
 	}
 
+	@Override
+	public void info(String message) {
+		getLog().info(message);
+	}
+
+	@Override
+	public void error(String message) {
+		getLog().error(message);
+	}
+
+	@Override
+	public void debug(String message) {
+		getLog().debug(message);
+	}
+
+	@Override
+	public void warn(String message, File sourceFile, Exception e) {
+		getLog().warn(message);
+		buildContext.addMessage(sourceFile, 0, 0,
+				message, BuildContext.SEVERITY_WARNING, e);
+	}
+
 }

@@ -15,21 +15,44 @@
  */
 package com.marvinformatics.formatter;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.function.Function;
 
-public class CacheableFormatter extends AbstractCacheableFormatter implements Formatter {
+public class CacheableFormatter {
 
-	private final Function<String, String> doFormat;
+	private final Formatter formatter;
+	private final ConfigurationSource context;
 
-	public CacheableFormatter(ConfigurationSource cfg, Function<String, String> doFormat) {
-		super(cfg);
+	public CacheableFormatter(ConfigurationSource cfg, Formatter formatter) {
+		this.context = cfg;
 
-		this.doFormat = doFormat;
+		this.formatter = formatter;
 	}
 
-	@Override
-	protected String doFormat(String code) {
-		return doFormat.apply(code);
+	public Result formatFile(Path file) {
+		try {
+			context.debug("Processing file: " + file);
+			String code = new String(Files.readAllBytes(file), context.getEncoding());
+			String formattedCode = fixLineEnding(formatter.format(code));
+
+			if (code.equals(formattedCode)) {
+				context.debug("Equal code. Not writing result to file.");
+				return Result.SKIPPED;
+			}
+
+			if (!context.isDryRun())
+				Files.write(file, formattedCode.getBytes(context.getEncoding()));
+
+			return Result.SUCCESS;
+		} catch (Exception e) {
+			context.warn("Error formating: ", file.toFile().getAbsoluteFile(), e);
+			return Result.FAIL;
+		}
+	}
+
+	private String fixLineEnding(String code) {
+		return context.lineEnding().fix(code);
 	}
 
 }

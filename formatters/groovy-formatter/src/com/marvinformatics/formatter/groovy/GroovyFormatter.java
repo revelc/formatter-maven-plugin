@@ -13,38 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.marvinformatics.formatter.javascript;
+package com.marvinformatics.formatter.groovy;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import org.codehaus.groovy.eclipse.refactoring.formatter.DefaultGroovyFormatter;
+import org.codehaus.groovy.eclipse.refactoring.formatter.FormatterPreferencesOnStore;
+import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.util.ISafeRunnableRunner;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
-import org.eclipse.wst.jsdt.core.JavaScriptCore;
-import org.eclipse.wst.jsdt.core.ToolFactory;
-import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
+import org.xml.sax.SAXException;
 
 import com.marvinformatics.formatter.Formatter;
-import com.marvinformatics.formatter.LineEnding;
 
-public class JavascriptFormatter implements Formatter {
+public class GroovyFormatter implements Formatter {
 
-	private static final String RELOCATION_PREFIX = "formatter.javascript.";
+	private static final List<Class<?>> RUNTIME_DEPENDENCIES = Arrays.asList(ISafeRunnableRunner.class,
+			SAXException.class);
 
-	private final CodeFormatter formatter;
-	private final LineEnding lineEnding;
+	private final DefaultGroovyFormatter formatter;
 
-	public JavascriptFormatter(Map<String, String> options, LineEnding lineEnding) {
-		this.formatter = ToolFactory.createCodeFormatter(options);
-		this.lineEnding = lineEnding;
+	public GroovyFormatter(Map<String, String> options) {
+		RUNTIME_DEPENDENCIES.forEach(Class::getName);
+
+		IDocument doc = new Document();
+		PreferenceStore preferences = createPreferences(options);
+		FormatterPreferencesOnStore preferencesStore = new FormatterPreferencesOnStore(preferences);
+		formatter = new DefaultGroovyFormatter(TextSelection.emptySelection(), doc, preferencesStore, false);
 	}
 
 	public String format(String code) {
-		TextEdit te = formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
-				lineEnding.getChars());
+		TextEdit te = formatter.format();
 		if (te == null)
 			throw new IllegalArgumentException(
 					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
@@ -56,6 +62,12 @@ public class JavascriptFormatter implements Formatter {
 			throw new IllegalStateException("Code cannot be formatted. original code:\n" + code);
 		}
 		return doc.get();
+	}
+
+	private static PreferenceStore createPreferences(final Map<String, String> options) {
+		final PreferenceStore preferences = new PreferenceStore();
+		options.forEach(preferences::putValue);
+		return preferences;
 	}
 
 }

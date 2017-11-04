@@ -36,6 +36,7 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
+import com.marvinformatics.formatter.groovy.GroovyFormatter;
 import com.marvinformatics.formatter.java.JavaFormatter;
 import com.marvinformatics.formatter.javascript.JavascriptFormatter;
 import com.marvinformatics.formatter.model.ConfigReadException;
@@ -115,7 +116,7 @@ public class FormatterExecuter {
 		return pattern;
 	}
 
-	private ThreadLocal<Formatter> createJavaFormatter() {
+	private ThreadLocal<CacheableFormatter> createJavaFormatter() {
 		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(config.javaConfig());
 		return ThreadLocal.withInitial(() -> {
 			return new CacheableFormatter(config, new JavaFormatter(
@@ -123,16 +124,24 @@ public class FormatterExecuter {
 					config.getCompilerSources(),
 					config.getCompilerCompliance(),
 					config.getCompilerCodegenTargetPlatform(),
-					config.lineEnding().getChars())::doFormat);
+					config.lineEnding()));
 		});
 	}
 
-	private ThreadLocal<Formatter> createJsFormatter() {
+	private ThreadLocal<CacheableFormatter> createJsFormatter() {
 		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(config.jsConfig());
 		return ThreadLocal.withInitial(() -> {
 			return new CacheableFormatter(config, new JavascriptFormatter(
 					lazyConfig.get(),
-					config.lineEnding().getChars())::doFormat);
+					config.lineEnding()));
+		});
+	}
+
+	private ThreadLocal<CacheableFormatter> createGroovyFormatter() {
+		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(config.jsConfig());
+		return ThreadLocal.withInitial(() -> {
+			return new CacheableFormatter(config, new GroovyFormatter(
+					lazyConfig.get()));
 		});
 	}
 

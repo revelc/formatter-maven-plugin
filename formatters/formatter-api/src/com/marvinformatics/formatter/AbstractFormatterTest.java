@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,6 +35,7 @@ import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest {
 
+	private static final String OUTPUT_DIR = "target/formatter-files/";
 	private Formatter formatter;
 
 	@Before
@@ -49,10 +48,6 @@ public abstract class AbstractFormatterTest {
 
 			public File getTargetDirectory() {
 				return targetDir;
-			}
-
-			public Log getLog() {
-				return new SystemStreamLog();
 			}
 
 			public Charset getEncoding() {
@@ -80,6 +75,27 @@ public abstract class AbstractFormatterTest {
 			public boolean isDryRun() {
 				return false;
 			}
+
+			@Override
+			public void info(String message) {
+				System.out.println("INFO " + message);
+			}
+
+			@Override
+			public void error(String message) {
+				System.out.println("ERROR " + message);
+			}
+
+			@Override
+			public void debug(String message) {
+				System.out.println("DEBUG " + message);
+			}
+
+			@Override
+			public void warn(String message, File sourceFile, Exception e) {
+				System.out.println("WARN " + message);
+				throw new RuntimeException(e);
+			}
 		});
 	}
 
@@ -90,20 +106,24 @@ public abstract class AbstractFormatterTest {
 
 	@Test
 	public void doTestFormat() throws IOException, NoSuchAlgorithmException {
-		File originalSourceFile = new File("src/test/resources/", fileUnderTest());
-		File sourceFile = createUnformatedFile(originalSourceFile);
+		new File(OUTPUT_DIR, fileUnderTest()).mkdirs();
 
-		Result r = formatter.formatFile(sourceFile.toPath());
-		assertEquals(Result.SUCCESS, r);
+		File originalCopyFile = new File(OUTPUT_DIR, fileUnderTest() + "/original");
+		Files.copy(new File("sample/", fileUnderTest()), originalCopyFile);
 
-		String originalContent = Files.toString(originalSourceFile, Charsets.UTF_8);
-		String formattedContent = Files.toString(sourceFile, Charsets.UTF_8);
+		File unformattedFile = createUnformatedFile(originalCopyFile);
 
-		String msg = "Files: \n-" + originalSourceFile.getAbsolutePath() + "\n-" + sourceFile.getAbsolutePath();
+		String originalContent = Files.toString(originalCopyFile, Charsets.UTF_8);
+		String formattedContent = formatter.format(originalContent);
+
+		File formattedFile = new File(OUTPUT_DIR, fileUnderTest() + "/formatted");
+		Files.write(formattedContent, formattedFile, Charsets.UTF_8);
+
+		String msg = "Files: \n-" + originalCopyFile.getAbsolutePath() + "\n-" + unformattedFile.getAbsolutePath();
 		assertEquals(msg, originalContent, formattedContent);
 
-		String expectedSha1 = Files.hash(originalSourceFile, Hashing.sha1()).toString();
-		String sha1 = Files.hash(sourceFile, Hashing.sha1()).toString();
+		String expectedSha1 = Files.hash(originalCopyFile, Hashing.sha1()).toString();
+		String sha1 = Files.hash(formattedFile, Hashing.sha1()).toString();
 
 		assertEquals(msg, expectedSha1, sha1);
 	}
@@ -111,11 +131,9 @@ public abstract class AbstractFormatterTest {
 	public abstract String fileUnderTest();
 
 	private File createUnformatedFile(File originalSourceFile) throws IOException {
-		File unformatedFile = new File("target/test-classes/", fileUnderTest());
+		File unformatedFile = new File(OUTPUT_DIR, fileUnderTest() + "/unformatted");
 
-		Files.copy(originalSourceFile, unformatedFile);
-
-		List<String> content = Files.readLines(unformatedFile, Charsets.UTF_8);
+		List<String> content = Files.readLines(originalSourceFile, Charsets.UTF_8);
 
 		StringBuilder messedContent = new StringBuilder();
 		for (String line : content)

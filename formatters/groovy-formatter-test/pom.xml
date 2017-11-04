@@ -33,22 +33,15 @@
     <version>1.9.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>java-formatter</artifactId>
-  <packaging>eclipse-plugin</packaging>
+  <artifactId>groovy-formatter-test</artifactId>
+  <packaging>eclipse-test-plugin</packaging>
 
-  <properties>
-    <formatter.relocation>formatter.java.</formatter.relocation>
-    <formatter.exclude>org.eclipse.jdt.core.**.*.</formatter.exclude>
-  </properties>
-
-  <profiles>
-    <profile>
-      <id>formatter-jars</id>
-
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-    </profile>
-  </profiles>
+  <repositories>
+    <repository>
+      <id>greclipse</id>
+      <url>http://dist.springsource.org/snapshot/GRECLIPSE/e4.7/</url>
+      <layout>p2</layout>
+    </repository>
+  </repositories>
 
 </project>

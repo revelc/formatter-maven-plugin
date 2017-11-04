@@ -29,20 +29,24 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>formatter-api</module>
     <module>java-formatter</module>
+    <module>java-formatter-test</module>
     <module>javascript-formatter</module>
+    <module>javascript-formatter-test</module>
+    <module>groovy-formatter</module>
+    <module>groovy-formatter-test</module>
   </modules>
+
+  <properties>
+    <formatter.relocation>formatter.</formatter.relocation>
+  </properties>
 
   <profiles>
     <profile>
       <id>formatter-jars</id>
-      <activation>
-        <file>
-          <exists>META-INF/MANIFEST.MF</exists>
-        </file>
-      </activation>
-      <build>
 
+      <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -100,6 +104,16 @@
                   </excludes>
                 </filter>
               </filters>
+              <relocations>
+                <relocation>
+                  <pattern>org</pattern>
+                  <shadedPattern>${formatter.relocation}org</shadedPattern>
+                  <excludes>
+                    <exclude>org.xml.**.*</exclude>
+                    <exclude>${formatter.exclude}</exclude>
+                  </excludes>
+                </relocation>
+              </relocations>
             </configuration>
             <executions>
               <execution>

@@ -15,6 +15,7 @@
  */
 package com.marvinformatics.formatter.java;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.core.JavaCore;
@@ -26,27 +27,32 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 
-public class JavaFormatter {
+import com.marvinformatics.formatter.Formatter;
+import com.marvinformatics.formatter.LineEnding;
+
+public class JavaFormatter implements Formatter {
 
 	private final CodeFormatter formatter;
-	private final String lineEnding;
+	private final LineEnding lineEnding;
 
 	public JavaFormatter(
 			Map<String, String> options,
 			String compilerSources,
 			String compilerCompliance,
 			String compilerCodegenTargetPlatform,
-			String lineEnding) {
+			LineEnding lineEnding) {
+
 		options.put(JavaCore.COMPILER_SOURCE, compilerSources);
 		options.put(JavaCore.COMPILER_COMPLIANCE, compilerCompliance);
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, compilerCodegenTargetPlatform);
 
-		formatter = ToolFactory.createCodeFormatter(options);
+		formatter = ToolFactory.createCodeFormatter(new HashMap<>(options));
 		this.lineEnding = lineEnding;
 	}
 
-	public String doFormat(String code) {
-		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0, lineEnding);
+	public String format(String code) {
+		TextEdit te = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code, 0, code.length(), 0,
+				lineEnding.getChars());
 		if (te == null)
 			throw new IllegalArgumentException(
 					"Code cannot be formatted. Possible cause " + "is unmatched source/target/compliance version.");
