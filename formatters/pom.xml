@@ -42,6 +42,21 @@
     <formatter.relocation>formatter.</formatter.relocation>
   </properties>
 
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-surefire-plugin</artifactId>
+          <configuration>
+            <useUIHarness>false</useUIHarness>
+            <useUIThread>false</useUIThread>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <profiles>
     <profile>
       <id>formatter-jars</id>

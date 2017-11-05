@@ -46,6 +46,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <tychoVersion>1.0.0</tychoVersion>
     <plugin.version>3.5</plugin.version>
     <java.version>1.8</java.version>
     <tychoVersion>1.0.0</tychoVersion>
