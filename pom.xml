@@ -193,6 +193,7 @@
           <excludes>
             <exclude>**/target/**</exclude>
             <exclude>**/sample/**</exclude>
+            <exclude>**/test/projects/**</exclude>
           </excludes>
           <lineEnding>LF</lineEnding>
           <configFile>${project.basedir}/src/config/eclipse/formatter/java.xml</configFile>
