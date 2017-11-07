@@ -34,32 +34,21 @@
     <module>java-formatter-test</module>
     <module>javascript-formatter</module>
     <module>javascript-formatter-test</module>
+    <!--
     <module>groovy-formatter</module>
     <module>groovy-formatter-test</module>
+-->
   </modules>
-
-  <properties>
-    <formatter.relocation>formatter.</formatter.relocation>
-  </properties>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.eclipse.tycho</groupId>
-          <artifactId>tycho-surefire-plugin</artifactId>
-          <configuration>
-            <useUIHarness>false</useUIHarness>
-            <useUIThread>false</useUIThread>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
 
   <profiles>
     <profile>
       <id>formatter-jars</id>
+
+      <activation>
+        <file>
+          <exists>${basedir}/shade</exists>
+        </file>
+      </activation>
 
       <build>
         <plugins>
@@ -125,8 +114,16 @@
                   <shadedPattern>${formatter.relocation}org</shadedPattern>
                   <excludes>
                     <exclude>org.xml.**.*</exclude>
-                    <exclude>${formatter.exclude}</exclude>
+                    <exclude>org.eclipse.**.*</exclude>
                   </excludes>
+                </relocation>
+                <relocation>
+                  <pattern>com.ibm</pattern>
+                  <shadedPattern>${formatter.relocation}com.ibm</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.google</pattern>
+                  <shadedPattern>${formatter.relocation}com.google</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>

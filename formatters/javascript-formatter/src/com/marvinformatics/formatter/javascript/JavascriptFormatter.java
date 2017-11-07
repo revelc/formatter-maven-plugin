@@ -15,7 +15,6 @@
  */
 package com.marvinformatics.formatter.javascript;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.text.BadLocationException;
@@ -23,7 +22,6 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
-import org.eclipse.wst.jsdt.core.JavaScriptCore;
 import org.eclipse.wst.jsdt.core.ToolFactory;
 import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 
@@ -31,8 +29,6 @@ import com.marvinformatics.formatter.Formatter;
 import com.marvinformatics.formatter.LineEnding;
 
 public class JavascriptFormatter implements Formatter {
-
-	private static final String RELOCATION_PREFIX = "formatter.javascript.";
 
 	private final CodeFormatter formatter;
 	private final LineEnding lineEnding;

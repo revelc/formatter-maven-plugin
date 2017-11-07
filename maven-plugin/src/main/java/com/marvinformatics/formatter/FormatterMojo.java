@@ -190,12 +190,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 			// this means m2e is trying to configure itself
 			new M2eConfigurer(this, buildContext).configure();
 		} else {
+			getLog().info("Preparing to format files");
+
 			// regular maven execution, just do the work
-			final ResultCollector rc = new FormatterExecuter(this).execute();
-			getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
-			getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
-			getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");
-			getLog().info("Approximate time taken: " + rc.getWatch().elapsed(TimeUnit.SECONDS) + "s");
+			try {
+				final ResultCollector rc = new FormatterExecuter(this).execute();
+				getLog().info("Successfully formatted: " + rc.successCount() + " file(s)");
+				getLog().info("Fail to format        : " + rc.failCount() + " file(s)");
+				getLog().info("Skipped               : " + rc.skippedCount() + " file(s)");
+				getLog().info("Approximate time taken: " + rc.getWatch().elapsed(TimeUnit.SECONDS) + "s");
+			} catch (Throwable e) {
+				getLog().error("Error running formatter", e);
+			}
 		}
 	}
 

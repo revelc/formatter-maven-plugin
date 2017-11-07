@@ -36,7 +36,6 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
-import com.marvinformatics.formatter.groovy.GroovyFormatter;
 import com.marvinformatics.formatter.java.JavaFormatter;
 import com.marvinformatics.formatter.javascript.JavascriptFormatter;
 import com.marvinformatics.formatter.model.ConfigReadException;
@@ -134,14 +133,6 @@ public class FormatterExecuter {
 			return new CacheableFormatter(config, new JavascriptFormatter(
 					lazyConfig.get(),
 					config.lineEnding()));
-		});
-	}
-
-	private ThreadLocal<CacheableFormatter> createGroovyFormatter() {
-		Supplier<Map<String, String>> lazyConfig = () -> getFormattingOptions(config.jsConfig());
-		return ThreadLocal.withInitial(() -> {
-			return new CacheableFormatter(config, new GroovyFormatter(
-					lazyConfig.get()));
 		});
 	}
 

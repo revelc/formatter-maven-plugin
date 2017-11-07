@@ -108,21 +108,22 @@ public abstract class AbstractFormatterTest {
 	public void doTestFormat() throws IOException, NoSuchAlgorithmException {
 		new File(OUTPUT_DIR, fileUnderTest()).mkdirs();
 
-		File originalCopyFile = new File(OUTPUT_DIR, fileUnderTest() + "/original");
-		Files.copy(new File("sample/", fileUnderTest()), originalCopyFile);
+		File originalFile = new File(OUTPUT_DIR, fileUnderTest() + "/original");
+		Files.copy(new File("src/test/resources/sample/", fileUnderTest()), originalFile);
 
-		File unformattedFile = createUnformatedFile(originalCopyFile);
+		File unformattedFile = createUnformatedFile(originalFile);
+		String unformattedContent = Files.toString(unformattedFile, Charsets.UTF_8);
 
-		String originalContent = Files.toString(originalCopyFile, Charsets.UTF_8);
-		String formattedContent = formatter.format(originalContent);
+		String originalContent = Files.toString(originalFile, Charsets.UTF_8);
+		String formattedContent = formatter.format(unformattedContent);
 
 		File formattedFile = new File(OUTPUT_DIR, fileUnderTest() + "/formatted");
 		Files.write(formattedContent, formattedFile, Charsets.UTF_8);
 
-		String msg = "Files: \n-" + originalCopyFile.getAbsolutePath() + "\n-" + unformattedFile.getAbsolutePath();
+		String msg = "Files: \n-" + originalFile.getAbsolutePath() + "\n-" + formattedFile.getAbsolutePath();
 		assertEquals(msg, originalContent, formattedContent);
 
-		String expectedSha1 = Files.hash(originalCopyFile, Hashing.sha1()).toString();
+		String expectedSha1 = Files.hash(originalFile, Hashing.sha1()).toString();
 		String sha1 = Files.hash(formattedFile, Hashing.sha1()).toString();
 
 		assertEquals(msg, expectedSha1, sha1);
@@ -154,7 +155,10 @@ public abstract class AbstractFormatterTest {
 
 		StringBuilder separator = new StringBuilder();
 		for (int i = 0; i < spaces; i++)
-			separator.append(' ');
+			if (i % 3 == 0)
+				separator.append('\t');
+			else
+				separator.append(' ');
 
 		return separator;
 	}

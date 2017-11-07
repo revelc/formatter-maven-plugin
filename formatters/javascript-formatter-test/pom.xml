@@ -34,6 +34,26 @@
   </parent>
 
   <artifactId>javascript-formatter-test</artifactId>
-  <packaging>eclipse-test-plugin</packaging>
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.marvinformatics.formatter</groupId>
+      <artifactId>formatter-api</artifactId>
+      <version>1.9.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.marvinformatics.formatter</groupId>
+      <artifactId>javascript-formatter</artifactId>
+      <version>1.9.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
 </project>
