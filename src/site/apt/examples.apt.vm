@@ -282,9 +282,9 @@ multiproject
         </configuration>
         <dependencies>
           <dependency>
-            <groupId>com.github.hazendaz</groupId>
+            <groupId>com.googlecode.example.multiproject</groupId>
             <artifactId>build-tools</artifactId>
-            <version>1.1.2</version>
+            <version>1.0</version>
           </dependency>
         </dependencies>
       </plugin>
