@@ -33,6 +33,7 @@
             <item name="Introduction" href="index.html"/>
             <item name="Goals" href="plugin-info.html"/>
             <item name="Usage" href="usage.html"/>
+            <item name="Examples" href="examples.html"/>
         </menu>
         <menu name="Examples">
             <item name="Source Files" href="examples.html#Setting_Source_Files"/>
