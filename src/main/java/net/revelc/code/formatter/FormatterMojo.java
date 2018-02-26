@@ -23,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -582,11 +581,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @param str
      *            the str
      * @return the string
-     * @throws UnsupportedEncodingException
-     *             the unsupported encoding exception
      */
-    private String sha512hash(String str) throws UnsupportedEncodingException {
-        return Hashing.sha512().hashBytes(str.getBytes(this.encoding)).toString();
+    private String sha512hash(String str) {
+        return Hashing.sha512().hashBytes(str.getBytes(getEncoding())).toString();
     }
 
     /**
