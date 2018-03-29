@@ -69,6 +69,7 @@
       </properties>
     </developer>
     <developer>
+      <id>ctubbsii</id>
       <name>Christopher Tubbs</name>
     </developer>
   </developers>
@@ -165,7 +166,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.13.100</version>
+      <version>3.13.101</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
