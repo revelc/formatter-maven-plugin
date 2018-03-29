@@ -63,3 +63,11 @@ ver 2.6.0
 ver 2.7.0
 =========
 - Eclipse Oxygen release
+
+ver 2.7.1
+=========
+- Switch to Tycho dependency of jdt-core for Eclipse Oxygen to fix enum formatting bug
+
+ver 2.7.2
+=========
+- Switch back to Eclipse jdt-core depenency to fix html javadoc formatting bug

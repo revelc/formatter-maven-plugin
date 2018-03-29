@@ -53,7 +53,7 @@ Plugin Version	| Eclipse Version
 1.6.0.RC4       | 4.5.0.RC4 (velo fork - mars)
 2.0.0 - 2.0.1   | 4.5.2 (merged forks - mars)
 2.1.0 - 2.6.0   | 4.6.3 (neon)
-2.7.0           | 4.7.0 (oxygen)
+2.7.&ast;       | 4.7.&ast; (oxygen)
 
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
