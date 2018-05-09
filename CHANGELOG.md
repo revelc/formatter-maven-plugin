@@ -71,3 +71,7 @@ ver 2.7.1
 ver 2.7.2
 =========
 - Switch back to Eclipse jdt-core depenency to fix html javadoc formatting bug
+
+ver 2.7.3
+=========
+- Update jdt-core dependency to fix enum formatting bug; require Maven project to format/validate
