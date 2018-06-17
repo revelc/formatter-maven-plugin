@@ -16,8 +16,8 @@ package net.revelc.code.formatter.model;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
 import net.revelc.code.formatter.model.ConfigReadException;
@@ -43,10 +43,10 @@ public class ConfigReaderTest {
         try (InputStream in = cl.getResourceAsStream("sample-config.xml")) {
             ConfigReader configReader = new ConfigReader();
             Map<String, String> config = configReader.read(in);
-            Assert.assertNotNull(config);
-            Assert.assertEquals(264, config.keySet().size());
+            Assertions.assertNotNull(config);
+            Assertions.assertEquals(264, config.keySet().size());
             // test get one of the entry in the file
-            Assert.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+            Assertions.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
         }
     }
 
@@ -56,13 +56,14 @@ public class ConfigReaderTest {
      * @throws Exception
      *             the exception
      */
-    @Test(expected = SAXException.class)
+    @Test
     public void test_read_invalid_config() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
             ConfigReader configReader = new ConfigReader();
-            configReader.read(in);
-            Assert.fail("Expected SAXException to be thrown");
+            Assertions.assertThrows(SAXException.class, () -> {
+                configReader.read(in);
+            });
         }
     }
 
@@ -72,13 +73,14 @@ public class ConfigReaderTest {
      * @throws Exception
      *             the exception
      */
-    @Test(expected = ConfigReadException.class)
+    @Test
     public void test_read_invalid_config2() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
             ConfigReader configReader = new ConfigReader();
-            configReader.read(in);
-            Assert.fail("Expected ConfigReadException to be thrown");
+            Assertions.assertThrows(ConfigReadException.class, () -> {
+                configReader.read(in);
+            });
         }
     }
 

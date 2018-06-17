@@ -13,8 +13,8 @@
  */
 package net.revelc.code.formatter;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /*
  * Copyright 2010. All work is copyrighted to their respective author(s),
@@ -50,7 +50,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_crlf() throws Exception {
         String fileData = "Test\r\nTest\r\nTest\r\n";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.CRLF, lineEnd);
+        Assertions.assertEquals(LineEnding.CRLF, lineEnd);
     }
 
     /**
@@ -60,7 +60,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_lf() throws Exception {
         String fileData = "Test\nTest\nTest\n";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.LF, lineEnd);
+        Assertions.assertEquals(LineEnding.LF, lineEnd);
     }
 
     /**
@@ -70,7 +70,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_cr() throws Exception {
         String fileData = "Test\rTest\rTest\r";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.CR, lineEnd);
+        Assertions.assertEquals(LineEnding.CR, lineEnd);
     }
 
     /**
@@ -80,7 +80,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_mixed_lf() throws Exception {
         String fileData = "Test\r\nTest\rTest\nTest\nTest\r\nTest\n";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.LF, lineEnd);
+        Assertions.assertEquals(LineEnding.LF, lineEnd);
     }
 
     /**
@@ -90,7 +90,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_mixed_auto() throws Exception {
         String fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.UNKNOWN, lineEnd);
+        Assertions.assertEquals(LineEnding.UNKNOWN, lineEnd);
     }
 
     /**
@@ -100,7 +100,7 @@ public class LineEndingTest {
     public void test_success_read_line_endings_none_auto() throws Exception {
         String fileData = "TestTestTestTest";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
-        Assert.assertEquals(LineEnding.UNKNOWN, lineEnd);
+        Assertions.assertEquals(LineEnding.UNKNOWN, lineEnd);
     }
 
 }

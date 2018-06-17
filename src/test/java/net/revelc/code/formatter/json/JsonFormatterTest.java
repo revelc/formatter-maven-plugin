@@ -16,8 +16,8 @@ package net.revelc.code.formatter.json;
 import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.SystemUtil;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.HashMap;
@@ -44,11 +44,11 @@ public class JsonFormatterTest extends AbstractFormatterTest {
     @Test
     public void testIsIntialized() throws Exception {
         JsonFormatter jsonFormatter = new JsonFormatter();
-        Assert.assertFalse(jsonFormatter.isInitialized());
+        Assertions.assertFalse(jsonFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
         jsonFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
-        Assert.assertTrue(jsonFormatter.isInitialized());
+        Assertions.assertTrue(jsonFormatter.isInitialized());
     }
 
 }
