@@ -27,7 +27,7 @@ import net.revelc.code.formatter.Result;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
@@ -85,7 +85,7 @@ public abstract class AbstractFormatterTest {
 
         formatter.init(options, new TestConfigurationSource(targetDir));
         Result result = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
-        Assert.assertEquals(Result.SUCCESS, result);
+        Assertions.assertEquals(Result.SUCCESS, result);
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
         byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
@@ -94,7 +94,7 @@ public abstract class AbstractFormatterTest {
             sb.append(Integer.toString((sha512[i] & 0xff) + 0x100, 16).substring(1));
         }
 
-        Assert.assertEquals(expectedSha512, sb.toString());
+        Assertions.assertEquals(expectedSha512, sb.toString());
     }
 
 }

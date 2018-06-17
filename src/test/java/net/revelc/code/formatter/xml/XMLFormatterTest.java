@@ -16,8 +16,8 @@ package net.revelc.code.formatter.xml;
 import java.io.File;
 import java.util.HashMap;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.SystemUtil;
@@ -42,11 +42,11 @@ public class XMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testIsIntialized() throws Exception {
         XMLFormatter xmlFormatter = new XMLFormatter();
-        Assert.assertFalse(xmlFormatter.isInitialized());
+        Assertions.assertFalse(xmlFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
         xmlFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
-        Assert.assertTrue(xmlFormatter.isInitialized());
+        Assertions.assertTrue(xmlFormatter.isInitialized());
     }
 
 }
