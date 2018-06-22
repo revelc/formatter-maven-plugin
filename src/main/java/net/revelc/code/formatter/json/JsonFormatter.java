@@ -13,8 +13,10 @@
  */
 package net.revelc.code.formatter.json;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.Separators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Strings;
@@ -41,12 +43,21 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
         int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
         String lineEnding = options.getOrDefault("lineending", SystemUtil.LINE_SEPARATOR);
+        boolean spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
 
         formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
         DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(Strings.repeat(" ", indent), lineEnding);
-        DefaultPrettyPrinter printer = new DefaultPrettyPrinter();
+        DefaultPrettyPrinter printer = new DefaultPrettyPrinter() {
+            public DefaultPrettyPrinter withSeparators(Separators separators) {
+                this._separators = separators;
+                this._objectFieldValueSeparatorWithSpaces = (spaceBeforeSeparator ? " " : "")
+                        + separators.getObjectFieldValueSeparator() + " ";
+                return this;
+            }
+        };
+
         printer.indentObjectsWith(indenter);
         printer.indentArraysWith(indenter);
         formatter.setDefaultPrettyPrinter(printer);

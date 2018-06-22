@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author yoshiman
@@ -42,13 +43,31 @@ public class JsonFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testIsIntialized() throws Exception {
+    public void testIsInitialized() {
         JsonFormatter jsonFormatter = new JsonFormatter();
         Assertions.assertFalse(jsonFormatter.isInitialized());
         final File targetDir = new File("target/testoutput");
         targetDir.mkdirs();
         jsonFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
         Assertions.assertTrue(jsonFormatter.isInitialized());
+    }
+
+    @Test
+    public void testDoFormatFileWithConfig() throws Exception {
+        Map<String, String> jsonFormattingOptions = new HashMap<>();
+        jsonFormattingOptions.put("indent", "2");
+        jsonFormattingOptions.put("spaceBeforeSeparator", "false");
+
+        // Since we set the line endings via options for json, we cannot rely on CRLF inside doTestFormat.
+        // The option will not be available inside json formatter init so it will use whatever the system
+        // default is regardless of requesting it to be CRLF later which is ignored.
+        if (SystemUtil.LINE_SEPARATOR.equals("\n")) {
+            doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
+                    "478edd57b917235d00f16611505060460758e7e0f4b53938941226dca183d09be7e946d9a14dbac492a200592d5a6fa5f463e60fd1c3d3dbf05c08c3c869a36b");
+        } else {
+            doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
+                    "2f894c97a22f1313fc7eb55a1bab5c1e8353c11c65bf979abe40347307f80e0dd745a3ab1caa39450dcd0701ccdb3bc1b0bb3afd80557bae33e4e4e7015b52a2");
+        }
     }
 
 }
