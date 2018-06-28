@@ -13,15 +13,16 @@
  */
 package net.revelc.code.formatter.json;
 
-import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.SystemUtil;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
+import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -45,11 +46,10 @@ public class JsonFormatterTest extends AbstractFormatterTest {
     @Test
     public void testIsInitialized() {
         JsonFormatter jsonFormatter = new JsonFormatter();
-        Assertions.assertFalse(jsonFormatter.isInitialized());
-        final File targetDir = new File("target/testoutput");
-        targetDir.mkdirs();
-        jsonFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
-        Assertions.assertTrue(jsonFormatter.isInitialized());
+        assertFalse(jsonFormatter.isInitialized());
+        jsonFormatter.init(new HashMap<String, String>(),
+                new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
+        assertTrue(jsonFormatter.isInitialized());
     }
 
     @Test

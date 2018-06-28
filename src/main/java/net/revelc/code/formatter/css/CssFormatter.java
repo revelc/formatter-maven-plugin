@@ -13,19 +13,21 @@
  */
 package net.revelc.code.formatter.css;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Map;
+
+import org.w3c.css.sac.InputSource;
+
 import com.steadystate.css.dom.CSSStyleSheetImpl;
 import com.steadystate.css.format.CSSFormat;
 import com.steadystate.css.parser.CSSOMParser;
 import com.steadystate.css.parser.SACParserCSS3;
+
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
-import org.w3c.css.sac.InputSource;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Map;
 
 /**
  * @author yoshiman

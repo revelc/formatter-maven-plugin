@@ -13,10 +13,11 @@
  */
 package net.revelc.code.formatter.xml;
 
-import java.io.File;
-import java.util.HashMap;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
+import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
@@ -42,11 +43,9 @@ public class XMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testIsIntialized() throws Exception {
         XMLFormatter xmlFormatter = new XMLFormatter();
-        Assertions.assertFalse(xmlFormatter.isInitialized());
-        final File targetDir = new File("target/testoutput");
-        targetDir.mkdirs();
-        xmlFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
-        Assertions.assertTrue(xmlFormatter.isInitialized());
+        assertFalse(xmlFormatter.isInitialized());
+        xmlFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
+        assertTrue(xmlFormatter.isInitialized());
     }
 
 }

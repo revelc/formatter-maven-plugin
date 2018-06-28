@@ -13,21 +13,21 @@
  */
 package net.revelc.code.formatter.json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import java.io.IOException;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.Separators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Strings;
+
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 import net.revelc.code.formatter.SystemUtil;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author yoshiman
@@ -50,6 +50,8 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
         DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(Strings.repeat(" ", indent), lineEnding);
         DefaultPrettyPrinter printer = new DefaultPrettyPrinter() {
+            private static final long serialVersionUID = 1L;
+
             public DefaultPrettyPrinter withSeparators(Separators separators) {
                 this._separators = separators;
                 this._objectFieldValueSeparatorWithSpaces = (spaceBeforeSeparator ? " " : "")

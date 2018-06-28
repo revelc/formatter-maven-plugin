@@ -13,6 +13,10 @@
  */
 package net.revelc.code.formatter.jsoup;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Document.OutputSettings;
@@ -24,10 +28,6 @@ import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 /**
  * @author yoshiman

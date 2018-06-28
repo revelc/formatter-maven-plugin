@@ -16,8 +16,7 @@ package net.revelc.code.formatter.java;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,9 +38,7 @@ public class JavaFormatterTest extends AbstractFormatterTest {
     public void testIsIntialized() throws Exception {
         JavaFormatter javaFormatter = new JavaFormatter();
         assertFalse(javaFormatter.isInitialized());
-        final File targetDir = new File("target/testoutput");
-        targetDir.mkdirs();
-        javaFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
+        javaFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
         assertTrue(javaFormatter.isInitialized());
     }
 

@@ -13,26 +13,31 @@
  */
 package net.revelc.code.formatter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
-
-import net.revelc.code.formatter.ConfigurationSource;
-import net.revelc.code.formatter.Formatter;
-import net.revelc.code.formatter.LineEnding;
-import net.revelc.code.formatter.Result;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest {
+
+    protected static final File TEST_OUTPUT_DIR = new File("target/testoutput");
+
+    @BeforeAll
+    public static void createTestDir() {
+        assertTrue(TEST_OUTPUT_DIR.mkdirs() || TEST_OUTPUT_DIR.isDirectory());
+    }
 
     public static class TestConfigurationSource implements ConfigurationSource {
 
@@ -74,25 +79,19 @@ public abstract class AbstractFormatterTest {
     }
 
     protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha512) throws IOException {
-        doTestFormat(null, formatter, fileUnderTest, expectedSha512);
+        doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512);
     }
 
     protected void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
             String expectedSha512) throws IOException {
 
         File originalSourceFile = new File("src/test/resources/", fileUnderTest);
-        File sourceFile = new File("target/testoutput/", fileUnderTest);
-
-        if (null == options) {
-            options = new HashMap<>();
-        }
-        final File targetDir = new File("target/testoutput");
-        targetDir.mkdirs();
+        File sourceFile = new File(TEST_OUTPUT_DIR, fileUnderTest);
 
         Files.copy(originalSourceFile, sourceFile);
-        formatter.init(options, new TestConfigurationSource(targetDir));
+        formatter.init(options, new TestConfigurationSource(TEST_OUTPUT_DIR));
         Result result = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
-        Assertions.assertEquals(Result.SUCCESS, result);
+        assertEquals(Result.SUCCESS, result);
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
         byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
@@ -101,7 +100,7 @@ public abstract class AbstractFormatterTest {
             sb.append(Integer.toString((sha512[i] & 0xff) + 0x100, 16).substring(1));
         }
 
-        Assertions.assertEquals(expectedSha512, sb.toString());
+        assertEquals(expectedSha512, sb.toString());
     }
 
 }

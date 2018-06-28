@@ -13,14 +13,15 @@
  */
 package net.revelc.code.formatter.css;
 
-import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.SystemUtil;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
+import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.HashMap;
+import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -42,12 +43,10 @@ public class CssFormatterTest extends AbstractFormatterTest {
     @Test
     public void testIsIntialized() throws Exception {
         CssFormatter cssFormatter = new CssFormatter();
-        Assertions.assertFalse(cssFormatter.isInitialized());
-        final File targetDir = new File("target/testoutput");
-        targetDir.mkdirs();
-        cssFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
+        assertFalse(cssFormatter.isInitialized());
+        cssFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
 
-        Assertions.assertTrue(cssFormatter.isInitialized());
+        assertTrue(cssFormatter.isInitialized());
     }
 
 }

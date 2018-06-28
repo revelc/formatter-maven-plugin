@@ -13,15 +13,15 @@
  */
 package net.revelc.code.formatter.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.InputStream;
 import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
-
-import net.revelc.code.formatter.model.ConfigReadException;
-import net.revelc.code.formatter.model.ConfigReader;
 
 /**
  * Test class for {@link ConfigReader}.
@@ -43,10 +43,10 @@ public class ConfigReaderTest {
         try (InputStream in = cl.getResourceAsStream("sample-config.xml")) {
             ConfigReader configReader = new ConfigReader();
             Map<String, String> config = configReader.read(in);
-            Assertions.assertNotNull(config);
-            Assertions.assertEquals(264, config.keySet().size());
+            assertNotNull(config);
+            assertEquals(264, config.keySet().size());
             // test get one of the entry in the file
-            Assertions.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+            assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
         }
     }
 
@@ -61,7 +61,7 @@ public class ConfigReaderTest {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
             ConfigReader configReader = new ConfigReader();
-            Assertions.assertThrows(SAXException.class, () -> {
+            assertThrows(SAXException.class, () -> {
                 configReader.read(in);
             });
         }
@@ -78,7 +78,7 @@ public class ConfigReaderTest {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
             ConfigReader configReader = new ConfigReader();
-            Assertions.assertThrows(ConfigReadException.class, () -> {
+            assertThrows(ConfigReadException.class, () -> {
                 configReader.read(in);
             });
         }

@@ -16,13 +16,11 @@ package net.revelc.code.formatter.javascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.javascript.JavascriptFormatter;
 
 public class JavascriptFormatterTest extends AbstractFormatterTest {
 
@@ -36,9 +34,7 @@ public class JavascriptFormatterTest extends AbstractFormatterTest {
     public void testIsIntialized() throws Exception {
         JavascriptFormatter jsFormatter = new JavascriptFormatter();
         assertFalse(jsFormatter.isInitialized());
-        final File targetDir = new File("target/testoutput");
-        targetDir.mkdirs();
-        jsFormatter.init(new HashMap<String, String>(), new AbstractFormatterTest.TestConfigurationSource(targetDir));
+        jsFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
         assertTrue(jsFormatter.isInitialized());
     }
 

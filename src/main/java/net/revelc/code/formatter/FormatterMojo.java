@@ -52,6 +52,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
 import com.google.common.hash.Hashing;
+
 import net.revelc.code.formatter.css.CssFormatter;
 import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.java.JavaFormatter;
@@ -364,8 +365,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Add source files to the files list.
      *
-     * @param files
-     *            the files
      */
     List<File> addCollectionFiles(File newBasedir) {
         final DirectoryScanner ds = new DirectoryScanner();
