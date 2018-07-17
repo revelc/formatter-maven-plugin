@@ -689,7 +689,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Read config file and return the config as {@link Map}.
      *
-     * @return the options from config file or null if not config file found
+     * @return the options from config file
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
@@ -701,8 +701,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         try (InputStream configInput = this.resourceManager.getResourceAsInputStream(newConfigFile)) {
             return new ConfigReader().read(configInput);
         } catch (ResourceNotFoundException e) {
-            getLog().debug("Config file [" + newConfigFile + "] cannot be found", e);
-            return new HashMap<>();
+            throw new MojoExecutionException("Cannot find config file [" + newConfigFile + "]");
         } catch (IOException e) {
             throw new MojoExecutionException("Cannot read config file [" + newConfigFile + "]", e);
         } catch (SAXException e) {
