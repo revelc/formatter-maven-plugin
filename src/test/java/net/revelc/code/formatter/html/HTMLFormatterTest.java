@@ -21,7 +21,6 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -31,7 +30,7 @@ public class HTMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
-        if (SystemUtil.LINE_SEPARATOR.equals("\n")) {
+        if (System.lineSeparator().equals("\n")) {
             doTestFormat(new HTMLFormatter(), "someFile.html",
                     "4c67ab8f63ee0efcb384d4adfe280476caf0d26c5e8799cde868ca1d94d64ece75d7bc3d37c5e84b7ca8656e310ef84057e5068e0dec3bd22a741ca181835efc");
         } else {

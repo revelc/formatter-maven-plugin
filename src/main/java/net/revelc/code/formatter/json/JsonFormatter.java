@@ -27,7 +27,6 @@ import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
-import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -42,7 +41,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         super.initCfg(cfg);
 
         int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
-        String lineEnding = options.getOrDefault("lineending", SystemUtil.LINE_SEPARATOR);
+        String lineEnding = options.getOrDefault("lineending", System.lineSeparator());
         boolean spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
 
         formatter = new ObjectMapper();
@@ -52,6 +51,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         DefaultPrettyPrinter printer = new DefaultPrettyPrinter() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public DefaultPrettyPrinter withSeparators(Separators separators) {
                 this._separators = separators;
                 this._objectFieldValueSeparatorWithSpaces = (spaceBeforeSeparator ? " " : "")

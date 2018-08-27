@@ -21,7 +21,6 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.SystemUtil;
 
 /**
  * @author yoshiman
@@ -31,7 +30,7 @@ public class XMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
-        if (SystemUtil.LINE_SEPARATOR.equals("\n")) {
+        if (System.lineSeparator().equals("\n")) {
             doTestFormat(new XMLFormatter(), "someFile.xml",
                     "ecf687f06e4ada957478267eaf9b3f90461ad2520af37e304400c75e48b3b4daa3e0be60145b76061c496a19df1ce1aa064abc91224d79a725e5cefd12367401");
         } else {

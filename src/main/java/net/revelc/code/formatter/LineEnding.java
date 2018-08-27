@@ -18,7 +18,7 @@ package net.revelc.code.formatter;
  */
 public enum LineEnding {
 
-    AUTO(SystemUtil.LINE_SEPARATOR), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOWN(null);
+    AUTO(System.lineSeparator()), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOWN(null);
 
     private final String chars;
 
