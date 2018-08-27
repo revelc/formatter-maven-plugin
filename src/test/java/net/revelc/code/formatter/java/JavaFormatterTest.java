@@ -21,7 +21,6 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.java.JavaFormatter;
 
 /**
  * @author marvin.froeder

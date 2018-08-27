@@ -8,7 +8,7 @@ ver 0.2.0 (2010-09-28)
 - use Eclipse 3.5 code formatter
 - use process-sources phase
 - use googlecode groupId
-- provide Maven site 
+- provide Maven site
 - available from Maven central repository
 
 ver 0.3 (2011-03-01)
@@ -75,3 +75,14 @@ ver 2.7.2
 ver 2.7.3
 =========
 - Update jdt-core dependency to fix enum formatting bug; require Maven project to format/validate
+
+ver 2.7.4
+=========
+- Plugin and dependency updates. Support JDK9 builds. Migrate to JUnit5. Minor
+  update to JSON formatter features. Standardize import order.
+
+ver 2.8.0
+=========
+- Plugin and dependency updates. Fail fast on config file error. Update
+  jdt-core for Eclipse Photon.
+

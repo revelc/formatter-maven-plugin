@@ -50,6 +50,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         formatter.syntax(Syntax.valueOf(options.getOrDefault("syntax", Syntax.html.name())));
     }
 
+    @Override
     public String doFormat(String code, LineEnding ending) {
         Document document;
         switch (formatter.syntax()) {

@@ -68,8 +68,8 @@ Examples
 * {Setting Compiler Version}
 
  To specify the compiler version to use in formatting, use the <<<compilerSource>>>, <<<compilerCompliance>>>, and <<<compilerTargetPlatform>>> parameters.\
- By default, the plugin uses a version of 1.5 for all of these parameters.\
- This example uses 1.8 as the compiler version during formatting:
+ By default, the plugin uses a version of 1.8 for all of these parameters.\
+ This example uses 1.9 as the compiler version during formatting:
 
 +---+
 <plugin>
@@ -77,9 +77,9 @@ Examples
   <artifactId>formatter-maven-plugin</artifactId>
   <version>${project.version}</version>
   <configuration>
-    <compilerSource>1.8</compilerSource>
-    <compilerCompliance>1.8</compilerCompliance>
-    <compilerTargetPlatform>1.8</compilerTargetPlatform>
+    <compilerSource>1.9</compilerSource>
+    <compilerCompliance>1.9</compilerCompliance>
+    <compilerTargetPlatform>1.9</compilerTargetPlatform>
   </configuration>
 </plugin>
 +---+
@@ -88,8 +88,8 @@ Examples
 
 +---+
 <properties>
-  <maven.compiler.source>1.6</maven.compiler.source>
-  <maven.compiler.target>1.6</maven.compiler.target>
+  <maven.compiler.source>1.9</maven.compiler.source>
+  <maven.compiler.target>1.9</maven.compiler.target>
 </properties>
 +---+
 
@@ -175,7 +175,7 @@ Examples
 <profiles version="11">
   <profile kind="CodeFormatterProfile" name="Custom Project Formatter" version="11">
     <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
-    <setting id="org.eclipse.jdt.core.compiler.source" value="1.8"/>
+    <setting id="org.eclipse.jdt.core.compiler.source" value="1.9"/>
     ...
   </profile>
 </profiles>
@@ -208,9 +208,9 @@ Examples
   <configuration>
     <configFile>\${project.basedir}/eclipse-formatter-config.xml</configFile>
     <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
-    <compilerSource>1.8</compilerSource>
-    <compilerCompliance>1.8</compilerCompliance>
-    <compilerTargetPlatform>1.8</compilerTargetPlatform>
+    <compilerSource>1.9</compilerSource>
+    <compilerCompliance>1.9</compilerCompliance>
+    <compilerTargetPlatform>1.9</compilerTargetPlatform>
   </configuration>
 </plugin>
 +---+

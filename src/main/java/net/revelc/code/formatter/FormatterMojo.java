@@ -145,19 +145,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Java compiler source version.
      */
-    @Parameter(defaultValue = "1.6", property = "maven.compiler.source", required = true)
+    @Parameter(defaultValue = "1.8", property = "maven.compiler.source", required = true)
     private String compilerSource;
 
     /**
      * Java compiler compliance version.
      */
-    @Parameter(defaultValue = "1.6", property = "maven.compiler.source", required = true)
+    @Parameter(defaultValue = "1.8", property = "maven.compiler.source", required = true)
     private String compilerCompliance;
 
     /**
      * Java compiler target version.
      */
-    @Parameter(defaultValue = "1.6", property = "maven.compiler.target", required = true)
+    @Parameter(defaultValue = "1.8", property = "maven.compiler.target", required = true)
     private String compilerTargetPlatform;
 
     /**

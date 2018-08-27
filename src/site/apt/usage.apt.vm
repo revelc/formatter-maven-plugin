@@ -22,7 +22,7 @@ Plugin Usage
 
  The following instructions describe how to use the plugin in its simplest
  configuration. The following pom section will be able to get you started
- using the plugin. 
+ using the plugin.
 
 +---+
 <project ...>
@@ -38,8 +38,8 @@ Plugin Usage
 </project>
 +---+
 
- With this configuration, java source files in <<<src/main/java>>> and <<<src/test/java>>> of 
- the project will be formatted using the default compiler version (1.5) and 
+ With this configuration, java source files in <<<src/main/java>>> and <<<src/test/java>>> of
+ the project will be formatted using the default compiler version (1.8) and
  line ending of the current system.
 
  Run the plugin with the <<<format>>> goal.
@@ -48,7 +48,7 @@ Plugin Usage
 mvn formatter:format
 +-----+
 
- In order to format the source files during the build, include the <<<format>>> goal 
+ In order to format the source files during the build, include the <<<format>>> goal
  in the plugin executions.
 
 +---+
@@ -84,7 +84,7 @@ mvn compile
 mvn formatter:validate
 +-----+
 
- In order to validate the source files during the build, include the <<<validate>>> goal 
+ In order to validate the source files during the build, include the <<<validate>>> goal
  in the plugin executions.
 
 +---+
