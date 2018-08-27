@@ -78,11 +78,14 @@ ver 2.7.3
 
 ver 2.7.4
 =========
-- Plugin and dependency updates. Support JDK9 builds. Migrate to JUnit5. Minor
-  update to JSON formatter features. Standardize import order.
+- Plugin and dependency updates
+- Support JDK9 builds
+- Migrate to JUnit5
+- Minor update to JSON formatter features
+- Standardize import order with impsort plugin
 
-ver 2.8.0
+ver 2.7.5
 =========
-- Plugin and dependency updates. Fail fast on config file error. Update
-  jdt-core for Eclipse Photon.
+- Plugin and dependency updates
+- Fail fast on config file error
 
