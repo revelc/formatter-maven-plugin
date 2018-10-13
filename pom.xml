@@ -141,6 +141,11 @@
       <version>26.0-jre</version>
     </dependency>
     <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+    <dependency>
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>jsdt-core</artifactId>
       <version>2.6.0</version>
@@ -495,6 +500,9 @@
               <ignoredUnusedDeclaredDependencies>
                 <unusedDeclaredDependency>org.junit.jupiter:junit-jupiter-engine:jar:${junit.version}</unusedDeclaredDependency>
               </ignoredUnusedDeclaredDependencies>
+              <ignoredDependencies>
+                <ignoredDependency>commons-beanutils:commons-beanutils</ignoredDependency>
+              </ignoredDependencies>
             </configuration>
           </execution>
         </executions>
