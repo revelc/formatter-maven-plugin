@@ -89,3 +89,7 @@ ver 2.7.5
 - Plugin and dependency updates
 - Fail fast on config file error
 
+ver 2.8.0
+=========
+- Update plugins and support Eclipse Photon
+
