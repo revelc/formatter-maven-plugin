@@ -350,7 +350,7 @@
               <!-- Do not upgrade to 2.0.4 as it does not work -->
               <version>2.0.3</version>
             </dependency>
-            <!-- For reporting only of versions -->
+            <!-- Fluido is for reporting on version updates only and not used here -->
             <dependency>
               <groupId>org.apache.maven.skins</groupId>
               <artifactId>maven-fluido-skin</artifactId>
