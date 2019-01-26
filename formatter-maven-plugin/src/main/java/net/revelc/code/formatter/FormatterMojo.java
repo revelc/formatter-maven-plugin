@@ -365,6 +365,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Add source files to the files list.
      *
+	 * @param newBasedir
+     *            the files
      */
     List<File> addCollectionFiles(File newBasedir) {
         final DirectoryScanner ds = new DirectoryScanner();

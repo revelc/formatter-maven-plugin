@@ -18,11 +18,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.revelc.code.formatter</groupId>
-  <artifactId>formatter-maven-plugin</artifactId>
-  <version>2.8.2-SNAPSHOT</version>
+  <artifactId>formatter</artifactId>
+  <version>2.8.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>formatter</name>
 
-  <packaging>maven-plugin</packaging>
-  <name>formatter-maven-plugin</name>
+  <modules>
+    <module>formatter-core</module>
+    <module>formatter-maven-plugin</module>
+    <module>formatter-ant</module>
+  </modules>
 
   <description>Maven plugin for formatting source code</description>
   <url>https://github.com/revelc/formatter-maven-plugin/</url>
@@ -71,6 +76,10 @@
     <developer>
       <id>ctubbsii</id>
       <name>Christopher Tubbs</name>
+    </developer>
+    <developer>
+      <id>divyakumarjain</id>
+      <name>Divyakumar Jain</name>
     </developer>
   </developers>
 
