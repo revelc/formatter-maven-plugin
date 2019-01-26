@@ -13,7 +13,6 @@
  */
 package net.revelc.code.formatter.html;
 
-import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 import net.revelc.code.formatter.jsoup.JsoupBasedFormatter;
 
@@ -21,7 +20,9 @@ import net.revelc.code.formatter.jsoup.JsoupBasedFormatter;
  * @author yoshiman
  *
  */
-public class HTMLFormatter extends JsoupBasedFormatter implements Formatter {
+public class HTMLFormatter extends JsoupBasedFormatter {
+
+    public static final String DEFAULT_OPTION_FILE = "formatter/jsoup/html.properties";
 
     @Override
     public String doFormat(String code, LineEnding ending) {

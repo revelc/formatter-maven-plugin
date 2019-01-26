@@ -1,0 +1,2 @@
+src/test/resources/lib/*
+src/test/resources/formatter-maven-cache.properties

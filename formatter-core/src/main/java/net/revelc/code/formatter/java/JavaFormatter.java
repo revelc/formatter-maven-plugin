@@ -30,6 +30,7 @@ import net.revelc.code.formatter.LineEnding;
 
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    public static final String DEFAULT_OPTION_FILE = "formatter/eclipse/java.xml";
     private CodeFormatter formatter;
 
     @Override
@@ -46,12 +47,12 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
             te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT | CodeFormatter.F_INCLUDE_COMMENTS, code, 0,
                     code.length(), 0, ending.getChars());
             if (te == null) {
-                this.log.debug(
+                this.logger.debug(
                         "Code cannot be formatted. Possible cause is unmatched source/target/compliance version.");
                 return null;
             }
         } catch (IndexOutOfBoundsException e) {
-            this.log.debug("Code cannot be formatted for text -->" + code + "<--", e);
+            this.logger.debug("Code cannot be formatted for text -->" + code + "<--", e);
             return null;
         }
 

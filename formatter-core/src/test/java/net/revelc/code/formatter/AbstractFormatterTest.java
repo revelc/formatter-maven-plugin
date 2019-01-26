@@ -23,8 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.jupiter.api.BeforeAll;
 
 import com.google.common.hash.Hashing;
@@ -50,11 +48,6 @@ public abstract class AbstractFormatterTest {
         @Override
         public File getTargetDirectory() {
             return this.targetDir;
-        }
-
-        @Override
-        public Log getLog() {
-            return new SystemStreamLog();
         }
 
         @Override
@@ -84,16 +77,17 @@ public abstract class AbstractFormatterTest {
 
     protected void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
             String expectedSha512) throws IOException {
-
         File originalSourceFile = new File("src/test/resources/", fileUnderTest);
         File sourceFile = new File(TEST_OUTPUT_DIR, fileUnderTest);
 
         Files.copy(originalSourceFile, sourceFile);
+
         formatter.init(options, new TestConfigurationSource(TEST_OUTPUT_DIR));
         Result result = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
         assertEquals(Result.SUCCESS, result);
 
-        // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
+        // We are hashing this as set in stone in case for some reason our source file
+        // changes unexpectedly.
         byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < sha512.length; i++) {

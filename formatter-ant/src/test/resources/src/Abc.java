@@ -23,132 +23,171 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * @author marvin.froeder
  */
-public abstract class AbstractCacheableFormatter {
-
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+public abstract class AbstractCacheableFormatter
+{
+    protected Logger logger = LoggerFactory.getLogger(AbstractCacheableFormatter.class);
 
     protected Charset encoding;
 
     protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
-    protected void initCfg(ConfigurationSource cfg) {
+    protected void initCfg(ConfigurationSource cfg)
+    {
         this.encoding = cfg.getEncoding();
     }
 
-    public Result formatFile(File file, LineEnding ending, boolean dryRun) {
-        try {
+    public Result formatFile(File file, LineEnding ending, boolean dryRun)
+    {
+        try
+        {
             this.logger.debug("Processing file: " + file + " with line ending: " + ending);
-            String code = fileRead(file, this.encoding);
+            String code = fileRead(file, this.encoding.name());
             String formattedCode = doFormat(code, ending);
 
-            if (formattedCode == null) {
+            if (formattedCode == null)
+            {
                 this.logger.debug("Nothing formatted. Try to fix line endings.");
                 formattedCode = fixLineEnding(code, ending);
             }
 
-            if (formattedCode == null) {
+            if (formattedCode == null)
+            {
                 this.logger.debug("Equal code. Not writing result to file.");
                 return Result.SKIPPED;
             }
 
-            if (!dryRun) {
-                fileWrite(file, this.encoding, formattedCode);
+            if (!dryRun)
+            {
+                fileWrite(file, this.encoding.name(), formattedCode);
             }
 
             // readme: Uncomment this when having build issues with hashCodes when nothing
             // changed. The issue is likely copyright dating issues.
             // this.logger.debug("formatted code: " + formattedCode);
             return Result.SUCCESS;
-        } catch (IOException | MalformedTreeException | BadLocationException e) {
+        }
+        catch (IOException | MalformedTreeException | BadLocationException e)
+        {
             this.logger.warn("Could not format the file", e);
             return Result.FAIL;
         }
     }
 
-    private static String fixLineEnding(String code, LineEnding ending) {
-        if (ending == LineEnding.KEEP) {
+    private static String fixLineEnding(String code, LineEnding ending)
+    {
+        if (ending == LineEnding.KEEP)
+        {
             return null;
         }
 
         LineEnding current = LineEnding.determineLineEnding(code);
-        if (current == LineEnding.UNKNOWN) {
+        if (current == LineEnding.UNKNOWN)
+        {
             return null;
         }
-        if (current == ending) {
+        if (current == ending)
+        {
             return null;
         }
-        if (ending == LineEnding.AUTO && Objects.equals(current.getChars(), ending.getChars())) {
+        if (ending == LineEnding.AUTO && Objects.equals(current.getChars(), ending.getChars()))
+        {
             return null;
         }
 
         return code.replace(current.getChars(), ending.getChars());
     }
 
-    private String fileRead(File file, Charset encoding) throws IOException {
+    public String fileRead(File file, String encoding) throws IOException
+    {
         StringBuilder buf = new StringBuilder();
         InputStreamReader reader = null;
 
-        try {
-            if (encoding != null) {
+        try
+        {
+            if (encoding != null)
+            {
                 reader = new InputStreamReader(new FileInputStream(file), encoding);
-            } else {
+            }
+            else
+            {
                 reader = new InputStreamReader(new FileInputStream(file));
             }
 
             char[] b = new char[512];
 
             int count;
-            while ((count = reader.read(b)) >= 0) {
+            while ((count = reader.read(b)) >= 0)
+            {
                 buf.append(b, 0, count);
             }
 
             reader.close();
             reader = null;
             return buf.toString();
-        } finally {
+        }
+        finally
+        {
             close(reader);
         }
     }
 
-    private void close(InputStreamReader reader) {
-        if (reader != null) {
-            try {
+    private void close(InputStreamReader reader)
+    {
+        if (reader != null)
+        {
+            try
+            {
                 reader.close();
-            } catch (IOException var2) {
+            }
+            catch (IOException var2)
+            {
                 ;
             }
 
         }
     }
 
-    private static void fileWrite(File file, Charset encoding, String data) throws IOException {
+    public static void fileWrite(File file, String encoding, String data) throws IOException
+    {
         OutputStreamWriter writer = null;
 
-        try {
+        try
+        {
             OutputStream out = new FileOutputStream(file);
-            if (encoding != null) {
+            if (encoding != null)
+            {
                 writer = new OutputStreamWriter(out, encoding);
-            } else {
+            }
+            else
+            {
                 writer = new OutputStreamWriter(out);
             }
 
             writer.write(data);
             writer.close();
             writer = null;
-        } finally {
+        }
+        finally
+        {
             close(writer);
         }
 
     }
 
-    public static void close(Writer writer) {
-        if (writer != null) {
-            try {
+    public static void close(Writer writer)
+    {
+        if (writer != null)
+        {
+            try
+            {
                 writer.close();
-            } catch (IOException var2) {
+            }
+            catch (IOException var2)
+            {
                 ;
             }
 

@@ -35,6 +35,7 @@ import net.revelc.code.formatter.LineEnding;
  */
 public class CssFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    public static final String DEFAULT_OPTION_FILE = "formatter/ph-css/css.properties";
     private CSSFormat formatter;
 
     @Override

@@ -33,3 +33,5 @@ nb-configuration.xml
 .idea/
 *.ipr
 *.iws
+src/test/resources/formatter-maven-cache.properties
+src/test/resources/lib/
