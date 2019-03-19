@@ -203,10 +203,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String configHtmlFile;
 
     /**
-     * File or classpath location of a properties file to use in xml formatting.
+     * File or classpath location of a properties file to use in jsoup xml formatting.
      */
     @Parameter(defaultValue = "formatter-maven-plugin/jsoup/xml.properties", property = "configxmlfile", required = true)
     private String configXmlFile;
+
+    /**
+     * File or classpath location of a properties file to use in eclipse xml formatting.
+     */
+    @Parameter(defaultValue = "formatter-maven-plugin/eclipse/xml.properties", property = "configexmlfile", required = true)
+    private String configEXmlFile;
 
     /**
      * File or classpath location of a properties file to use in json formatting.
@@ -245,6 +251,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private Boolean skipXmlFormatting;
 
     /**
+     * Whether to use the jsoup based formatter.
+     */
+    @Parameter(defaultValue = "true", property = "formatter.xml.jsoup")
+    private Boolean jsoupXmlFormatting;
+
+    /**
      * Whether the json formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.json.skip")
@@ -276,7 +288,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     private HTMLFormatter htmlFormatter = new HTMLFormatter();
 
-    private XMLFormatter xmlFormatter = new XMLFormatter();
+    private XMLFormatter xmlFormatter;
 
     private JsonFormatter jsonFormatter = new JsonFormatter();
 
@@ -291,6 +303,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        xmlFormatter = new XMLFormatter(jsoupXmlFormatting);
+
         if (this.skipFormatting) {
             getLog().info("Formatting is skipped");
             return;
@@ -646,8 +660,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (configHtmlFile != null) {
             this.htmlFormatter.init(getOptionsFromPropertiesFile(configHtmlFile), this);
         }
-        if (configXmlFile != null) {
+        if (jsoupXmlFormatting && configXmlFile != null) {
             this.xmlFormatter.init(getOptionsFromPropertiesFile(configXmlFile), this);
+        } else if (configEXmlFile != null) {
+            this.xmlFormatter.init(getOptionsFromPropertiesFile(configEXmlFile), this);
         }
         if (configJsonFile != null) {
             Map<String, String> jsonFormattingOptions = getOptionsFromPropertiesFile(configJsonFile);

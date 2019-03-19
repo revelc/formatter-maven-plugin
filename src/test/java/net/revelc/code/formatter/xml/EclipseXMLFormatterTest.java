@@ -25,25 +25,24 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 /**
  * @author yoshiman
  */
-public class XMLFormatterTest extends AbstractFormatterTest {
+public class EclipseXMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        // FIXME Handle linux vs windows since this formatter does not accept line endings
+        // Since we set the line endings via options for the formatter, we cannot rely on CRLF inside doTestFormat.
+        // The option will not be available inside json formatter init so it will use whatever the system
+        // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
-            doTestFormat(new XMLFormatter(true), "someFile.xml",
-                    "ecf687f06e4ada957478267eaf9b3f90461ad2520af37e304400c75e48b3b4daa3e0be60145b76061c496a19df1ce1aa064abc91224d79a725e5cefd12367401");
-        } else {
             doTestFormat(new XMLFormatter(false), "someFile.xml",
-                    "8fb712bdc9068f9f8501f555c9dad182176bc66959812f2977d43f4794bb42b13d160bdc3aeb7f68e8a6c7654f2997cd90e41b006900748a6f0ffb8c0cf5077b");
+                    "30e68ab990fab71d9f413e50486cfc389c2a92465a837ce5dad9b1b6f2f61443f733bb9ba0b1d657dd4d85933009cf36a2f168771b12dd2e92ea69b79a99f478");
         }
     }
 
     @Test
     public void testIsIntialized() throws Exception {
-        XMLFormatter xmlFormatter = new XMLFormatter(true);
+        XMLFormatter xmlFormatter = new XMLFormatter(false);
         assertFalse(xmlFormatter.isInitialized());
-        xmlFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
+        xmlFormatter.init(Collections.emptyMap(), new TestConfigurationSource(TEST_OUTPUT_DIR));
         assertTrue(xmlFormatter.isInitialized());
     }
 
