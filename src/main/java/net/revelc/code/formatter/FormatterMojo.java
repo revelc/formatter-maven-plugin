@@ -254,7 +254,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Whether to use the jsoup based formatter.
      */
     @Parameter(defaultValue = "true", property = "formatter.xml.jsoup")
-    private Boolean jsoupXmlFormatting;
+    private Boolean useJsoupXmlFormatter;
 
     /**
      * Whether the json formatting is skipped.
@@ -303,7 +303,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        xmlFormatter = new XMLFormatter(jsoupXmlFormatting);
+        xmlFormatter = new XMLFormatter(useJsoupXmlFormatter);
 
         if (this.skipFormatting) {
             getLog().info("Formatting is skipped");
@@ -670,7 +670,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (configHtmlFile != null) {
             this.htmlFormatter.init(getOptionsFromPropertiesFile(configHtmlFile), this);
         }
-        if (jsoupXmlFormatting && configXmlFile != null) {
+        if (useJsoupXmlFormatter && configXmlFile != null) {
             this.xmlFormatter.init(getOptionsFromPropertiesFile(configXmlFile), this);
         } else if (configEXmlFile != null) {
             this.xmlFormatter.init(getOptionsFromPropertiesFile(configEXmlFile), this);
