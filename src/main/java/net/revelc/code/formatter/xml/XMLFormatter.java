@@ -23,6 +23,7 @@ import net.revelc.code.formatter.xml.eclipse.XmlDocumentFormatter;
 
 /**
  * @author yoshiman
+ * @author Jose Montoya
  */
 public class XMLFormatter implements Formatter {
     private final Formatter delegateFormatter;
@@ -31,7 +32,7 @@ public class XMLFormatter implements Formatter {
         if (useJsoupFormatting)
             this.delegateFormatter = new JsoupDelegate();
         else
-            this.delegateFormatter = new EclipseAntDelegate();
+            this.delegateFormatter = new EclipseDelegate();
 
     }
 
@@ -58,7 +59,7 @@ public class XMLFormatter implements Formatter {
         }
     }
 
-    protected class EclipseAntDelegate extends AbstractCacheableFormatter implements Formatter {
+    protected class EclipseDelegate extends AbstractCacheableFormatter implements Formatter {
         XmlDocumentFormatter formatter;
 
         @Override

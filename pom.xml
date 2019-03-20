@@ -451,6 +451,7 @@
                 <exclude>LICENSE</exclude>
                 <exclude>NOTICE</exclude>
                 <exclude>.gitattributes</exclude>
+                <exclude>**/xml/eclipse/*.java</exclude>
               </excludes>
               <mapping>
                 <java>SLASHSTAR_STYLE</java>
