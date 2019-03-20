@@ -18,6 +18,7 @@ public class FormattingPreferences {
     private boolean wrapLongLines = true;
     private boolean tabInsteadOfSpaces = true;
     private int tabWidth = 4;
+    private boolean setSplitMultiAttrs = false;
 
     public void setMaxLineLength(Integer maxLineLength) {
         if (maxLineLength != null)
@@ -68,5 +69,14 @@ public class FormattingPreferences {
 
     public boolean useTabInsteadOfSpaces() {
         return tabInsteadOfSpaces;
+    }
+
+    public boolean isSetSplitMultiAttrs() {
+        return setSplitMultiAttrs;
+    }
+
+    public void setSetSplitMultiAttrs(Boolean setSplitMultiAttrs) {
+        if (setSplitMultiAttrs != null)
+            this.setSplitMultiAttrs = setSplitMultiAttrs;
     }
 }

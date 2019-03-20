@@ -156,97 +156,6 @@ public class XMLTagFormatter {
         }
     }
 
-    protected class TagFormatter {
-
-        private final FormattingPreferences prefs;
-
-        public TagFormatter(FormattingPreferences prefs) {
-            this.prefs = prefs;
-        }
-
-        private int countChar(char searchChar, String inTargetString) {
-            StringCharacterIterator iter = new StringCharacterIterator(inTargetString);
-            int i = 0;
-            if (iter.first() == searchChar)
-                i++;
-            while (iter.getIndex() < iter.getEndIndex()) {
-                if (iter.next() == searchChar) {
-                    i++;
-                }
-            }
-            return i;
-        }
-
-        public String format(Tag tag, String indent, String lineDelimiter) {
-            if (prefs.wrapLongTags()
-                    && lineRequiresWrap(indent + tag.toString(), prefs.getMaximumLineWidth(), prefs.getTabWidth())) {
-                return wrapTag(tag, indent, lineDelimiter);
-            }
-
-            return tag.toString();
-        }
-
-        protected boolean lineRequiresWrap(String line, int lineWidth, int tabWidth) {
-            return tabExpandedLineWidth(line, tabWidth) > lineWidth;
-        }
-
-        /**
-         * @param line
-         *            the line in which spaces are to be expanded
-         * @param tabWidth
-         *            number of spaces to substitute for a tab
-         * @return length of the line with tabs expanded to spaces
-         */
-        protected int tabExpandedLineWidth(String line, int tabWidth) {
-            int tabCount = countChar('\t', line);
-            return (line.length() - tabCount) + (tabCount * tabWidth);
-        }
-
-        protected String wrapTag(Tag tag, String indent, String lineDelimiter) {
-            StringBuilder sb = new StringBuilder(1024);
-            StringBuilder pairBuffer;
-            sb.append('<');
-            sb.append(tag.getElementName());
-
-            String extraIndent = indent + prefs.getCanonicalIndent();
-            int currLineLength = tabExpandedLineWidth(indent, prefs.getTabWidth()) + sb.length();
-
-            // If each attribute fits on the line append it, otherwise start a new line and continue
-            for (int i = 0; i < tag.attributeCount(); i++) {
-                AttributePair pair = tag.getAttributePair(i);
-                pairBuffer = new StringBuilder(1024);
-
-                pairBuffer.append(pair.getAttribute());
-                pairBuffer.append('=');
-                pairBuffer.append(pair.getQuote());
-                pairBuffer.append(pair.getValue());
-                pairBuffer.append(pair.getQuote());
-
-                if (currLineLength + pairBuffer.length() < prefs.getMaximumLineWidth()) {
-                    sb.append(' ');
-                    sb.append(pairBuffer);
-
-                    currLineLength += pairBuffer.length() + 1;
-                } else {
-                    sb.append(lineDelimiter);
-                    sb.append(extraIndent);
-                    sb.append(pairBuffer);
-
-                    currLineLength = extraIndent.length() + pairBuffer.length();
-                }
-            }
-
-            if (tag.isClosed()) {
-                sb.append(' ');
-            }
-
-            if (tag.isClosed())
-                sb.append('/');
-            sb.append('>');
-            return sb.toString();
-        }
-    }
-
     // if object creation is an issue, use static methods or a flyweight
     // pattern
     protected static class TagParser {
@@ -466,6 +375,126 @@ public class XMLTagFormatter {
                 }
             }
             return -1;
+        }
+    }
+
+    protected class TagFormatter {
+
+        private final FormattingPreferences prefs;
+
+        public TagFormatter(FormattingPreferences prefs) {
+            this.prefs = prefs;
+        }
+
+        private int countChar(char searchChar, String inTargetString) {
+            StringCharacterIterator iter = new StringCharacterIterator(inTargetString);
+            int i = 0;
+            if (iter.first() == searchChar)
+                i++;
+            while (iter.getIndex() < iter.getEndIndex()) {
+                if (iter.next() == searchChar) {
+                    i++;
+                }
+            }
+            return i;
+        }
+
+        protected void openTag(StringBuilder sb, Tag tag) {
+            sb.append('<');
+            sb.append(tag.getElementName());
+        }
+
+        protected void closeTag(StringBuilder sb, Tag tag) {
+            if (tag.isClosed()) {
+                sb.append(' ');
+                sb.append('/');
+            }
+            sb.append('>');
+        }
+
+        public String format(Tag tag, String indent, String lineDelimiter) {
+            if (prefs.isSetSplitMultiAttrs()) {
+                StringBuilder sb = new StringBuilder(1024);
+                openTag(sb, tag);
+
+                String extraIndent = indent + prefs.getCanonicalIndent();
+
+                for (int i = 0; i < tag.attributeCount(); i++) {
+                    AttributePair pair = tag.getAttributePair(i);
+
+                    sb.append(lineDelimiter);
+                    sb.append(extraIndent);
+                    sb.append(pair.getAttribute());
+                    sb.append('=');
+                    sb.append(pair.getQuote());
+                    sb.append(pair.getValue());
+                    sb.append(pair.getQuote());
+                }
+
+                closeTag(sb, tag);
+
+                return sb.toString();
+
+            } else if (prefs.wrapLongTags()
+                    && lineRequiresWrap(indent + tag.toString(), prefs.getMaximumLineWidth(), prefs.getTabWidth())) {
+                return wrapTag(tag, indent, lineDelimiter);
+            }
+
+            return tag.toString();
+        }
+
+        protected boolean lineRequiresWrap(String line, int lineWidth, int tabWidth) {
+            return tabExpandedLineWidth(line, tabWidth) > lineWidth;
+        }
+
+        /**
+         * @param line
+         *            the line in which spaces are to be expanded
+         * @param tabWidth
+         *            number of spaces to substitute for a tab
+         * @return length of the line with tabs expanded to spaces
+         */
+        protected int tabExpandedLineWidth(String line, int tabWidth) {
+            int tabCount = countChar('\t', line);
+            return (line.length() - tabCount) + (tabCount * tabWidth);
+        }
+
+        protected String wrapTag(Tag tag, String indent, String lineDelimiter) {
+            StringBuilder sb = new StringBuilder(1024);
+            StringBuilder pairBuffer;
+            openTag(sb, tag);
+
+            String extraIndent = indent + prefs.getCanonicalIndent();
+            int currLineLength = tabExpandedLineWidth(indent, prefs.getTabWidth()) + sb.length();
+
+            // If each attribute fits on the line append it, otherwise start a new line and continue
+            for (int i = 0; i < tag.attributeCount(); i++) {
+                AttributePair pair = tag.getAttributePair(i);
+                pairBuffer = new StringBuilder(1024);
+
+                pairBuffer.append(pair.getAttribute());
+                pairBuffer.append('=');
+                pairBuffer.append(pair.getQuote());
+                pairBuffer.append(pair.getValue());
+                pairBuffer.append(pair.getQuote());
+
+                if (currLineLength + pairBuffer.length() < prefs.getMaximumLineWidth()) {
+                    sb.append(' ');
+                    sb.append(pairBuffer);
+
+                    currLineLength += pairBuffer.length() + 1;
+                } else {
+                    sb.append(lineDelimiter);
+                    sb.append(extraIndent);
+                    sb.append(pairBuffer);
+
+                    currLineLength = extraIndent.length() + pairBuffer.length();
+                }
+            }
+
+            closeTag(sb, tag);
+
+            return sb.toString();
         }
     }
 }

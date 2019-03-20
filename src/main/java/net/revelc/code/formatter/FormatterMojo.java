@@ -383,9 +383,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     List<File> addCollectionFiles(File newBasedir) {
         final DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir(newBasedir);
+
+        Log log = getLog();
+
         if (this.includes != null && this.includes.length > 0) {
+            for (String include : includes) {
+                log.debug("Including files with pattern " + include + " in directory " + newBasedir);
+            }
             ds.setIncludes(this.includes);
         } else {
+            for (String include : DEFAULT_INCLUDES) {
+                log.debug("Including files with pattern " + include + " in directory " + newBasedir);
+            }
             ds.setIncludes(DEFAULT_INCLUDES);
         }
 
@@ -397,6 +406,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         List<File> foundFiles = new ArrayList<>();
         for (String filename : ds.getIncludedFiles()) {
+            log.debug("Adding file " + filename);
             foundFiles.add(new File(newBasedir, filename));
         }
         return foundFiles;
