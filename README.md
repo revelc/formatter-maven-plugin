@@ -55,6 +55,7 @@ Plugin Version	| Eclipse Version
 2.1.0 - 2.6.0   | 4.6.3 (neon)
 2.7.&ast;       | 4.7.&ast; (oxygen)
 2.8.&ast;       | 4.8.&ast; (photon)
+2.9.&ast;       | 4.9.&ast; (2019-03)
 
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
