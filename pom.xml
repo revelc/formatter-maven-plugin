@@ -72,6 +72,13 @@
       <id>ctubbsii</id>
       <name>Christopher Tubbs</name>
     </developer>
+    <developer>
+      <id>jam01</id>
+      <name>Jose Montoya</name>
+      <email>jmontoya@ms3-inc.com</email>
+      <organization>ms3-inc</organization>
+      <organizationUrl>https://www.ms3-inc.com</organizationUrl>
+    </developer>
   </developers>
 
   <prerequisites>
@@ -150,6 +157,11 @@
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>jsdt-core</artifactId>
       <version>2.6.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.revelc.code.formatter</groupId>
+      <artifactId>xml-formatter</artifactId>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.cssparser</groupId>
