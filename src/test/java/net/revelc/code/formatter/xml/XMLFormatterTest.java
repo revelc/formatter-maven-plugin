@@ -31,7 +31,7 @@ public class XMLFormatterTest extends AbstractFormatterTest {
     @Test
     public void testDoFormatFile() throws Exception {
         // Since we set the line endings via options for xml, we cannot rely on CRLF inside doTestFormat.
-        // The option will not be available inside json formatter init so it will use whatever the system
+        // The option will not be available inside xml formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new XMLFormatter(), "someFile.xml",
