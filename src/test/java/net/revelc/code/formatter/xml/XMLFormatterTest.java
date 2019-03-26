@@ -30,8 +30,16 @@ public class XMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        doTestFormat(new XMLFormatter(), "someFile.xml",
-                "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb");
+        // Since we set the line endings via options for xml, we cannot rely on CRLF inside doTestFormat.
+        // The option will not be available inside json formatter init so it will use whatever the system
+        // default is regardless of requesting it to be CRLF later which is ignored.
+        if (System.lineSeparator().equals("\n")) {
+            doTestFormat(new XMLFormatter(), "someFile.xml",
+                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb");
+        } else {
+            doTestFormat(new XMLFormatter(), "someFile.xml",
+                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0");
+        }
     }
 
     @Test

@@ -39,9 +39,9 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
         String splitMultiAttrs = options.get("splitMultiAttrs");
 
         prefs.setMaxLineLength(maxLineLength != null ? Integer.valueOf(maxLineLength) : null);
-        prefs.setTabWidth(tabWidth != null ? Integer.valueOf(tabWidth) : null);
         prefs.setWrapLongLines(wrapLongLines != null ? Boolean.valueOf(wrapLongLines) : null);
         prefs.setTabInsteadOfSpaces(tabInsteadOfSpaces != null ? Boolean.valueOf(tabInsteadOfSpaces) : null);
+        prefs.setTabWidth(tabWidth != null ? Integer.valueOf(tabWidth) : null);
         prefs.setSplitMultiAttrs(splitMultiAttrs != null ? Boolean.valueOf(splitMultiAttrs) : null);
 
         this.formatter = new XmlDocumentFormatter(options.getOrDefault("lineending", System.lineSeparator()), prefs);
