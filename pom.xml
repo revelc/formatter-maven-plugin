@@ -82,7 +82,7 @@
   </developers>
 
   <prerequisites>
-    <maven>3.0.5</maven>
+    <maven>3.3.9</maven>
   </prerequisites>
 
   <scm>
@@ -119,7 +119,7 @@
   </distributionManagement>
 
   <properties>
-    <junit.version>5.4.0</junit.version>
+    <junit.version>5.5.0-M1</junit.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -166,7 +166,7 @@
     <dependency>
       <groupId>net.sourceforge.cssparser</groupId>
       <artifactId>cssparser</artifactId>
-      <version>0.9.26</version>
+      <version>0.9.27</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -207,13 +207,13 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>3.5.4</version>
+      <version>3.6.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.5.2</version>
+      <version>3.6.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -293,7 +293,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
+          <version>3.0.0-M1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -325,7 +325,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>3.1.0</version>
           <configuration>
             <quiet>true</quiet>
             <doclint>all,-missing</doclint>
@@ -334,7 +334,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.5.2</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -378,7 +378,7 @@
             <dependency>
               <groupId>org.apache.maven.wagon</groupId>
               <artifactId>wagon-ssh</artifactId>
-              <version>3.2.0</version>
+              <version>3.3.2</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -408,12 +408,12 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.2</version>
+          <version>0.8.3</version>
         </plugin>
         <plugin>
           <groupId>org.gaul</groupId>
           <artifactId>modernizer-maven-plugin</artifactId>
-          <version>1.7.1</version>
+          <version>1.8.0</version>
           <configuration>
             <javaVersion>${maven.compiler.target}</javaVersion>
           </configuration>
@@ -533,7 +533,7 @@
         <configuration>
           <rules>
             <requireMavenVersion>
-              <version>[3.0.5,)</version>
+              <version>[3.3.9,)</version>
             </requireMavenVersion>
             <requireJavaVersion>
               <version>[${maven.compiler.source},)</version>
