@@ -91,5 +91,12 @@ ver 2.7.5
 
 ver 2.8.0
 =========
-- Update plugins and support Eclipse Photon
+- Update plugins and support Eclipse 2018-09
+
+ver 2.9.0
+=========
+- Support Eclipse 2019-03 formatter
+- Update plugins, dependencies
+- replace jsoup with xml-formatter, based on Eclipse ant formatter
+- Apply bugfix for cssparser
 

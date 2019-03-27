@@ -35,34 +35,20 @@ View the Maven plugin documentation for the latest release [here][plugin-docs].
 
 ## Eclipse Compatibility
 
--------------------------------------
-Plugin Version	| Eclipse Version
---------------  | ---------------
-0.1.0           | 3.3.0
-0.2.0 - 0.3.1   | 3.5.2
-0.4             | 3.8.1 
-0.5.2           | 4.4.1
-1.0.0           | 3.8.3 (velo fork)
-1.1.0           | 3.8.3 (velo fork)
-1.2.0           | 3.8.3 (velo fork)
-1.3.0           | 3.8.3 (velo fork)
-1.4.0           | 4.4.0 (velo fork - luna)
-1.6.0.RC1       | 4.5.0.RC1 (velo fork - mars)
-1.6.0.RC2       | 4.5.0.RC2 (velo fork - mars)
-1.6.0.RC3       | 4.5.0.RC3 (velo fork - mars)
-1.6.0.RC4       | 4.5.0.RC4 (velo fork - mars)
-2.0.0 - 2.0.1   | 4.5.2 (merged forks - mars)
-2.1.0 - 2.6.0   | 4.6.3 (neon)
-2.7.&ast;       | 4.7.&ast; (oxygen)
-2.8.&ast;       | 4.8.&ast; (photon)
-2.9.&ast;       | 4.9.&ast; (2019-03)
+The primary use case of this plugin is to ensure consistent formatting for a
+project, regardless of differences between IDE preferences or IDE versions that
+developers use. Nevertheless, some users may find it useful to correlate
+versions of this plugin to the version of Eclipse whose code is used as the
+basis for this plugin's formatting. See [the wiki][compat] for a list of recent
+versions of this plugin and their corresponding Eclipse versions.
 
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
-[m2e]: https://eclipse.org/m2e
 [blog]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
-[plugin-docs]: http://code.revelc.net/formatter-maven-plugin/
+[compat]: https://github.com/revelc/formatter-maven-plugin/wiki/Eclipse-Version-Compatibility
 [formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
+[m2e]: https://eclipse.org/m2e
+[plugin-docs]: http://code.revelc.net/formatter-maven-plugin/
 [related1]: http://wiki.eclipse.org/M2E_extension_development_environment
 [related2]: http://wiki.eclipse.org/Submitting_M2E_marketplace_entries
 [related3]: http://www.eclipse.org/forums/index.php/t/478639/0/unread/
