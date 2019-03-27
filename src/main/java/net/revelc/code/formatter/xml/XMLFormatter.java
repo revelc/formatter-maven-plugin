@@ -19,6 +19,8 @@ import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
+import net.revelc.code.formatter.xml.lib.FormattingPreferences;
+import net.revelc.code.formatter.xml.lib.XmlDocumentFormatter;
 
 /**
  * @author yoshiman

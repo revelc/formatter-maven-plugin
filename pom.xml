@@ -161,7 +161,7 @@
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>xml-formatter</artifactId>
-      <version>0.1.0</version>
+      <version>0.1.1</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.cssparser</groupId>
@@ -314,6 +314,13 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.1.1</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Sealed>true</Sealed>
+              </manifestEntries>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
