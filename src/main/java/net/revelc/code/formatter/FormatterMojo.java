@@ -205,7 +205,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * File or classpath location of a properties file to use in xml formatting.
      */
-    @Parameter(defaultValue = "formatter-maven-plugin/jsoup/xml.properties", property = "configxmlfile", required = true)
+    @Parameter(defaultValue = "formatter-maven-plugin/eclipse/xml.properties", property = "configxmlfile", required = true)
     private String configXmlFile;
 
     /**
@@ -647,7 +647,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             this.htmlFormatter.init(getOptionsFromPropertiesFile(configHtmlFile), this);
         }
         if (configXmlFile != null) {
-            this.xmlFormatter.init(getOptionsFromPropertiesFile(configXmlFile), this);
+            Map<String, String> xmlFormattingOptions = getOptionsFromPropertiesFile(configXmlFile);
+            xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
+            this.xmlFormatter.init(xmlFormattingOptions, this);
         }
         if (configJsonFile != null) {
             Map<String, String> jsonFormattingOptions = getOptionsFromPropertiesFile(configJsonFile);

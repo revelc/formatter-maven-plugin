@@ -24,18 +24,21 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 
 /**
  * @author yoshiman
+ * @author jam01
  */
 public class XMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
-        // FIXME Handle linux vs windows since this formatter does not accept line endings
+        // Since we set the line endings via options for xml, we cannot rely on CRLF inside doTestFormat.
+        // The option will not be available inside xml formatter init so it will use whatever the system
+        // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "ecf687f06e4ada957478267eaf9b3f90461ad2520af37e304400c75e48b3b4daa3e0be60145b76061c496a19df1ce1aa064abc91224d79a725e5cefd12367401");
+                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb");
         } else {
             doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "8fb712bdc9068f9f8501f555c9dad182176bc66959812f2977d43f4794bb42b13d160bdc3aeb7f68e8a6c7654f2997cd90e41b006900748a6f0ffb8c0cf5077b");
+                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0");
         }
     }
 
