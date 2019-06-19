@@ -131,6 +131,88 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.commands</artifactId>
+        <version>3.9.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.contenttype</artifactId>
+        <version>3.7.300</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.expressions</artifactId>
+        <version>3.6.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.filesystem</artifactId>
+        <version>1.7.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.jobs</artifactId>
+        <version>3.10.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.resources</artifactId>
+        <version>3.13.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.runtime</artifactId>
+        <version>3.15.300</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.app</artifactId>
+        <version>1.4.200</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.common</artifactId>
+        <version>3.10.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.preferences</artifactId>
+        <version>3.7.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.registry</artifactId>
+        <version>3.8.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.osgi</artifactId>
+        <version>3.14.0</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.text</artifactId>
+        <version>3.8.200</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
