@@ -100,3 +100,8 @@ ver 2.9.0
 - replace jsoup with xml-formatter, based on Eclipse ant formatter
 - Apply bugfix for cssparser
 
+ver 2.10.0
+==========
+- Support Eclipse 2019-06 formatter
+- Update plugins, dependencies
+
