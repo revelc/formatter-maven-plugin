@@ -114,12 +114,10 @@
   </distributionManagement>
 
   <properties>
-    <junit.version>5.5.0-RC1</junit.version>
+    <junit.version>5.5.1</junit.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.testSource>1.8</maven.compiler.testSource>
-    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 
     <!-- skip standard site deployment, because site is deployed using github plugin instead -->
     <maven.site.deploy.skip>true</maven.site.deploy.skip>
@@ -231,7 +229,7 @@
       <!-- override vulnerable transitive version from commons-digester3 -->
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.9.3</version>
+      <version>1.9.4</version>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
@@ -267,7 +265,7 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.2.0</version>
+      <version>3.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
@@ -283,6 +281,16 @@
       <groupId>org.w3c.css</groupId>
       <artifactId>sac</artifactId>
       <version>1.3</version>
+    </dependency>
+    <dependency>
+      <!--
+        Needed because jdk11 enforcement of jdk8 compliance is stricter than either
+        Java 11 compliance or jdk8 enforcement of Java 8 compliance.
+      -->
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <!-- versions plugin says 2.0.2 is newer, but not true; 1.4.01 is latest as of 14Aug2019 -->
+      <version>1.4.01</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -358,7 +366,7 @@
         <plugin>
           <groupId>net.revelc.code</groupId>
           <artifactId>impsort-maven-plugin</artifactId>
-          <version>1.2.0</version>
+          <version>1.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -410,7 +418,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.1</version>
           <configuration>
             <quiet>true</quiet>
             <doclint>all,-missing</doclint>
@@ -446,13 +454,13 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
+          <version>3.8.2</version>
           <dependencies>
             <!-- Fluido is listed here for version update checking only -->
             <dependency>
               <groupId>org.apache.maven.skins</groupId>
               <artifactId>maven-fluido-skin</artifactId>
-              <version>1.7</version>
+              <version>1.8</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -814,6 +822,9 @@
           <name>m2e.version</name>
         </property>
       </activation>
+      <properties>
+        <maven.compiler.release>8</maven.compiler.release>
+      </properties>
       <build>
         <pluginManagement>
           <plugins>
@@ -887,6 +898,15 @@
           </plugins>
         </pluginManagement>
       </build>
+    </profile>
+    <profile>
+      <id>jdk-release-flag</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>8</maven.compiler.release>
+      </properties>
     </profile>
   </profiles>
 </project>
