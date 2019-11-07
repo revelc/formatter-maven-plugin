@@ -105,3 +105,8 @@ ver 2.10.0
 - Support Eclipse 2019-06 formatter
 - Update plugins, dependencies
 
+ver 2.11.0
+==========
+- Support Eclipse 2019-09 formatter
+- Update plugins, dependencies
+
