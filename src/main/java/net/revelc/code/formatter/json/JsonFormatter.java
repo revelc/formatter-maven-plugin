@@ -52,6 +52,11 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
             private static final long serialVersionUID = 1L;
 
             @Override
+            public DefaultPrettyPrinter createInstance() {
+                return new DefaultPrettyPrinter(this);
+            }
+
+            @Override
             public DefaultPrettyPrinter withSeparators(Separators separators) {
                 this._separators = separators;
                 this._objectFieldValueSeparatorWithSpaces = (spaceBeforeSeparator ? " " : "")
