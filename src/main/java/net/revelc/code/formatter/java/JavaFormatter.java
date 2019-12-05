@@ -57,12 +57,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 
         IDocument doc = new Document(code);
         te.apply(doc);
-        String formattedCode = doc.get();
-
-        if (code.equals(formattedCode)) {
-            return null;
-        }
-        return formattedCode;
+        return doc.get();
     }
 
     @Override
