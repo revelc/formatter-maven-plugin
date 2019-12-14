@@ -167,7 +167,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @since 0.3
      */
     @Parameter(property = "project.build.sourceEncoding", required = true)
-    private String encoding;
+    String encoding;
 
     /**
      * Sets the line-ending of files after formatting. Valid values are:
@@ -182,7 +182,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @since 0.2.0
      */
     @Parameter(defaultValue = "AUTO", property = "lineending", required = true)
-    private LineEnding lineEnding;
+    LineEnding lineEnding;
 
     /**
      * File or classpath location of an Eclipse code formatter configuration xml file to use in formatting.
@@ -224,7 +224,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Whether the java formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.java.skip")
-    private Boolean skipJavaFormatting;
+    Boolean skipJavaFormatting;
 
     /**
      * Whether the javascript formatting is skipped.
@@ -268,9 +268,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Use eclipse defaults when set to true for java and javascript.
      */
     @Parameter(defaultValue = "false", property = "formatter.useEclipseDefaults")
-    private Boolean useEclipseDefaults;
+    Boolean useEclipseDefaults;
 
-    private JavaFormatter javaFormatter = new JavaFormatter();
+    JavaFormatter javaFormatter = new JavaFormatter();
 
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
@@ -581,7 +581,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the str
      * @return the string
      */
-    private String sha512hash(String str) {
+    protected String sha512hash(String str) {
         return Hashing.sha512().hashBytes(str.getBytes(getEncoding())).toString();
     }
 
@@ -634,7 +634,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private void createCodeFormatter() throws MojoExecutionException {
+    void createCodeFormatter() throws MojoExecutionException {
         Map<String, String> javaFormattingOptions = getFormattingOptions(this.configFile);
         if (javaFormattingOptions != null) {
             this.javaFormatter.init(javaFormattingOptions, this);
@@ -742,7 +742,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         return map;
     }
 
-    class ResultCollector {
+    static class ResultCollector {
 
         int successCount;
 
