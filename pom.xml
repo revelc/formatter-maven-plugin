@@ -290,7 +290,7 @@
       -->
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
-      <!-- versions plugin says 2.0.2 is newer, but not true; 1.4.01 is latest as of 14Aug2019 -->
+      <!-- versions plugin says 2.0.2 is newer, but that is just a relocation pom to much older version -->
       <version>1.4.01</version>
     </dependency>
     <dependency>
