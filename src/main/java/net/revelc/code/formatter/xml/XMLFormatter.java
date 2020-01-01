@@ -50,7 +50,7 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
         if (wellFormedValidation != null) {
             prefs.setWellFormedValidation(wellFormedValidation);
         }
-            
+
         this.formatter = new XmlDocumentFormatter(options.getOrDefault("lineending", System.lineSeparator()), prefs);
     }
 
