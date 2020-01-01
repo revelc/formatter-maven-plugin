@@ -47,9 +47,10 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
         prefs.setTabWidth(tabWidth != null ? Integer.valueOf(tabWidth) : null);
         prefs.setSplitMultiAttrs(splitMultiAttrs != null ? Boolean.valueOf(splitMultiAttrs) : null);
 
-        if (wellFormedValidation != null)
+        if (wellFormedValidation != null) {
             prefs.setWellFormedValidation(wellFormedValidation);
-
+        }
+            
         this.formatter = new XmlDocumentFormatter(options.getOrDefault("lineending", System.lineSeparator()), prefs);
     }
 
