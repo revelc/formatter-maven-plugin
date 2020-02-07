@@ -22,6 +22,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.LineEnding;
 
 /**
  * @author yoshiman
@@ -62,10 +63,12 @@ public class JsonFormatterTest extends AbstractFormatterTest {
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
-                    "478edd57b917235d00f16611505060460758e7e0f4b53938941226dca183d09be7e946d9a14dbac492a200592d5a6fa5f463e60fd1c3d3dbf05c08c3c869a36b");
+                    "478edd57b917235d00f16611505060460758e7e0f4b53938941226dca183d09be7e946d9a14dbac492a200592d5a6fa5f463e60fd1c3d3dbf05c08c3c869a36b",
+                    LineEnding.CRLF);
         } else {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
-                    "2f894c97a22f1313fc7eb55a1bab5c1e8353c11c65bf979abe40347307f80e0dd745a3ab1caa39450dcd0701ccdb3bc1b0bb3afd80557bae33e4e4e7015b52a2");
+                    "2f894c97a22f1313fc7eb55a1bab5c1e8353c11c65bf979abe40347307f80e0dd745a3ab1caa39450dcd0701ccdb3bc1b0bb3afd80557bae33e4e4e7015b52a2",
+                    LineEnding.CRLF);
         }
     }
 
