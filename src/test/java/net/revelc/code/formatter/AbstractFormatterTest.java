@@ -79,18 +79,18 @@ public abstract class AbstractFormatterTest {
     }
 
     protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha512) throws IOException {
-        doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512);
+        doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF);
     }
 
     protected void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
-            String expectedSha512) throws IOException {
+            String expectedSha512, LineEnding lineEnding) throws IOException {
 
         File originalSourceFile = new File("src/test/resources/", fileUnderTest);
         File sourceFile = new File(TEST_OUTPUT_DIR, fileUnderTest);
 
         Files.copy(originalSourceFile, sourceFile);
         formatter.init(options, new TestConfigurationSource(TEST_OUTPUT_DIR));
-        Result result = formatter.formatFile(sourceFile, LineEnding.CRLF, false);
+        Result result = formatter.formatFile(sourceFile, lineEnding, false);
         assertEquals(Result.SUCCESS, result);
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.

@@ -44,7 +44,14 @@ public abstract class AbstractCacheableFormatter {
         try {
             this.log.debug("Processing file: " + file + " with line ending: " + ending);
             String code = FileUtils.fileRead(file, this.encoding.name());
-            String formattedCode = doFormat(code, ending);
+            LineEnding formatterLineEnding = ending;
+            // if the line ending is set as KEEP we have to determine the current line ending of the file
+            // and let the formatter use this one. Otherwise it would likely fall back to current system line separator
+            if (formatterLineEnding == LineEnding.KEEP) {
+                formatterLineEnding = LineEnding.determineLineEnding(code);
+                this.log.debug("Determined line ending: " + formatterLineEnding + " to keep for file: " + file);
+            }
+            String formattedCode = doFormat(code, formatterLineEnding);
 
             if (formattedCode == null) {
                 this.log.debug("Nothing formatted. Try to fix line endings.");
