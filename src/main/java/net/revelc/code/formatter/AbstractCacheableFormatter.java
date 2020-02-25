@@ -63,6 +63,8 @@ public abstract class AbstractCacheableFormatter {
                 return Result.SKIPPED;
             }
 
+            this.log.debug("Line endings fixed");
+
             if (!dryRun) {
                 FileUtils.fileWrite(file, this.encoding.name(), formattedCode);
             }
