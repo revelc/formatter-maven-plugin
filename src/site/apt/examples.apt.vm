@@ -236,7 +236,10 @@ com.example:build-tools
 
   You can then configure your project to use this formatter in this jar.\
   A separate artifact containing the formatter resource works well with\
-  both single-module and multi-module projects:
+  both single-module and multi-module projects.
+
+  The following configuration will bind the plugin to execute the <<<format>>> goal\
+  in the default lifecycle phase of <<<process-sources>>>. Try it using <<<mvn process-sources>>>.
 
 +-----+
 <project>
@@ -308,7 +311,10 @@ com.example:multiproject
   <<In the multi-module parent POM>>
 
   Provide some basic configuration, as desired in parent POM of the\
-  multi-module project for the formatter plugin:
+  multi-module project for the formatter plugin.
+
+  The following configuration will bind the plugin to execute the <<<format>>> goal\
+  in the default lifecycle phase of <<<process-sources>>>.
 
 +-----+
 <project>
@@ -356,7 +362,8 @@ com.example:multiproject
   <<In the sibling modules which use the formatter>>
 
   Configure the non-build-tools modules to include their sibling build-tools\
-  module when they run the formatter (<moduleA> shown here, for example):
+  module when they run the formatter (<moduleA> shown here, for example).\
+  Try it using <<<mvn process-sources>>>.
 
 +-----+
 <project>
