@@ -114,7 +114,7 @@
   </distributionManagement>
 
   <properties>
-    <junit.version>5.6.0-M1</junit.version>
+    <junit.version>5.6.1</junit.version>
 
     <maven.compiler.release>8</maven.compiler.release>
 
@@ -132,92 +132,97 @@
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.commands</artifactId>
-        <version>3.9.600</version>
+        <version>3.9.700</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.contenttype</artifactId>
-        <version>3.7.500</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.core.expressions</artifactId>
-        <version>3.6.600</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.core.filesystem</artifactId>
-        <version>1.7.600</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.core.jobs</artifactId>
-        <version>3.10.600</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.core.resources</artifactId>
-        <version>3.13.600</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.core.runtime</artifactId>
-        <version>3.17.0</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.equinox.app</artifactId>
-        <version>1.4.300</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.equinox.common</artifactId>
-        <version>3.10.600</version>
-      </dependency>
-      <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
-        <groupId>org.eclipse.platform</groupId>
-        <artifactId>org.eclipse.equinox.preferences</artifactId>
         <version>3.7.600</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.expressions</artifactId>
+        <version>3.6.700</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.filesystem</artifactId>
+        <version>1.7.700</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.jobs</artifactId>
+        <version>3.10.700</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.resources</artifactId>
+        <version>3.13.700</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.core.runtime</artifactId>
+        <version>3.17.100</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.app</artifactId>
+        <version>1.4.400</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.common</artifactId>
+        <version>3.11.0</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.equinox.preferences</artifactId>
+        <version>3.7.700</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.registry</artifactId>
-        <version>3.8.600</version>
+        <version>3.8.700</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.osgi</artifactId>
-        <version>3.15.100</version>
+        <version>3.15.200</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.text</artifactId>
-        <version>3.10.0</version>
+        <version>3.10.100</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.10.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.10.1</version>
+      <version>2.10.3</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.10.1</version>
+      <version>2.10.3</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -233,7 +238,7 @@
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>jsdt-core</artifactId>
-      <version>2.6.0</version>
+      <version>2.7.0</version>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
@@ -269,12 +274,12 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.20.0</version>
+      <version>3.21.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <version>1.12.1</version>
+      <version>1.13.1</version>
     </dependency>
     <dependency>
       <groupId>org.w3c.css</groupId>
@@ -323,7 +328,7 @@
         <plugin>
           <groupId>com.github.ekryd.sortpom</groupId>
           <artifactId>sortpom-maven-plugin</artifactId>
-          <version>2.10.0</version>
+          <version>2.11.0</version>
         </plugin>
         <plugin>
           <groupId>com.github.github</groupId>
@@ -380,7 +385,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.1.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -417,7 +422,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.2.0</version>
           <configuration>
             <quiet>true</quiet>
             <doclint>all,-missing</doclint>
@@ -453,7 +458,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.8.2</version>
+          <version>3.9.0</version>
           <dependencies>
             <!-- Fluido is listed here for version update checking only -->
             <dependency>
@@ -494,7 +499,7 @@
         <plugin>
           <groupId>org.gaul</groupId>
           <artifactId>modernizer-maven-plugin</artifactId>
-          <version>2.0.0</version>
+          <version>2.1.0</version>
           <configuration>
             <javaVersion>${maven.compiler.target}</javaVersion>
           </configuration>
