@@ -626,6 +626,8 @@
                 <ignored>org.junit.jupiter:junit-jupiter-engine</ignored>
                 <!-- ignore transitive dependency overridden to avoid vulnerability -->
                 <ignored>commons-beanutils:commons-beanutils</ignored>
+                <!-- ignore alignment with jackson annotations -->
+                <ignored>com.fasterxml.jackson.core:jackson-annotations</ignored>
               </ignoredUnusedDeclaredDependencies>
             </configuration>
           </execution>
