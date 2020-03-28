@@ -32,10 +32,10 @@ public class HTMLFormatterTest extends AbstractFormatterTest {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new HTMLFormatter(), "someFile.html",
-                    "4c67ab8f63ee0efcb384d4adfe280476caf0d26c5e8799cde868ca1d94d64ece75d7bc3d37c5e84b7ca8656e310ef84057e5068e0dec3bd22a741ca181835efc");
+                    "1cfe5e48635d8618be4d490a5e7f690ef8e1dfc7e24303457030e281068bbebac44b552ae52ac88f03bf10e72ed0582904d665afc54bade395fd3d183abe0cba");
         } else {
             doTestFormat(new HTMLFormatter(), "someFile.html",
-                    "c41dd597f53450a404550d45b574d4ffe04cae138a8d5b74351c40492da392b31398bb0176f8229dd815cef63109408b95a06e9707242346a718d205ef8fb2df");
+                    "57b5eae0562d6abc4d4e874b675c8351282b0c4797a19891c82bb5e1c50c5ede9bda6d1d9490a775e0d5f56f0521854d321de78782760d5fb8567680a25c307c");
         }
     }
 
