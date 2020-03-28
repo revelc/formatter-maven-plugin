@@ -670,6 +670,9 @@
       <plugin>
         <groupId>org.gaul</groupId>
         <artifactId>modernizer-maven-plugin</artifactId>
+        <configuration>
+          <javaVersion>${maven.compiler.release}</javaVersion>
+        </configuration>
         <executions>
           <execution>
             <id>modernizer</id>
