@@ -33,3 +33,6 @@ nb-configuration.xml
 .idea/
 *.ipr
 *.iws
+
+### Formatter Cache ###
+.cache/
