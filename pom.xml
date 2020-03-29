@@ -101,6 +101,11 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
     </dependency>
@@ -214,6 +219,7 @@
               <rules>
                 <dependencyConvergence>
                   <excludes>
+                    <exclude>cglib:cglib</exclude>
                     <exclude>commons-beanutils:commons-beanutils</exclude>
                     <exclude>commons-logging:commons-logging</exclude>
                     <exclude>com.google.guava:guava</exclude>
@@ -235,6 +241,8 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <configuration>
           <ignoredUnusedDeclaredDependencies>
+            <!-- ignore transient dependency overridden to get newer asm jdk support -->
+            <ignored>cglib:cglib</ignored>
             <!-- ignore transitive dependency overridden to avoid vulnerability -->
             <ignore>commons-beanutils:commons-beanutils</ignore>
             <!-- ignore alignment with commons-logging to support slf4j -->
