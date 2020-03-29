@@ -556,6 +556,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 result = this.cssFormatter.formatFile(file, this.lineEnding, dryRun);
             }
         } else {
+            log.debug("No formatter found or initialization failed for file " + file.getName());
             result = Result.SKIPPED;
         }
 
