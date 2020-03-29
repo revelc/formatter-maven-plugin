@@ -287,6 +287,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @throws MojoExecutionException
      *             the mojo execution exception
+     * @throws MojoFailureException
+     *             the mojo failure exception
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     @Override
@@ -457,6 +459,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the hash cache
      * @param basedirPath
      *            the basedir path
+     * @throws MojoFailureException
+     *             the mojo failure exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      */
     private void formatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath)
             throws MojoFailureException, MojoExecutionException {
@@ -479,10 +485,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the hash cache
      * @param basedirPath
      *            the basedir path
+     * @param dryRun
+     *            the dry run
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      * @throws BadLocationException
      *             the bad location exception
+     * @throws MojoFailureException
+     *             the mojo failure exception
+     * @throws MojoExecutionException
+     *             the mojo execution exception
      */
     protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
