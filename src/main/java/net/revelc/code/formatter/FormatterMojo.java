@@ -648,27 +648,33 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *             the mojo execution exception
      */
     private void createCodeFormatter() throws MojoExecutionException {
+        // Java Setup
         Map<String, String> javaFormattingOptions = getFormattingOptions(this.configFile);
         if (javaFormattingOptions != null) {
             this.javaFormatter.init(javaFormattingOptions, this);
         }
+        // Javascript Setup
         Map<String, String> jsFormattingOptions = getFormattingOptions(this.configJsFile);
         if (jsFormattingOptions != null) {
             this.jsFormatter.init(jsFormattingOptions, this);
         }
+        // Html Setup
         if (configHtmlFile != null) {
-            this.htmlFormatter.init(getOptionsFromPropertiesFile(configHtmlFile), this);
+            this.htmlFormatter.init(getOptionsFromPropertiesFile(this.configHtmlFile), this);
         }
+        // Xml Setup
         if (configXmlFile != null) {
-            Map<String, String> xmlFormattingOptions = getOptionsFromPropertiesFile(configXmlFile);
+            Map<String, String> xmlFormattingOptions = getOptionsFromPropertiesFile(this.configXmlFile);
             xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
             this.xmlFormatter.init(xmlFormattingOptions, this);
         }
+        // Json Setup
         if (configJsonFile != null) {
-            Map<String, String> jsonFormattingOptions = getOptionsFromPropertiesFile(configJsonFile);
+            Map<String, String> jsonFormattingOptions = getOptionsFromPropertiesFile(this.configJsonFile);
             jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
             this.jsonFormatter.init(jsonFormattingOptions, this);
         }
+        // Css Setup
         if (configCssFile != null) {
             this.cssFormatter.init(getOptionsFromPropertiesFile(configCssFile), this);
         }
