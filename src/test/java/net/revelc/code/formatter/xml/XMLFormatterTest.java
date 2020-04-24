@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
 
@@ -29,6 +30,7 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 public class XMLFormatterTest extends AbstractFormatterTest {
 
     @Test
+    @EnabledIfSystemProperty(named = "line.separator", matches = "\\n")
     public void testDoFormatFile() throws Exception {
         // Since we set the line endings via options for xml, we cannot rely on CRLF inside doTestFormat.
         // The option will not be available inside xml formatter init so it will use whatever the system
