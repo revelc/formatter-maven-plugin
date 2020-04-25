@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
 
@@ -28,6 +29,7 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 public class HTMLFormatterTest extends AbstractFormatterTest {
 
     @Test
+    @EnabledIfSystemProperty(named = "line.separator", matches = "\\n")
     public void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         if (System.lineSeparator().equals("\n")) {
