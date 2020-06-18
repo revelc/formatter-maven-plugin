@@ -144,7 +144,7 @@
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.expressions</artifactId>
-        <version>3.6.700</version>
+        <version>3.6.800</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
