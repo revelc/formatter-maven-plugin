@@ -563,7 +563,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         switch (result) {
         case SKIPPED:
             rc.skippedCount++;
-            return;
+            break;
         case SUCCESS:
             rc.successCount++;
             break;
@@ -574,16 +574,24 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             break;
         }
 
+        // Write the cache
         String formattedCode = readFileAsString(file);
         String formattedHash = sha512hash(formattedCode);
         hashCache.setProperty(path, formattedHash);
 
+        // If we had determined to skip write, do so now after cache was written
+        if (result.equals(Result.SKIPPED)) {
+            return;
+        }
+
+        // As a safety check, if our hash matches, skip the write of file
         if (originalHash.equals(formattedHash)) {
             rc.skippedCount++;
             log.debug("Equal hash code. Not writing result to file.");
             return;
         }
 
+        // Now write the file
         writeStringToFile(formattedCode, file);
     }
 
