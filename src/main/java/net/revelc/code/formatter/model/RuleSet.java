@@ -32,6 +32,7 @@ class RuleSet extends RuleSetBase {
      *
      * @param digester
      *            the digester
+     * 
      * @see org.apache.commons.digester3.RuleSetBase#addRuleInstances(org.apache.commons.digester3.Digester)
      */
     @Override

@@ -292,6 +292,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *             the mojo execution exception
      * @throws MojoFailureException
      *             the mojo failure exception
+     * 
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     @Override
@@ -462,6 +463,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the hash cache
      * @param basedirPath
      *            the basedir path
+     * 
      * @throws MojoFailureException
      *             the mojo failure exception
      * @throws MojoExecutionException
@@ -490,6 +492,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the basedir path
      * @param dryRun
      *            the dry run
+     * 
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      * @throws BadLocationException
@@ -603,6 +606,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @param str
      *            the str
+     * 
      * @return the string
      */
     private String sha512hash(String str) {
@@ -614,7 +618,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @param file
      *            the file
+     * 
      * @return the string
+     * 
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -639,6 +645,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the str
      * @param file
      *            the file
+     * 
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -701,6 +708,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Return the options to be passed when creating {@link CodeFormatter} instance.
      *
      * @return the formatting options or null if not config file found
+     * 
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
@@ -722,6 +730,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Read config file and return the config as {@link Map}.
      *
      * @return the options from config file
+     * 
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
@@ -747,6 +756,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Read properties file and return the properties as {@link Map}.
      *
      * @return the options from properties file or null if not properties file found
+     * 
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
