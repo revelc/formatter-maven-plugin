@@ -14,18 +14,13 @@
 package net.revelc.code.formatter.html;
 
 import net.revelc.code.formatter.Formatter;
-import net.revelc.code.formatter.LineEnding;
 import net.revelc.code.formatter.jsoup.JsoupBasedFormatter;
 
 /**
  * @author yoshiman
- *
  */
 public class HTMLFormatter extends JsoupBasedFormatter implements Formatter {
 
-    @Override
-    public String doFormat(String code, LineEnding ending) {
-        return super.doFormat(code, ending);
-    }
+    // Nothing more necessary
 
 }
