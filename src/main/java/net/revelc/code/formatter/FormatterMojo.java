@@ -607,7 +607,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private String readFileAsString(File file) throws java.io.IOException {
+    private String readFileAsString(File file) throws IOException {
         StringBuilder fileData = new StringBuilder(1000);
         try (BufferedReader reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding))) {
             char[] buf = new char[1024];
