@@ -26,11 +26,11 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 /**
  * @author yoshiman
  */
-public class HTMLFormatterTest extends AbstractFormatterTest {
+class HTMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     @EnabledIfSystemProperty(named = "line.separator", matches = "\\n")
-    public void testDoFormatFile() throws Exception {
+    void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new HTMLFormatter(), "someFile.html",
@@ -42,7 +42,7 @@ public class HTMLFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testIsIntialized() throws Exception {
+    void testIsIntialized() throws Exception {
         HTMLFormatter htmlFormatter = new HTMLFormatter();
         assertFalse(htmlFormatter.isInitialized());
         htmlFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));

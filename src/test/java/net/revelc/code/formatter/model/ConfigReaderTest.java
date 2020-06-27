@@ -38,7 +38,7 @@ public class ConfigReaderTest {
      *             the exception
      */
     @Test
-    public void test_success_read_config() throws Exception {
+    void test_success_read_config() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (InputStream in = cl.getResourceAsStream("sample-config.xml")) {
             ConfigReader configReader = new ConfigReader();
@@ -57,7 +57,7 @@ public class ConfigReaderTest {
      *             the exception
      */
     @Test
-    public void test_read_invalid_config() throws Exception {
+    void test_read_invalid_config() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
             ConfigReader configReader = new ConfigReader();
@@ -74,7 +74,7 @@ public class ConfigReaderTest {
      *             the exception
      */
     @Test
-    public void test_read_invalid_config2() throws Exception {
+    void test_read_invalid_config2() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
             ConfigReader configReader = new ConfigReader();

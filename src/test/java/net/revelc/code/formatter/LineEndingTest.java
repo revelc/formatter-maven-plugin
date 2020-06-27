@@ -23,13 +23,13 @@ import org.junit.jupiter.api.Test;
  * @author Matt Blanchette
  * @author marvin.froeder
  */
-public class LineEndingTest {
+class LineEndingTest {
 
     /**
      * Test successfully determining CRLF line ending.
      */
     @Test
-    public void test_success_read_line_endings_crlf() throws Exception {
+    void test_success_read_line_endings_crlf() throws Exception {
         String fileData = "Test\r\nTest\r\nTest\r\n";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
         assertEquals(LineEnding.CRLF, lineEnd);
@@ -39,7 +39,7 @@ public class LineEndingTest {
      * Test successfully determining LF line ending.
      */
     @Test
-    public void test_success_read_line_endings_lf() throws Exception {
+    void test_success_read_line_endings_lf() throws Exception {
         String fileData = "Test\nTest\nTest\n";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
         assertEquals(LineEnding.LF, lineEnd);
@@ -49,7 +49,7 @@ public class LineEndingTest {
      * Test successfully determining CR line ending.
      */
     @Test
-    public void test_success_read_line_endings_cr() throws Exception {
+    void test_success_read_line_endings_cr() throws Exception {
         String fileData = "Test\rTest\rTest\r";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
         assertEquals(LineEnding.CR, lineEnd);
@@ -59,7 +59,7 @@ public class LineEndingTest {
      * Test successfully determining LF line ending with mixed endings.
      */
     @Test
-    public void test_success_read_line_endings_mixed_lf() throws Exception {
+    void test_success_read_line_endings_mixed_lf() throws Exception {
         String fileData = "Test\r\nTest\rTest\nTest\nTest\r\nTest\n";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
         assertEquals(LineEnding.LF, lineEnd);
@@ -69,7 +69,7 @@ public class LineEndingTest {
      * Test successfully determining AUTO line ending with mixed endings and no clear majority.
      */
     @Test
-    public void test_success_read_line_endings_mixed_auto() throws Exception {
+    void test_success_read_line_endings_mixed_auto() throws Exception {
         String fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
         assertEquals(LineEnding.UNKNOWN, lineEnd);
@@ -79,7 +79,7 @@ public class LineEndingTest {
      * Test successfully determining AUTO line ending with no endings.
      */
     @Test
-    public void test_success_read_line_endings_none_auto() throws Exception {
+    void test_success_read_line_endings_none_auto() throws Exception {
         String fileData = "TestTestTestTest";
         LineEnding lineEnd = LineEnding.determineLineEnding(fileData);
         assertEquals(LineEnding.UNKNOWN, lineEnd);

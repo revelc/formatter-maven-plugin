@@ -27,11 +27,11 @@ import net.revelc.code.formatter.AbstractFormatterTest;
  * @author yoshiman
  * @author jam01
  */
-public class XMLFormatterTest extends AbstractFormatterTest {
+class XMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     @EnabledIfSystemProperty(named = "line.separator", matches = "\\n")
-    public void testDoFormatFile() throws Exception {
+    void testDoFormatFile() throws Exception {
         // Since we set the line endings via options for xml, we cannot rely on CRLF inside doTestFormat.
         // The option will not be available inside xml formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
@@ -45,7 +45,7 @@ public class XMLFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testIsIntialized() throws Exception {
+    void testIsIntialized() throws Exception {
         XMLFormatter xmlFormatter = new XMLFormatter();
         assertFalse(xmlFormatter.isInitialized());
         xmlFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));

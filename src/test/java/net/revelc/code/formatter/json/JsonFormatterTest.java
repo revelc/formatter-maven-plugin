@@ -27,7 +27,7 @@ import net.revelc.code.formatter.LineEnding;
 /**
  * @author yoshiman
  */
-public class JsonFormatterTest extends AbstractFormatterTest {
+class JsonFormatterTest extends AbstractFormatterTest {
 
     @Test
     public void testDoFormatFile() throws Exception {
@@ -44,7 +44,7 @@ public class JsonFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testIsInitialized() {
+    void testIsInitialized() {
         JsonFormatter jsonFormatter = new JsonFormatter();
         assertFalse(jsonFormatter.isInitialized());
         jsonFormatter.init(new HashMap<String, String>(),
@@ -53,7 +53,7 @@ public class JsonFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testDoFormatFileWithConfig() throws Exception {
+    void testDoFormatFileWithConfig() throws Exception {
         Map<String, String> jsonFormattingOptions = new HashMap<>();
         jsonFormattingOptions.put("indent", "2");
         jsonFormattingOptions.put("spaceBeforeSeparator", "false");
