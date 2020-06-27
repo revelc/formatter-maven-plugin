@@ -51,6 +51,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Strings;
 import com.google.common.hash.Hashing;
 
 import net.revelc.code.formatter.css.CssFormatter;
@@ -506,8 +507,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
         Log log = getLog();
         log.debug("Processing file: " + file);
-        String code = readFileAsString(file);
-        String originalHash = sha512hash(code);
+        String originalCode = readFileAsString(file);
+        String originalHash = sha512hash(originalCode);
 
         String canonicalPath = file.getCanonicalPath();
         String path = canonicalPath.substring(basedirPath.length());
@@ -518,79 +519,92 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        Result result;
+        Result result = null;
+        String formattedCode = null;
         if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
             if (skipJavaFormatting) {
                 getLog().info("Java formatting is skipped");
                 result = Result.SKIPPED;
             } else {
-                result = this.javaFormatter.formatFile(file, this.lineEnding, dryRun);
+                formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".js") && jsFormatter.isInitialized()) {
             if (skipJsFormatting) {
                 getLog().info("Javascript formatting is skipped");
                 result = Result.SKIPPED;
             } else {
-                result = this.jsFormatter.formatFile(file, this.lineEnding, dryRun);
+                formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".html") && htmlFormatter.isInitialized()) {
             if (skipHtmlFormatting) {
                 getLog().info("Html formatting is skipped");
                 result = Result.SKIPPED;
             } else {
-                result = this.htmlFormatter.formatFile(file, this.lineEnding, dryRun);
+                formattedCode = this.htmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".xml") && xmlFormatter.isInitialized()) {
             if (skipXmlFormatting) {
                 getLog().info("Xml formatting is skipped");
                 result = Result.SKIPPED;
             } else {
-                result = this.xmlFormatter.formatFile(file, this.lineEnding, dryRun);
+                formattedCode = this.xmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".json") && jsonFormatter.isInitialized()) {
             if (skipJsonFormatting) {
                 getLog().info("json formatting is skipped");
                 result = Result.SKIPPED;
             } else {
-                result = this.jsonFormatter.formatFile(file, this.lineEnding, dryRun);
+                formattedCode = this.jsonFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".css") && cssFormatter.isInitialized()) {
             if (skipCssFormatting) {
                 getLog().info("css formatting is skipped");
                 result = Result.SKIPPED;
             } else {
-                result = this.cssFormatter.formatFile(file, this.lineEnding, dryRun);
+                formattedCode = this.cssFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else {
             log.debug("No formatter found or initialization failed for file " + file.getName());
             result = Result.SKIPPED;
         }
 
-        switch (result) {
-        case SKIPPED:
+        // If not skipped, check formatting result
+        if (!Result.SKIPPED.equals(result)) {
+            if (formattedCode == null) {
+                result = Result.FAIL;
+            } else if (originalCode.equals(formattedCode)) {
+                result = Result.SKIPPED;
+            } else {
+                result = Result.SUCCESS;
+            }
+        }
+
+        // Process the result type
+        if (Result.SKIPPED.equals(result)) {
             rc.skippedCount++;
-            break;
-        case SUCCESS:
+        } else if (Result.SUCCESS.equals(result)) {
             rc.successCount++;
-            break;
-        case FAIL:
+        } else if (Result.FAIL.equals(result)) {
             rc.failCount++;
             return;
-        default:
-            break;
         }
 
         // Write the cache
-        String formattedCode = readFileAsString(file);
-        String formattedHash = sha512hash(formattedCode);
+        String formattedHash;
+        if (Result.SKIPPED.equals(result)) {
+            formattedHash = originalHash;
+        } else {
+            formattedHash = sha512hash(Strings.nullToEmpty(formattedCode));
+        }
         hashCache.setProperty(path, formattedHash);
 
         // If we had determined to skip write, do so now after cache was written
-        if (result.equals(Result.SKIPPED)) {
+        if (Result.SKIPPED.equals(result)) {
+            log.debug("File is already formatted.  Writing to cache only.");
             return;
         }
 
-        // As a safety check, if our hash matches, skip the write of file
+        // As a safety check, if our hash matches, skip the write of file (should never occur)
         if (originalHash.equals(formattedHash)) {
             rc.skippedCount++;
             log.debug("Equal hash code. Not writing result to file.");
@@ -598,7 +612,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         // Now write the file
-        writeStringToFile(formattedCode, file);
+        if (!dryRun) {
+            writeStringToFile(formattedCode, file);
+        }
     }
 
     /**

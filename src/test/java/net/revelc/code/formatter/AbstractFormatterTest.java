@@ -14,6 +14,8 @@
 package net.revelc.code.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -25,6 +27,7 @@ import java.util.Map;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
+import org.codehaus.plexus.util.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 
 import com.google.common.hash.Hashing;
@@ -85,13 +88,24 @@ public abstract class AbstractFormatterTest {
     protected void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
             String expectedSha512, LineEnding lineEnding) throws IOException {
 
+        // Set original file and file to use for test
         File originalSourceFile = new File("src/test/resources/", fileUnderTest);
         File sourceFile = new File(TEST_OUTPUT_DIR, fileUnderTest);
 
+        // Copy file to new location
         Files.copy(originalSourceFile, sourceFile);
+
+        // Read file to be formatted
+        String originalCode = FileUtils.fileRead(sourceFile, StandardCharsets.UTF_8.name());
+
+        // Format the file and make sure formatting worked
         formatter.init(options, new TestConfigurationSource(TEST_OUTPUT_DIR));
-        Result result = formatter.formatFile(sourceFile, lineEnding, false);
-        assertEquals(Result.SUCCESS, result);
+        String formattedCode = formatter.formatFile(sourceFile, originalCode, lineEnding);
+        assertNotNull(formattedCode);
+        assertNotEquals(originalCode, formattedCode);
+
+        // Write the file we formatte4d
+        FileUtils.fileWrite(sourceFile, StandardCharsets.UTF_8.name(), formattedCode);
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
         byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();

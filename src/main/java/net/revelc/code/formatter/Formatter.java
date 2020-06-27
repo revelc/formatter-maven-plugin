@@ -29,7 +29,7 @@ public interface Formatter {
     /**
      * Format individual file.
      */
-    abstract Result formatFile(File file, LineEnding ending, boolean dryRun);
+    abstract String formatFile(File file, String originalCode, LineEnding ending);
 
     /**
      * return true if this formatter have been initialized
