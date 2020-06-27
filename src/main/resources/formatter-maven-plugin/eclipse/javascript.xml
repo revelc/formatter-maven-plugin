@@ -146,6 +146,7 @@
 <setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_comma_in_type_arguments" value="insert"/>
 <setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_comma_in_type_parameters" value="insert"/>
 <setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_ellipsis" value="insert"/>
+<setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_function_keyword" value="do not insert"/>
 <setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_opening_angle_bracket_in_parameterized_type_reference" value="do not insert"/>
 <setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_opening_angle_bracket_in_type_arguments" value="do not insert"/>
 <setting id="org.eclipse.wst.jsdt.core.formatter.insert_space_after_opening_angle_bracket_in_type_parameters" value="do not insert"/>
