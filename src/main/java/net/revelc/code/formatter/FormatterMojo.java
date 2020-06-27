@@ -115,6 +115,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = ".", property = "project.basedir", readonly = true, required = true)
     private File basedir;
 
+    @Parameter(defaultValue = "${project.basedir}/.cache")
+    private File cachedir;
+
     /**
      * Location of the Java source files to format. Defaults to source main and test directories if not set. Deprecated
      * in version 0.3. Reintroduced in 0.4.
@@ -411,7 +414,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the props
      */
     private void storeFileHashCache(Properties props) {
-        File cacheFile = new File(this.targetDirectory, CACHE_PROPERTIES_FILENAME);
+        File cacheFile = new File(this.cachedir, CACHE_PROPERTIES_FILENAME);
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(cacheFile))) {
             props.store(out, null);
         } catch (IOException e) {
@@ -427,15 +430,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private Properties readFileHashCacheFile() {
         Properties props = new Properties();
         Log log = getLog();
-        if (!this.targetDirectory.exists()) {
-            this.targetDirectory.mkdirs();
-        } else if (!this.targetDirectory.isDirectory()) {
-            log.warn("Something strange here as the '" + this.targetDirectory.getPath()
-                    + "' supposedly target directory is not a directory.");
+        if (!this.cachedir.exists()) {
+            this.cachedir.mkdirs();
+        } else if (!this.cachedir.isDirectory()) {
+            log.warn("Something strange here as the '" + this.cachedir.getPath()
+                    + "' supposedly cache directory is not a directory.");
             return props;
         }
 
-        File cacheFile = new File(this.targetDirectory, CACHE_PROPERTIES_FILENAME);
+        File cacheFile = new File(this.cachedir, CACHE_PROPERTIES_FILENAME);
         if (!cacheFile.exists()) {
             return props;
         }
