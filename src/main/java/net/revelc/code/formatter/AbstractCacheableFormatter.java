@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.maven.plugin.logging.Log;
-import org.codehaus.plexus.util.FileUtils;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 
@@ -40,42 +39,34 @@ public abstract class AbstractCacheableFormatter {
         this.encoding = cfg.getEncoding();
     }
 
-    public Result formatFile(File file, LineEnding ending, boolean dryRun) {
+    public String formatFile(File file, String originalCode, LineEnding ending) {
         try {
             this.log.debug("Processing file: " + file + " with line ending: " + ending);
-            String code = FileUtils.fileRead(file, this.encoding.name());
             LineEnding formatterLineEnding = ending;
             // if the line ending is set as KEEP we have to determine the current line ending of the file
             // and let the formatter use this one. Otherwise it would likely fall back to current system line separator
             if (formatterLineEnding == LineEnding.KEEP) {
-                formatterLineEnding = LineEnding.determineLineEnding(code);
+                formatterLineEnding = LineEnding.determineLineEnding(originalCode);
                 this.log.debug("Determined line ending: " + formatterLineEnding + " to keep for file: " + file);
             }
-            String formattedCode = doFormat(code, formatterLineEnding);
+            String formattedCode = doFormat(originalCode, formatterLineEnding);
 
             if (formattedCode == null) {
                 this.log.debug("Nothing formatted. Try to fix line endings.");
-                formattedCode = fixLineEnding(code, ending);
+                formattedCode = fixLineEnding(originalCode, ending);
             }
 
             if (formattedCode == null) {
                 this.log.debug("Equal code. Not writing result to file.");
-                return Result.SKIPPED;
+                return originalCode;
             }
 
             this.log.debug("Line endings fixed");
 
-            if (!dryRun) {
-                FileUtils.fileWrite(file, this.encoding.name(), formattedCode);
-            }
-
-            // readme: Uncomment this when having build issues with hashCodes when nothing
-            // changed. The issue is likely copyright dating issues.
-            // this.log.debug("formatted code: " + formattedCode);
-            return Result.SUCCESS;
+            return formattedCode;
         } catch (IOException | MalformedTreeException | BadLocationException e) {
             this.log.warn(e);
-            return Result.FAIL;
+            return null;
         }
     }
 
