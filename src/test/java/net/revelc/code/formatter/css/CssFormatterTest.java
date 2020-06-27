@@ -25,10 +25,10 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 /**
  * @author yoshiman
  */
-public class CssFormatterTest extends AbstractFormatterTest {
+class CssFormatterTest extends AbstractFormatterTest {
 
     @Test
-    public void testDoFormatFile() throws Exception {
+    void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new CssFormatter(), "someFile.css",
@@ -40,7 +40,7 @@ public class CssFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testIsIntialized() throws Exception {
+    void testIsIntialized() throws Exception {
         CssFormatter cssFormatter = new CssFormatter();
         assertFalse(cssFormatter.isInitialized());
         cssFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
