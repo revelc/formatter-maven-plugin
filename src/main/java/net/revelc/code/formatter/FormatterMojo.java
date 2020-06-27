@@ -227,37 +227,37 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * Whether the java formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.java.skip")
-    private Boolean skipJavaFormatting;
+    private boolean skipJavaFormatting;
 
     /**
      * Whether the javascript formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.js.skip")
-    private Boolean skipJsFormatting;
+    private boolean skipJsFormatting;
 
     /**
      * Whether the html formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.html.skip")
-    private Boolean skipHtmlFormatting;
+    private boolean skipHtmlFormatting;
 
     /**
      * Whether the xml formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.xml.skip")
-    private Boolean skipXmlFormatting;
+    private boolean skipXmlFormatting;
 
     /**
      * Whether the json formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.json.skip")
-    private Boolean skipJsonFormatting;
+    private boolean skipJsonFormatting;
 
     /**
      * Whether the css formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.css.skip")
-    private Boolean skipCssFormatting;
+    private boolean skipCssFormatting;
 
     /**
      * Whether the formatting is skipped.
@@ -265,13 +265,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @since 0.5
      */
     @Parameter(defaultValue = "false", alias = "skip", property = "formatter.skip")
-    private Boolean skipFormatting;
+    private boolean skipFormatting;
 
     /**
      * Use eclipse defaults when set to true for java and javascript.
      */
     @Parameter(defaultValue = "false", property = "formatter.useEclipseDefaults")
-    private Boolean useEclipseDefaults;
+    private boolean useEclipseDefaults;
 
     private JavaFormatter javaFormatter = new JavaFormatter();
 
