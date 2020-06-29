@@ -110,3 +110,14 @@ ver 2.11.0
 - Support Eclipse 2019-09 formatter
 - Update plugins, dependencies
 
+ver 2.12.0
+==========
+- Support level with Eclipse 2020-06.
+- Cache process rewritten to reduce reads/writes of files and speed up initial uncached usage.  Cache directory added with ability to override to survive maven clean on subsequent runs.  All files will be logged to cache now, not just files that are formatted.
+- Patch vulnerable library usage.
+- New 'wellFormedValidation=WARN' with xml formatter for allowing partial files.
+- LineEnding.KEEP support adjustments to fix processing.
+- Make 'formatter.excludes' property
+- Additional debug logging for missing formatter or initialization errors.
+- Bring up to date internal Eclipse Java and JavaScript format configuration files and sort for reasier future updates.  Sort other configuration files and sort file handling usage.
+- All skip options switched from Wrapper Boolean to primitive boolean as all have defaults as false.
