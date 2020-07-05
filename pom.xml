@@ -298,7 +298,7 @@
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
       <!-- versions plugin says 2.0.2 is newer, but that is just a relocation pom to much older version -->
-      <version>1.4.01</version>
+      <version>2.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
