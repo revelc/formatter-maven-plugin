@@ -286,6 +286,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     private CssFormatter cssFormatter = new CssFormatter();
 
+    private boolean hashCacheWritten;
+
     /**
      * Execute.
      *
@@ -357,7 +359,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 }
             }
 
-            storeFileHashCache(hashCache);
+            // Only store the cache if it changed during processing to avoid java properties timestamp writting for
+            // those that want to save the cache
+            if (hashCacheWritten) {
+                storeFileHashCache(hashCache);
+            }
 
             long endClock = System.currentTimeMillis();
 
@@ -597,6 +603,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             formattedHash = sha512hash(Strings.nullToEmpty(formattedCode));
         }
         hashCache.setProperty(path, formattedHash);
+        hashCacheWritten = true;
 
         // If we had determined to skip write, do so now after cache was written
         if (Result.SKIPPED.equals(result)) {
