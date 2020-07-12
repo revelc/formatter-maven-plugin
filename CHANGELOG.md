@@ -121,3 +121,7 @@ ver 2.12.0
 - Additional debug logging for missing formatter or initialization errors.
 - Bring up to date internal Eclipse Java and JavaScript format configuration files and sort for reasier future updates.  Sort other configuration files and sort file handling usage.
 - All skip options switched from Wrapper Boolean to primitive boolean as all have defaults as false.
+
+ver 2.12.1
+==========
+- Do not write the cache file if it did not actually write any files for update witin the cache.  This allows users to save the cache to their repository and it will work on both windows/*nix without full rewrites.  The problem with the cache file write when not needed is due to java properties design issue where it logs timestamp upon change.
