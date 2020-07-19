@@ -43,8 +43,10 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
 
         int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
         boolean rgbAsHex = Boolean.parseBoolean(options.getOrDefault("rgbAsHex", Boolean.TRUE.toString()));
-        boolean useSourceStringValues = Boolean.parseBoolean(options.getOrDefault("useSourceStringValues", Boolean.FALSE.toString()));
-        formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex).setUseSourceStringValues(useSourceStringValues);
+        boolean useSourceStringValues = Boolean
+                .parseBoolean(options.getOrDefault("useSourceStringValues", Boolean.FALSE.toString()));
+        formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex)
+                .setUseSourceStringValues(useSourceStringValues);
     }
 
     @Override
