@@ -117,13 +117,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private File basedir;
 
     /**
-     * Projects cache directory. This file is a hash cache of the files in the project source. It can be preserved in
-     * source code such that it ensures builds are always fast by not unnecessarily writing files constantly. It can
-     * also be added to gitignore in case startup is not necessary. It further can be redirected to another location.
+     * Projects cache directory.
      *
+     * <p>
+     * This file is a hash cache of the files in the project source. It can be preserved in source code such that it
+     * ensures builds are always fast by not unnecessarily writing files constantly. It can also be added to gitignore
+     * in case startup is not necessary. It further can be redirected to another location.
+     *
+     * <p>
      * When stored in the repository, the cache if run on cross platforms will display the files multiple times due to
      * line ending differences on the platform.
      *
+     * <p>
      * The cache itself has been part of formatter plugin for a long time but was hidden in target directory and did not
      * survive clean phase when it should. This is not intended to be clean in that way as one would want as close to a
      * no-op as possible when files are already all formatted and/or have not been otherwise touched. This is used based
@@ -131,7 +136,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * 
      * @since 2.12.1
      */
-    @Parameter(defaultValue = "${project.basedir}/.cache")
+    @Parameter(defaultValue = "${project.build.directory}")
     private File cachedir;
 
     /**
