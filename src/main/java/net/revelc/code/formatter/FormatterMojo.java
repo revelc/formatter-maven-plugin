@@ -136,7 +136,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * 
      * @since 2.12.1
      */
-    @Parameter(defaultValue = "${project.build.directory}")
+    @Parameter(defaultValue = "${project.build.directory}", property = "formatter.cachedir")
     private File cachedir;
 
     /**
