@@ -46,7 +46,7 @@ versions of this plugin and their corresponding Eclipse versions.
 [issues_img]: https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg
 [issues_link]: https://github.com/revelc/formatter-maven-plugin/issues
 [license_img]: http://img.shields.io/badge/license-ASL-blue.svg
-[license_link]: https://github.com/revelc/formatter-maven-plugin/blob/master/LICENSE
+[license_link]: https://github.com/revelc/formatter-maven-plugin/blob/main/LICENSE
 [m2e]: https://eclipse.org/m2e
 [maven_img]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg
 [maven_link]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin
