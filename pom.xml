@@ -97,8 +97,8 @@
     <url>https://github.com/revelc/formatter-maven-plugin/issues</url>
   </issueManagement>
   <ciManagement>
-    <system>travis</system>
-    <url>https://travis-ci.org/revelc/formatter-maven-plugin/</url>
+    <system>GitHub</system>
+    <url>https://github.com/revelc/formatter-maven-plugin/actions</url>
   </ciManagement>
 
   <distributionManagement>
@@ -491,16 +491,6 @@
           <version>2.7</version>
         </plugin>
         <plugin>
-          <groupId>org.eluder.coveralls</groupId>
-          <artifactId>coveralls-maven-plugin</artifactId>
-          <version>4.3.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.5</version>
-        </plugin>
-        <plugin>
           <groupId>org.gaul</groupId>
           <artifactId>modernizer-maven-plugin</artifactId>
           <version>2.1.0</version>
@@ -708,25 +698,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>pre-unit-test</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-            <configuration>
-              <includes>
-                <include>**/revelc/*</include>
-              </includes>
-              <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-              <propertyName>utCoverage</propertyName>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
@@ -784,45 +755,6 @@
                 </goals>
               </execution>
             </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>travis</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eluder.coveralls</groupId>
-            <artifactId>coveralls-maven-plugin</artifactId>
-            <configuration>
-              <scanForSources>true</scanForSources>
-              <sourceDirectories>
-                <sourceDirectory>${project.basedir}</sourceDirectory>
-              </sourceDirectories>
-              <jacocoReports>
-                <report>${project.build.directory}/coverage-reports/jacoco.xml</report>
-              </jacocoReports>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <configuration>
-              <fileSets>
-                <fileSet>
-                  <directory>${project.basedir}</directory>
-                  <includes>
-                    <include>**/*.exec</include>
-                  </includes>
-                </fileSet>
-              </fileSets>
-              <includes>
-                <include>**/revelc/**</include>
-              </includes>
-              <destFile>${project.build.directory}/jacoco.exec</destFile>
-            </configuration>
           </plugin>
         </plugins>
       </build>

@@ -1,14 +1,8 @@
 formatter-maven-plugin
 ======================
 
-[![Linux Build Status](https://travis-ci.org/revelc/formatter-maven-plugin.svg)](https://travis-ci.org/revelc/formatter-maven-plugin)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/j3cd0dwqlyu0iv2y?svg=true)](https://ci.appveyor.com/project/velo/formatter-maven-plugin)
-[![Coverage Status](https://coveralls.io/repos/revelc/formatter-maven-plugin/badge.svg?branch=master)](https://coveralls.io/r/revelc/formatter-maven-plugin?branch=master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/)
-[![Issues](https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/issues)
-[![Forks](https://img.shields.io/github/forks/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/network)
-[![Stars](https://img.shields.io/github/stars/revelc/formatter-maven-plugin.svg)](https://github.com/revelc/formatter-maven-plugin/stargazers)
-[![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/revelc/formatter-maven-plugin/blob/master/LICENSE)
+[![mvn verify][ci_img]][ci_link] [![Maven Central][maven_img]][maven_link]
+[![Issues][issues_img]][issues_link] [![Apache License][license_img]][license_link]
 
 This project provides a mechanism to automatically (re)format your [Maven]
 project during a Maven build, or to verify its formatting, so that your project
@@ -45,9 +39,17 @@ versions of this plugin and their corresponding Eclipse versions.
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
 [blog]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
+[ci_img]: https://github.com/revelc/formatter-maven-plugin/workflows/mvn%20verify/badge.svg
+[ci_link]: https://github.com/revelc/formatter-maven-plugin/actions
 [compat]: https://github.com/revelc/formatter-maven-plugin/wiki/Eclipse-Version-Compatibility
 [formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
+[issues_img]: https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg
+[issues_link]: https://github.com/revelc/formatter-maven-plugin/issues
+[license_img]: http://img.shields.io/badge/license-ASL-blue.svg
+[license_link]: https://github.com/revelc/formatter-maven-plugin/blob/master/LICENSE
 [m2e]: https://eclipse.org/m2e
+[maven_img]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg
+[maven_link]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin
 [plugin-docs]: http://code.revelc.net/formatter-maven-plugin/
 [related1]: http://wiki.eclipse.org/M2E_extension_development_environment
 [related2]: http://wiki.eclipse.org/Submitting_M2E_marketplace_entries
