@@ -1,8 +1,9 @@
 formatter-maven-plugin
 ======================
 
-[![mvn verify][ci_img]][ci_link] [![Maven Central][maven_img]][maven_link]
-[![Issues][issues_img]][issues_link] [![Apache License][license_img]][license_link]
+[![mvn verify][ci_img]][ci_link]
+[![Maven Central][maven_img]][maven_link]
+[![Apache License][license_img]][license_link]
 
 This project provides a mechanism to automatically (re)format your [Maven]
 project during a Maven build, or to verify its formatting, so that your project
@@ -43,8 +44,6 @@ versions of this plugin and their corresponding Eclipse versions.
 [ci_link]: https://github.com/revelc/formatter-maven-plugin/actions
 [compat]: https://github.com/revelc/formatter-maven-plugin/wiki/Eclipse-Version-Compatibility
 [formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
-[issues_img]: https://img.shields.io/github/issues/revelc/formatter-maven-plugin.svg
-[issues_link]: https://github.com/revelc/formatter-maven-plugin/issues
 [license_img]: http://img.shields.io/badge/license-ASL-blue.svg
 [license_link]: https://github.com/revelc/formatter-maven-plugin/blob/main/LICENSE
 [m2e]: https://eclipse.org/m2e
