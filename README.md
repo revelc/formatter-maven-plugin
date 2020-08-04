@@ -39,18 +39,18 @@ versions of this plugin and their corresponding Eclipse versions.
 
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
-[blog]: http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
+[blog]: https://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
 [ci_img]: https://github.com/revelc/formatter-maven-plugin/workflows/mvn%20verify/badge.svg
 [ci_link]: https://github.com/revelc/formatter-maven-plugin/actions
 [compat]: https://github.com/revelc/formatter-maven-plugin/wiki/Eclipse-Version-Compatibility
 [formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
-[license_img]: http://img.shields.io/badge/license-ASL-blue.svg
+[license_img]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
 [license_link]: https://github.com/revelc/formatter-maven-plugin/blob/main/LICENSE
 [m2e]: https://eclipse.org/m2e
 [maven_img]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg
 [maven_link]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code.formatter/formatter-maven-plugin
-[plugin-docs]: http://code.revelc.net/formatter-maven-plugin/
-[related1]: http://wiki.eclipse.org/M2E_extension_development_environment
-[related2]: http://wiki.eclipse.org/Submitting_M2E_marketplace_entries
-[related3]: http://www.eclipse.org/forums/index.php/t/478639/0/unread/
-[related4]: http://www.vogella.com/articles/EclipsePreferences/article.html
+[plugin-docs]: https://code.revelc.net/formatter-maven-plugin/
+[related1]: https://wiki.eclipse.org/M2E_extension_development_environment
+[related2]: https://wiki.eclipse.org/Submitting_M2E_marketplace_entries
+[related3]: https://www.eclipse.org/forums/index.php/t/478639/0/unread/
+[related4]: https://www.vogella.com/articles/EclipsePreferences/article.html
