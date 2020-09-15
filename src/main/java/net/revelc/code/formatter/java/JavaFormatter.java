@@ -48,7 +48,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
         String ep = options.get(EXCLUSION_PATTERN);
         if (ep != null) {
-            exclusionPattern = Pattern.compile(ep, Pattern.MULTILINE);
+            setExclusionPattern(ep);
         }
     }
 
@@ -56,21 +56,9 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
         TextEdit te;
         try {
-            List<IRegion> regions = new ArrayList<>();
-            int start = 0;
-            if (exclusionPattern != null) {
-                Matcher matcher = exclusionPattern.matcher(code);
-                while (matcher.find()) {
-                    int s = matcher.start();
-                    int e = matcher.end();
-                    regions.add(new Region(start, s - start));
-                    start = e;
-                }
-            }
-            regions.add(new Region(start, code.length() - start));
-
+            IRegion[] regions = getRegions(code, exclusionPattern);
             te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT | CodeFormatter.F_INCLUDE_COMMENTS, code,
-                    regions.toArray(new IRegion[0]), 0, ending.getChars());
+                    regions, 0, ending.getChars());
             if (te == null) {
                 this.log.debug(
                         "Code cannot be formatted. Possible cause is unmatched source/target/compliance version.");
@@ -94,6 +82,26 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     @Override
     public boolean isInitialized() {
         return formatter != null;
+    }
+
+    public void setExclusionPattern(String ep) {
+        exclusionPattern = Pattern.compile(ep, Pattern.MULTILINE);
+    }
+
+    protected static IRegion[] getRegions(String code, Pattern exclusionPattern) {
+        List<IRegion> regions = new ArrayList<>();
+        int start = 0;
+        if (exclusionPattern != null) {
+            Matcher matcher = exclusionPattern.matcher(code);
+            while (matcher.find()) {
+                int s = matcher.start();
+                int e = matcher.end();
+                regions.add(new Region(start, s - start));
+                start = e;
+            }
+        }
+        regions.add(new Region(start, code.length() - start));
+        return regions.toArray(new IRegion[0]);
     }
 
 }
