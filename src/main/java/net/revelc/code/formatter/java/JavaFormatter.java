@@ -36,8 +36,6 @@ import net.revelc.code.formatter.LineEnding;
 
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    private static final String EXCLUSION_PATTERN = "net.revelc.code.formatter.java.exclusion_pattern";
-
     private CodeFormatter formatter;
     private Pattern exclusionPattern;
 
@@ -46,10 +44,6 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
-        String ep = options.get(EXCLUSION_PATTERN);
-        if (ep != null) {
-            setExclusionPattern(ep);
-        }
     }
 
     @Override

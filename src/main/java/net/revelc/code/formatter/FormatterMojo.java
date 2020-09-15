@@ -315,9 +315,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * &lt;javaExclusionPattern>\b(from\([^;]*\.end[^;]*?\)\));&lt;/javaExclusionPattern>
      * </code>
      *
-     * Note that this property can also be set using the <code>net.revelc.code.formatter.java.exclusion_pattern</code>
-     * property in the xml configuration file for the java formatter.
-     *
      * @since 2.13
      */
     @Parameter(property = "formatter.java.exclusion_pattern")
