@@ -15,7 +15,7 @@ package net.revelc.code.formatter;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class MulticastRouteTest {
+public class AnyClassExclusionLF {
 
 	protected RouteBuilder createRouteBuilder() throws Exception {
 			// bad indentation which should be fixed
