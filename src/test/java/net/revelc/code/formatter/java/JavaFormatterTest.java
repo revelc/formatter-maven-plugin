@@ -63,4 +63,13 @@ class JavaFormatterTest extends AbstractFormatterTest {
         assertTrue(javaFormatter.isInitialized());
     }
 
+    @Test
+    void testDoFormatFileWithExclusions() throws Exception {
+        JavaFormatter formatter = new JavaFormatter();
+        formatter.setExclusionPattern("\\b(from\\([^;]*\\.end[^;]*?\\));");
+        doTestFormat(Collections.emptyMap(), formatter, "AnyClassExclusionLF.java",
+                "ea4580e667895a179a2baccd4822077e87caa62f2ebb2db0409407de48890b06fa1f7a070db617a4ab156a4e9223d5f2aa99a69209e1f0bdb263a0af7359d43e",
+                LineEnding.KEEP);
+    }
+
 }

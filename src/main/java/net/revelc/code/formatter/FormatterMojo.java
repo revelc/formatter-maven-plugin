@@ -294,6 +294,32 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "false", property = "formatter.useEclipseDefaults")
     private boolean useEclipseDefaults;
 
+    /**
+     * A java regular expression pattern that can be used to exclude some portions of the java code from being
+     * reformatted.
+     *
+     * This can be useful when using DSL that embeds some kind of semantic hierarchy, where users can use various
+     * indentation level to increase the readability of the code. Those semantics are ignored by the formatter, so this
+     * regex pattern can be used to match certain portions of the code so that they will not be reformatted.
+     *
+     * An example is the Apache Camel java DSL which can be used in the following way: <code><pre>
+     * 	from("seda:a").routeId("a")
+     * 			.log("routing at ${routeId}")
+     * 			.multicast()
+     * 				.to("seda:b")
+     * 				.to("seda:c")
+     * 			.end()
+     * 			.log("End of routing");
+     * </pre></code> In the above example, the exercept can be skipped by the formatter by defining the following
+     * property in the formatter xml configuration: <code>
+     * &lt;javaExclusionPattern>\b(from\([^;]*\.end[^;]*?\)\));&lt;/javaExclusionPattern>
+     * </code>
+     *
+     * @since 2.13
+     */
+    @Parameter(property = "formatter.java.exclusion_pattern")
+    private String javaExclusionPattern;
+
     private JavaFormatter javaFormatter = new JavaFormatter();
 
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
@@ -713,6 +739,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         Map<String, String> javaFormattingOptions = getFormattingOptions(this.configFile);
         if (javaFormattingOptions != null) {
             this.javaFormatter.init(javaFormattingOptions, this);
+        }
+        if (this.javaExclusionPattern != null) {
+            this.javaFormatter.setExclusionPattern(this.javaExclusionPattern);
         }
         // Javascript Setup
         Map<String, String> jsFormattingOptions = getFormattingOptions(this.configJsFile);
