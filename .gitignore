@@ -34,5 +34,3 @@ nb-configuration.xml
 *.ipr
 *.iws
 
-### Formatter Cache ###
-.cache/

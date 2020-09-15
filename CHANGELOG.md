@@ -126,6 +126,10 @@ ver 2.12.1
 ==========
 - Do not write the cache file if it did not actually write any files for update witin the cache.  This allows users to save the cache to their repository and it will work on both windows/*nix without full rewrites.  The problem with the cache file write when not needed is due to java properties design issue where it logs timestamp upon change.
 
+ver 2.12.2
+==========
+- Use target directory for the default cache location.
+
 ver 2.13.0
 ==========
 - Add support for excluding certain portions of java code from being reformatted.
