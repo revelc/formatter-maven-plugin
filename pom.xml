@@ -129,82 +129,94 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.compare.core</artifactId>
+        <version>3.6.900</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.commands</artifactId>
         <version>3.9.700</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.contenttype</artifactId>
-        <version>3.7.700</version>
+        <version>3.7.800</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.expressions</artifactId>
-        <version>3.6.800</version>
+        <version>3.7.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.filesystem</artifactId>
         <version>1.7.700</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.jobs</artifactId>
         <version>3.10.800</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.resources</artifactId>
-        <version>3.13.700</version>
+        <version>3.13.800</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.runtime</artifactId>
-        <version>3.18.0</version>
+        <version>3.19.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.app</artifactId>
-        <version>1.4.500</version>
+        <version>1.5.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.common</artifactId>
-        <version>3.12.0</version>
+        <version>3.13.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.preferences</artifactId>
         <version>3.8.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.registry</artifactId>
-        <version>3.8.800</version>
+        <version>3.9.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.osgi</artifactId>
-        <version>3.15.300</version>
+        <version>3.16.0</version>
       </dependency>
       <dependency>
-        <!-- transitive dependency of jdt.core resolved here to avoid version range -->
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.platform</groupId>
+        <artifactId>org.eclipse.team.core</artifactId>
+        <version>3.8.1100</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.text</artifactId>
-        <version>3.10.200</version>
+        <version>3.10.300</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>

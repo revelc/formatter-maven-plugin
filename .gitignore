@@ -20,7 +20,7 @@ buildNumber.properties
 
 ### NetBeans ###
 nbproject/private/
-build/
+/build/
 nbbuild/
 dist/
 nbdist/
