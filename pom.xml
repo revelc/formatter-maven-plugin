@@ -174,7 +174,7 @@
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.app</artifactId>
-        <version>1.4.500</version>
+        <version>1.5.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
