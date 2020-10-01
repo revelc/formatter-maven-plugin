@@ -863,14 +863,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private void logSkippedTypes() {
         List<Type> skippedTypes = getSkippedTypes();
-
         if (skippedTypes.isEmpty()) {
             return;
         }
-
-        List<String> skippedTypesAsStrings = skippedTypes.stream().map(Type::toString).collect(Collectors.toList());
-
-        getLog().info("Formatting is skipped for types: " + String.join(", ", skippedTypesAsStrings));
+        String skippedTypes = skippedTypes.stream().map(Type::toString).collect(Collectors.joining(", "));
+        getLog().info("Formatting is skipped for types: " + skippedTypes);
     }
 
     /**
