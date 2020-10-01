@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -382,6 +383,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             }
         }
 
+        logSkippedTypes();
+
         int numberOfFiles = files.size();
         Log log = getLog();
         log.info("Number of files to be formatted: " + numberOfFiles);
@@ -575,42 +578,42 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         String formattedCode = null;
         if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
             if (skipJavaFormatting) {
-                getLog().debug("Java formatting is skipped");
+                log.debug(Type.JAVA + " formatting is skipped");
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".js") && jsFormatter.isInitialized()) {
             if (skipJsFormatting) {
-                getLog().debug("JavaScript formatting is skipped");
+                log.debug(Type.JAVASCRIPT + " formatting is skipped");
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".html") && htmlFormatter.isInitialized()) {
             if (skipHtmlFormatting) {
-                getLog().debug("HTML formatting is skipped");
+                log.debug(Type.HTML + " formatting is skipped");
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.htmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".xml") && xmlFormatter.isInitialized()) {
             if (skipXmlFormatting) {
-                getLog().debug("XML formatting is skipped");
+                log.debug(Type.XML + " formatting is skipped");
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.xmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".json") && jsonFormatter.isInitialized()) {
             if (skipJsonFormatting) {
-                getLog().debug("JSON formatting is skipped");
+                log.debug(Type.JSON + " formatting is skipped");
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsonFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".css") && cssFormatter.isInitialized()) {
             if (skipCssFormatting) {
-                getLog().debug("CSS formatting is skipped");
+                log.debug(Type.CSS + " formatting is skipped");
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.cssFormatter.formatFile(file, originalCode, this.lineEnding);
@@ -852,6 +855,52 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             map.put(name, properties.getProperty(name));
         }
         return map;
+    }
+
+    /**
+     * Log a message with the list of types that are skipped from formatting. No message is logged if no type is
+     * skipped.
+     */
+    private void logSkippedTypes() {
+        List<Type> skippedTypes = getSkippedTypes();
+
+        if (skippedTypes.isEmpty()) {
+            return;
+        }
+
+        List<String> skippedTypesAsStrings = skippedTypes.stream().map(Type::toString).collect(Collectors.toList());
+
+        getLog().info("Formatting is skipped for types: " + String.join(", ", skippedTypesAsStrings));
+    }
+
+    /**
+     * Get a list of types that are skipped from formatting.
+     *
+     * @return a new list of skipped types; empty list if none are skipped.
+     */
+    private List<Type> getSkippedTypes() {
+        List<Type> skippedTypes = new ArrayList<>();
+
+        if (skipJavaFormatting) {
+            skippedTypes.add(Type.JAVA);
+        }
+        if (skipJsFormatting) {
+            skippedTypes.add(Type.JAVASCRIPT);
+        }
+        if (skipHtmlFormatting) {
+            skippedTypes.add(Type.HTML);
+        }
+        if (skipXmlFormatting) {
+            skippedTypes.add(Type.XML);
+        }
+        if (skipJsonFormatting) {
+            skippedTypes.add(Type.JSON);
+        }
+        if (skipCssFormatting) {
+            skippedTypes.add(Type.CSS);
+        }
+
+        return skippedTypes;
     }
 
     class ResultCollector {
