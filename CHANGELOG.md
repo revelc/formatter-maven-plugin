@@ -134,3 +134,4 @@ ver 2.13.0
 ==========
 - Add support for excluding certain portions of java code from being reformatted.
 - Change log level to DEBUG for messages with format "<type> formatting is skipped".
+- Support Eclipse 2020-09 (4.17, JDT 3.23)
