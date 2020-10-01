@@ -162,7 +162,7 @@
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.resources</artifactId>
-        <version>3.13.700</version>
+        <version>3.13.800</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
