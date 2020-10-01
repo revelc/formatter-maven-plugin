@@ -168,7 +168,7 @@
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.runtime</artifactId>
-        <version>3.18.0</version>
+        <version>3.19.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of jdt.core resolved here to avoid version range -->
