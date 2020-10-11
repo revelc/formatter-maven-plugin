@@ -30,16 +30,16 @@ import net.revelc.code.formatter.LineEnding;
 class JsonFormatterTest extends AbstractFormatterTest {
 
     @Test
-    public void testDoFormatFile() throws Exception {
+    void testDoFormatFile() throws Exception {
         // Since we set the line endings via options for json, we cannot rely on CRLF inside doTestFormat.
         // The option will not be available inside json formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new JsonFormatter(), "someFile.json",
-                    "9f167e5af2e0b93ab68c5d72fcdee5a4cfa532fd1d673b3c4ff15cb95fcc5f6a17261076a4b9d58261f2887c9d4a87a4125330d5481499246dc5a0154ab476c8");
+                    "4f74200377cfd8a1ee31622ef212268ceb6db177c2bc39481828aba1581869f593ec059c987d18d02f77a134084e8ccf2d016fe28ecc2209d81ffabfc885fae3");
         } else {
             doTestFormat(new JsonFormatter(), "someFile.json",
-                    "ce94186dfe66fe2813fab37d2f4f9eb6e4ca21ee6351051cd971652798b6760be75de0c7ff92913f55378003ffb72fc3ee5289aa213773144a643de891e3cb3a");
+                    "c6e19e9d042d8d2045eb17d2966f105e6c538d5c05c614c556eb88dfb020645cb2d410cf059643a14ca193487b888e24194499ee8be2c337afdc89067a23e4cd");
         }
     }
 
@@ -57,17 +57,18 @@ class JsonFormatterTest extends AbstractFormatterTest {
         Map<String, String> jsonFormattingOptions = new HashMap<>();
         jsonFormattingOptions.put("indent", "2");
         jsonFormattingOptions.put("spaceBeforeSeparator", "false");
+        jsonFormattingOptions.put("alphabeticalOrder", "true");
 
         // Since we set the line endings via options for json, we cannot rely on CRLF inside doTestFormat.
         // The option will not be available inside json formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
-                    "478edd57b917235d00f16611505060460758e7e0f4b53938941226dca183d09be7e946d9a14dbac492a200592d5a6fa5f463e60fd1c3d3dbf05c08c3c869a36b",
+                    "2122f00ff5a3b4d3012d568b907deaecee248b5b1f8e3ebe213f6b7b3a628ad0c14d236e79789763d940f346c689694ac9854fe8fe7d935a50286e65c036a36d",
                     LineEnding.CRLF);
         } else {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
-                    "2f894c97a22f1313fc7eb55a1bab5c1e8353c11c65bf979abe40347307f80e0dd745a3ab1caa39450dcd0701ccdb3bc1b0bb3afd80557bae33e4e4e7015b52a2",
+                    "5d433f2700a2fdabfabdb309d5f807df91ad86f7a94658d4a3f2f3699ae78b2efb1de451c141f61905f1c814cd647f312ae9651454e65d124510be0573082e86",
                     LineEnding.CRLF);
         }
     }
