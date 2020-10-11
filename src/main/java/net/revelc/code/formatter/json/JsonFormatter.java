@@ -43,7 +43,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
         String lineEnding = options.getOrDefault("lineending", System.lineSeparator());
         boolean spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
-
+        boolean useAlphabeticalOrder = Boolean.parseBoolean(options.getOrDefault("alphabeticalOrder", "false"));
         formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
@@ -69,6 +69,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         printer.indentArraysWith(indenter);
         formatter.setDefaultPrettyPrinter(printer);
         formatter.enable(SerializationFeature.INDENT_OUTPUT);
+        formatter.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, useAlphabeticalOrder);
     }
 
     @Override
@@ -76,6 +77,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         // note: line ending set in init for this usecase
         Object json = formatter.readValue(code, Object.class);
         String formattedCode = formatter.writer().writeValueAsString(json);
+        formattedCode = formattedCode + ending.getChars();
         if (code.equals(formattedCode)) {
             return null;
         }
