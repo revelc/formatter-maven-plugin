@@ -814,6 +814,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
         this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
 
+        newConfigFile = findConfigResource(basedir, newConfigFile);
         try (InputStream configInput = this.resourceManager.getResourceAsInputStream(newConfigFile)) {
             return new ConfigReader().read(configInput);
         } catch (ResourceNotFoundException e) {
@@ -842,6 +843,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         Properties properties = new Properties();
         try {
+            newPropertiesFile = findConfigResource(basedir, newPropertiesFile);
             properties.load(this.resourceManager.getResourceAsInputStream(newPropertiesFile));
         } catch (ResourceNotFoundException e) {
             getLog().debug("Property file [" + newPropertiesFile + "] cannot be found", e);
@@ -855,6 +857,29 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             map.put(name, properties.getProperty(name));
         }
         return map;
+    }
+
+    /**
+     * find config resource from system file
+     * 
+     * @param basedir
+     * @param configFile
+     * 
+     * @return
+     */
+    private String findConfigResource(File basedir, String configFile) {
+        // first search relatively to the base directory
+        File temp = new File(basedir, configFile);
+        if (temp.exists() && temp.canRead()) {
+            return configFile;
+        }
+        // if not found, search for absolute location on file system, or relative to execution dir
+        temp = new File(configFile);
+        if (temp.exists() && temp.canRead()) {
+            return new File(configFile).getAbsolutePath();
+        }
+
+        return configFile;
     }
 
     /**
