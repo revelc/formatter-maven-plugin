@@ -264,7 +264,7 @@
     <dependency>
       <groupId>net.sourceforge.cssparser</groupId>
       <artifactId>cssparser</artifactId>
-      <version>0.9.28</version>
+      <version>0.9.29</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
