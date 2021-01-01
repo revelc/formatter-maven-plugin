@@ -216,7 +216,7 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.text</artifactId>
-        <version>3.10.300</version>
+        <version>3.10.400</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
