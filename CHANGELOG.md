@@ -135,3 +135,10 @@ ver 2.13.0
 - Add support for excluding certain portions of java code from being reformatted.
 - Change log level to DEBUG for messages with format "<type> formatting is skipped".
 - Support Eclipse 2020-09 (4.17, JDT 3.23)
+
+ver 2.14.0
+==========
+- Change log level to DEBUG for messages with format "<type> formatting is skipped".
+- Support Eclipse 2020-12 (4.18, JDT 3.24)
+- Improved JSON formatter with newline after formatting and alphabeticalOrder option
+
