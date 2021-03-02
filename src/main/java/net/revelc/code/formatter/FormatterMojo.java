@@ -13,6 +13,8 @@
  */
 package net.revelc.code.formatter;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -352,7 +354,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        long startClock = System.currentTimeMillis();
+        long startClock = System.nanoTime();
 
         if (StringUtils.isEmpty(this.encoding)) {
             this.encoding = ReaderFactory.FILE_ENCODING;
@@ -395,8 +397,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             Properties hashCache = readFileHashCacheFile();
 
             String basedirPath = getBasedirPath();
-            for (int i = 0, n = files.size(); i < n; i++) {
-                File file = files.get(i);
+            for (File file : files) {
                 if (file.exists()) {
                     if (file.canWrite()) {
                         formatFile(file, rc, hashCache, basedirPath);
@@ -414,13 +415,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 storeFileHashCache(hashCache);
             }
 
-            long endClock = System.currentTimeMillis();
+            long duration = NANOSECONDS.toSeconds(System.nanoTime() - startClock);
 
             log.info("Successfully formatted:          " + rc.successCount + FILE_S);
             log.info("Fail to format:                  " + rc.failCount + FILE_S);
             log.info("Skipped:                         " + rc.skippedCount + FILE_S);
             log.info("Read only skipped:               " + rc.readOnlyCount + FILE_S);
-            log.info("Approximate time taken:          " + ((endClock - startClock) / 1000) + "s");
+            log.info("Approximate time taken:          " + duration + "s");
         }
     }
 
