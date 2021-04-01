@@ -344,7 +344,7 @@
         <plugin>
           <groupId>com.github.ekryd.sortpom</groupId>
           <artifactId>sortpom-maven-plugin</artifactId>
-          <version>2.13.1</version>
+          <version>2.14.1</version>
         </plugin>
         <plugin>
           <groupId>com.github.github</groupId>
@@ -359,7 +359,7 @@
             <dependency>
               <groupId>com.mycila</groupId>
               <artifactId>license-maven-plugin-git</artifactId>
-              <version>4.0.rc2</version>
+              <version>4.0</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -386,7 +386,7 @@
         <plugin>
           <groupId>net.revelc.code</groupId>
           <artifactId>impsort-maven-plugin</artifactId>
-          <version>1.5.0</version>
+          <version>1.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -502,7 +502,7 @@
         <plugin>
           <groupId>org.gaul</groupId>
           <artifactId>modernizer-maven-plugin</artifactId>
-          <version>2.1.0</version>
+          <version>2.2.0</version>
           <configuration>
             <javaVersion>${maven.compiler.target}</javaVersion>
           </configuration>
