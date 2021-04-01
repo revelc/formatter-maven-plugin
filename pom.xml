@@ -162,7 +162,7 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.jobs</artifactId>
-        <version>3.10.1000</version>
+        <version>3.10.1100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
