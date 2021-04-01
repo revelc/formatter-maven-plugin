@@ -221,7 +221,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>2.12.1</version>
+        <version>2.12.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -354,12 +354,12 @@
         <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>4.0.rc2</version>
+          <version>4.0</version>
           <dependencies>
             <dependency>
               <groupId>com.mycila</groupId>
               <artifactId>license-maven-plugin-git</artifactId>
-              <version>4.0.rc2</version>
+              <version>4.0</version>
             </dependency>
           </dependencies>
         </plugin>
