@@ -142,3 +142,7 @@ ver 2.14.0
 - Support Eclipse 2020-12 (4.18, JDT 3.24)
 - Improved JSON formatter with newline after formatting and alphabeticalOrder option
 
+ver 2.15.0
+==========
+- Support Eclipse 2021-03 (4.19, JDT 3.25)
+

@@ -14,14 +14,21 @@
     limitations under the License.
 
 -->
-<profiles version="20">
-<profile kind="CodeFormatterProfile" name="formatter" version="20">
+<profiles version="21">
+<profile kind="CodeFormatterProfile" name="formatter" version="21">
 <setting id="org.eclipse.jdt.core.formatter.align_assignment_statements_on_columns" value="false"/>
 <setting id="org.eclipse.jdt.core.formatter.align_fields_grouping_blank_lines" value="2147483647"/>
 <setting id="org.eclipse.jdt.core.formatter.align_type_members_on_columns" value="false"/>
 <setting id="org.eclipse.jdt.core.formatter.align_variable_declarations_on_columns" value="false"/>
 <setting id="org.eclipse.jdt.core.formatter.align_with_spaces" value="false"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_additive_operator" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_enum_constant" value="49"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_field" value="49"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_local_variable" value="49"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_method" value="49"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_package" value="49"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_parameter" value="0"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_annotations_on_type" value="49"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_allocation_expression" value="16"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation" value="0"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_enum_constant" value="16"/>
@@ -58,6 +65,7 @@
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_superinterfaces_in_type_declaration" value="16"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_throws_clause_in_constructor_declaration" value="16"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_throws_clause_in_method_declaration" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_type_annotations" value="0"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_type_arguments" value="0"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_type_parameters" value="0"/>
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_union_type_in_multicatch" value="16"/>
