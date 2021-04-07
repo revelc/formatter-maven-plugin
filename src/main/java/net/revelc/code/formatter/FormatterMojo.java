@@ -136,6 +136,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * survive clean phase when it should. This is not intended to be clean in that way as one would want as close to a
      * no-op as possible when files are already all formatted and/or have not been otherwise touched. This is used based
      * off the files in the project so it is as much part of the source as any other file is.
+     *
+     * <p>
+     * The cache can become invalid for any number of reasons that this plugin can't reasonably detect automatically. If
+     * you rely on the cache and make any changes to the project that could conceivably make the cache invalid, or if
+     * you notice that files aren't being reformatted when they should, just delete the cache and it will be rebuilt.
      * 
      * @since 2.12.1
      */
