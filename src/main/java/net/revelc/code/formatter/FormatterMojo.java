@@ -114,9 +114,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private File targetDirectory;
 
     /**
-     * Project's base directory.
+     * Project's base directory as specified in the POM.
      */
-    @Parameter(defaultValue = ".", property = "project.basedir", readonly = true, required = true)
+    @Parameter(defaultValue = "${project.basedir}", property = "baseDirectory", readonly = true, required = true)
     private File basedir;
 
     /**
