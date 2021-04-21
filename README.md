@@ -34,15 +34,16 @@ The primary use case of this plugin is to ensure consistent formatting for a
 project, regardless of differences between IDE preferences or IDE versions that
 developers use. Nevertheless, some users may find it useful to correlate
 versions of this plugin to the version of Eclipse whose code is used as the
-basis for this plugin's formatting. See [the wiki][compat] for a list of recent
-versions of this plugin and their corresponding Eclipse versions.
+basis for this plugin's formatting. See [the project website][compat] for a
+list of recent versions of this plugin and their corresponding Eclipse
+versions.
 
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
 [blog]: https://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
 [ci_img]: https://github.com/revelc/formatter-maven-plugin/workflows/mvn%20verify/badge.svg
 [ci_link]: https://github.com/revelc/formatter-maven-plugin/actions
-[compat]: https://github.com/revelc/formatter-maven-plugin/wiki/Eclipse-Version-Compatibility
+[compat]: https://code.revelc.net/formatter-maven-plugin/eclipse-versions.html
 [formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
 [license_img]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
 [license_link]: https://github.com/revelc/formatter-maven-plugin/blob/main/LICENSE
