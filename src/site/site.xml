@@ -33,6 +33,7 @@
             <item name="Introduction" href="index.html"/>
             <item name="Goals" href="plugin-info.html"/>
             <item name="Usage" href="usage.html"/>
+            <item name="Eclipse Compatibility" href="eclipse-versions.html"/>
             <item name="Examples" href="examples.html"/>
         </menu>
         <menu name="Examples">

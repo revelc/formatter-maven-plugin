@@ -580,6 +580,7 @@
               </excludes>
               <mapping>
                 <java>SLASHSTAR_STYLE</java>
+                <vm>XML_STYLE</vm>
               </mapping>
             </configuration>
           </execution>

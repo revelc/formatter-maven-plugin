@@ -1,0 +1,38 @@
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+#set ($d = "$")
+
+Eclipse Version Compatibility
+=============================
+
+This plugin uses Eclipse tools to format Java code.
+
+For reference, the following chart shows recent versions of this plugin, and
+their compatibility with major Eclipse releases.
+
+formatter-maven-plugin | Eclipse<br/>Name | Eclipse<br/>Version | JDT Core
+-----------------------|------------------|---------------------|---------
+2.15                   | 2021-03          | 4.19                | 3.25
+2.14                   | 2020-12          | 4.18                | 3.24
+2.13                   | 2020-09          | 4.17                | 3.23
+2.12                   | 2020-06          | 4.16                | 3.22
+2.11                   | 2019-09          | 4.13                | 3.19
+2.10                   | 2019-06          | 4.12                | 3.18
+2.9                    | 2019-03          | 4.11                | 3.17
+2.8                    | 2018-09          | 4.9                 | 3.15
+2.7                    | Oxygen           | 4.7                 | 3.13
+
