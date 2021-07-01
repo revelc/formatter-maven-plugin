@@ -146,3 +146,9 @@ ver 2.15.0
 ==========
 - Support Eclipse 2021-03 (4.19, JDT 3.25)
 
+ver 2.16.0
+==========
+- Support Eclipse 2021-06 (4.20, JDT 3.26)
+- Support overriding base directory
+- Move docs about version compatibility to src/site/
+
