@@ -223,7 +223,7 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.text</artifactId>
-        <version>3.11.0</version>
+        <version>3.12.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
