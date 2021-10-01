@@ -145,7 +145,7 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.commands</artifactId>
-        <version>3.10.0</version>
+        <version>3.10.100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
