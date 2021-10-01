@@ -19,3 +19,6 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 10
+  ignore:
+    # ignore transitive dependencies updated with src/build/find-transitive-eclipse-updates.sh
+    - dependency-name: "org.eclipse.platform:*"
