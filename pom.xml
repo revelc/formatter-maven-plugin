@@ -145,49 +145,49 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.commands</artifactId>
-        <version>3.10.0</version>
+        <version>3.10.100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.contenttype</artifactId>
-        <version>3.7.1000</version>
+        <version>3.8.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.expressions</artifactId>
-        <version>3.7.100</version>
+        <version>3.8.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.filesystem</artifactId>
-        <version>1.9.0</version>
+        <version>1.9.100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.jobs</artifactId>
-        <version>3.11.0</version>
+        <version>3.12.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.resources</artifactId>
-        <version>3.15.0</version>
+        <version>3.15.100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.runtime</artifactId>
-        <version>3.22.0</version>
+        <version>3.23.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.app</artifactId>
-        <version>1.5.100</version>
+        <version>1.6.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
@@ -199,25 +199,25 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.preferences</artifactId>
-        <version>3.8.200</version>
+        <version>3.9.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.registry</artifactId>
-        <version>3.10.200</version>
+        <version>3.11.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.osgi</artifactId>
-        <version>3.16.300</version>
+        <version>3.17.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.team.core</artifactId>
-        <version>3.9.0</version>
+        <version>3.9.100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
