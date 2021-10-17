@@ -303,6 +303,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean useEclipseDefaults;
 
     /**
+     * Whether the logging output should be kept quiet (reduced logging output). Instead of logging details at INFO
+     * level then logging is done at DEBUG level instead, to reduce the logging noise, especially when there are no
+     * files changed.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.loggingQuietMode")
+    private boolean loggingQuietMode;
+
+    /**
      * A java regular expression pattern that can be used to exclude some portions of the java code from being
      * reformatted.
      *
@@ -369,7 +377,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (!Charset.isSupported(this.encoding)) {
                 throw new MojoExecutionException("Encoding '" + this.encoding + "' is not supported");
             }
-            getLog().info("Using '" + this.encoding + "' encoding to format source files.");
+            String msg = "Using '" + this.encoding + "' encoding to format source files.";
+            if (loggingQuietMode) {
+                getLog().debug(msg);
+            } else {
+                getLog().info(msg);
+            }
         }
 
         List<File> files = new ArrayList<>();
@@ -394,7 +407,14 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         int numberOfFiles = files.size();
         Log log = getLog();
-        log.info("Number of files to be formatted: " + numberOfFiles);
+
+        // reduce logging noise
+        String msg = "Number of files to be formatted: " + numberOfFiles;
+        if (loggingQuietMode) {
+            log.debug(msg);
+        } else {
+            log.info(msg);
+        }
 
         if (numberOfFiles > 0) {
             createCodeFormatter();
@@ -422,11 +442,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
             long duration = NANOSECONDS.toSeconds(System.nanoTime() - startClock);
 
-            log.info("Successfully formatted:          " + rc.successCount + FILE_S);
-            log.info("Fail to format:                  " + rc.failCount + FILE_S);
-            log.info("Skipped:                         " + rc.skippedCount + FILE_S);
-            log.info("Read only skipped:               " + rc.readOnlyCount + FILE_S);
-            log.info("Approximate time taken:          " + duration + "s");
+            boolean noChanges = rc.successCount == 0 && rc.failCount == 0;
+            if (noChanges && loggingQuietMode) {
+                log.info("All files up to date, no formatting necessary");
+            } else {
+                log.info("Successfully formatted:          " + rc.successCount + FILE_S);
+                log.info("Fail to format:                  " + rc.failCount + FILE_S);
+                log.info("Skipped:                         " + rc.skippedCount + FILE_S);
+                log.info("Read only skipped:               " + rc.readOnlyCount + FILE_S);
+                log.info("Approximate time taken:          " + duration + "s");
+            }
         }
     }
 
@@ -873,7 +898,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
         String skippedTypesStr = skippedTypes.stream().map(Type::toString).collect(Collectors.joining(", "));
-        getLog().info("Formatting is skipped for types: " + skippedTypesStr);
+        String msg = "Formatting is skipped for types: " + skippedTypesStr;
+        if (loggingQuietMode) {
+            getLog().debug(msg);
+        } else {
+            getLog().info(msg);
+        }
     }
 
     /**
