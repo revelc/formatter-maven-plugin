@@ -152,3 +152,6 @@ ver 2.16.0
 - Support overriding base directory
 - Move docs about version compatibility to src/site/
 
+ver 2.17.0
+==========
+- Support Eclipse 2021-09 (4.21, JDT 3.27)
