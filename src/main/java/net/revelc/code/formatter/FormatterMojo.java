@@ -425,8 +425,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             String elapsed = TimeUtil.printDuration(delta, true);
 
             getLog().info(
-                    String.format("Processed %d files in %s (Formatted: %d, Failed: %d, Skipped: %d, Readonly: %d)",
-                            numberOfFiles, elapsed, rc.successCount, rc.failCount, rc.skippedCount, rc.readOnlyCount));
+                    String.format("Processed %d files in %s (Formatted: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
+                            numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.failCount, rc.readOnlyCount));
         }
     }
 
