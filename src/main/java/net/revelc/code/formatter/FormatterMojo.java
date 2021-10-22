@@ -13,8 +13,6 @@
  */
 package net.revelc.code.formatter;
 
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -303,14 +301,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean useEclipseDefaults;
 
     /**
-     * Whether the logging output should be kept quiet (reduced logging output). Instead of logging details at INFO
-     * level then logging is done at DEBUG level instead, to reduce the logging noise, especially when there are no
-     * files changed.
-     */
-    @Parameter(defaultValue = "false", property = "formatter.loggingQuietMode")
-    private boolean loggingQuietMode;
-
-    /**
      * A java regular expression pattern that can be used to exclude some portions of the java code from being
      * reformatted.
      *
@@ -367,7 +357,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        long startClock = System.nanoTime();
+        long startClock = System.currentTimeMillis();
 
         if (StringUtils.isEmpty(this.encoding)) {
             this.encoding = ReaderFactory.FILE_ENCODING;
@@ -377,12 +367,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (!Charset.isSupported(this.encoding)) {
                 throw new MojoExecutionException("Encoding '" + this.encoding + "' is not supported");
             }
-            String msg = "Using '" + this.encoding + "' encoding to format source files.";
-            if (loggingQuietMode) {
-                getLog().debug(msg);
-            } else {
-                getLog().info(msg);
-            }
+            getLog().debug("Using '" + this.encoding + "' encoding to format source files.");
         }
 
         List<File> files = new ArrayList<>();
@@ -410,11 +395,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // reduce logging noise
         String msg = "Number of files to be formatted: " + numberOfFiles;
-        if (loggingQuietMode) {
-            log.debug(msg);
-        } else {
-            log.info(msg);
-        }
+        log.debug(msg);
 
         if (numberOfFiles > 0) {
             createCodeFormatter();
@@ -440,18 +421,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 storeFileHashCache(hashCache);
             }
 
-            long duration = NANOSECONDS.toSeconds(System.nanoTime() - startClock);
+            long delta = System.currentTimeMillis() - startClock;
+            String elapsed = TimeUtil.printDuration(delta, true);
 
-            boolean noChanges = rc.successCount == 0 && rc.failCount == 0;
-            if (noChanges && loggingQuietMode) {
-                log.info("All files up to date, no formatting necessary");
-            } else {
-                log.info("Successfully formatted:          " + rc.successCount + FILE_S);
-                log.info("Fail to format:                  " + rc.failCount + FILE_S);
-                log.info("Skipped:                         " + rc.skippedCount + FILE_S);
-                log.info("Read only skipped:               " + rc.readOnlyCount + FILE_S);
-                log.info("Approximate time taken:          " + duration + "s");
-            }
+            getLog().info(
+                    String.format("Processed %d files in %s (Formatted: %d, Failed: %d, Skipped: %d, Readonly: %d)",
+                            numberOfFiles, elapsed, rc.successCount, rc.failCount, rc.skippedCount, rc.readOnlyCount));
         }
     }
 
@@ -898,12 +873,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
         String skippedTypesStr = skippedTypes.stream().map(Type::toString).collect(Collectors.joining(", "));
-        String msg = "Formatting is skipped for types: " + skippedTypesStr;
-        if (loggingQuietMode) {
-            getLog().debug(msg);
-        } else {
-            getLog().info(msg);
-        }
+        getLog().debug("Formatting is skipped for types: " + skippedTypesStr);
     }
 
     /**
