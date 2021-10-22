@@ -44,23 +44,20 @@ public final class TimeUtil {
         }
 
         if (days > 0) {
-            sb.append(days).append("d").append(hours % 24).append("h").append(minutes % 60).append("m")
-                    .append(seconds % 60).append("s");
-        } else if (hours > 0) {
-            sb.append(hours % 24).append("h").append(minutes % 60).append("m").append(seconds % 60).append("s");
-        } else if (minutes > 0) {
-            sb.append(minutes % 60).append("m").append(seconds % 60).append("s");
-        } else if (seconds > 0) {
-            sb.append(seconds % 60).append("s");
-            // lets include millis when there are only seconds by default
-            precise = true;
-        } else if (millis > 0) {
-            precise = false;
-            sb.append(millis).append("ms");
+            sb.append(days).append("d");
         }
-
-        if (precise & millis > 0) {
-            sb.append(millis).append("ms");
+        if (days + hours > 0) {
+            sb.append(hours % 24).append("h");
+        }
+        if (days + hours + minutes > 0) {
+            sb.append(minutes % 60).append("m");
+        }
+        if (days + hours + minutes + seconds > 0) {
+            sb.append(seconds % 60).append("s");
+        }
+        // include millis when precise is requested and everything less than 1 minute
+        if (precise || days + hours + minutes == 0) {
+            sb.append(uptime % 1000).append("ms");
         }
 
         return sb.toString();
