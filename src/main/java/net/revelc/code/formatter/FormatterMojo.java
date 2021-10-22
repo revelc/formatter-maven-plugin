@@ -13,6 +13,8 @@
  */
 package net.revelc.code.formatter;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -357,7 +359,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        long startClock = System.currentTimeMillis();
+        long startClock = System.nanoTime();
 
         if (StringUtils.isEmpty(this.encoding)) {
             this.encoding = ReaderFactory.FILE_ENCODING;
@@ -421,8 +423,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 storeFileHashCache(hashCache);
             }
 
-            long delta = System.currentTimeMillis() - startClock;
-            String elapsed = TimeUtil.printDuration(delta, true);
+            long duration = NANOSECONDS.toMillis(System.nanoTime() - startClock);
+            String elapsed = TimeUtil.printDuration(duration);
 
             getLog().info(
                     String.format("Processed %d files in %s (Formatted: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
