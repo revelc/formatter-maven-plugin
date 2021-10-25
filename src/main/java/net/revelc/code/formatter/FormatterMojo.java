@@ -369,7 +369,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (!Charset.isSupported(this.encoding)) {
                 throw new MojoExecutionException("Encoding '" + this.encoding + "' is not supported");
             }
-            getLog().info("Using '" + this.encoding + "' encoding to format source files.");
+            getLog().debug("Using '" + this.encoding + "' encoding to format source files.");
         }
 
         List<File> files = new ArrayList<>();
@@ -394,7 +394,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         int numberOfFiles = files.size();
         Log log = getLog();
-        log.info("Number of files to be formatted: " + numberOfFiles);
+
+        // reduce logging noise
+        String msg = "Number of files to be formatted: " + numberOfFiles;
+        log.debug(msg);
 
         if (numberOfFiles > 0) {
             createCodeFormatter();
@@ -420,13 +423,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 storeFileHashCache(hashCache);
             }
 
-            long duration = NANOSECONDS.toSeconds(System.nanoTime() - startClock);
+            long duration = NANOSECONDS.toMillis(System.nanoTime() - startClock);
+            String elapsed = TimeUtil.printDuration(duration);
 
-            log.info("Successfully formatted:          " + rc.successCount + FILE_S);
-            log.info("Fail to format:                  " + rc.failCount + FILE_S);
-            log.info("Skipped:                         " + rc.skippedCount + FILE_S);
-            log.info("Read only skipped:               " + rc.readOnlyCount + FILE_S);
-            log.info("Approximate time taken:          " + duration + "s");
+            getLog().info(
+                    String.format("Processed %d files in %s (Formatted: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
+                            numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.failCount, rc.readOnlyCount));
         }
     }
 
@@ -873,7 +875,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
         String skippedTypesStr = skippedTypes.stream().map(Type::toString).collect(Collectors.joining(", "));
-        getLog().info("Formatting is skipped for types: " + skippedTypesStr);
+        getLog().debug("Formatting is skipped for types: " + skippedTypesStr);
     }
 
     /**
