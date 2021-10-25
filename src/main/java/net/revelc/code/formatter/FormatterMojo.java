@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -88,6 +89,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /** The Constant DEFAULT_INCLUDES. */
     private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.css", "**/*.json", "**/*.html", "**/*.java",
             "**/*.js", "**/*.xml" };
+
+    private static final Pattern REMOVE_TRAILING_PATTERN = Pattern.compile("\\p{Blank}+$", Pattern.MULTILINE);
 
     /**
      * ResourceManager for retrieving the configFile resource.
@@ -328,6 +331,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(property = "formatter.java.exclusion_pattern")
     private String javaExclusionPattern;
 
+    /**
+     * When set to true, remove trailing whitespace on all lines after the formatter has finished.
+     *
+     * @since 2.17.0
+     */
+    @Parameter(defaultValue = "false", property = "formatter.removeTrailingWhitespace")
+    private boolean removeTrailingWhitespace;
     private JavaFormatter javaFormatter = new JavaFormatter();
 
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
@@ -650,6 +660,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         } else if (Result.FAIL.equals(result)) {
             rc.failCount++;
             return;
+        }
+
+        // Process the source one more time and remove any trailing whitespace found
+        if (removeTrailingWhitespace && formattedCode != null) {
+            formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
         }
 
         // Write the cache
