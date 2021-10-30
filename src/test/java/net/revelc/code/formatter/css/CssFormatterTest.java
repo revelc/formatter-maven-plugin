@@ -21,6 +21,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.FormatCycle;
 
 /**
  * @author yoshiman
@@ -32,10 +33,18 @@ class CssFormatterTest extends AbstractFormatterTest {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new CssFormatter(), "someFile.css",
-                    "72b2c33020774b407c2e49a849e47990941d3c80d982b1a4ef2e0ffed605b85e2680fca57cfdbc9d6cd2fc6fc0236dbeb915fd75f530689c7e90a3745316b6a3");
+                    "72b2c33020774b407c2e49a849e47990941d3c80d982b1a4ef2e0ffed605b85e2680fca57cfdbc9d6cd2fc6fc0236dbeb915fd75f530689c7e90a3745316b6a3",
+                    FormatCycle.FIRST);
+            doTestFormat(new CssFormatter(), "someFile.css",
+                    "72b2c33020774b407c2e49a849e47990941d3c80d982b1a4ef2e0ffed605b85e2680fca57cfdbc9d6cd2fc6fc0236dbeb915fd75f530689c7e90a3745316b6a3",
+                    FormatCycle.SECOND);
         } else {
             doTestFormat(new CssFormatter(), "someFile.css",
-                    "684255d79eb28c6f4cfa340b6930fe1cfd9de16a1c6abf5f54e8f6837694b599101ef247ed00b8aea5460aa64cda60b418cebefd8ea28d5e747ed9cf4c3a9274");
+                    "684255d79eb28c6f4cfa340b6930fe1cfd9de16a1c6abf5f54e8f6837694b599101ef247ed00b8aea5460aa64cda60b418cebefd8ea28d5e747ed9cf4c3a9274",
+                    FormatCycle.FIRST);
+            doTestFormat(new CssFormatter(), "someFile.css",
+                    "684255d79eb28c6f4cfa340b6930fe1cfd9de16a1c6abf5f54e8f6837694b599101ef247ed00b8aea5460aa64cda60b418cebefd8ea28d5e747ed9cf4c3a9274",
+                    FormatCycle.SECOND);
         }
     }
 
@@ -43,7 +52,8 @@ class CssFormatterTest extends AbstractFormatterTest {
     void testIsIntialized() throws Exception {
         CssFormatter cssFormatter = new CssFormatter();
         assertFalse(cssFormatter.isInitialized());
-        cssFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
+        cssFormatter.init(Collections.emptyMap(),
+                new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_PRIMARY_DIR));
 
         assertTrue(cssFormatter.isInitialized());
     }

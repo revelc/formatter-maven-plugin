@@ -21,20 +21,26 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.FormatCycle;
 
 class JavascriptFormatterTest extends AbstractFormatterTest {
 
     @Test
     void testDoFormatFile() throws Exception {
         doTestFormat(new JavascriptFormatter(), "AnyJS.js",
-                "33020bfa1ecebd935b6d6ba8e482bc14433ad52899ca63bd892fbb85d20e835ad183dba1e0a6203a72fbbb3d859b6f6872e320a8ea2fa93c9b2ca301ae7c6ec8");
+                "33020bfa1ecebd935b6d6ba8e482bc14433ad52899ca63bd892fbb85d20e835ad183dba1e0a6203a72fbbb3d859b6f6872e320a8ea2fa93c9b2ca301ae7c6ec8",
+                FormatCycle.FIRST);
+        doTestFormat(new JavascriptFormatter(), "AnyJS.js",
+                "33020bfa1ecebd935b6d6ba8e482bc14433ad52899ca63bd892fbb85d20e835ad183dba1e0a6203a72fbbb3d859b6f6872e320a8ea2fa93c9b2ca301ae7c6ec8",
+                FormatCycle.SECOND);
     }
 
     @Test
     void testIsIntialized() throws Exception {
         JavascriptFormatter jsFormatter = new JavascriptFormatter();
         assertFalse(jsFormatter.isInitialized());
-        jsFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
+        jsFormatter.init(Collections.emptyMap(),
+                new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_PRIMARY_DIR));
         assertTrue(jsFormatter.isInitialized());
     }
 

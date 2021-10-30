@@ -35,11 +35,16 @@ import com.google.common.io.Files;
 
 public abstract class AbstractFormatterTest {
 
-    protected static final File TEST_OUTPUT_DIR = new File("target/testoutput");
+    protected static final String RESOURCE_LOCATION_PRIMARY = "src/test/resources";
+    protected static final String RESOURCE_LOCATION_SECONDARY = "target/testoutput";
+
+    protected static final File TEST_OUTPUT_PRIMARY_DIR = new File("target/testoutput");
+    protected static final File TEST_OUTPUT_SECONDARY_DIR = new File("target/testoutputrepeat");
 
     @BeforeAll
     public static void createTestDir() {
-        assertTrue(TEST_OUTPUT_DIR.mkdirs() || TEST_OUTPUT_DIR.isDirectory());
+        assertTrue(TEST_OUTPUT_PRIMARY_DIR.mkdirs() || TEST_OUTPUT_PRIMARY_DIR.isDirectory());
+        assertTrue(TEST_OUTPUT_SECONDARY_DIR.mkdirs() || TEST_OUTPUT_SECONDARY_DIR.isDirectory());
     }
 
     public static class TestConfigurationSource implements ConfigurationSource {
@@ -81,16 +86,33 @@ public abstract class AbstractFormatterTest {
         }
     }
 
-    protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha512) throws IOException {
-        doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF);
+    protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha512,
+            FormatCycle formatCycle) throws IOException {
+        doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF, formatCycle);
     }
 
     protected void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
-            String expectedSha512, LineEnding lineEnding) throws IOException {
+            String expectedSha512, LineEnding lineEnding, FormatCycle formatCycle) throws IOException {
+
+        // Set the used resource location for test (either first pass or second pass)
+        String resourceLocation;
+        if (FormatCycle.SECOND == formatCycle) {
+            resourceLocation = RESOURCE_LOCATION_SECONDARY;
+        } else {
+            resourceLocation = RESOURCE_LOCATION_PRIMARY;
+        }
+
+        // Set the used output directory for test (either first pass or second pass)
+        File testOutputDir;
+        if (FormatCycle.SECOND == formatCycle) {
+            testOutputDir = TEST_OUTPUT_SECONDARY_DIR;
+        } else {
+            testOutputDir = TEST_OUTPUT_PRIMARY_DIR;
+        }
 
         // Set original file and file to use for test
-        File originalSourceFile = new File("src/test/resources/", fileUnderTest);
-        File sourceFile = new File(TEST_OUTPUT_DIR, fileUnderTest);
+        File originalSourceFile = new File(resourceLocation, fileUnderTest);
+        File sourceFile = new File(testOutputDir, fileUnderTest);
 
         // Copy file to new location
         Files.copy(originalSourceFile, sourceFile);
@@ -99,13 +121,19 @@ public abstract class AbstractFormatterTest {
         String originalCode = FileUtils.fileRead(sourceFile, StandardCharsets.UTF_8.name());
 
         // Format the file and make sure formatting worked
-        formatter.init(options, new TestConfigurationSource(TEST_OUTPUT_DIR));
+        formatter.init(options, new TestConfigurationSource(testOutputDir));
         String formattedCode = formatter.formatFile(sourceFile, originalCode, lineEnding);
         assertNotNull(formattedCode);
-        assertNotEquals(originalCode, formattedCode);
 
         // Write the file we formatte4d
         FileUtils.fileWrite(sourceFile, StandardCharsets.UTF_8.name(), formattedCode);
+
+        // Run assertions on formatted file, if not valid, reject and tester can look at resulting files to debug issue.
+        if (FormatCycle.SECOND == formatCycle) {
+            assertEquals(originalCode, formattedCode);
+        } else {
+            assertNotEquals(originalCode, formattedCode);
+        }
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
         byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
