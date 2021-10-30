@@ -81,8 +81,6 @@ import net.revelc.code.formatter.xml.XMLFormatter;
 @Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = true, threadSafe = true)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
-    private static final String FILE_S = " file(s)";
-
     /** The Constant CACHE_PROPERTIES_FILENAME. */
     private static final String CACHE_PROPERTIES_FILENAME = "formatter-maven-cache.properties";
 
@@ -90,6 +88,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private static final String[] DEFAULT_INCLUDES = new String[] { "**/*.css", "**/*.json", "**/*.html", "**/*.java",
             "**/*.js", "**/*.xml" };
 
+    /** The Constant REMOVE_TRAILING_PATTERN. */
     private static final Pattern REMOVE_TRAILING_PATTERN = Pattern.compile("\\p{Blank}+$", Pattern.MULTILINE);
 
     /**
