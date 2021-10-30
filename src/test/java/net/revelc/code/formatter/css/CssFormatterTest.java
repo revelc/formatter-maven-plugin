@@ -32,10 +32,10 @@ class CssFormatterTest extends AbstractFormatterTest {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new CssFormatter(), "someFile.css",
-                    "80042a8a00870195a43c6a80e8e0b2d13e3ac8fd3f52e10277f05a637af6bb5bdddcf5b939677be0b48b907a74861f3f3cd71be38edf4f740c7e9f31d79b1ee1");
+                    "72b2c33020774b407c2e49a849e47990941d3c80d982b1a4ef2e0ffed605b85e2680fca57cfdbc9d6cd2fc6fc0236dbeb915fd75f530689c7e90a3745316b6a3");
         } else {
             doTestFormat(new CssFormatter(), "someFile.css",
-                    "332e3475ccfcb029ba8db3fd1d9ebd7e44dad60d96866de50e0434c0075a41e138c3fc919410780e985c69e6975d86cf18c2048ab1311cb382218db82dfaa79e");
+                    "684255d79eb28c6f4cfa340b6930fe1cfd9de16a1c6abf5f54e8f6837694b599101ef247ed00b8aea5460aa64cda60b418cebefd8ea28d5e747ed9cf4c3a9274");
         }
     }
 

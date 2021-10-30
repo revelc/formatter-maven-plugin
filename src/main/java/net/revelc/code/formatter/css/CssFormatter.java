@@ -57,6 +57,9 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         CSSStyleSheetImpl sheet = (CSSStyleSheetImpl) parser.parseStyleSheet(source, null, null);
         String formattedCode = sheet.getCssText(formatter);
 
+        // Patch converted 'tab' back to '\9' for IE 7,8, and 9 hack. Cssparser switches it to 'tab'.
+        formattedCode = formattedCode.replace("\t;", "\\9;");
+
         if (code.equals(formattedCode)) {
             return null;
         }
