@@ -30,6 +30,10 @@ public enum LineEnding {
         return this.chars;
     }
 
+    public boolean isSystem() {
+        return System.lineSeparator().equals(getChars());
+    }
+
     /**
      * Returns the most occurring line-ending characters in the file text or null if no line-ending occurs the most.
      */

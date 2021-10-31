@@ -13,15 +13,14 @@
  */
 package net.revelc.code.formatter.xml;
 
+import static java.util.Collections.emptyMap;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.FormatCycle;
+import net.revelc.code.formatter.LineEnding;
 
 /**
  * @author yoshiman
@@ -31,32 +30,21 @@ class XMLFormatterTest extends AbstractFormatterTest {
 
     @Test
     void testDoFormatFile() throws Exception {
-        // Since we set the line endings via options for xml, we cannot rely on CRLF inside doTestFormat.
+        // Since we set the line endings via options for xml, we cannot rely on CRLF inside twoPassTest.
         // The option will not be available inside xml formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
-        if (System.lineSeparator().equals("\n")) {
-            doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb",
-                    FormatCycle.FIRST);
-            doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb",
-                    FormatCycle.SECOND);
-        } else {
-            doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0",
-                    FormatCycle.FIRST);
-            doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0",
-                    FormatCycle.SECOND);
-        }
+        String expectedHash = LineEnding.LF.isSystem()
+                ? "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb"
+                : "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0";
+        LineEnding lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
+        twoPassTest(emptyMap(), new XMLFormatter(), "someFile.xml", expectedHash, lineEnding);
     }
 
     @Test
     void testIsIntialized() throws Exception {
         XMLFormatter xmlFormatter = new XMLFormatter();
         assertFalse(xmlFormatter.isInitialized());
-        xmlFormatter.init(Collections.emptyMap(),
-                new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_PRIMARY_DIR));
+        xmlFormatter.init(emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_PRIMARY_DIR));
         assertTrue(xmlFormatter.isInitialized());
     }
 
