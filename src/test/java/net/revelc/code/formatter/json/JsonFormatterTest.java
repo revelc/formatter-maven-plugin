@@ -74,10 +74,10 @@ class JsonFormatterTest extends AbstractFormatterTest {
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
                     "2122f00ff5a3b4d3012d568b907deaecee248b5b1f8e3ebe213f6b7b3a628ad0c14d236e79789763d940f346c689694ac9854fe8fe7d935a50286e65c036a36d",
-                    LineEnding.CRLF, FormatCycle.FIRST);
+                    LineEnding.LF, FormatCycle.FIRST);
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
                     "2122f00ff5a3b4d3012d568b907deaecee248b5b1f8e3ebe213f6b7b3a628ad0c14d236e79789763d940f346c689694ac9854fe8fe7d935a50286e65c036a36d",
-                    LineEnding.CRLF, FormatCycle.SECOND);
+                    LineEnding.LF, FormatCycle.SECOND);
         } else {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
                     "5d433f2700a2fdabfabdb309d5f807df91ad86f7a94658d4a3f2f3699ae78b2efb1de451c141f61905f1c814cd647f312ae9651454e65d124510be0573082e86",
