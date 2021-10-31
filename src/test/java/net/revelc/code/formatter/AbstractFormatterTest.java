@@ -88,7 +88,11 @@ public abstract class AbstractFormatterTest {
 
     protected void doTestFormat(Formatter formatter, String fileUnderTest, String expectedSha512,
             FormatCycle formatCycle) throws IOException {
-        doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF, formatCycle);
+        if (System.lineSeparator().equals("\n")) {
+            doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.LF, formatCycle);
+        } else {
+            doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF, formatCycle);
+        }
     }
 
     protected void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
