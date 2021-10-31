@@ -349,13 +349,6 @@
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <version>4.1</version>
-          <dependencies>
-            <dependency>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin-git</artifactId>
-              <version>4.1</version>
-            </dependency>
-          </dependencies>
         </plugin>
         <plugin>
           <groupId>net.revelc.code.formatter</groupId>

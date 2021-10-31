@@ -44,7 +44,7 @@ jobs:
         key: ${{ matrix.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ matrix.os }}-m2
     - name: Build with Maven
-      run: mvn -B -V -e "-Dstyle.color=always" verify -D"license.skip=true"
+      run: mvn -B -V -e "-Dstyle.color=always" verify
       env:
         MAVEN_OPTS: -Djansi.force=true
 
