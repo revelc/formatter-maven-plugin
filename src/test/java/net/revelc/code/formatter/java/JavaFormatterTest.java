@@ -31,12 +31,21 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     @Test
     void testDoFormatFile() throws Exception {
-        doTestFormat(new JavaFormatter(), "AnyClass.java",
-                "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca",
-                FormatCycle.FIRST);
-        doTestFormat(new JavaFormatter(), "AnyClass.java",
-                "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca",
-                FormatCycle.SECOND);
+        if (System.lineSeparator().equals("\n")) {
+            doTestFormat(new JavaFormatter(), "AnyClass.java",
+                    "5d41510e74b87c6b38c8e4692d53aa9de3d7a85d08c72697b77c48541534147a028e799289d49c05cc9a3cc601e64c86bb954bb62b03b7277616b71ecc5bd716",
+                    FormatCycle.FIRST);
+            doTestFormat(new JavaFormatter(), "AnyClass.java",
+                    "5d41510e74b87c6b38c8e4692d53aa9de3d7a85d08c72697b77c48541534147a028e799289d49c05cc9a3cc601e64c86bb954bb62b03b7277616b71ecc5bd716",
+                    FormatCycle.SECOND);
+        } else {
+            doTestFormat(new JavaFormatter(), "AnyClass.java",
+                    "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca",
+                    FormatCycle.FIRST);
+            doTestFormat(new JavaFormatter(), "AnyClass.java",
+                    "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca",
+                    FormatCycle.SECOND);
+        }
     }
 
     @Test

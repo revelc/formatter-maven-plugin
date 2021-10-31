@@ -91,7 +91,8 @@ public abstract class AbstractFormatterTest {
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.LF, formatCycle);
         } else {
-            doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF, formatCycle);
+            doTestFormat(Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, LineEnding.CRLF,
+                    formatCycle);
         }
     }
 

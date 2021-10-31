@@ -37,10 +37,10 @@ class JsonFormatterTest extends AbstractFormatterTest {
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new JsonFormatter(), "someFile.json",
-                    "4f74200377cfd8a1ee31622ef212268ceb6db177c2bc39481828aba1581869f593ec059c987d18d02f77a134084e8ccf2d016fe28ecc2209d81ffabfc885fae3",
+                    "1c8b8931b79a7dfaa4d2ab1986ebfe5967716b63877aa0311091214bf870f5480469a80e920fc825a98ad265f252e94e1ca4b94a55a279d0d2d302a20dcb4fa3",
                     FormatCycle.FIRST);
             doTestFormat(new JsonFormatter(), "someFile.json",
-                    "4f74200377cfd8a1ee31622ef212268ceb6db177c2bc39481828aba1581869f593ec059c987d18d02f77a134084e8ccf2d016fe28ecc2209d81ffabfc885fae3",
+                    "1c8b8931b79a7dfaa4d2ab1986ebfe5967716b63877aa0311091214bf870f5480469a80e920fc825a98ad265f252e94e1ca4b94a55a279d0d2d302a20dcb4fa3",
                     FormatCycle.SECOND);
         } else {
             doTestFormat(new JsonFormatter(), "someFile.json",
