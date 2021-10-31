@@ -21,6 +21,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.FormatCycle;
 
 /**
  * @author yoshiman
@@ -35,10 +36,18 @@ class XMLFormatterTest extends AbstractFormatterTest {
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb");
+                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb",
+                    FormatCycle.FIRST);
+            doTestFormat(new XMLFormatter(), "someFile.xml",
+                    "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb",
+                    FormatCycle.SECOND);
         } else {
             doTestFormat(new XMLFormatter(), "someFile.xml",
-                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0");
+                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0",
+                    FormatCycle.FIRST);
+            doTestFormat(new XMLFormatter(), "someFile.xml",
+                    "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0",
+                    FormatCycle.SECOND);
         }
     }
 
@@ -46,7 +55,8 @@ class XMLFormatterTest extends AbstractFormatterTest {
     void testIsIntialized() throws Exception {
         XMLFormatter xmlFormatter = new XMLFormatter();
         assertFalse(xmlFormatter.isInitialized());
-        xmlFormatter.init(Collections.emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_DIR));
+        xmlFormatter.init(Collections.emptyMap(),
+                new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_PRIMARY_DIR));
         assertTrue(xmlFormatter.isInitialized());
     }
 
