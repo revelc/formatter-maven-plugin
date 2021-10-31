@@ -73,10 +73,10 @@ class JsonFormatterTest extends AbstractFormatterTest {
         // default is regardless of requesting it to be CRLF later which is ignored.
         if (System.lineSeparator().equals("\n")) {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
-                    "2122f00ff5a3b4d3012d568b907deaecee248b5b1f8e3ebe213f6b7b3a628ad0c14d236e79789763d940f346c689694ac9854fe8fe7d935a50286e65c036a36d",
+                    "0ca303fef968b92f3f798ff1615cd6c501ea3b754fd18f54932fd07c1dce86d2df9845817b8f521a2254c98c6e0d35b0bced3ea12113e961d3789111868897d7",
                     LineEnding.LF, FormatCycle.FIRST);
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
-                    "2122f00ff5a3b4d3012d568b907deaecee248b5b1f8e3ebe213f6b7b3a628ad0c14d236e79789763d940f346c689694ac9854fe8fe7d935a50286e65c036a36d",
+                    "0ca303fef968b92f3f798ff1615cd6c501ea3b754fd18f54932fd07c1dce86d2df9845817b8f521a2254c98c6e0d35b0bced3ea12113e961d3789111868897d7",
                     LineEnding.LF, FormatCycle.SECOND);
         } else {
             doTestFormat(jsonFormattingOptions, new JsonFormatter(), "someFile.json",
