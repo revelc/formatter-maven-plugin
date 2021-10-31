@@ -155,3 +155,8 @@ ver 2.16.0
 ver 2.17.0
 ==========
 - Support Eclipse 2021-09 (4.21, JDT 3.27)
+- Added patch to cssparser to retain ie 7,8,9 hack for \9
+
+ver 2.17.1
+==========
+- Fix processing on EOL markers making it accurate (mixed match resulted in odd behavior)
