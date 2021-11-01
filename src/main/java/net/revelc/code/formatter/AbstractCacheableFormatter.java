@@ -17,11 +17,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
+
+import net.revelc.code.formatter.css.CssFormatter;
+import net.revelc.code.formatter.html.HTMLFormatter;
+import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
  * @author marvin.froeder
@@ -54,6 +57,9 @@ public abstract class AbstractCacheableFormatter {
             if (formattedCode == null) {
                 this.log.debug("Nothing formatted. Try to fix line endings.");
                 formattedCode = fixLineEnding(originalCode, ending);
+            } else if (this instanceof CssFormatter || this instanceof HTMLFormatter || this instanceof XMLFormatter) {
+                this.log.debug("Formatted but line endings not supported by tooling. Try to fix line endings.");
+                formattedCode = fixLineEnding(formattedCode, ending);
             }
 
             if (formattedCode == null) {
@@ -75,18 +81,12 @@ public abstract class AbstractCacheableFormatter {
             return null;
         }
 
-        LineEnding current = LineEnding.determineLineEnding(code);
-        if (current == LineEnding.UNKNOWN) {
-            return null;
-        }
-        if (current == ending) {
-            return null;
-        }
-        if (ending == LineEnding.AUTO && Objects.equals(current.getChars(), ending.getChars())) {
-            return null;
-        }
+        // Normalize all line endings
+        code = code.replace(LineEnding.CRLF.getChars(), LineEnding.LF.getChars());
+        code = code.replace(LineEnding.CR.getChars(), LineEnding.LF.getChars());
 
-        return code.replace(current.getChars(), ending.getChars());
+        // Replace line endings with chosen style
+        return code.replace(LineEnding.LF.getChars(), ending.getChars());
     }
 
     protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
