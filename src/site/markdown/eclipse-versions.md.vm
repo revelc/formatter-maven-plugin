@@ -26,6 +26,7 @@ their compatibility with major Eclipse releases.
 
 formatter-maven-plugin | Eclipse<br/>Name | Eclipse<br/>Version | JDT Core | JDK<br/>Version
 -----------------------|------------------|---------------------|----------|----------------
+2.18                   | 2021-12          | 4.22                | 3.28     | 11
 2.17                   | 2021-09          | 4.21                | 3.27     | 11
 2.16                   | 2021-06          | 4.20                | 3.26     | 8
 2.15                   | 2021-03          | 4.19                | 3.25     | 8

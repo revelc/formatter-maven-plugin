@@ -167,3 +167,8 @@ ver 2.17.1
 ==========
 - Bump jsdt support to 2021-09 - now requires jdk 11
 - Fix processing on end of line (EOL) markers making it accurate (mixed match resulted in odd behavior)
+
+ver 2.18.0
+==========
+- Support Eclipse 2021-12 (4.22, JDT 3.28) - now requires jdk 11
+
