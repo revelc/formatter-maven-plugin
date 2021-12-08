@@ -154,9 +154,16 @@ ver 2.16.0
 
 ver 2.17.0
 ==========
-- Support Eclipse 2021-09 (4.21, JDT 3.27)
-- Added patch to cssparser to retain ie 7,8,9 hack for \9
+- Support Eclipse 2021-09 (4.21, JDT 3.27) - now requires jdk 11
+- Bump jsdt support to 2020-09
+- Cleanup jsoup implementation as it only supports html in our implementation (had xml case statement but we use eclipse variation)
+- Added patch to cssparser to retain ie 7,8,9 hack for '\9'
+- Run our tests on two pass (ie test the formatting results) to confirm repeated same formatting.  Known issue with jsoup (html formatter)
+- Improve logging output during plugin run (info) with more output in debug run
+- Use timeutil to format time
+- Add new parameter 'removeTrailingWhitespace' to remove trailing whitespace. (only happens if it actually formatted)
 
 ver 2.17.1
 ==========
-- Fix processing on EOL markers making it accurate (mixed match resulted in odd behavior)
+- Bump jsdt support to 2021-09 - now requires jdk 11
+- Fix processing on end of line (EOL) markers making it accurate (mixed match resulted in odd behavior)

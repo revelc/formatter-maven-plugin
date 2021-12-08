@@ -38,6 +38,14 @@ basis for this plugin's formatting. See [the project website][compat] for a
 list of recent versions of this plugin and their corresponding Eclipse
 versions.
 
+## JDK Requirements
+- 2.16.x requires jdk 8 as required by Eclipse binaries
+- 2.17.x requires jdk 11 as required by Eclipse binaries
+
+## Changelog
+
+Refer to changelog for further details [changelog](CHANGELOG.md)
+
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
 [blog]: https://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
