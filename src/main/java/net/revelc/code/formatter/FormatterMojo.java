@@ -644,10 +644,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (!Result.SKIPPED.equals(result)) {
             if (formattedCode == null) {
                 result = Result.FAIL;
-            } else if (originalCode.equals(formattedCode)) {
-                result = Result.SKIPPED;
             } else {
-                result = Result.SUCCESS;
+                // Process the source one more time and remove any trailing whitespace found
+                if (removeTrailingWhitespace) {
+                    formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
+                }
+                result = originalCode.equals(formattedCode) ? Result.SKIPPED : Result.SUCCESS;
             }
         }
 
@@ -659,11 +661,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         } else if (Result.FAIL.equals(result)) {
             rc.failCount++;
             return;
-        }
-
-        // Process the source one more time and remove any trailing whitespace found
-        if (removeTrailingWhitespace && formattedCode != null) {
-            formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
         }
 
         // Write the cache
