@@ -172,3 +172,4 @@ ver 2.18.0
 ==========
 - Support Eclipse 2021-12 (4.22, JDT 3.28) - now requires jdk 11
 - Move whitespace trim to ensure it's counted in formatting stats
+- Set whitespace trim to default 'true' as it is formatting

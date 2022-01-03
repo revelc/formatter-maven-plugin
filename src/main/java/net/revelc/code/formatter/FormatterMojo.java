@@ -336,10 +336,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * When set to true, remove trailing whitespace on all lines after the formatter has finished.
      *
+     * Default to 'true' since 2.18.0
+     *
      * @since 2.17.0
      */
-    @Parameter(defaultValue = "false", property = "formatter.removeTrailingWhitespace")
+    @Parameter(defaultValue = "true", property = "formatter.removeTrailingWhitespace")
     private boolean removeTrailingWhitespace;
+
     private JavaFormatter javaFormatter = new JavaFormatter();
 
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
