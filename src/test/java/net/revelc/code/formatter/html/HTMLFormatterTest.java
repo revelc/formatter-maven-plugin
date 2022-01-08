@@ -31,8 +31,8 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         String expectedHash = LineEnding.LF.isSystem()
-                ? "1cfe5e48635d8618be4d490a5e7f690ef8e1dfc7e24303457030e281068bbebac44b552ae52ac88f03bf10e72ed0582904d665afc54bade395fd3d183abe0cba"
-                : "ef3969324f673d0831fe3a7c36426d162d0619b9dcdc187e5674b41a9743fdb9bad10a651f66dd43ff0806d1b1303bfb0384375f12bf1940e84347b84846b631";
+                ? "a342e3aa371fe0188144b7efae2c5f92c66966b08c2f816f9d91966a58b1f2270b1ac79a24ae19709af26cd9b4eeca868469870977854b42e04477d04a951cc4"
+                : "1ca6c6d7569344583700a37b24b613b28d12a4a658b28953892503a067ab0c2fcbbbe128f8143ec7c8c6aca65ec14eff63555f9bbc661b60c0945ce596dcc44d";
         LineEnding lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         singlePassTest(new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
         // TODO: jsoup has further bugs to fix so this always fails currently
