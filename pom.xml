@@ -113,6 +113,20 @@
     </snapshotRepository>
   </distributionManagement>
 
+  <!-- TODO: Allow pull from snapshots while on jsoup snapshot, remove once finalized -->
+  <repositories>
+    <repository>
+      <id>oss.sonatype.org-snapshot</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <properties>
     <junit.version>5.8.2</junit.version>
 
