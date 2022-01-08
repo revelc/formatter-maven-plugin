@@ -91,6 +91,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /** The Constant REMOVE_TRAILING_PATTERN. */
     private static final Pattern REMOVE_TRAILING_PATTERN = Pattern.compile("\\p{Blank}+$", Pattern.MULTILINE);
 
+    /** The Constant FORMATTER_SKIPPED with preceding space. */
+    private static final String FORMATTING_IS_SKIPPED = " formatting is skipped";
+    
     /**
      * ResourceManager for retrieving the configFile resource.
      */
@@ -595,42 +598,42 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         String formattedCode = null;
         if (file.getName().endsWith(".java") && javaFormatter.isInitialized()) {
             if (skipJavaFormatting) {
-                log.debug(Type.JAVA + " formatting is skipped");
+                log.debug(Type.JAVA + FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".js") && jsFormatter.isInitialized()) {
             if (skipJsFormatting) {
-                log.debug(Type.JAVASCRIPT + " formatting is skipped");
+                log.debug(Type.JAVASCRIPT + FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".html") && htmlFormatter.isInitialized()) {
             if (skipHtmlFormatting) {
-                log.debug(Type.HTML + " formatting is skipped");
+                log.debug(Type.HTML + FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.htmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".xml") && xmlFormatter.isInitialized()) {
             if (skipXmlFormatting) {
-                log.debug(Type.XML + " formatting is skipped");
+                log.debug(Type.XML + FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.xmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".json") && jsonFormatter.isInitialized()) {
             if (skipJsonFormatting) {
-                log.debug(Type.JSON + " formatting is skipped");
+                log.debug(Type.JSON + FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsonFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (file.getName().endsWith(".css") && cssFormatter.isInitialized()) {
             if (skipCssFormatting) {
-                log.debug(Type.CSS + " formatting is skipped");
+                log.debug(Type.CSS + FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.cssFormatter.formatFile(file, originalCode, this.lineEnding);
