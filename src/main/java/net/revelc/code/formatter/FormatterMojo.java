@@ -93,7 +93,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /** The Constant FORMATTER_SKIPPED with preceding space. */
     private static final String FORMATTING_IS_SKIPPED = " formatting is skipped";
-    
+
     /**
      * ResourceManager for retrieving the configFile resource.
      */
