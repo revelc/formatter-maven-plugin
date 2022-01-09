@@ -16,6 +16,7 @@ package net.revelc.code.formatter.jsoup;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,6 +34,9 @@ import net.revelc.code.formatter.LineEnding;
  * The Class JsoupBasedFormatter.
  */
 public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter implements Formatter {
+
+    /** The Constant REMOVE_TRAILING_PATTERN. */
+    private static final Pattern REMOVE_TRAILING_PATTERN = Pattern.compile("\\p{Blank}+$", Pattern.MULTILINE);
 
     /** The formatter. */
     private OutputSettings formatter;
@@ -60,7 +64,12 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         document = Jsoup.parse(code, "", Parser.htmlParser());
         document.outputSettings(this.formatter);
 
-        final var formattedCode = document.outerHtml();
+        var formattedCode = document.outerHtml();
+
+        // TODO: Fixing trailing space issue caused by jsoup. We do fix this during a proper run
+        // but our tests fail to do so thus we are duplicating this until jsoup fixes bug.
+        formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
+
         if (code.equals(formattedCode)) {
             return null;
         }
