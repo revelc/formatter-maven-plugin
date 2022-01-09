@@ -175,4 +175,4 @@ ver 2.18.0
 - Set whitespace trim to default 'true' as it is formatting
 - Added support for jsoup maxPaddingWidth, we default to -1 to disable to retain original behaviour on full pretty print
 - Add <script> block to html tests to demonstrate upstream jsoup bug adding new lines has been fixed
-- Add support for trimming trailing spaces from jsoup pretty print so our internal tests can function properly due to jsoup upstream issues
+- Add support for trimming trailing spaces from jsoup pretty print so our internal tests can function properly due to jsoup upstream bug
