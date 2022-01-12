@@ -17,7 +17,6 @@ import java.io.File;
 import java.util.Map;
 
 /**
- * @author marvin.froeder
  */
 public interface Formatter {
 

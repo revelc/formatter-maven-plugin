@@ -25,9 +25,6 @@ import org.xml.sax.SAXException;
 
 /**
  * Test class for {@link ConfigReader}.
- * 
- * @author jecki
- * @author Matt Blanchette
  */
 class ConfigReaderTest {
 

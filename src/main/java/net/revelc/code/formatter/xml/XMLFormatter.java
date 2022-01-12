@@ -23,8 +23,6 @@ import net.revelc.code.formatter.xml.lib.FormattingPreferences;
 import net.revelc.code.formatter.xml.lib.XmlDocumentFormatter;
 
 /**
- * @author yoshiman
- * @author jam01
  */
 public class XMLFormatter extends AbstractCacheableFormatter implements Formatter {
     private XmlDocumentFormatter formatter;

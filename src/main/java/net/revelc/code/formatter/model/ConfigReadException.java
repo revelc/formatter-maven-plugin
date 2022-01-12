@@ -16,8 +16,6 @@ package net.revelc.code.formatter.model;
 /**
  * An exception thrown when there is an error reading settings from the code formatter profile of an Eclipse formatter
  * config file.
- * 
- * @author Matt Blanchette
  */
 public class ConfigReadException extends Exception {
 

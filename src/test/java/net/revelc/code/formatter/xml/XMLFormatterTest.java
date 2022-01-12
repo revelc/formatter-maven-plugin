@@ -23,8 +23,6 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
- * @author yoshiman
- * @author jam01
  */
 class XMLFormatterTest extends AbstractFormatterTest {
 
