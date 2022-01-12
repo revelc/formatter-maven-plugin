@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class TimeUtilTest {
+class TimeUtilTest {
 
     @Test
-    public void testPrintDuration() throws Exception {
+    void testPrintDuration() throws Exception {
         assertEquals("123ms", TimeUtil.printDuration(123));
         assertEquals("1s", TimeUtil.printDuration(1000));
         assertEquals("1s1ms", TimeUtil.printDuration(1001));

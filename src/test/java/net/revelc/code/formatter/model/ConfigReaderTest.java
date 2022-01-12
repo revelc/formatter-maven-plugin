@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
  * @author jecki
  * @author Matt Blanchette
  */
-public class ConfigReaderTest {
+class ConfigReaderTest {
 
     /**
      * Test successfully read a config file.
