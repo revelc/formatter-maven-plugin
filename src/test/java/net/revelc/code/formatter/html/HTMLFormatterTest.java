@@ -36,11 +36,11 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "ca14768f37dab92f65551a71fb3e4ce1304df2f9528ec24abeeb615aea2fc1b3f8910b823e24f4a391b58bddc555429761520f7cb43f0bccb51f04f04b789aab"
-                : "563119044ad9aaa712080e7261653f883b4c10a3376a8546200db3ac984233fb82fa012be4e08277d11402098b43c1b28f216393647cc8cbb6213b0023433469";
+                ? "9774ef68195bb7bd9c1d0eaed6b3c7536633d0d916ad52187005ec2c89e0fcfe42e14dd4576453cb14abaef0352ef0b7a275c015e7cc124b8b4da481f423d030"
+                : "135d87e3e4be25a31bfc360a049cc41217a8ad8e2e697fb9b423f48cba08789b12134503b2e44d661eb2a54adc47e0530b661be2ee0e4589ef306986c04f2933";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.singlePassTest(new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
-        // TODO: jsoup has further bugs to fix so this always fails currently
+        // TODO: jsoup has further bugs to fix so this always fails currently as their counter for leading space is sometimes wrong (off by one)
         // twoPassTest(emptyMap(), new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
     }
 
