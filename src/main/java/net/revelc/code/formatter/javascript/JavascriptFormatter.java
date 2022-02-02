@@ -53,7 +53,7 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
             return null;
         }
 
-        IDocument doc = new Document(code);
+        final IDocument doc = new Document(code);
         te.apply(doc);
         String formattedCode = doc.get();
 
@@ -65,7 +65,7 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
 
     @Override
     public boolean isInitialized() {
-        return formatter != null;
+        return this.formatter != null;
     }
 
 }

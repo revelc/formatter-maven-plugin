@@ -57,7 +57,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
             }
 
             @Override
-            public DefaultPrettyPrinter withSeparators(Separators separators) {
+            public DefaultPrettyPrinter withSeparators(final Separators separators) {
                 this._separators = separators;
                 this._objectFieldValueSeparatorWithSpaces = (spaceBeforeSeparator ? " " : "")
                         + separators.getObjectFieldValueSeparator() + " ";
@@ -67,13 +67,13 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
         printer.indentObjectsWith(indenter);
         printer.indentArraysWith(indenter);
-        formatter.setDefaultPrettyPrinter(printer);
-        formatter.enable(SerializationFeature.INDENT_OUTPUT);
-        formatter.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, useAlphabeticalOrder);
+        this.formatter.setDefaultPrettyPrinter(printer);
+        this.formatter.enable(SerializationFeature.INDENT_OUTPUT);
+        this.formatter.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, useAlphabeticalOrder);
     }
 
     @Override
-    protected String doFormat(String code, LineEnding ending) throws IOException {
+    protected String doFormat(final String code, final LineEnding ending) throws IOException {
         // note: line ending set in init for this usecase
         Object json = formatter.readValue(code, Object.class);
         String formattedCode = formatter.writer().writeValueAsString(json);
@@ -86,7 +86,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
     @Override
     public boolean isInitialized() {
-        return formatter != null;
+        return this.formatter != null;
     }
 
 }

@@ -27,7 +27,7 @@ public class Profiles {
     public static final String PROFILE_KIND = "CodeFormatterProfile";
 
     /** The profiles. */
-    private List<Map<String, String>> profileList = new ArrayList<>();
+    private final List<Map<String, String>> profileList = new ArrayList<>();
 
     /**
      * Adds the profile.
@@ -35,8 +35,8 @@ public class Profiles {
      * @param profile
      *            the profile
      */
-    public void addProfile(Profile profile) {
-        if (PROFILE_KIND.equals(profile.getKind())) {
+    public void addProfile(final Profile profile) {
+        if (Profiles.PROFILE_KIND.equals(profile.getKind())) {
             this.profileList.add(profile.getSettings());
         }
     }

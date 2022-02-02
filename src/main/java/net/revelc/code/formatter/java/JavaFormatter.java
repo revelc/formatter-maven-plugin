@@ -81,7 +81,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 
     @Override
     public boolean isInitialized() {
-        return formatter != null;
+        return this.formatter != null;
     }
 
     /**
@@ -90,8 +90,8 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
      * @param ep
      *            the new exclusion pattern
      */
-    public void setExclusionPattern(String ep) {
-        exclusionPattern = Pattern.compile(ep, Pattern.MULTILINE);
+    public void setExclusionPattern(final String ep) {
+        this.exclusionPattern = Pattern.compile(ep, Pattern.MULTILINE);
     }
 
     /**
@@ -101,7 +101,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
      *            the code
      * @param exclusionPattern
      *            the exclusion pattern
-     * 
+     *
      * @return the regions
      */
     protected static IRegion[] getRegions(String code, Pattern exclusionPattern) {

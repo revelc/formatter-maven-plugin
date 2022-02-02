@@ -25,7 +25,7 @@ class RuleSet extends RuleSetBase {
     private static final String PROFILES_PROFILE = "profiles/profile";
 
     /** The Constant PROFILES_PROFILE_SETTING. */
-    private static final String PROFILES_PROFILE_SETTING = PROFILES_PROFILE + "/setting";
+    private static final String PROFILES_PROFILE_SETTING = RuleSet.PROFILES_PROFILE + "/setting";
 
     /**
      * Adds the rule instances.
@@ -38,15 +38,15 @@ class RuleSet extends RuleSetBase {
     @Override
     public void addRuleInstances(final Digester digester) {
         digester.addObjectCreate("profiles", Profiles.class);
-        digester.addObjectCreate(PROFILES_PROFILE, Profile.class);
-        digester.addObjectCreate(PROFILES_PROFILE_SETTING, Setting.class);
+        digester.addObjectCreate(RuleSet.PROFILES_PROFILE, Profile.class);
+        digester.addObjectCreate(RuleSet.PROFILES_PROFILE_SETTING, Setting.class);
 
-        digester.addSetNext(PROFILES_PROFILE, "addProfile");
-        digester.addSetNext(PROFILES_PROFILE_SETTING, "addSetting");
+        digester.addSetNext(RuleSet.PROFILES_PROFILE, "addProfile");
+        digester.addSetNext(RuleSet.PROFILES_PROFILE_SETTING, "addSetting");
 
-        digester.addSetProperties(PROFILES_PROFILE, "kind", "kind");
-        digester.addSetProperties(PROFILES_PROFILE_SETTING, "id", "id");
-        digester.addSetProperties(PROFILES_PROFILE_SETTING, "value", "value");
+        digester.addSetProperties(RuleSet.PROFILES_PROFILE, "kind", "kind");
+        digester.addSetProperties(RuleSet.PROFILES_PROFILE_SETTING, "id", "id");
+        digester.addSetProperties(RuleSet.PROFILES_PROFILE_SETTING, "value", "value");
     }
 
 }
