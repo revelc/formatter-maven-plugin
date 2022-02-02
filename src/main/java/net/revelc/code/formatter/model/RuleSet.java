@@ -36,7 +36,7 @@ class RuleSet extends RuleSetBase {
      * @see org.apache.commons.digester3.RuleSetBase#addRuleInstances(org.apache.commons.digester3.Digester)
      */
     @Override
-    public void addRuleInstances(Digester digester) {
+    public void addRuleInstances(final Digester digester) {
         digester.addObjectCreate("profiles", Profiles.class);
         digester.addObjectCreate(PROFILES_PROFILE, Profile.class);
         digester.addObjectCreate(PROFILES_PROFILE_SETTING, Setting.class);

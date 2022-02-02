@@ -53,7 +53,7 @@ public abstract class AbstractCacheableFormatter {
      * @param cfg
      *            the cfg
      */
-    protected void initCfg(ConfigurationSource cfg) {
+    protected void initCfg(final ConfigurationSource cfg) {
         this.log = cfg.getLog();
         this.encoding = cfg.getEncoding();
     }
@@ -70,7 +70,7 @@ public abstract class AbstractCacheableFormatter {
      * 
      * @return the string
      */
-    public String formatFile(File file, String originalCode, LineEnding ending) {
+    public String formatFile(final File file, final String originalCode, final LineEnding ending) {
         try {
             this.log.debug("Processing file: " + file + " with line ending: " + ending);
             LineEnding formatterLineEnding = ending;
@@ -114,7 +114,7 @@ public abstract class AbstractCacheableFormatter {
      * 
      * @return the string
      */
-    private static String fixLineEnding(String code, LineEnding ending) {
+    private static String fixLineEnding(String code, final LineEnding ending) {
         if (ending == LineEnding.KEEP) {
             return null;
         }

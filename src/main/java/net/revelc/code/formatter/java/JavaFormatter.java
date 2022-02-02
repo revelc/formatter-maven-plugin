@@ -46,14 +46,14 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     private Pattern exclusionPattern;
 
     @Override
-    public void init(Map<String, String> options, ConfigurationSource cfg) {
+    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
     }
 
     @Override
-    public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
+    public String doFormat(final String code, final LineEnding ending) throws IOException, BadLocationException {
         TextEdit te;
         try {
             IRegion[] regions = getRegions(code, exclusionPattern);

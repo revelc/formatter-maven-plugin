@@ -162,8 +162,8 @@ public abstract class AbstractFormatterTest {
      * @param lineEnding
      *            the line ending
      */
-    private void multiPassTest(int numPasses, Map<String, String> options, Formatter formatter, String fileUnderTest,
-            String expectedSha512, LineEnding lineEnding) {
+    private void multiPassTest(final int numPasses, final Map<String, String> options, final Formatter formatter,
+            final String fileUnderTest, final String expectedSha512, final LineEnding lineEnding) {
         IntStream.rangeClosed(1, numPasses).forEachOrdered(passNumber -> {
             try {
                 doTestFormat(options, formatter, fileUnderTest, expectedSha512, lineEnding, passNumber);

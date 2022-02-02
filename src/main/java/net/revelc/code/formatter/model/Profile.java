@@ -34,7 +34,7 @@ public class Profile {
      * @param setting
      *            the setting
      */
-    public void addSetting(Setting setting) {
+    public void addSetting(final Setting setting) {
         this.settings.put(setting.getId(), setting.getValue());
     }
 
@@ -62,7 +62,7 @@ public class Profile {
      * @param value
      *            the new kind
      */
-    public void setKind(String value) {
+    public void setKind(final String value) {
         this.kind = value;
     }
 }

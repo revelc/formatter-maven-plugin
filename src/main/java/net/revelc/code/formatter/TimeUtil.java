@@ -26,7 +26,7 @@ public final class TimeUtil {
      *
      * @return the time used for displaying on screen or in logs
      */
-    public static String printDuration(long duration) {
+    public static String printDuration(final long duration) {
         if (duration <= 0) {
             return "0ms";
         }

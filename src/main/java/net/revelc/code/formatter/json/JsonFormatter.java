@@ -37,7 +37,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     private ObjectMapper formatter;
 
     @Override
-    public void init(Map<String, String> options, ConfigurationSource cfg) {
+    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         int indent = Integer.parseInt(options.getOrDefault("indent", "4"));

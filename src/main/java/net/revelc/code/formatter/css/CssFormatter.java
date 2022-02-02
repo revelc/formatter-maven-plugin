@@ -38,7 +38,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     private CSSFormat formatter;
 
     @Override
-    public void init(Map<String, String> options, ConfigurationSource cfg) {
+    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
@@ -50,7 +50,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     }
 
     @Override
-    protected String doFormat(String code, LineEnding ending) throws IOException {
+    protected String doFormat(final String code, final LineEnding ending) throws IOException {
 
         InputSource source = new InputSource(new StringReader(code));
         CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
