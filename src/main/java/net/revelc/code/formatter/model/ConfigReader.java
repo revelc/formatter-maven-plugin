@@ -30,10 +30,10 @@ public class ConfigReader {
      *
      * @param input
      *            the input
-     * 
+     *
      * @return return {@link Map} with all the configurations read from the config file, or throws an exception if
      *         there's a problem reading the input, e.g.: invalid XML.
-     * 
+     *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      * @throws SAXException

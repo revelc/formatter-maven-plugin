@@ -67,7 +67,7 @@ public abstract class AbstractCacheableFormatter {
      *            the original code
      * @param ending
      *            the ending
-     * 
+     *
      * @return the string
      */
     public String formatFile(final File file, final String originalCode, final LineEnding ending) {
@@ -111,7 +111,7 @@ public abstract class AbstractCacheableFormatter {
      *            the code
      * @param ending
      *            the ending
-     * 
+     *
      * @return the string
      */
     private static String fixLineEnding(String code, final LineEnding ending) {
@@ -134,9 +134,9 @@ public abstract class AbstractCacheableFormatter {
      *            the code
      * @param ending
      *            the ending
-     * 
+     *
      * @return the string
-     * 
+     *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      * @throws BadLocationException

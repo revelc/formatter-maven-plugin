@@ -40,7 +40,7 @@ public interface Formatter {
      *            the original code
      * @param ending
      *            the ending
-     * 
+     *
      * @return the string
      */
     String formatFile(File file, String originalCode, LineEnding ending);
