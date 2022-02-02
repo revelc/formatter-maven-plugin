@@ -19,19 +19,50 @@ import java.nio.charset.Charset;
 import org.apache.maven.plugin.logging.Log;
 
 /**
+ * The Interface ConfigurationSource.
  */
 public interface ConfigurationSource {
 
+    /**
+     * Gets the log.
+     *
+     * @return the log
+     */
     Log getLog();
 
+    /**
+     * Gets the compiler sources.
+     *
+     * @return the compiler sources
+     */
     String getCompilerSources();
 
+    /**
+     * Gets the compiler compliance.
+     *
+     * @return the compiler compliance
+     */
     String getCompilerCompliance();
 
+    /**
+     * Gets the compiler codegen target platform.
+     *
+     * @return the compiler codegen target platform
+     */
     String getCompilerCodegenTargetPlatform();
 
+    /**
+     * Gets the target directory.
+     *
+     * @return the target directory
+     */
     File getTargetDirectory();
 
+    /**
+     * Gets the encoding.
+     *
+     * @return the encoding
+     */
     Charset getEncoding();
 
 }

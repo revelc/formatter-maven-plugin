@@ -23,9 +23,16 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
+ * The Class XMLFormatterTest.
  */
 class XMLFormatterTest extends AbstractFormatterTest {
 
+    /**
+     * Test do format file.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFile() throws Exception {
         // Since we set the line endings via options for xml, we cannot rely on CRLF inside twoPassTest.
@@ -38,6 +45,12 @@ class XMLFormatterTest extends AbstractFormatterTest {
         twoPassTest(emptyMap(), new XMLFormatter(), "someFile.xml", expectedHash, lineEnding);
     }
 
+    /**
+     * Test is intialized.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testIsIntialized() throws Exception {
         XMLFormatter xmlFormatter = new XMLFormatter();

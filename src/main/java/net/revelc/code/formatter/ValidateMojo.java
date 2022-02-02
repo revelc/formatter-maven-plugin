@@ -32,9 +32,11 @@ import org.eclipse.jface.text.BadLocationException;
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = true, threadSafe = true)
 public class ValidateMojo extends FormatterMojo {
 
+    /** The aggregator. */
     @Parameter(defaultValue = "false", property = "aggregator", required = true)
     private boolean aggregator;
 
+    /** The execution root. */
     @Parameter(defaultValue = "${project.executionRoot}", required = true)
     private boolean executionRoot;
 

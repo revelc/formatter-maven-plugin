@@ -35,24 +35,46 @@ import org.junit.jupiter.api.BeforeAll;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
+/**
+ * The Class AbstractFormatterTest.
+ */
 public abstract class AbstractFormatterTest {
 
+    /** The Constant RESOURCE_LOCATION_PRIMARY. */
     protected static final String RESOURCE_LOCATION_PRIMARY = "src/test/resources";
+
+    /** The Constant RESOURCE_LOCATION_SECONDARY. */
     protected static final String RESOURCE_LOCATION_SECONDARY = "target/testoutput";
 
+    /** The Constant TEST_OUTPUT_PRIMARY_DIR. */
     protected static final File TEST_OUTPUT_PRIMARY_DIR = new File("target/testoutput");
+
+    /** The Constant TEST_OUTPUT_SECONDARY_DIR. */
     protected static final File TEST_OUTPUT_SECONDARY_DIR = new File("target/testoutputrepeat");
 
+    /**
+     * Creates the test dir.
+     */
     @BeforeAll
     public static void createTestDir() {
         assertTrue(TEST_OUTPUT_PRIMARY_DIR.mkdirs() || TEST_OUTPUT_PRIMARY_DIR.isDirectory());
         assertTrue(TEST_OUTPUT_SECONDARY_DIR.mkdirs() || TEST_OUTPUT_SECONDARY_DIR.isDirectory());
     }
 
+    /**
+     * The Class TestConfigurationSource.
+     */
     public static class TestConfigurationSource implements ConfigurationSource {
 
+        /** The target dir. */
         private final File targetDir;
 
+        /**
+         * Instantiates a new test configuration source.
+         *
+         * @param targetDir
+         *            the target dir
+         */
         public TestConfigurationSource(File targetDir) {
             this.targetDir = targetDir;
         }
@@ -88,16 +110,58 @@ public abstract class AbstractFormatterTest {
         }
     }
 
+    /**
+     * Single pass test.
+     *
+     * @param formatter
+     *            the formatter
+     * @param fileUnderTest
+     *            the file under test
+     * @param expectedSha512
+     *            the expected sha 512
+     * @param lineEnding
+     *            the line ending
+     */
     protected void singlePassTest(Formatter formatter, String fileUnderTest, String expectedSha512,
             LineEnding lineEnding) {
         multiPassTest(1, emptyMap(), formatter, fileUnderTest, expectedSha512, lineEnding);
     }
 
+    /**
+     * Two pass test.
+     *
+     * @param options
+     *            the options
+     * @param formatter
+     *            the formatter
+     * @param fileUnderTest
+     *            the file under test
+     * @param expectedSha512
+     *            the expected sha 512
+     * @param lineEnding
+     *            the line ending
+     */
     protected void twoPassTest(Map<String, String> options, Formatter formatter, String fileUnderTest,
             String expectedSha512, LineEnding lineEnding) {
         multiPassTest(2, options, formatter, fileUnderTest, expectedSha512, lineEnding);
     }
 
+    /**
+     * Multi pass test.
+     *
+     * @param numPasses
+     *            the num passes
+     * @param options
+     *            the options
+     * @param formatter
+     *            the formatter
+     * @param fileUnderTest
+     *            the file under test
+     * @param expectedSha512
+     *            the expected sha 512
+     * @param lineEnding
+     *            the line ending
+     */
     private void multiPassTest(int numPasses, Map<String, String> options, Formatter formatter, String fileUnderTest,
             String expectedSha512, LineEnding lineEnding) {
         IntStream.rangeClosed(1, numPasses).forEachOrdered(passNumber -> {
@@ -109,6 +173,25 @@ public abstract class AbstractFormatterTest {
         });
     }
 
+    /**
+     * Do test format.
+     *
+     * @param options
+     *            the options
+     * @param formatter
+     *            the formatter
+     * @param fileUnderTest
+     *            the file under test
+     * @param expectedSha512
+     *            the expected sha 512
+     * @param lineEnding
+     *            the line ending
+     * @param formatCycle
+     *            the format cycle
+     * 
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
             String expectedSha512, LineEnding lineEnding, int formatCycle) throws IOException {
 

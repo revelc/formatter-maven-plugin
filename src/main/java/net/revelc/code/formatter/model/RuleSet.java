@@ -21,7 +21,10 @@ import org.apache.commons.digester3.RuleSetBase;
  */
 class RuleSet extends RuleSetBase {
 
+    /** The Constant PROFILES_PROFILE. */
     private static final String PROFILES_PROFILE = "profiles/profile";
+
+    /** The Constant PROFILES_PROFILE_SETTING. */
     private static final String PROFILES_PROFILE_SETTING = PROFILES_PROFILE + "/setting";
 
     /**

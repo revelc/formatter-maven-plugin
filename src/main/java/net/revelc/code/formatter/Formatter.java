@@ -17,21 +17,38 @@ import java.io.File;
 import java.util.Map;
 
 /**
+ * The Interface Formatter.
  */
 public interface Formatter {
 
     /**
      * Initialize the {@link org.eclipse.jdt.core.formatter.CodeFormatter} instance to be used by this component.
+     *
+     * @param options
+     *            the options
+     * @param cfg
+     *            the cfg
      */
     abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
     /**
      * Format individual file.
+     *
+     * @param file
+     *            the file
+     * @param originalCode
+     *            the original code
+     * @param ending
+     *            the ending
+     * 
+     * @return the string
      */
     abstract String formatFile(File file, String originalCode, LineEnding ending);
 
     /**
-     * return true if this formatter have been initialized
+     * Return true if this formatter have been initialized.
+     *
+     * @return true, if is initialized
      */
     boolean isInitialized();
 

@@ -29,10 +29,11 @@ import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 
 /**
- *
+ * The Class JsonFormatter.
  */
 public class JsonFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    /** The formatter. */
     private ObjectMapper formatter;
 
     @Override

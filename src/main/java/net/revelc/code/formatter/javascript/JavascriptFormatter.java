@@ -28,8 +28,12 @@ import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 
+/**
+ * The Class JavascriptFormatter.
+ */
 public class JavascriptFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    /** The formatter. */
     private CodeFormatter formatter;
 
     @Override

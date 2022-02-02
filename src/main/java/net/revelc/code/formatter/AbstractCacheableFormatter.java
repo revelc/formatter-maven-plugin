@@ -27,20 +27,49 @@ import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
+ * The Class AbstractCacheableFormatter.
  */
 public abstract class AbstractCacheableFormatter {
 
+    /** The log. */
     protected Log log;
 
+    /** The encoding. */
     protected Charset encoding;
 
+    /**
+     * Inits the.
+     *
+     * @param options
+     *            the options
+     * @param cfg
+     *            the cfg
+     */
     protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
 
+    /**
+     * Inits the cfg.
+     *
+     * @param cfg
+     *            the cfg
+     */
     protected void initCfg(ConfigurationSource cfg) {
         this.log = cfg.getLog();
         this.encoding = cfg.getEncoding();
     }
 
+    /**
+     * Format file.
+     *
+     * @param file
+     *            the file
+     * @param originalCode
+     *            the original code
+     * @param ending
+     *            the ending
+     * 
+     * @return the string
+     */
     public String formatFile(File file, String originalCode, LineEnding ending) {
         try {
             this.log.debug("Processing file: " + file + " with line ending: " + ending);
@@ -75,6 +104,16 @@ public abstract class AbstractCacheableFormatter {
         }
     }
 
+    /**
+     * Fix line ending.
+     *
+     * @param code
+     *            the code
+     * @param ending
+     *            the ending
+     * 
+     * @return the string
+     */
     private static String fixLineEnding(String code, LineEnding ending) {
         if (ending == LineEnding.KEEP) {
             return null;
@@ -88,6 +127,21 @@ public abstract class AbstractCacheableFormatter {
         return code.replace(LineEnding.LF.getChars(), ending.getChars());
     }
 
+    /**
+     * Do format.
+     *
+     * @param code
+     *            the code
+     * @param ending
+     *            the ending
+     * 
+     * @return the string
+     * 
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws BadLocationException
+     *             the bad location exception
+     */
     protected abstract String doFormat(String code, LineEnding ending) throws IOException, BadLocationException;
 
 }

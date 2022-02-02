@@ -23,9 +23,16 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
+ * The Class JavaFormatterTest.
  */
 class JavaFormatterTest extends AbstractFormatterTest {
 
+    /**
+     * Test do format file.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFile() throws Exception {
         String expectedHash = LineEnding.LF.isSystem()
@@ -35,24 +42,48 @@ class JavaFormatterTest extends AbstractFormatterTest {
         twoPassTest(emptyMap(), new JavaFormatter(), "AnyClass.java", expectedHash, lineEnding);
     }
 
+    /**
+     * Test do format file keep line feed LF.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFileKeepLineFeedLF() throws Exception {
         String expectedHash = "5d41510e74b87c6b38c8e4692d53aa9de3d7a85d08c72697b77c48541534147a028e799289d49c05cc9a3cc601e64c86bb954bb62b03b7277616b71ecc5bd716";
         twoPassTest(emptyMap(), new JavaFormatter(), "AnyClassLF.java", expectedHash, LineEnding.KEEP);
     }
 
+    /**
+     * Test do format file keep line feed CR.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFileKeepLineFeedCR() throws Exception {
         String expectedHash = "cf44c525667d8c49c80d390215e4d1995c10e8966583da0920e3917837188e5b95159f9dc7b4ae2559fbfa4550cbbaca166edc8991907d5fd4bbc74a1402e97e";
         twoPassTest(emptyMap(), new JavaFormatter(), "AnyClassCR.java", expectedHash, LineEnding.KEEP);
     }
 
+    /**
+     * Test do format file keep line feed CRLF.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFileKeepLineFeedCRLF() throws Exception {
         String expectedHash = "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca";
         twoPassTest(emptyMap(), new JavaFormatter(), "AnyClassCRLF.java", expectedHash, LineEnding.KEEP);
     }
 
+    /**
+     * Test is intialized.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testIsIntialized() throws Exception {
         JavaFormatter javaFormatter = new JavaFormatter();
@@ -61,6 +92,12 @@ class JavaFormatterTest extends AbstractFormatterTest {
         assertTrue(javaFormatter.isInitialized());
     }
 
+    /**
+     * Test do format file with exclusions.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFileWithExclusions() throws Exception {
         JavaFormatter formatter = new JavaFormatter();

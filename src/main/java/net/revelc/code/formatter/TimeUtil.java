@@ -13,6 +13,9 @@
  */
 package net.revelc.code.formatter;
 
+/**
+ * The Class TimeUtil.
+ */
 public final class TimeUtil {
 
     /**

@@ -22,8 +22,17 @@ import org.junit.jupiter.api.Test;
 import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
+/**
+ * The Class JavascriptFormatterTest.
+ */
 class JavascriptFormatterTest extends AbstractFormatterTest {
 
+    /**
+     * Test do format file.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFile() throws Exception {
         String expectedHash = LineEnding.LF.isSystem()
@@ -33,6 +42,12 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
         twoPassTest(emptyMap(), new JavascriptFormatter(), "AnyJS.js", expectedHash, lineEnding);
     }
 
+    /**
+     * Test is intialized.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testIsIntialized() throws Exception {
         JavascriptFormatter jsFormatter = new JavascriptFormatter();
