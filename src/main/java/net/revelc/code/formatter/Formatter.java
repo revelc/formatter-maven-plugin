@@ -29,7 +29,7 @@ public interface Formatter {
      * @param cfg
      *            the cfg
      */
-    abstract void init(Map<String, String> options, ConfigurationSource cfg);
+    void init(Map<String, String> options, ConfigurationSource cfg);
 
     /**
      * Format individual file.
@@ -43,7 +43,7 @@ public interface Formatter {
      * 
      * @return the string
      */
-    abstract String formatFile(File file, String originalCode, LineEnding ending);
+    String formatFile(File file, String originalCode, LineEnding ending);
 
     /**
      * Return true if this formatter have been initialized.
