@@ -35,7 +35,7 @@ class JavaFormatterTest extends AbstractFormatterTest {
     @Test
     void testDoFormatFile() throws Exception {
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "5d41510e74b87c6b38c8e4692d53aa9de3d7a85d08c72697b77c48541534147a028e799289d49c05cc9a3cc601e64c86bb954bb62b03b7277616b71ecc5bd716"
+                ? "2471c37dc976b24353bda569c9e9d702f8b376c2296c0acd1f9e2513b1d842d8a58af2167147b1f79805fa0aa0003480e95c51917510d3c738de486a3b760d4c"
                 : "4c002ff0cb5f8455bc42d3457b1d3418fcf1fd742551aa2d37d665b30825bf210636cfb8c1fc04e04ed074324c0d22909053b7e805db42b05fb4ba68e0cf457a";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClass.java", expectedHash, lineEnding);

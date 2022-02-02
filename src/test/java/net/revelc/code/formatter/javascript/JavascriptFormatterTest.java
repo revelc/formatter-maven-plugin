@@ -35,7 +35,7 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
     @Test
     void testDoFormatFile() throws Exception {
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "d2a196d7aaddc3285b783d929965c884d1c1cacf15e777f0a7a7315355822b51f903fdb5b47f7f6c79ffc35e2f2dee58b605578a8b18afb91cdfed4624f03d7d"
+                ? "4feeb51bd266eba3633aae66bb6fbd710ab8a97783dd92aa2649f6c08396ddc529d54576bba10566d264e4279b135e5cf546517a2a1cbf7d986fa899f2328a8a"
                 : "c9d6b3f17bb2503c794e7411e830b83957ecf94db1c330bad4871641e7537c86a96a69929f959fd79f7b96963fcb61e0c785c95badd100745d0285eece1c6f6d";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new JavascriptFormatter(), "AnyJS.js", expectedHash, lineEnding);
