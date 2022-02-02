@@ -13,23 +13,19 @@
  */
 package net.revelc.code.formatter;
 
-import static java.util.Collections.emptyMap;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.codehaus.plexus.util.FileUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
 import com.google.common.hash.Hashing;
@@ -57,8 +53,10 @@ public abstract class AbstractFormatterTest {
      */
     @BeforeAll
     public static void createTestDir() {
-        assertTrue(TEST_OUTPUT_PRIMARY_DIR.mkdirs() || TEST_OUTPUT_PRIMARY_DIR.isDirectory());
-        assertTrue(TEST_OUTPUT_SECONDARY_DIR.mkdirs() || TEST_OUTPUT_SECONDARY_DIR.isDirectory());
+        Assertions.assertTrue(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR.mkdirs()
+                || AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR.isDirectory());
+        Assertions.assertTrue(AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR.mkdirs()
+                || AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR.isDirectory());
     }
 
     /**
@@ -75,7 +73,7 @@ public abstract class AbstractFormatterTest {
          * @param targetDir
          *            the target dir
          */
-        public TestConfigurationSource(File targetDir) {
+        public TestConfigurationSource(final File targetDir) {
             this.targetDir = targetDir;
         }
 
@@ -122,9 +120,9 @@ public abstract class AbstractFormatterTest {
      * @param lineEnding
      *            the line ending
      */
-    protected void singlePassTest(Formatter formatter, String fileUnderTest, String expectedSha512,
-            LineEnding lineEnding) {
-        multiPassTest(1, emptyMap(), formatter, fileUnderTest, expectedSha512, lineEnding);
+    protected void singlePassTest(final Formatter formatter, final String fileUnderTest, final String expectedSha512,
+            final LineEnding lineEnding) {
+        this.multiPassTest(1, Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, lineEnding);
     }
 
     /**
@@ -141,9 +139,9 @@ public abstract class AbstractFormatterTest {
      * @param lineEnding
      *            the line ending
      */
-    protected void twoPassTest(Map<String, String> options, Formatter formatter, String fileUnderTest,
-            String expectedSha512, LineEnding lineEnding) {
-        multiPassTest(2, options, formatter, fileUnderTest, expectedSha512, lineEnding);
+    protected void twoPassTest(final Map<String, String> options, final Formatter formatter, final String fileUnderTest,
+            final String expectedSha512, final LineEnding lineEnding) {
+        this.multiPassTest(2, options, formatter, fileUnderTest, expectedSha512, lineEnding);
     }
 
     /**
@@ -166,8 +164,8 @@ public abstract class AbstractFormatterTest {
             final String fileUnderTest, final String expectedSha512, final LineEnding lineEnding) {
         IntStream.rangeClosed(1, numPasses).forEachOrdered(passNumber -> {
             try {
-                doTestFormat(options, formatter, fileUnderTest, expectedSha512, lineEnding, passNumber);
-            } catch (IOException e) {
+                this.doTestFormat(options, formatter, fileUnderTest, expectedSha512, lineEnding, passNumber);
+            } catch (final IOException e) {
                 throw new UncheckedIOException(e);
             }
         });
@@ -188,12 +186,12 @@ public abstract class AbstractFormatterTest {
      *            the line ending
      * @param formatCycle
      *            the format cycle
-     * 
+     *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void doTestFormat(Map<String, String> options, Formatter formatter, String fileUnderTest,
-            String expectedSha512, LineEnding lineEnding, int formatCycle) throws IOException {
+    private void doTestFormat(final Map<String, String> options, final Formatter formatter, final String fileUnderTest,
+            final String expectedSha512, final LineEnding lineEnding, final int formatCycle) throws IOException {
 
         // Set the used resource location for test (either first pass or second pass)
         String resourceLocation;
@@ -201,31 +199,31 @@ public abstract class AbstractFormatterTest {
         File testOutputDir;
         switch (formatCycle) {
         case 1:
-            resourceLocation = RESOURCE_LOCATION_PRIMARY;
-            testOutputDir = TEST_OUTPUT_PRIMARY_DIR;
+            resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_PRIMARY;
+            testOutputDir = AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR;
             break;
         case 2:
-            resourceLocation = RESOURCE_LOCATION_SECONDARY;
-            testOutputDir = TEST_OUTPUT_SECONDARY_DIR;
+            resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_SECONDARY;
+            testOutputDir = AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR;
             break;
         default:
             throw new IllegalStateException("Unrecognized format cycle: " + formatCycle);
         }
 
         // Set original file and file to use for test
-        File originalSourceFile = new File(resourceLocation, fileUnderTest);
-        File sourceFile = new File(testOutputDir, fileUnderTest);
+        final var originalSourceFile = new File(resourceLocation, fileUnderTest);
+        final var sourceFile = new File(testOutputDir, fileUnderTest);
 
         // Copy file to new location
         Files.copy(originalSourceFile, sourceFile);
 
         // Read file to be formatted
-        String originalCode = FileUtils.fileRead(sourceFile, StandardCharsets.UTF_8.name());
+        final var originalCode = FileUtils.fileRead(sourceFile, StandardCharsets.UTF_8.name());
 
         // Format the file and make sure formatting worked
         formatter.init(options, new TestConfigurationSource(testOutputDir));
-        String formattedCode = formatter.formatFile(sourceFile, originalCode, lineEnding);
-        assertNotNull(formattedCode);
+        final var formattedCode = formatter.formatFile(sourceFile, originalCode, lineEnding);
+        Assertions.assertNotNull(formattedCode);
 
         // Write the file we formatte4d
         FileUtils.fileWrite(sourceFile, StandardCharsets.UTF_8.name(), formattedCode);
@@ -234,23 +232,23 @@ public abstract class AbstractFormatterTest {
         // to debug issue.
         switch (formatCycle) {
         case 1:
-            assertNotEquals(originalCode, formattedCode);
+            Assertions.assertNotEquals(originalCode, formattedCode);
             break;
         case 2:
-            assertEquals(originalCode, formattedCode);
+            Assertions.assertEquals(originalCode, formattedCode);
             break;
         default:
             throw new IllegalStateException("Unrecognized format cycle: " + formatCycle);
         }
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
-        byte[] sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < sha512.length; i++) {
-            sb.append(Integer.toString((sha512[i] & 0xff) + 0x100, 16).substring(1));
+        final var sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
+        final var sb = new StringBuilder();
+        for (final byte element : sha512) {
+            sb.append(Integer.toString((element & 0xff) + 0x100, 16).substring(1));
         }
 
-        assertEquals(expectedSha512, sb.toString());
+        Assertions.assertEquals(expectedSha512, sb.toString());
     }
 
 }

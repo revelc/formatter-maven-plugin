@@ -13,10 +13,9 @@
  */
 package net.revelc.code.formatter.javascript;
 
-import static java.util.Collections.emptyMap;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Collections;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
@@ -35,11 +34,11 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testDoFormatFile() throws Exception {
-        String expectedHash = LineEnding.LF.isSystem()
+        final var expectedHash = LineEnding.LF.isSystem()
                 ? "d2a196d7aaddc3285b783d929965c884d1c1cacf15e777f0a7a7315355822b51f903fdb5b47f7f6c79ffc35e2f2dee58b605578a8b18afb91cdfed4624f03d7d"
                 : "33020bfa1ecebd935b6d6ba8e482bc14433ad52899ca63bd892fbb85d20e835ad183dba1e0a6203a72fbbb3d859b6f6872e320a8ea2fa93c9b2ca301ae7c6ec8";
-        LineEnding lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
-        twoPassTest(emptyMap(), new JavascriptFormatter(), "AnyJS.js", expectedHash, lineEnding);
+        final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
+        this.twoPassTest(Collections.emptyMap(), new JavascriptFormatter(), "AnyJS.js", expectedHash, lineEnding);
     }
 
     /**
@@ -50,10 +49,11 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testIsIntialized() throws Exception {
-        JavascriptFormatter jsFormatter = new JavascriptFormatter();
-        assertFalse(jsFormatter.isInitialized());
-        jsFormatter.init(emptyMap(), new AbstractFormatterTest.TestConfigurationSource(TEST_OUTPUT_PRIMARY_DIR));
-        assertTrue(jsFormatter.isInitialized());
+        final var jsFormatter = new JavascriptFormatter();
+        Assertions.assertFalse(jsFormatter.isInitialized());
+        jsFormatter.init(Collections.emptyMap(),
+                new AbstractFormatterTest.TestConfigurationSource(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR));
+        Assertions.assertTrue(jsFormatter.isInitialized());
     }
 
 }
