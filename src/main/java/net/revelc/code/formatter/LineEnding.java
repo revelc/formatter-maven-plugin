@@ -67,7 +67,7 @@ public enum LineEnding {
      *
      * @param fileDataString
      *            the file data string
-     * 
+     *
      * @return the line ending
      */
     public static LineEnding determineLineEnding(final String fileDataString) {

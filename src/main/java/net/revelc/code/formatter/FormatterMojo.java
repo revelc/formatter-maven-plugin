@@ -136,7 +136,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * The cache can become invalid for any number of reasons that this plugin can't reasonably detect automatically. If
      * you rely on the cache and make any changes to the project that could conceivably make the cache invalid, or if
      * you notice that files aren't being reformatted when they should, just delete the cache and it will be rebuilt.
-     * 
+     *
      * @since 2.12.1
      */
     @Parameter(defaultValue = "${project.build.directory}", property = "formatter.cachedir")
@@ -145,7 +145,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Location of the Java source files to format. Defaults to source main and test directories if not set. Deprecated
      * in version 0.3. Reintroduced in 0.4.
-     * 
+     *
      * @since 0.4
      */
     @Parameter
@@ -154,7 +154,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * List of fileset patterns for Java source locations to include in formatting. Patterns are relative to the project
      * source and test source directories. When not specified, the default include is <code>**&#47;*.java</code>
-     * 
+     *
      * @since 0.3
      */
     @Parameter(property = "formatter.includes")
@@ -163,7 +163,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * List of fileset patterns for Java source locations to exclude from formatting. Patterns are relative to the
      * project source and test source directories. When not specified, there is no default exclude.
-     * 
+     *
      * @since 0.3
      */
     @Parameter(property = "formatter.excludes")
@@ -190,7 +190,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * The file encoding used to read and write source files. When not specified and sourceEncoding also not set,
      * default is platform file encoding.
-     * 
+     *
      * @since 0.3
      */
     @Parameter(property = "project.build.sourceEncoding", required = true)
@@ -205,7 +205,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * <li><b>"CRLF"</b> - Use DOS and Windows style line endings</li>
      * <li><b>"CR"</b> - Use early Mac style line endings</li>
      * </ul>
-     * 
+     *
      * @since 0.2.0
      */
     @Parameter(defaultValue = "AUTO", property = "lineending", required = true)
@@ -363,7 +363,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *             the mojo execution exception
      * @throws MojoFailureException
      *             the mojo failure exception
-     * 
+     *
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     @Override
@@ -479,7 +479,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /**
      * Gets the basedir path.
-     * 
+     *
      * @return the basedir path
      */
     private String getBasedirPath() {
@@ -546,7 +546,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the hash cache
      * @param basedirPath
      *            the basedir path
-     * 
+     *
      * @throws MojoFailureException
      *             the mojo failure exception
      * @throws MojoExecutionException
@@ -575,7 +575,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the basedir path
      * @param dryRun
      *            the dry run
-     * 
+     *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      * @throws BadLocationException
@@ -708,7 +708,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @param str
      *            the str
-     * 
+     *
      * @return the string
      */
     private String sha512hash(final String str) {
@@ -720,9 +720,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @param file
      *            the file
-     * 
+     *
      * @return the string
-     * 
+     *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -747,7 +747,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the str
      * @param file
      *            the file
-     * 
+     *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
