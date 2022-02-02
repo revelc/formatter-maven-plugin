@@ -17,8 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class TimeUtilTest.
+ */
 class TimeUtilTest {
 
+    /**
+     * Test print duration.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testPrintDuration() throws Exception {
         assertEquals("123ms", TimeUtil.printDuration(123));

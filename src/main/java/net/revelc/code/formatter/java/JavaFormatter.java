@@ -34,9 +34,15 @@ import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 
+/**
+ * The Class JavaFormatter.
+ */
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    /** The formatter. */
     private CodeFormatter formatter;
+
+    /** The exclusion pattern. */
     private Pattern exclusionPattern;
 
     @Override
@@ -78,10 +84,26 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
         return formatter != null;
     }
 
+    /**
+     * Sets the exclusion pattern.
+     *
+     * @param ep
+     *            the new exclusion pattern
+     */
     public void setExclusionPattern(String ep) {
         exclusionPattern = Pattern.compile(ep, Pattern.MULTILINE);
     }
 
+    /**
+     * Gets the regions.
+     *
+     * @param code
+     *            the code
+     * @param exclusionPattern
+     *            the exclusion pattern
+     * 
+     * @return the regions
+     */
     protected static IRegion[] getRegions(String code, Pattern exclusionPattern) {
         List<IRegion> regions = new ArrayList<>();
         int start = 0;

@@ -14,7 +14,14 @@
 package net.revelc.code.formatter;
 
 /**
+ * The Enum Result.
  */
 public enum Result {
-    SKIPPED, SUCCESS, FAIL
+
+    /** The skipped. */
+    SKIPPED,
+    /** The success. */
+    SUCCESS,
+    /** The fail. */
+    FAIL
 }

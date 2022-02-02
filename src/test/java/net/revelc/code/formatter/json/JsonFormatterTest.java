@@ -26,9 +26,16 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
+ * The Class JsonFormatterTest.
  */
 class JsonFormatterTest extends AbstractFormatterTest {
 
+    /**
+     * Test do format file.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFile() throws Exception {
         // Since we set the line endings via options for json, we cannot rely on CRLF inside twoPassTest.
@@ -41,6 +48,9 @@ class JsonFormatterTest extends AbstractFormatterTest {
         twoPassTest(emptyMap(), new JsonFormatter(), "someFile.json", expectedHash, lineEnding);
     }
 
+    /**
+     * Test is initialized.
+     */
     @Test
     void testIsInitialized() {
         JsonFormatter jsonFormatter = new JsonFormatter();
@@ -49,6 +59,12 @@ class JsonFormatterTest extends AbstractFormatterTest {
         assertTrue(jsonFormatter.isInitialized());
     }
 
+    /**
+     * Test do format file with config.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFileWithConfig() throws Exception {
         Map<String, String> jsonFormattingOptions = new HashMap<>();

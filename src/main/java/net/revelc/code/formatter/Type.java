@@ -14,14 +14,32 @@
 package net.revelc.code.formatter;
 
 /**
- * Supported types to be formatted
+ * Supported types to be formatted.
  */
 public enum Type {
 
-    JAVA("Java"), JAVASCRIPT("JavaScript"), HTML("HTML"), XML("XML"), JSON("JSON"), CSS("CSS");
+    /** The java. */
+    JAVA("Java"),
+    /** The javascript. */
+    JAVASCRIPT("JavaScript"),
+    /** The html. */
+    HTML("HTML"),
+    /** The xml. */
+    XML("XML"),
+    /** The json. */
+    JSON("JSON"),
+    /** The css. */
+    CSS("CSS");
 
+    /** The name. */
     private String name;
 
+    /**
+     * Instantiates a new type.
+     *
+     * @param name
+     *            the name
+     */
     Type(String name) {
         this.name = name;
     }

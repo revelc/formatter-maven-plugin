@@ -23,9 +23,16 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
+ * The Class HTMLFormatterTest.
  */
 class HTMLFormatterTest extends AbstractFormatterTest {
 
+    /**
+     * Test do format file.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
@@ -38,6 +45,12 @@ class HTMLFormatterTest extends AbstractFormatterTest {
         // twoPassTest(emptyMap(), new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
     }
 
+    /**
+     * Test is intialized.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testIsIntialized() throws Exception {
         HTMLFormatter htmlFormatter = new HTMLFormatter();

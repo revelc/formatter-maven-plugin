@@ -23,9 +23,16 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
+ * The Class CssFormatterTest.
  */
 class CssFormatterTest extends AbstractFormatterTest {
 
+    /**
+     * Test do format file.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
@@ -36,6 +43,12 @@ class CssFormatterTest extends AbstractFormatterTest {
         twoPassTest(emptyMap(), new CssFormatter(), "someFile.css", expectedHash, lineEnding);
     }
 
+    /**
+     * Test is intialized.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testIsIntialized() throws Exception {
         CssFormatter cssFormatter = new CssFormatter();

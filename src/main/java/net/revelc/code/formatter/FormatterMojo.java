@@ -339,18 +339,25 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "true", property = "formatter.removeTrailingWhitespace")
     private boolean removeTrailingWhitespace;
 
+    /** The java formatter. */
     private JavaFormatter javaFormatter = new JavaFormatter();
 
+    /** The js formatter. */
     private JavascriptFormatter jsFormatter = new JavascriptFormatter();
 
+    /** The html formatter. */
     private HTMLFormatter htmlFormatter = new HTMLFormatter();
 
+    /** The xml formatter. */
     private XMLFormatter xmlFormatter = new XMLFormatter();
 
+    /** The json formatter. */
     private JsonFormatter jsonFormatter = new JsonFormatter();
 
+    /** The css formatter. */
     private CssFormatter cssFormatter = new CssFormatter();
 
+    /** The hash cache written. */
     private boolean hashCacheWritten;
 
     /**
@@ -446,6 +453,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Add source files to the files list.
      *
+     * @param newBasedir
+     *            the new basedir
+     * 
+     * @return the list
      */
     List<File> addCollectionFiles(File newBasedir) {
         final DirectoryScanner ds = new DirectoryScanner();
@@ -803,6 +814,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Return the options to be passed when creating {@link CodeFormatter} instance.
      *
+     * @param newConfigFile
+     *            the new config file
+     * 
      * @return the formatting options or null if not config file found
      * 
      * @throws MojoExecutionException
@@ -825,6 +839,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Read config file and return the config as {@link Map}.
      *
+     * @param newConfigFile
+     *            the new config file
+     * 
      * @return the options from config file
      * 
      * @throws MojoExecutionException
@@ -851,6 +868,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * Read properties file and return the properties as {@link Map}.
      *
+     * @param newPropertiesFile
+     *            the new properties file
+     * 
      * @return the options from properties file or null if not properties file found
      * 
      * @throws MojoExecutionException
@@ -921,14 +941,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         return skippedTypes;
     }
 
+    /**
+     * The Class ResultCollector.
+     */
     class ResultCollector {
 
+        /** The success count. */
         int successCount;
 
+        /** The fail count. */
         int failCount;
 
+        /** The skipped count. */
         int skippedCount;
 
+        /** The read only count. */
         int readOnlyCount;
     }
 

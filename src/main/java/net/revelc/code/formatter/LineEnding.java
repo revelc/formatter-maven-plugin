@@ -14,27 +14,61 @@
 package net.revelc.code.formatter;
 
 /**
+ * The Enum LineEnding.
  */
 public enum LineEnding {
 
-    AUTO(System.lineSeparator()), KEEP(null), LF("\n"), CRLF("\r\n"), CR("\r"), UNKNOWN(null);
+    /** The auto. */
+    AUTO(System.lineSeparator()),
+    /** The keep. */
+    KEEP(null),
+    /** The lf. */
+    LF("\n"),
+    /** The crlf. */
+    CRLF("\r\n"),
+    /** The cr. */
+    CR("\r"),
+    /** The unknown. */
+    UNKNOWN(null);
 
+    /** The chars. */
     private final String chars;
 
+    /**
+     * Instantiates a new line ending.
+     *
+     * @param value
+     *            the value
+     */
     LineEnding(String value) {
         this.chars = value;
     }
 
+    /**
+     * Gets the chars.
+     *
+     * @return the chars
+     */
     public String getChars() {
         return this.chars;
     }
 
+    /**
+     * Checks if is system.
+     *
+     * @return true, if is system
+     */
     public boolean isSystem() {
         return System.lineSeparator().equals(getChars());
     }
 
     /**
      * Returns the most occurring line-ending characters in the file text or null if no line-ending occurs the most.
+     *
+     * @param fileDataString
+     *            the file data string
+     * 
+     * @return the line ending
      */
     public static LineEnding determineLineEnding(String fileDataString) {
         int lfCount = 0;

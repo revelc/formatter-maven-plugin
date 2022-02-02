@@ -30,10 +30,11 @@ import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.LineEnding;
 
 /**
- *
+ * The Class CssFormatter.
  */
 public class CssFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    /** The formatter. */
     private CSSFormat formatter;
 
     @Override
