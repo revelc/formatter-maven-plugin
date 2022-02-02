@@ -36,8 +36,8 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "eaf4db207cdb232d1242c88d5d2e56357d48d717968a89e383771136a1315d8da876ada06e30bb4feb266ea9f0cf184535bb6f0ffd12d8d60a34744d4107a2e1"
-                : "fc0b6d7ed8de398408a4c02c4af61ad205a98321933c868d1d61376756d15ce55f3ce397a8e306e20c10cee4064c5bad9a4bb939e27ed751ad8c60eef1916cf7";
+                ? "52401e276c1bb05e815cef5b0a374be83b88ffb310af2e3603fd08e81471635592f5c30be487384752f0a2e403ffc9508952756a78e9986f79c4e5623f0776c2"
+                : "6e8514f245f16e7e57bf2e145adab26fa212b00298f4dc1f4ca9ada0d8c719c2ba1f15e1d064b6c8cf6bfc98708b78e9a93b744fff10c5ef67abe81a0c13b11b";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
     }

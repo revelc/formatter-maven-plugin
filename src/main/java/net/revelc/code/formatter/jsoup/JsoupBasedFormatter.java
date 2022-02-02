@@ -99,6 +99,9 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
             formattedCode = String.join(ending.getChars(), newLines);
         }
 
+        // TODO: Fixing jsoup tagging issue where line break doesn't occur (seen in headers)
+        formattedCode = formattedCode.replace("--><!", "-->" + ending.getChars() + "<!");
+
         if (code.equals(formattedCode)) {
             return null;
         }
