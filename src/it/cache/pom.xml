@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.hazendaz</groupId>
+        <artifactId>base-parent</artifactId>
+        <version>31</version>
+    </parent>
+
+    <groupId>net.revelc.code.formatter</groupId>
+    <artifactId>cache-sample</artifactId>
+    <version>testing</version>
+
+    <name>cache-sample</name>
+    <description>Cache Sample Integration Test</description>
+    <url>https://github.com/revelc/formatter-maven-plugin</url>
+
+    <scm>
+        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/revelc/formatter-maven-plugin</url>
+    </scm>
+
+    <build>
+        <finalName>cache-sample</finalName>
+        <plugins>
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>@pom.version@</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.hazendaz</groupId>
+                        <artifactId>build-tools</artifactId>
+                        <version>1.2.6</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>format-code</id>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

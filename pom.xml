@@ -848,5 +848,36 @@
         </pluginManagement>
       </build>
     </profile>
+    <profile>
+      <id>run-it</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-invoker-plugin</artifactId>
+            <version>3.2.2</version>
+            <executions>
+              <execution>
+                <id>integration-test-run</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <projectsDirectory>${project.basedir}/src/it</projectsDirectory>
+                  <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                  <showVersion>true</showVersion>
+                  <pomIncludes>
+                    <pomInclude>*/pom.xml</pomInclude>
+                  </pomIncludes>
+                  <postBuildHookScript>verify</postBuildHookScript>
+                  <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+                  <settingsFile>${project.basedir}/src/it/settings.xml</settingsFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
