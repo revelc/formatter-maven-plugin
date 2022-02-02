@@ -91,7 +91,8 @@ public enum LineEnding {
 
         if (lfCount > crCount && lfCount > crlfCount) {
             return LF;
-        } else if (crlfCount > lfCount && crlfCount > crCount) {
+        }
+        if (crlfCount > lfCount && crlfCount > crCount) {
             return CRLF;
         } else if (crCount > lfCount && crCount > crlfCount) {
             return CR;

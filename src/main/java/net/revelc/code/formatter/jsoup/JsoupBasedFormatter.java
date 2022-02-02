@@ -54,12 +54,11 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     @Override
     public String doFormat(final String code, final LineEnding ending) {
         Document document;
-        if (formatter.syntax() == Syntax.html) {
-            document = Jsoup.parse(code, "", Parser.htmlParser());
-        } else {
-            throw new IllegalArgumentException(formatter.syntax() + " is not allowed as syntax");
+        if (this.formatter.syntax() != Syntax.html) {
+            throw new IllegalArgumentException(this.formatter.syntax() + " is not allowed as syntax");
         }
-        document.outputSettings(formatter);
+        document = Jsoup.parse(code, "", Parser.htmlParser());
+        document.outputSettings(this.formatter);
 
         final var formattedCode = document.outerHtml();
         if (code.equals(formattedCode)) {
