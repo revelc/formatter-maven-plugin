@@ -26,7 +26,7 @@ import org.eclipse.jface.text.BadLocationException;
 
 /**
  * This mojo is very similar to Formatter mojo, but it is focused on CI servers.
- * 
+ * <p>
  * If the code ain't formatted as expected this mojo will fail the build
  */
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.VALIDATE, requiresProject = true, threadSafe = true)

@@ -31,10 +31,10 @@ public final class TimeUtil {
             return "0ms";
         }
 
-        StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
 
-        long seconds = duration / 1000;
-        long minutes = seconds / 60;
+        final var seconds = duration / 1000;
+        final var minutes = seconds / 60;
         if (minutes > 0) {
             sb.append(minutes % 60).append("m");
         }
@@ -42,7 +42,7 @@ public final class TimeUtil {
             sb.append(seconds % 60).append("s");
         }
 
-        long millis = duration % 1000;
+        final var millis = duration % 1000;
         if (duration < 1000 || millis > 0) {
             // append millis if the duration is less than a second,
             // for duration longer than a second then only include millis if not zero

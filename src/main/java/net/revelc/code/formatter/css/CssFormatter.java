@@ -41,9 +41,9 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
-        boolean rgbAsHex = Boolean.parseBoolean(options.getOrDefault("rgbAsHex", Boolean.TRUE.toString()));
-        boolean useSourceStringValues = Boolean
+        final var indent = Integer.parseInt(options.getOrDefault("indent", "4"));
+        final var rgbAsHex = Boolean.parseBoolean(options.getOrDefault("rgbAsHex", Boolean.TRUE.toString()));
+        final var useSourceStringValues = Boolean
                 .parseBoolean(options.getOrDefault("useSourceStringValues", Boolean.FALSE.toString()));
         this.formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex)
                 .setUseSourceStringValues(useSourceStringValues);
@@ -52,10 +52,10 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     @Override
     protected String doFormat(final String code, final LineEnding ending) throws IOException {
 
-        InputSource source = new InputSource(new StringReader(code));
-        CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
-        CSSStyleSheetImpl sheet = (CSSStyleSheetImpl) parser.parseStyleSheet(source, null, null);
-        String formattedCode = sheet.getCssText(formatter);
+        final var source = new InputSource(new StringReader(code));
+        final var parser = new CSSOMParser(new SACParserCSS3());
+        final var sheet = (CSSStyleSheetImpl) parser.parseStyleSheet(source, null, null);
+        var formattedCode = sheet.getCssText(this.formatter);
 
         // Patch converted 'tab' back to '\9' for IE 7,8, and 9 hack. Cssparser switches it to 'tab'.
         formattedCode = formattedCode.replace("\t;", "\\9;");

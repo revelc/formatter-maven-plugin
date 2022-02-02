@@ -40,15 +40,15 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        int indent = Integer.parseInt(options.getOrDefault("indent", "4"));
-        String lineEnding = options.getOrDefault("lineending", System.lineSeparator());
-        boolean spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
-        boolean useAlphabeticalOrder = Boolean.parseBoolean(options.getOrDefault("alphabeticalOrder", "false"));
-        formatter = new ObjectMapper();
+        final var indent = Integer.parseInt(options.getOrDefault("indent", "4"));
+        final var lineEnding = options.getOrDefault("lineending", System.lineSeparator());
+        final var spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
+        final var useAlphabeticalOrder = Boolean.parseBoolean(options.getOrDefault("alphabeticalOrder", "false"));
+        this.formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
-        DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(Strings.repeat(" ", indent), lineEnding);
-        DefaultPrettyPrinter printer = new DefaultPrettyPrinter() {
+        final DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(Strings.repeat(" ", indent), lineEnding);
+        final DefaultPrettyPrinter printer = new DefaultPrettyPrinter() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -75,8 +75,8 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     @Override
     protected String doFormat(final String code, final LineEnding ending) throws IOException {
         // note: line ending set in init for this usecase
-        Object json = formatter.readValue(code, Object.class);
-        String formattedCode = formatter.writer().writeValueAsString(json);
+        final var json = this.formatter.readValue(code, Object.class);
+        var formattedCode = this.formatter.writer().writeValueAsString(json);
         formattedCode = formattedCode + ending.getChars();
         if (code.equals(formattedCode)) {
             return null;

@@ -34,13 +34,13 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        FormattingPreferences prefs = new FormattingPreferences();
-        String maxLineLength = options.get("maxLineLength");
-        String wrapLongLines = options.get("wrapLongLines");
-        String tabInsteadOfSpaces = options.get("tabInsteadOfSpaces");
-        String tabWidth = options.get("tabWidth");
-        String splitMultiAttrs = options.get("splitMultiAttrs");
-        String wellFormedValidation = options.get("wellFormedValidation");
+        final var prefs = new FormattingPreferences();
+        final var maxLineLength = options.get("maxLineLength");
+        final var wrapLongLines = options.get("wrapLongLines");
+        final var tabInsteadOfSpaces = options.get("tabInsteadOfSpaces");
+        final var tabWidth = options.get("tabWidth");
+        final var splitMultiAttrs = options.get("splitMultiAttrs");
+        final var wellFormedValidation = options.get("wellFormedValidation");
 
         prefs.setMaxLineLength(maxLineLength != null ? Integer.valueOf(maxLineLength) : null);
         prefs.setWrapLongLines(wrapLongLines != null ? Boolean.valueOf(wrapLongLines) : null);
@@ -56,8 +56,8 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
     }
 
     @Override
-    protected String doFormat(String code, LineEnding ending) {
-        String formattedCode = formatter.format(code);
+    protected String doFormat(final String code, final LineEnding ending) {
+        final var formattedCode = this.formatter.format(code);
 
         if (code.equals(formattedCode)) {
             return null;
