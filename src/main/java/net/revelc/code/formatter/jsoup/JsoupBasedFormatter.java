@@ -15,6 +15,8 @@ package net.revelc.code.formatter.jsoup;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -38,6 +40,9 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     /** The Constant REMOVE_TRAILING_PATTERN. */
     private static final Pattern REMOVE_TRAILING_PATTERN = Pattern.compile("\\p{Blank}+$", Pattern.MULTILINE);
 
+    /** The Constant RESET_LEADING_SPACES_PATTERN. */
+    private static final Pattern RESET_LEADING_SPACES_PATTERN = Pattern.compile("^\\s+");
+
     /** The formatter. */
     private OutputSettings formatter;
 
@@ -56,7 +61,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     }
 
     @Override
-    public String doFormat(final String code, final LineEnding ending) {
+    public String doFormat(String code, final LineEnding ending) {
         Document document;
         if (this.formatter.syntax() != Syntax.html) {
             throw new IllegalArgumentException(this.formatter.syntax() + " is not allowed as syntax");
@@ -69,6 +74,30 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         // TODO: Fixing trailing space issue caused by jsoup. We do fix this during a proper run
         // but our tests fail to do so thus we are duplicating this until jsoup fixes bug.
         formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
+
+        // TODO: Fixing jsoup counting issue which occurs when more than one indentation (jsoup can have mixed line
+        // ending content)
+        if (this.formatter.indentAmount() > 1) {
+            int lineSize;
+            int newLineSize;
+            int remainder;
+            String[] lines = formattedCode.split("\\r?\\n");
+            List<String> newLines = new ArrayList<>(lines.length);
+            for (String line : lines) {
+                lineSize = line.length();
+                if (lineSize != 0) {
+                    newLineSize = RESET_LEADING_SPACES_PATTERN.matcher(line).replaceAll("").length();
+                    if (lineSize != newLineSize) {
+                        remainder = (lineSize - newLineSize) % this.formatter.indentAmount();
+                        if (remainder > 0) {
+                            line = line.substring(remainder);
+                        }
+                    }
+                }
+                newLines.add(line);
+            }
+            formattedCode = String.join(ending.getChars(), newLines);
+        }
 
         if (code.equals(formattedCode)) {
             return null;
