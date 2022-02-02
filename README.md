@@ -38,6 +38,10 @@ basis for this plugin's formatting. See [the project website][compat] for a
 list of recent versions of this plugin and their corresponding Eclipse
 versions.
 
+## Integration Tests ##
+
+mvn -Prun-it clean install
+
 ## JDK Requirements
 - 2.16.x requires jdk 8 as required by Eclipse binaries
 - 2.17.x and later requires jdk 11 as required by Eclipse binaries

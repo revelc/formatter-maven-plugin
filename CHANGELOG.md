@@ -180,3 +180,6 @@ ver 2.18.0
 - Add support for breaking '--><! from jsoup pretty print so our internal tests can function propertly due to jsoup upstream bug
 - Run overall code cleanup including using java 10 'var' since we require jdk 11 to work.
 - Internal usage of http: has been switched to https and any redirects from old google code were updated to reflect this repo as seen in tests.  One left over http is a bogus site.
+- Enhance cache support to not write timestamp to it and to sort content making it safe to check in and use via automation to update when using cross platform such as linux and windows.
+  Without this, it can get random data write as this is read into memory first then written at end with no guarantee of order.
+- Added first integration test to confirm caching with sorting and removal of timestamp can be confirmed properly
