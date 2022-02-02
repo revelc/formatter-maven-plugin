@@ -26,7 +26,6 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
- * @author yoshiman
  */
 class JsonFormatterTest extends AbstractFormatterTest {
 

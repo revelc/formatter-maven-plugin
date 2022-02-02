@@ -23,9 +23,6 @@ import org.xml.sax.SAXException;
 
 /**
  * This class reads a config file for Eclipse code formatter.
- * 
- * @author jecki
- * @author Matt Blanchette
  */
 public class ConfigReader {
 

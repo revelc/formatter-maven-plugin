@@ -27,7 +27,6 @@ import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
- * @author marvin.froeder
  */
 public abstract class AbstractCacheableFormatter {
 

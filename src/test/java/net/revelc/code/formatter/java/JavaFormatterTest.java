@@ -23,7 +23,6 @@ import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
 
 /**
- * @author marvin.froeder
  */
 class JavaFormatterTest extends AbstractFormatterTest {
 

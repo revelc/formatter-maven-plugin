@@ -19,9 +19,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for {@link LineEnding}.
- * 
- * @author Matt Blanchette
- * @author marvin.froeder
  */
 class LineEndingTest {
 

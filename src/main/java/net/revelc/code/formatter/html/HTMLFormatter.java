@@ -17,7 +17,6 @@ import net.revelc.code.formatter.Formatter;
 import net.revelc.code.formatter.jsoup.JsoupBasedFormatter;
 
 /**
- * @author yoshiman
  */
 public class HTMLFormatter extends JsoupBasedFormatter implements Formatter {
 
