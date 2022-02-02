@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.ToolFactory;
@@ -56,7 +55,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     public String doFormat(final String code, final LineEnding ending) throws IOException, BadLocationException {
         TextEdit te;
         try {
-            IRegion[] regions = getRegions(code, exclusionPattern);
+            final var regions = JavaFormatter.getRegions(code, this.exclusionPattern);
             te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT | CodeFormatter.F_INCLUDE_COMMENTS, code,
                     regions, 0, ending.getChars());
             if (te == null) {
@@ -64,14 +63,14 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
                         "Code cannot be formatted. Possible cause is unmatched source/target/compliance version.");
                 return null;
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             this.log.debug("Code cannot be formatted for text -->" + code + "<--", e);
             return null;
         }
 
-        IDocument doc = new Document(code);
+        final IDocument doc = new Document(code);
         te.apply(doc);
-        String formattedCode = doc.get();
+        final var formattedCode = doc.get();
 
         if (code.equals(formattedCode)) {
             return null;
@@ -104,14 +103,14 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
      *
      * @return the regions
      */
-    protected static IRegion[] getRegions(String code, Pattern exclusionPattern) {
-        List<IRegion> regions = new ArrayList<>();
-        int start = 0;
+    protected static IRegion[] getRegions(final String code, final Pattern exclusionPattern) {
+        final List<IRegion> regions = new ArrayList<>();
+        var start = 0;
         if (exclusionPattern != null) {
-            Matcher matcher = exclusionPattern.matcher(code);
+            final var matcher = exclusionPattern.matcher(code);
             while (matcher.find()) {
-                int s = matcher.start();
-                int e = matcher.end();
+                final var s = matcher.start();
+                final var e = matcher.end();
                 regions.add(new Region(start, s - start));
                 start = e;
             }

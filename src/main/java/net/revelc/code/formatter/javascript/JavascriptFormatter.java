@@ -19,7 +19,6 @@ import java.util.Map;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.text.edits.TextEdit;
 import org.eclipse.wst.jsdt.core.ToolFactory;
 import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 
@@ -44,8 +43,8 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     }
 
     @Override
-    public String doFormat(String code, LineEnding ending) throws IOException, BadLocationException {
-        TextEdit te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
+    public String doFormat(final String code, final LineEnding ending) throws IOException, BadLocationException {
+        final var te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
                 ending.getChars());
         if (te == null) {
             this.log.debug(
@@ -55,7 +54,7 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
 
         final IDocument doc = new Document(code);
         te.apply(doc);
-        String formattedCode = doc.get();
+        final var formattedCode = doc.get();
 
         if (code.equals(formattedCode)) {
             return null;

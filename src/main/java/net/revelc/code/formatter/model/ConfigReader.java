@@ -15,7 +15,6 @@ package net.revelc.code.formatter.model;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.digester3.Digester;
@@ -42,17 +41,17 @@ public class ConfigReader {
      * @throws ConfigReadException
      *             the config read exception
      */
-    public Map<String, String> read(InputStream input) throws IOException, SAXException, ConfigReadException {
-        Digester digester = new Digester();
+    public Map<String, String> read(final InputStream input) throws IOException, SAXException, ConfigReadException {
+        final var digester = new Digester();
         digester.addRuleSet(new RuleSet());
 
-        Object result = digester.parse(input);
+        final var result = digester.parse(input);
         if (result == null || !(result instanceof Profiles)) {
             throw new ConfigReadException("No profiles found in config file");
         }
 
-        Profiles profiles = (Profiles) result;
-        List<Map<String, String>> list = profiles.getProfiles();
+        final var profiles = (Profiles) result;
+        final var list = profiles.getProfiles();
         if (list.isEmpty()) {
             throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
         }

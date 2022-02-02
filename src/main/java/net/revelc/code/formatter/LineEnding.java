@@ -70,13 +70,13 @@ public enum LineEnding {
      * 
      * @return the line ending
      */
-    public static LineEnding determineLineEnding(String fileDataString) {
-        int lfCount = 0;
-        int crCount = 0;
-        int crlfCount = 0;
+    public static LineEnding determineLineEnding(final String fileDataString) {
+        var lfCount = 0;
+        var crCount = 0;
+        var crlfCount = 0;
 
-        for (int i = 0; i < fileDataString.length(); i++) {
-            char c = fileDataString.charAt(i);
+        for (var i = 0; i < fileDataString.length(); i++) {
+            final var c = fileDataString.charAt(i);
             if (c == '\r') {
                 if ((i + 1) < fileDataString.length() && fileDataString.charAt(i + 1) == '\n') {
                     crlfCount++;
