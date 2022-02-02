@@ -15,11 +15,11 @@
 
 -->
 <project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd">
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
-        <version>1.10.0</version>
+        <version>${maven-fluido-skin.version}</version>
     </skin>
     <custom>
         <fluidoSkin>
@@ -29,7 +29,7 @@
     </custom>
     <body>
         <menu name="Overview">
-            <item name="Project Home" href="http://code.revelc.net/formatter-maven-plugin/"/>
+            <item name="Project Home" href="https://code.revelc.net/formatter-maven-plugin/"/>
             <item name="Introduction" href="index.html"/>
             <item name="Goals" href="plugin-info.html"/>
             <item name="Usage" href="usage.html"/>

@@ -116,6 +116,8 @@
   <properties>
     <junit.version>5.8.2</junit.version>
 
+    <maven-fluido-skin.version>1.10.0</maven-fluido-skin.version>
+
     <!-- all 3 are needed, because some plugins might use the source/target variables -->
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>11</maven.compiler.source>
@@ -474,7 +476,7 @@
             <dependency>
               <groupId>org.apache.maven.skins</groupId>
               <artifactId>maven-fluido-skin</artifactId>
-              <version>1.10.0</version>
+              <version>${maven-fluido-skin.version}</version>
             </dependency>
           </dependencies>
         </plugin>
