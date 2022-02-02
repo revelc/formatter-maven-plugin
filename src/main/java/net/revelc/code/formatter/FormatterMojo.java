@@ -67,7 +67,7 @@ import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
  * A Maven plugin mojo to format Java source code using the Eclipse code formatter.
- * 
+ * <p>
  * Mojo parameters allow customizing formatting by specifying the config XML file, line endings, compiler version, and
  * source code locations. Reformatting source files is avoided using an sha512 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
@@ -120,22 +120,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /**
      * Projects cache directory.
-     *
      * <p>
      * This file is a hash cache of the files in the project source. It can be preserved in source code such that it
      * ensures builds are always fast by not unnecessarily writing files constantly. It can also be added to gitignore
      * in case startup is not necessary. It further can be redirected to another location.
-     *
      * <p>
      * When stored in the repository, the cache if run on cross platforms will display the files multiple times due to
      * line ending differences on the platform.
-     *
      * <p>
      * The cache itself has been part of formatter plugin for a long time but was hidden in target directory and did not
      * survive clean phase when it should. This is not intended to be clean in that way as one would want as close to a
      * no-op as possible when files are already all formatted and/or have not been otherwise touched. This is used based
      * off the files in the project so it is as much part of the source as any other file is.
-     *
      * <p>
      * The cache can become invalid for any number of reasons that this plugin can't reasonably detect automatically. If
      * you rely on the cache and make any changes to the project that could conceivably make the cache invalid, or if
@@ -304,11 +300,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * A java regular expression pattern that can be used to exclude some portions of the java code from being
      * reformatted.
-     *
+     * <p>
      * This can be useful when using DSL that embeds some kind of semantic hierarchy, where users can use various
      * indentation level to increase the readability of the code. Those semantics are ignored by the formatter, so this
      * regex pattern can be used to match certain portions of the code so that they will not be reformatted.
-     *
+     * <p>
      * An example is the Apache Camel java DSL which can be used in the following way: <code><pre>
      * 	from("seda:a").routeId("a")
      * 			.log("routing at ${routeId}")
@@ -317,9 +313,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * 				.to("seda:c")
      * 			.end()
      * 			.log("End of routing");
-     * </pre></code> In the above example, the exercept can be skipped by the formatter by defining the following
-     * property in the formatter xml configuration: <code>
-     * &lt;javaExclusionPattern>\b(from\([^;]*\.end[^;]*?\)\));&lt;/javaExclusionPattern>
+     * </pre></code>
+     * <p>
+     * In the above example, the exercept can be skipped by the formatter by defining the following property in the
+     * formatter xml configuration: <code>
+     *   &lt;javaExclusionPattern>\b(from\([^;]*\.end[^;]*?\)\));&lt;/javaExclusionPattern>
      * </code>
      *
      * @since 2.13
@@ -329,7 +327,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /**
      * When set to true, remove trailing whitespace on all lines after the formatter has finished.
-     *
+     * <p>
      * Default to 'true' since 2.18.0
      *
      * @since 2.17.0
