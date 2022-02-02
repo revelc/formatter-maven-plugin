@@ -84,10 +84,10 @@ public abstract class AbstractCacheableFormatter {
 
             if (formattedCode == null) {
                 this.log.debug("Nothing formatted. Try to fix line endings.");
-                formattedCode = fixLineEnding(originalCode, ending);
+                formattedCode = AbstractCacheableFormatter.fixLineEnding(originalCode, ending);
             } else if (this instanceof CssFormatter || this instanceof HTMLFormatter || this instanceof XMLFormatter) {
                 this.log.debug("Formatted but line endings not supported by tooling. Try to fix line endings.");
-                formattedCode = fixLineEnding(formattedCode, ending);
+                formattedCode = AbstractCacheableFormatter.fixLineEnding(formattedCode, ending);
             }
 
             if (formattedCode == null) {

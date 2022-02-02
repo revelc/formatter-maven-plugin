@@ -41,14 +41,14 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        formatter = new OutputSettings();
-        formatter.charset(Charset.forName(options.getOrDefault("charset", StandardCharsets.UTF_8.name())));
-        formatter.escapeMode(EscapeMode.valueOf(options.getOrDefault("escapeMode", EscapeMode.xhtml.name())));
-        formatter.indentAmount(Integer.parseInt(options.getOrDefault("indentAmount", "4")));
-        formatter.maxPaddingWidth(Integer.parseInt(options.getOrDefault("maxPaddingWidth", "-1")));
-        formatter.outline(Boolean.parseBoolean(options.getOrDefault("outlineMode", Boolean.TRUE.toString())));
-        formatter.prettyPrint(Boolean.parseBoolean(options.getOrDefault("pretty", Boolean.TRUE.toString())));
-        formatter.syntax(Syntax.valueOf(options.getOrDefault("syntax", Syntax.html.name())));
+        this.formatter = new OutputSettings();
+        this.formatter.charset(Charset.forName(options.getOrDefault("charset", StandardCharsets.UTF_8.name())));
+        this.formatter.escapeMode(EscapeMode.valueOf(options.getOrDefault("escapeMode", EscapeMode.xhtml.name())));
+        this.formatter.indentAmount(Integer.parseInt(options.getOrDefault("indentAmount", "4")));
+        this.formatter.maxPaddingWidth(Integer.parseInt(options.getOrDefault("maxPaddingWidth", "-1")));
+        this.formatter.outline(Boolean.parseBoolean(options.getOrDefault("outlineMode", Boolean.TRUE.toString())));
+        this.formatter.prettyPrint(Boolean.parseBoolean(options.getOrDefault("pretty", Boolean.TRUE.toString())));
+        this.formatter.syntax(Syntax.valueOf(options.getOrDefault("syntax", Syntax.html.name())));
     }
 
     @Override
@@ -70,7 +70,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
 
     @Override
     public boolean isInitialized() {
-        return formatter != null;
+        return this.formatter != null;
     }
 
 }

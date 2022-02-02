@@ -59,7 +59,7 @@ public enum LineEnding {
      * @return true, if is system
      */
     public boolean isSystem() {
-        return System.lineSeparator().equals(getChars());
+        return System.lineSeparator().equals(this.getChars());
     }
 
     /**

@@ -45,7 +45,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         boolean rgbAsHex = Boolean.parseBoolean(options.getOrDefault("rgbAsHex", Boolean.TRUE.toString()));
         boolean useSourceStringValues = Boolean
                 .parseBoolean(options.getOrDefault("useSourceStringValues", Boolean.FALSE.toString()));
-        formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex)
+        this.formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex)
                 .setUseSourceStringValues(useSourceStringValues);
     }
 
@@ -68,7 +68,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
 
     @Override
     public boolean isInitialized() {
-        return formatter != null;
+        return this.formatter != null;
     }
 
 }

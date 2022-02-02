@@ -68,7 +68,7 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
 
     @Override
     public boolean isInitialized() {
-        return formatter != null;
+        return this.formatter != null;
     }
 
 }

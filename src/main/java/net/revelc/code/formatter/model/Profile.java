@@ -26,7 +26,7 @@ public class Profile {
     private String kind;
 
     /** The settings. */
-    private Map<String, String> settings = new HashMap<>();
+    private final Map<String, String> settings = new HashMap<>();
 
     /**
      * Adds the setting.
