@@ -38,7 +38,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     private OutputSettings formatter;
 
     @Override
-    public void init(Map<String, String> options, ConfigurationSource cfg) {
+    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         formatter = new OutputSettings();
@@ -52,7 +52,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     }
 
     @Override
-    public String doFormat(String code, LineEnding ending) {
+    public String doFormat(final String code, final LineEnding ending) {
         Document document;
         if (formatter.syntax() == Syntax.html) {
             document = Jsoup.parse(code, "", Parser.htmlParser());

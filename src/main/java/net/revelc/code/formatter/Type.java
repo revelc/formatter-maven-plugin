@@ -40,7 +40,7 @@ public enum Type {
      * @param name
      *            the name
      */
-    Type(String name) {
+    Type(final String name) {
         this.name = name;
     }
 

@@ -28,7 +28,7 @@ public class ConfigReadException extends Exception {
      * @param message
      *            the message
      */
-    public ConfigReadException(String message) {
+    public ConfigReadException(final String message) {
         super(message);
     }
 

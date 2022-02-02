@@ -40,7 +40,7 @@ public class Setting {
      * @param newId
      *            the new id
      */
-    public void setId(String newId) {
+    public void setId(final String newId) {
         this.id = newId;
     }
 
@@ -59,7 +59,7 @@ public class Setting {
      * @param newValue
      *            the new value
      */
-    public void setValue(String newValue) {
+    public void setValue(final String newValue) {
         this.value = newValue;
     }
 }

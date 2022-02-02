@@ -40,7 +40,7 @@ public enum LineEnding {
      * @param value
      *            the value
      */
-    LineEnding(String value) {
+    LineEnding(final String value) {
         this.chars = value;
     }
 

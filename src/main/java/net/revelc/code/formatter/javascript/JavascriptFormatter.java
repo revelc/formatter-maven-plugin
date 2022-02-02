@@ -37,7 +37,7 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     private CodeFormatter formatter;
 
     @Override
-    public void init(Map<String, String> options, ConfigurationSource cfg) {
+    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);

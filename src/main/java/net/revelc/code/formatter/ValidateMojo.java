@@ -50,7 +50,8 @@ public class ValidateMojo extends FormatterMojo {
     }
 
     @Override
-    protected void doFormatFile(File file, ResultCollector rc, Properties hashCache, String basedirPath, boolean dryRun)
+    protected void doFormatFile(final File file, final ResultCollector rc, final Properties hashCache,
+            final String basedirPath, final boolean dryRun)
             throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
