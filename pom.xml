@@ -127,6 +127,8 @@
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <maven-fluido-skin.version>1.10.0</maven-fluido-skin.version>
   </properties>
 
   <dependencyManagement>
@@ -474,7 +476,7 @@
             <dependency>
               <groupId>org.apache.maven.skins</groupId>
               <artifactId>maven-fluido-skin</artifactId>
-              <version>1.10.0</version>
+              <version>${maven-fluido-skin.version}</version>
             </dependency>
           </dependencies>
         </plugin>
