@@ -3,7 +3,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,8 +38,8 @@ class XMLFormatterTest extends AbstractFormatterTest {
         // The option will not be available inside xml formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "a5bfe48d45504b624d5f610bcbb935b117c8190de7c27957a8ba3658df6f3879682c485d77378443399a5d092899105988386c56b14308ac21faf02a82bfdffb"
-                : "1fc08d47972da8debc97ef4071bc1a67a7df588513242e0af8a5df507c469a5921e52f096a436713c2291107ca20e1c215069abcd9dc04bed9ccbcb0418932e0";
+                ? "50bd28ef987519facbeffa1a5c3e2ef484adddfe192b44ee1ae2d27d2ca31697b64918a163e3ba4f5f46cfe33c733b7aeb836c01ae01e139ed0138a956300d7c"
+                : "2237283dbc5f0fa0af5460f51407abf9732c1f7a785d3e60d0953addf41774805f36e6cfe1ebee8da7f09d62265a5ca623e99d473aaaf52676bc539e0b2cfb04";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new XMLFormatter(), "someFile.xml", expectedHash, lineEnding);
     }

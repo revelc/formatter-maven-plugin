@@ -3,7 +3,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,8 +35,8 @@ class JavaFormatterTest extends AbstractFormatterTest {
     @Test
     void testDoFormatFile() throws Exception {
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "5d41510e74b87c6b38c8e4692d53aa9de3d7a85d08c72697b77c48541534147a028e799289d49c05cc9a3cc601e64c86bb954bb62b03b7277616b71ecc5bd716"
-                : "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca";
+                ? "2471c37dc976b24353bda569c9e9d702f8b376c2296c0acd1f9e2513b1d842d8a58af2167147b1f79805fa0aa0003480e95c51917510d3c738de486a3b760d4c"
+                : "4c002ff0cb5f8455bc42d3457b1d3418fcf1fd742551aa2d37d665b30825bf210636cfb8c1fc04e04ed074324c0d22909053b7e805db42b05fb4ba68e0cf457a";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClass.java", expectedHash, lineEnding);
     }
@@ -49,7 +49,7 @@ class JavaFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testDoFormatFileKeepLineFeedLF() throws Exception {
-        final var expectedHash = "5d41510e74b87c6b38c8e4692d53aa9de3d7a85d08c72697b77c48541534147a028e799289d49c05cc9a3cc601e64c86bb954bb62b03b7277616b71ecc5bd716";
+        final var expectedHash = "2471c37dc976b24353bda569c9e9d702f8b376c2296c0acd1f9e2513b1d842d8a58af2167147b1f79805fa0aa0003480e95c51917510d3c738de486a3b760d4c";
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClassLF.java", expectedHash, LineEnding.KEEP);
     }
 
@@ -61,7 +61,7 @@ class JavaFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testDoFormatFileKeepLineFeedCR() throws Exception {
-        final var expectedHash = "cf44c525667d8c49c80d390215e4d1995c10e8966583da0920e3917837188e5b95159f9dc7b4ae2559fbfa4550cbbaca166edc8991907d5fd4bbc74a1402e97e";
+        final var expectedHash = "3ca0689406f695ab2b2f8ec07d4ddbec3fd50a5f777b41294747555ad4b3df1edecaf7ac754abc4c6a700aaa04e8fd59fd34300b3eba6173d0dab80bc981e1c4";
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClassCR.java", expectedHash, LineEnding.KEEP);
     }
 
@@ -73,7 +73,7 @@ class JavaFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testDoFormatFileKeepLineFeedCRLF() throws Exception {
-        final var expectedHash = "fe7bdeec160a33a744209602d1ae99f94bd8ff433dd3ab856bcf6857588170d5c69b027f15c72bd7a6c0ae6e3659a9ab62196fa198366ec0c0722286257cbdca";
+        final var expectedHash = "4c002ff0cb5f8455bc42d3457b1d3418fcf1fd742551aa2d37d665b30825bf210636cfb8c1fc04e04ed074324c0d22909053b7e805db42b05fb4ba68e0cf457a";
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClassCRLF.java", expectedHash,
                 LineEnding.KEEP);
     }
@@ -103,7 +103,7 @@ class JavaFormatterTest extends AbstractFormatterTest {
     void testDoFormatFileWithExclusions() throws Exception {
         final var formatter = new JavaFormatter();
         formatter.setExclusionPattern("\\b(from\\([^;]*\\.end[^;]*?\\));");
-        final var expectedHash = "ea4580e667895a179a2baccd4822077e87caa62f2ebb2db0409407de48890b06fa1f7a070db617a4ab156a4e9223d5f2aa99a69209e1f0bdb263a0af7359d43e";
+        final var expectedHash = "7d83d3145da6e03087b99387dbcd4f3fc1a6893b3133eaf068556ae52683e91a20aeab5c91b910d704b468fc5d9b2f6999d956a87b6bb01f13d072e323ed76d9";
         this.twoPassTest(Collections.emptyMap(), formatter, "AnyClassExclusionLF.java", expectedHash, LineEnding.KEEP);
     }
 
