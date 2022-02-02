@@ -315,10 +315,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * 			.log("End of routing");
      * </pre></code>
      * <p>
-     * In the above example, the exercept can be skipped by the formatter by defining the following property in the
-     * formatter xml configuration: <code>
+     * In the above example, the except can be skipped by the formatter by defining the following property in the
+     * formatter xml configuration: <code><pre>
      *   &lt;javaExclusionPattern>\b(from\([^;]*\.end[^;]*?\)\));&lt;/javaExclusionPattern>
-     * </code>
+     * </pre></code>
      *
      * @since 2.13
      */
