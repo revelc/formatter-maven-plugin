@@ -13,13 +13,7 @@
  */
 package net.revelc.code.formatter.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.io.InputStream;
-import java.util.Map;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
@@ -36,14 +30,14 @@ class ConfigReaderTest {
      */
     @Test
     void test_success_read_config() throws Exception {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        try (InputStream in = cl.getResourceAsStream("sample-config.xml")) {
-            ConfigReader configReader = new ConfigReader();
-            Map<String, String> config = configReader.read(in);
-            assertNotNull(config);
-            assertEquals(264, config.keySet().size());
+        final var cl = Thread.currentThread().getContextClassLoader();
+        try (var in = cl.getResourceAsStream("sample-config.xml")) {
+            final var configReader = new ConfigReader();
+            final var config = configReader.read(in);
+            Assertions.assertNotNull(config);
+            Assertions.assertEquals(264, config.size());
             // test get one of the entry in the file
-            assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
+            Assertions.assertEquals("true", config.get("org.eclipse.jdt.core.formatter.comment.format_html"));
         }
     }
 
@@ -55,10 +49,10 @@ class ConfigReaderTest {
      */
     @Test
     void test_read_invalid_config() throws Exception {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        try (InputStream in = cl.getResourceAsStream("sample-invalid-config.xml")) {
-            ConfigReader configReader = new ConfigReader();
-            assertThrows(SAXException.class, () -> {
+        final var cl = Thread.currentThread().getContextClassLoader();
+        try (var in = cl.getResourceAsStream("sample-invalid-config.xml")) {
+            final var configReader = new ConfigReader();
+            Assertions.assertThrows(SAXException.class, () -> {
                 configReader.read(in);
             });
         }
@@ -72,10 +66,10 @@ class ConfigReaderTest {
      */
     @Test
     void test_read_invalid_config2() throws Exception {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        try (final InputStream in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
-            ConfigReader configReader = new ConfigReader();
-            assertThrows(ConfigReadException.class, () -> {
+        final var cl = Thread.currentThread().getContextClassLoader();
+        try (final var in = cl.getResourceAsStream("sample-invalid-config2.xml")) {
+            final var configReader = new ConfigReader();
+            Assertions.assertThrows(ConfigReadException.class, () -> {
                 configReader.read(in);
             });
         }
