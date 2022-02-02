@@ -25,7 +25,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -500,9 +503,40 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private void storeFileHashCache(final Properties props) {
         final var cacheFile = new File(this.cachedir, FormatterMojo.CACHE_PROPERTIES_FILENAME);
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(cacheFile))) {
+            this.getLog().debug("Storing property file cache");
             props.store(out, null);
         } catch (final IOException e) {
             this.getLog().warn("Cannot store file hash cache properties file", e);
+            return;
+        }
+
+        // Run update on cache file to make sure its sorted and we remove the property timestamp
+        final List<String> existing;
+        try {
+            // Read in existing file
+            this.getLog().debug("Reading property file cache");
+            existing = Files.readAllLines(cacheFile.toPath());
+        } catch (final IOException e) {
+            this.getLog().warn("Cannot read the hash cache properties file", e);
+            return;
+        }
+
+        // Sort the properties
+        this.getLog().debug("Sorting property file cache");
+        Collections.sort(existing);
+
+        // Remove properties timestamp
+        this.getLog().debug("Removing timestamp from property file cache");
+        existing.remove(0);
+
+        // Write file back
+        try {
+            this.getLog().debug("Writing sorted cache file with no timestamp");
+            this.getLog().debug("Files in cache are:\n\n" + existing);
+            Files.deleteIfExists(cacheFile.toPath());
+            Files.write(cacheFile.toPath(), existing, StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            this.getLog().warn("Cannot write the hash cache properties file", e);
         }
     }
 
