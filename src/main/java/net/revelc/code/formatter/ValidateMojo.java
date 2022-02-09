@@ -17,11 +17,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 import org.eclipse.jface.text.BadLocationException;
 
 /**
@@ -40,6 +43,24 @@ public class ValidateMojo extends FormatterMojo {
     @Parameter(defaultValue = "${project.executionRoot}", required = true)
     private boolean executionRoot;
 
+    @Parameter(defaultValue = "${mojo.groupId}", required = true, readonly = true)
+    private String mojoGroupId;
+
+    @Parameter(defaultValue = "${mojo.artifactId}", required = true, readonly = true)
+    private String mojoArtifactId;
+
+    @Parameter(defaultValue = "${mojo.version}", required = true, readonly = true)
+    private String mojoVersion;
+
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
+    private MavenProject mavenProject;
+
+    @Parameter(defaultValue = "${session}", required = true, readonly = true)
+    private MavenSession mavenSession;
+
+    @Parameter(defaultValue = "${mojoExecution}", readonly = true, required = true)
+    private MojoExecution mojoExecution;
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (this.aggregator && !this.executionRoot) {
@@ -56,12 +77,22 @@ public class ValidateMojo extends FormatterMojo {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
         if (rc.successCount != 0) {
-            throw new MojoFailureException("File '" + file
-                    + "' has not been previously formatted.  Please format file and commit before running validation!");
+            String errorMessage = String.format(
+                    "File '%s' has not been previously formatted. Please format file (for example by invoking `%s`) and commit before running validation!",
+                    file, formatCommand());
+            throw new MojoFailureException(errorMessage);
         }
         if (rc.failCount != 0) {
             throw new MojoExecutionException("Error formating '" + file + "' ");
         }
+    }
+
+    private String formatCommand() {
+        String mojoInvocation = String.format("%s:%s:%s:%s", mojoGroupId, mojoArtifactId, mojoVersion,
+                FORMAT_MOJO_NAME);
+        boolean isMultiModule = mavenSession.getAllProjects().size() > 1;
+        String specifyModule = isMultiModule ? String.format("-f %s", mavenProject.getBasedir()) : "";
+        return String.format("mvn %s %s", specifyModule, mojoInvocation).replace("  ", " ");
     }
 
 }
