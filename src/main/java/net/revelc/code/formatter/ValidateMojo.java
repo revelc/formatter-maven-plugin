@@ -83,7 +83,7 @@ public class ValidateMojo extends FormatterMojo {
             throw new MojoFailureException(errorMessage);
         }
         if (rc.failCount != 0) {
-            throw new MojoExecutionException("Error formating '" + file + "' ");
+            throw new MojoExecutionException("Error formatting '" + file + "' ");
         }
     }
 
