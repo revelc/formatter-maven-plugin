@@ -15,6 +15,7 @@ package net.revelc.code.formatter;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Properties;
 
 import org.apache.maven.execution.MavenSession;
@@ -91,7 +92,8 @@ public class ValidateMojo extends FormatterMojo {
         String mojoInvocation = String.format("%s:%s:%s:%s", mojoGroupId, mojoArtifactId, mojoVersion,
                 FORMAT_MOJO_NAME);
         boolean isMultiModule = mavenSession.getAllProjects().size() > 1;
-        String specifyModule = isMultiModule ? String.format("-f %s", mavenProject.getBasedir()) : "";
+        Path moduleDir = Path.of(".").toAbsolutePath().relativize(mavenProject.getBasedir().toPath().toAbsolutePath());
+        String specifyModule = isMultiModule ? String.format("-f %s", moduleDir) : "";
         return String.format("mvn %s %s", specifyModule, mojoInvocation).replace("  ", " ");
     }
 
