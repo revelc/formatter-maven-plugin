@@ -75,8 +75,10 @@ import net.revelc.code.formatter.xml.XMLFormatter;
  * source code locations. Reformatting source files is avoided using an sha512 hash of the content, comparing to the
  * original hash to the hash after formatting and a cached hash.
  */
-@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = true, threadSafe = true)
+@Mojo(name = FormatterMojo.FORMAT_MOJO_NAME, defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresProject = true, threadSafe = true)
 public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
+
+    static final String FORMAT_MOJO_NAME = "format";
 
     /** The Constant CACHE_PROPERTIES_FILENAME. */
     private static final String CACHE_PROPERTIES_FILENAME = "formatter-maven-cache.properties";
