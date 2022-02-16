@@ -19,14 +19,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import net.revelc.code.formatter.AbstractFormatterTest;
-import net.revelc.code.formatter.LineEnding;
 import org.codehaus.plexus.util.IOUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import net.revelc.code.formatter.AbstractFormatterTest;
+import net.revelc.code.formatter.LineEnding;
 
 public class MultipleJsonFormatterTest extends AbstractFormatterTest {
 

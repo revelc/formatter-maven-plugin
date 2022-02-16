@@ -87,7 +87,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         return doFormatWithMultipleJsonFileForbidden(code, ending);
     }
 
-    protected String doFormatWithMultipleJsonFileForbidden(final String code, final LineEnding ending)
+    private String doFormatWithMultipleJsonFileForbidden(final String code, final LineEnding ending)
             throws IOException {
         // note: line ending set in init for this usecase
         final var json = this.formatter.readValue(code, Object.class);
@@ -99,8 +99,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         return formattedCode;
     }
 
-    protected String doFormatWithMultipleJsonFileAllowed(final String code, final LineEnding ending)
-            throws IOException {
+    private String doFormatWithMultipleJsonFileAllowed(final String code, final LineEnding ending) throws IOException {
         try (StringWriter stringWriter = new StringWriter()) {
             JsonParser jsonParser = this.formatter.createParser(code);
             // note: line ending set in init for this usecase
