@@ -50,7 +50,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         final var spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
         final var useAlphabeticalOrder = Boolean.parseBoolean(options.getOrDefault("alphabeticalOrder", "false"));
         this.multipleJsonObjectFileAllowed = Boolean
-                .parseBoolean(options.getOrDefault("multipleJsonObjectFileAllowed", "false"));
+                .parseBoolean(options.getOrDefault("multipleJsonObjectFileAllowed", "true"));
         this.formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
