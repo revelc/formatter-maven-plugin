@@ -297,9 +297,9 @@
       <version>3.28.0</version>
     </dependency>
     <dependency>
-      <groupId>org.jsoup</groupId>
+      <groupId>com.github.hazendaz.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <version>1.15.1-SNAPSHOT</version>
+      <version>1.15.1</version>
     </dependency>
     <dependency>
       <groupId>org.w3c.css</groupId>
