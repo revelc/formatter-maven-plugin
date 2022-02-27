@@ -38,7 +38,7 @@ public abstract class AbstractCacheableFormatter {
     protected Charset encoding;
 
     /**
-     * Inits the.
+     * Inits the AbstractCacheableFormatter.
      *
      * @param options
      *            the options
@@ -129,6 +129,9 @@ public abstract class AbstractCacheableFormatter {
 
     /**
      * Do format.
+     *
+     * notice that when calling this function, {@code ending} here MUST equals lineending in config when
+     * {@link #init(Map, ConfigurationSource)} init.
      *
      * @param code
      *            the code

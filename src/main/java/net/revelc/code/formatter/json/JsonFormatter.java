@@ -14,8 +14,11 @@
 package net.revelc.code.formatter.json;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Iterator;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.Separators;
@@ -36,6 +39,8 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     /** The formatter. */
     private ObjectMapper formatter;
 
+    private boolean multipleJsonObjectFileAllowed;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
@@ -44,6 +49,8 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         final var lineEnding = options.getOrDefault("lineending", System.lineSeparator());
         final var spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
         final var useAlphabeticalOrder = Boolean.parseBoolean(options.getOrDefault("alphabeticalOrder", "false"));
+        this.multipleJsonObjectFileAllowed = Boolean
+                .parseBoolean(options.getOrDefault("multipleJsonObjectFileAllowed", "true"));
         this.formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
@@ -74,6 +81,14 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
     @Override
     protected String doFormat(final String code, final LineEnding ending) throws IOException {
+        if (this.multipleJsonObjectFileAllowed) {
+            return doFormatWithMultipleJsonFileAllowed(code, ending);
+        }
+        return doFormatWithMultipleJsonFileForbidden(code, ending);
+    }
+
+    private String doFormatWithMultipleJsonFileForbidden(final String code, final LineEnding ending)
+            throws IOException {
         // note: line ending set in init for this usecase
         final var json = this.formatter.readValue(code, Object.class);
         var formattedCode = this.formatter.writer().writeValueAsString(json);
@@ -82,6 +97,24 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
             return null;
         }
         return formattedCode;
+    }
+
+    private String doFormatWithMultipleJsonFileAllowed(final String code, final LineEnding ending) throws IOException {
+        try (StringWriter stringWriter = new StringWriter()) {
+            JsonParser jsonParser = this.formatter.createParser(code);
+            // note: line ending set in init for this usecase
+            final Iterator<Object> jsonObjectIterator = this.formatter.readValues(jsonParser, Object.class);
+            while (jsonObjectIterator.hasNext()) {
+                String jsonString = this.formatter.writer().writeValueAsString(jsonObjectIterator.next());
+                stringWriter.write(jsonString);
+                stringWriter.write(ending.getChars());
+            }
+            String formattedCode = stringWriter.toString();
+            if (code.equals(formattedCode)) {
+                return null;
+            }
+            return formattedCode;
+        }
     }
 
     @Override
