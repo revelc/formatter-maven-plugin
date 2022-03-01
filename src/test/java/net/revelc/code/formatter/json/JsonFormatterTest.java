@@ -13,10 +13,14 @@
  */
 package net.revelc.code.formatter.json;
 
+import java.io.IOException;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import org.codehaus.plexus.util.IOUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -79,6 +83,38 @@ class JsonFormatterTest extends AbstractFormatterTest {
                 : "5d433f2700a2fdabfabdb309d5f807df91ad86f7a94658d4a3f2f3699ae78b2efb1de451c141f61905f1c814cd647f312ae9651454e65d124510be0573082e86";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(jsonFormattingOptions, new JsonFormatter(), "someFile.json", expectedHash, lineEnding);
+    }
+
+    @Test
+    public void testMultipleJson() throws IOException {
+        testFormattingObjects("/multiple-json");
+    }
+
+    @Test
+    public void testNormalJson() throws IOException {
+        testFormattingObjects("/normal-json");
+    }
+
+    private void testFormattingObjects(String testpath) throws IOException {
+        String originalJson;
+        String expectedFormattedJson;
+        try (var in = getClass().getResourceAsStream(testpath + "/before.json")) {
+            originalJson = IOUtil.toString(Objects.requireNonNull(in), "UTF-8");
+        }
+        try (var in = getClass().getResourceAsStream(testpath + "/after.json")) {
+            expectedFormattedJson = IOUtil.toString(Objects.requireNonNull(in), "UTF-8");
+        }
+        for (LineEnding currentTestedLineEnding : EnumSet.of(LineEnding.CRLF, LineEnding.LF, LineEnding.CR)) {
+            final var jsonFormatter = new JsonFormatter();
+            Assertions.assertFalse(jsonFormatter.isInitialized());
+            jsonFormatter.init(Map.of("lineending", currentTestedLineEnding.getChars()),
+                    new TestConfigurationSource(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR));
+            Assertions.assertTrue(jsonFormatter.isInitialized());
+            String result = jsonFormatter.doFormat(originalJson, currentTestedLineEnding);
+            Assertions
+                    .assertEquals(expectedFormattedJson.replaceAll(LineEnding.CRLF.getChars(), LineEnding.LF.getChars())
+                            .replaceAll(LineEnding.LF.getChars(), currentTestedLineEnding.getChars()), result);
+        }
     }
 
 }
