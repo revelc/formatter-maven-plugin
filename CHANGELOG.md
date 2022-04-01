@@ -183,3 +183,8 @@ ver 2.18.0
 - Enhance cache support to not write timestamp to it and to sort content making it safe to check in and use via automation to update when using cross platform such as linux and windows.
   Without this, it can get random data write as this is read into memory first then written at end with no guarantee of order.
 - Added first integration test to confirm caching with sorting and removal of timestamp can be confirmed properly
+
+ver 2.19.0
+==========
+- Support Eclipse 2022-03 (4.23, JDT 3.29) - now requires jdk 11
+
