@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1646105828042">
-    <module artifactId="formatter-maven-plugin" groupId="net.revelc.code.formatter" version="2.18.0"/>
+<licensePluginReport goal="FORMAT" timestamp="1654112203059">
+    <module artifactId="formatter-maven-plugin" groupId="net.revelc.code.formatter" version="2.19.0"/>
     <files>
         <file path="pom.xml" result="NOOP"/>
         <file path="src/build/find-transitive-eclipse-updates.sh" result="NOOP"/>
