@@ -207,16 +207,16 @@ formatting:
 </plugin>
 ```
 
-By default, the plugin uses the compiler versions in the `configFile` instead
-of the compiler parameters. To specify using the compiler parameters instead of
-those in the configFile, set the `overrideConfigCompilerVersion` parameter to
-`true`.
+The plugin overrides the compiler version in the `configFile` with the value of
+`1.8` by default, but will use the value of the `maven.compiler.source`
+property for the `compilerCompliance` and `compilerSource` values, and the
+value of the `maven.compiler.target` property for the `compilerTargetPlatform`
+value, if those properties are set in your Maven environment.
 
-This parameter is useful to avoid updating the configFile to keep the compiler
-version in sync with the pom. This example uses all settings except the
-compiler version defined in the configuration file named
-`eclipse-formatter-config.xml` and instead uses the compiler version specified
-in the parameters for formatting:
+These parameters are useful to avoid updating the configFile to keep the
+compiler version in sync with the pom. This example shows how to set these
+parameters directly in the plugin configuration, rather than rely on the
+default behavior:
 
 ```xml
 <plugin>
@@ -225,7 +225,6 @@ in the parameters for formatting:
   <version>${project.version}</version>
   <configuration>
     <configFile>${d}{project.basedir}/eclipse-formatter-config.xml</configFile>
-    <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
     <compilerSource>1.9</compilerSource>
     <compilerCompliance>1.9</compilerCompliance>
     <compilerTargetPlatform>1.9</compilerTargetPlatform>
