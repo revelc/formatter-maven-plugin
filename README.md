@@ -40,7 +40,7 @@ versions.
 
 ## Integration Tests ##
 
-mvn -Prun-it clean install
+mvn -Prun-it clean verify
 
 ## JDK Requirements
 - 2.16.x requires jdk 8 as required by Eclipse binaries

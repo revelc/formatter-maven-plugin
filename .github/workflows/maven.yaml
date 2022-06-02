@@ -24,14 +24,15 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
+        java: [11, 17]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: 11
+        java-version: ${{ matrix.java }}
         distribution: zulu
     - name: Cache local maven repository
       uses: actions/cache@v3
@@ -40,7 +41,10 @@ jobs:
         key: ${{ matrix.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ matrix.os }}-m2
     - name: Build with Maven
-      run: mvn -B -V -e "-Dstyle.color=always" verify
+      run: mvn -B -V -e "-Dstyle.color=always" -Prun-it verify
       env:
         MAVEN_OPTS: -Djansi.force=true
+    - name: View IT build log on failure
+      if: ${{ failure() }}
+      run: cat target/it/cache/build.log
 

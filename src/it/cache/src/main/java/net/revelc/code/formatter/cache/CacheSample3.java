@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hazendaz.maven.makeself;
+package net.revelc.code.formatter.cache;
 
 /**
  * The Class CacheSample3.

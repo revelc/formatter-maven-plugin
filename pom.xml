@@ -872,6 +872,7 @@
               <execution>
                 <id>integration-test-run</id>
                 <goals>
+                  <goal>install</goal>
                   <goal>run</goal>
                 </goals>
                 <configuration>

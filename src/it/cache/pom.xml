@@ -19,41 +19,25 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.github.hazendaz</groupId>
-        <artifactId>base-parent</artifactId>
-        <version>31</version>
-    </parent>
+    <groupId>@project.groupId@</groupId>
+    <artifactId>@project.artifactId@-cache-test</artifactId>
+    <version>@project.version@</version>
 
-    <groupId>net.revelc.code.formatter</groupId>
-    <artifactId>cache-sample</artifactId>
-    <version>testing</version>
-
-    <name>cache-sample</name>
-    <description>Cache Sample Integration Test</description>
-    <url>https://github.com/revelc/formatter-maven-plugin</url>
-
-    <scm>
-        <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://github.com/revelc/formatter-maven-plugin</url>
-    </scm>
+    <properties>
+        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
     <build>
-        <finalName>cache-sample</finalName>
         <plugins>
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <version>@pom.version@</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.hazendaz</groupId>
-                        <artifactId>build-tools</artifactId>
-                        <version>1.2.6</version>
-                    </dependency>
-                </dependencies>
+                <version>@project.version@</version>
                 <executions>
                     <execution>
                         <id>format-code</id>
