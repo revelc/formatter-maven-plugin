@@ -152,13 +152,13 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.compare.core</artifactId>
-        <version>3.6.1000</version>
+        <version>3.7.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.commands</artifactId>
-        <version>3.10.100</version>
+        <version>3.10.200</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
@@ -176,25 +176,25 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.filesystem</artifactId>
-        <version>1.9.300</version>
+        <version>1.9.400</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.jobs</artifactId>
-        <version>3.12.100</version>
+        <version>3.13.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.resources</artifactId>
-        <version>3.16.100</version>
+        <version>3.17.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.runtime</artifactId>
-        <version>3.24.100</version>
+        <version>3.25.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
@@ -206,13 +206,13 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.common</artifactId>
-        <version>3.16.0</version>
+        <version>3.16.100</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.equinox.preferences</artifactId>
-        <version>3.9.100</version>
+        <version>3.10.1</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
@@ -224,19 +224,31 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.osgi</artifactId>
-        <version>3.17.200</version>
+        <version>3.18.0</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.team.core</artifactId>
-        <version>3.9.300</version>
+        <version>3.9.400</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.text</artifactId>
-        <version>3.12.0</version>
+        <version>3.12.100</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
+        <groupId>org.osgi</groupId>
+        <artifactId>org.osgi.service.prefs</artifactId>
+        <version>1.1.2</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
+        <groupId>org.osgi</groupId>
+        <artifactId>osgi.annotation</artifactId>
+        <version>8.0.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
