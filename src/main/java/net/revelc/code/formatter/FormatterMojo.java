@@ -436,7 +436,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 }
             }
 
-            // Only store the cache if it changed during processing to avoid java properties timestamp writting for
+            // Only store the cache if it changed during processing to avoid java properties timestamp writing for
             // those that want to save the cache
             if (this.hashCacheWritten) {
                 this.storeFileHashCache(hashCache);
