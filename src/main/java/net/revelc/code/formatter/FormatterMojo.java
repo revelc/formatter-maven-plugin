@@ -733,8 +733,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        // Now write the file
-        if (!dryRun) {
+        // Now write the file or log during dry run
+        if (dryRun) {
+            String errorMessage = String.format("File '%s' has not been previously formatted.", file);
+            this.getLog().error(errorMessage);
+        } else {
             this.writeStringToFile(formattedCode, file);
         }
     }

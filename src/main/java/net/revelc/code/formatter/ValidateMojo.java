@@ -62,6 +62,16 @@ public class ValidateMojo extends FormatterMojo {
     @Parameter(defaultValue = "${mojoExecution}", readonly = true, required = true)
     private MojoExecution mojoExecution;
 
+    private boolean validationErrors;
+
+    /**
+     * When set to true, fail validation on first file formatter validation error.
+     *
+     * @since 2.20.0
+     */
+    @Parameter(defaultValue = "true", property = "formatter.failOnFirstValidationError")
+    private boolean failOnFirstValidationError;
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (this.aggregator && !this.executionRoot) {
@@ -69,6 +79,10 @@ public class ValidateMojo extends FormatterMojo {
         }
 
         super.execute();
+
+        if (this.validationErrors) {
+            throw new MojoFailureException(errorMessage());
+        }
     }
 
     @Override
@@ -78,10 +92,11 @@ public class ValidateMojo extends FormatterMojo {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
         if (rc.successCount != 0) {
-            String errorMessage = String.format(
-                    "File '%s' has not been previously formatted. Please format file (for example by invoking `%s`) and commit before running validation!",
-                    file, formatCommand());
-            throw new MojoFailureException(errorMessage);
+            if (failOnFirstValidationError) {
+                throw new MojoFailureException(errorMessage());
+            } else {
+                this.validationErrors = true;
+            }
         }
         if (rc.failCount != 0) {
             throw new MojoExecutionException("Error formatting '" + file + "' ");
@@ -95,6 +110,16 @@ public class ValidateMojo extends FormatterMojo {
         Path moduleDir = Path.of(".").toAbsolutePath().relativize(mavenProject.getBasedir().toPath().toAbsolutePath());
         String specifyModule = isMultiModule ? String.format("-f %s", moduleDir) : "";
         return String.format("mvn %s %s", specifyModule, mojoInvocation).replace("  ", " ");
+    }
+
+    private String errorMessage() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Formatter validation detected, see file above that triggered violation. ");
+        builder.append("To see all violations, use `-Dformatter.failOnFirstValidationError=false`. ");
+        builder.append("Please format file(s) (for example by invoking `");
+        builder.append(formatCommand());
+        builder.append("` and commit before running validation!");
+        return builder.toString();
     }
 
 }
