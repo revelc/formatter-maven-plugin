@@ -80,7 +80,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
             int lineLength;
             int trimLineLength;
             int remainder;
-            // jsoup can have mixed line ending content
+            // jsoup processing results in mixed line ending content
             String[] lines = formattedCode.split("\\r?\\n");
             List<String> newLines = new ArrayList<>(lines.length);
             for (String line : lines) {
