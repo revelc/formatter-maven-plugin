@@ -98,6 +98,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
                 }
                 newLines.add(line);
             }
+            // normalizes line endings
             formattedCode = String.join(ending.getChars(), newLines);
         }
 
