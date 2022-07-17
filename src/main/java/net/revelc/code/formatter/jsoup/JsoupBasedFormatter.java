@@ -102,6 +102,12 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
             formattedCode = String.join(ending.getChars(), newLines);
         }
 
+        // XXX: Adding new line at end of file until jsoup fixes bug.
+        String[] lines = formattedCode.split(ending.getChars());
+        if (!lines[lines.length - 1].equals(ending.getChars())) {
+            formattedCode = formattedCode + ending.getChars();
+        }
+
         if (code.equals(formattedCode)) {
             return null;
         }
