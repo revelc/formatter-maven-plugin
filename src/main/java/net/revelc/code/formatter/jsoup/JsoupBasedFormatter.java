@@ -71,16 +71,16 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
 
         var formattedCode = document.outerHtml();
 
-        // TODO: Fixing trailing space issue caused by jsoup. We do fix this during a proper run
+        // XXX: Fixing trailing space issue caused by jsoup. We do fix this during a proper run
         // but our tests fail to do so thus we are duplicating this until jsoup fixes bug.
         formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
 
-        // TODO: Fixing jsoup counting issue which occurs when more than one indentation (jsoup can have mixed line
-        // ending content)
+        // XXX: Fixing jsoup counter issue when more than one character indentation until jsoup fixes bug.
         if (this.formatter.indentAmount() > 1) {
             int lineSize;
             int newLineSize;
             int remainder;
+            // jsoup can have mixed line ending content
             String[] lines = formattedCode.split("\\r?\\n");
             List<String> newLines = new ArrayList<>(lines.length);
             for (String line : lines) {
