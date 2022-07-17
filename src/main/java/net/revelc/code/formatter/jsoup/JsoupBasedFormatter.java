@@ -77,18 +77,20 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
 
         // XXX: Fixing jsoup counter issue when more than one character indentation until jsoup fixes bug.
         if (this.formatter.indentAmount() > 1) {
-            int lineSize;
-            int newLineSize;
+            int lineLength;
+            int trimLineLength;
             int remainder;
             // jsoup can have mixed line ending content
             String[] lines = formattedCode.split("\\r?\\n");
             List<String> newLines = new ArrayList<>(lines.length);
             for (String line : lines) {
-                lineSize = line.length();
-                if (lineSize != 0) {
-                    newLineSize = RESET_LEADING_SPACES_PATTERN.matcher(line).replaceAll("").length();
-                    if (lineSize != newLineSize) {
-                        remainder = (lineSize - newLineSize) % this.formatter.indentAmount();
+                lineLength = line.length();
+                if (lineLength != 0) {
+                    // Trim leading spaces to get trimmed length
+                    trimLineLength = RESET_LEADING_SPACES_PATTERN.matcher(line).replaceAll("").length();
+                    if (lineLength != trimLineLength) {
+                        // Find remainder to correct formatted line
+                        remainder = (lineLength - trimLineLength) % this.formatter.indentAmount();
                         if (remainder > 0) {
                             line = line.substring(remainder);
                         }
