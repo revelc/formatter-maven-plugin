@@ -75,13 +75,16 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         // but our tests fail to do so thus we are duplicating this until jsoup fixes bug.
         formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
 
+        // XXX: jsoup processing results in mixed line ending content and needs normalized until jsoup fixes bug.
+        String[] lines = formattedCode.split("\\r?\\n");
+        formattedCode = String.join(ending.getChars(), lines);
+
         // XXX: Fixing jsoup counter issue when more than one character indentation until jsoup fixes bug.
         if (this.formatter.indentAmount() > 1) {
             int lineLength;
             int trimLineLength;
             int remainder;
-            // jsoup processing results in mixed line ending content
-            String[] lines = formattedCode.split("\\r?\\n");
+            lines = formattedCode.split(ending.getChars());
             List<String> newLines = new ArrayList<>(lines.length);
             for (String line : lines) {
                 lineLength = line.length();
@@ -103,7 +106,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         }
 
         // XXX: Adding new line at end of file until jsoup fixes bug.
-        String[] lines = formattedCode.split(ending.getChars());
+        lines = formattedCode.split(ending.getChars());
         if (!lines[lines.length - 1].equals(ending.getChars())) {
             formattedCode = formattedCode + ending.getChars();
         }
