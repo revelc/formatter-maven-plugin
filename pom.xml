@@ -348,20 +348,6 @@
     </dependency>
   </dependencies>
 
-  <!-- TODO: Allow pull from snapshots while on jsoup snapshot, remove once finalized -->
-  <repositories>
-    <repository>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>oss.sonatype.org-snapshot</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-  </repositories>
-
   <build>
     <pluginManagement>
       <plugins>
