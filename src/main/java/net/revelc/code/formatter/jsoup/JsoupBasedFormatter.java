@@ -77,7 +77,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
 
         // XXX: Jsoup results in mixed line ending content needing normalized until jsoup
-        // provides line ending support.  Internally Jsoup simply uses new line only and
+        // provides line ending support. Internally Jsoup simply uses new line only and
         // mixture comes from lines that did not require additional formatting.
         String[] lines = formattedCode.split("\\r?\\n");
         formattedCode = String.join(ending.getChars(), lines);
