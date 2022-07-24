@@ -69,26 +69,36 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         document = Jsoup.parse(code, "", Parser.htmlParser());
         document.outputSettings(this.formatter);
 
+        // Perform Jsoup Pretty Format which does result in inconsistences handled after
         var formattedCode = document.outerHtml();
 
-        // TODO: Fixing trailing space issue caused by jsoup. We do fix this during a proper run
-        // but our tests fail to do so thus we are duplicating this until jsoup fixes bug.
+        // XXX: Trim trailing spaces inserted by jsoup. We do fix this during a full run
+        // but unit tests are direct calls thus we are duplicating this until jsoup fixes bug.
         formattedCode = REMOVE_TRAILING_PATTERN.matcher(formattedCode).replaceAll("");
 
-        // TODO: Fixing jsoup counting issue which occurs when more than one indentation (jsoup can have mixed line
-        // ending content)
+        // XXX: Jsoup results in mixed line ending content needing normalized until jsoup
+        // provides line ending support.  Internally Jsoup simply uses new line only and
+        // mixture comes from lines that did not require additional formatting.
+        String[] lines = formattedCode.split("\\r?\\n");
+        formattedCode = String.join(ending.getChars(), lines);
+
+        // XXX: Fixing jsoup counter issue when more than one character indentation until jsoup fixes bug.
+        // This surfaces on some items such as <a>, <div>, <span> content with 1 extra character space.
         if (this.formatter.indentAmount() > 1) {
-            int lineSize;
-            int newLineSize;
+            int lineLength;
+            int trimLineLength;
             int remainder;
-            String[] lines = formattedCode.split("\\r?\\n");
+            // This is normalized on line 82/83 and simply can use our line endings
+            lines = formattedCode.split(ending.getChars());
             List<String> newLines = new ArrayList<>(lines.length);
             for (String line : lines) {
-                lineSize = line.length();
-                if (lineSize != 0) {
-                    newLineSize = RESET_LEADING_SPACES_PATTERN.matcher(line).replaceAll("").length();
-                    if (lineSize != newLineSize) {
-                        remainder = (lineSize - newLineSize) % this.formatter.indentAmount();
+                lineLength = line.length();
+                if (lineLength != 0) {
+                    // Trim leading spaces to get trimmed length
+                    trimLineLength = RESET_LEADING_SPACES_PATTERN.matcher(line).replaceAll("").length();
+                    if (lineLength != trimLineLength) {
+                        // Find remainder to correct formatted line
+                        remainder = (lineLength - trimLineLength) % this.formatter.indentAmount();
                         if (remainder > 0) {
                             line = line.substring(remainder);
                         }
@@ -99,8 +109,12 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
             formattedCode = String.join(ending.getChars(), newLines);
         }
 
-        // TODO: Fixing jsoup tagging issue where line break doesn't occur (seen in headers)
-        formattedCode = formattedCode.replace("--><!", "-->" + ending.getChars() + "<!");
+        // XXX: Adding new line at end of file until jsoup fixes bug.
+        // This is normalized on line 82/83 and simply can use our line endings
+        lines = formattedCode.split(ending.getChars());
+        if (!lines[lines.length - 1].equals(ending.getChars())) {
+            formattedCode = formattedCode + ending.getChars();
+        }
 
         if (code.equals(formattedCode)) {
             return null;
