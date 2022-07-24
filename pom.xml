@@ -245,7 +245,7 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.osgi</groupId>
         <artifactId>osgi.annotation</artifactId>
-        <version>8.0.1</version>
+        <version>8.1.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
