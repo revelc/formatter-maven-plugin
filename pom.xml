@@ -497,6 +497,12 @@
           <version>3.0.0-M7</version>
         </plugin>
         <plugin>
+          <!-- this is kept to more easily run manual checks for updates -->
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.11.0</version>
+        </plugin>
+        <plugin>
           <groupId>org.gaul</groupId>
           <artifactId>modernizer-maven-plugin</artifactId>
           <version>2.4.0</version>
