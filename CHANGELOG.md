@@ -192,3 +192,7 @@ ver 2.20.0
 ==========
 - Support Eclipse 2022-06 (4.24, JDT 3.30) - requires jdk 11
 
+ver 2.21.0
+==========
+- Support Eclipse 2022-09 (4.25, JDT 3.31) - requires jdk 11
+
