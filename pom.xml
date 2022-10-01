@@ -501,7 +501,7 @@
           <!-- this is kept to more easily run manual checks for updates -->
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.11.0</version>
+          <version>2.12.0</version>
         </plugin>
         <plugin>
           <groupId>org.gaul</groupId>
