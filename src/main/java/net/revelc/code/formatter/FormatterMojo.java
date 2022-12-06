@@ -36,13 +36,16 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.resource.ResourceManager;
 import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
@@ -98,6 +101,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Component(role = ResourceManager.class)
     private ResourceManager resourceManager;
+
+    /**
+     * The Maven project for retrieving the resources.
+     */
+    @Component
+    private MavenProject project;
 
     /**
      * Project's source directory as specified in the POM.
@@ -340,6 +349,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "true", property = "formatter.removeTrailingWhitespace")
     private boolean removeTrailingWhitespace;
 
+    /**
+     * When set to true, the resources for the project are included in formatting. This includes both the main and
+     * test resources.
+     * <p>
+     * The included/excluded patterns for this plugin are honored as well as the included/excluded patterns from the
+     * resource itself.
+     * </p>
+     *
+     * @since 2.22.0
+     */
+    @Parameter(defaultValue = "false", property = "formatter.includeResources")
+    private boolean includeResources;
+
     /** The java formatter. */
     private final JavaFormatter javaFormatter = new JavaFormatter();
 
@@ -408,6 +430,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 files.addAll(this.addCollectionFiles(this.testSourceDirectory));
             }
         }
+        // If including resources in formatting, format both the main and test resources
+        if (includeResources) {
+            for (Resource resource : project.getResources()) {
+                files.addAll(this.addCollectionFiles(resource));
+            }
+            for (Resource resource : project.getTestResources()) {
+                files.addAll(this.addCollectionFiles(resource));
+            }
+        }
 
         this.logSkippedTypes();
 
@@ -470,6 +501,61 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         ds.setExcludes(this.excludes);
+        ds.addDefaultExcludes();
+        ds.setCaseSensitive(false);
+        ds.setFollowSymlinks(false);
+        ds.scan();
+
+        final List<File> foundFiles = new ArrayList<>();
+        for (final String filename : ds.getIncludedFiles()) {
+            foundFiles.add(new File(newBasedir, filename));
+        }
+        return foundFiles;
+    }
+
+    /**
+     * Add source files to the files list.
+     *
+     * @param resource
+     *            the resource to add
+     *
+     * @return the list
+     */
+    private List<File> addCollectionFiles(final Resource resource) {
+        final var newBasedir = new File(resource.getDirectory());
+        if (!newBasedir.exists()) {
+            final Log log = getLog();
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("Skipping non-existing directory %s", newBasedir));
+            }
+            return Collections.emptyList();
+        }
+        final var ds = new DirectoryScanner();
+        ds.setBasedir(newBasedir);
+
+        // Check includes. We want to process both what the user includes from this plugin and what the resource itself
+        // includes.
+        final List<String> included = new ArrayList<>();
+        if (this.includes != null && this.includes.length > 0) {
+            Collections.addAll(included, this.includes);
+        }
+        if (resource.getIncludes().isEmpty()) {
+            Collections.addAll(included, DEFAULT_INCLUDES);
+        } else {
+            included.addAll(resource.getIncludes());
+        }
+        ds.setIncludes(included.toArray(new String[0]));
+
+        // Check excludes. We want to process both what the user exclude from this plugin and what the resource itself
+        // excludes.
+        final List<String> excluded = new ArrayList<>();
+        if (this.excludes != null && this.excludes.length > 0) {
+            Collections.addAll(excluded, this.excludes);
+        }
+        excluded.addAll(resource.getExcludes());
+        if (!excluded.isEmpty()) {
+            ds.setExcludes(excluded.toArray(new String[0]));
+        }
         ds.addDefaultExcludes();
         ds.setCaseSensitive(false);
         ds.setFollowSymlinks(false);
