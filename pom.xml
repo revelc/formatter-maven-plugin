@@ -477,7 +477,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M3</version>
+          <version>4.0.0-M4</version>
           <dependencies>
             <!-- Fluido is listed here for version update checking only -->
             <dependency>
