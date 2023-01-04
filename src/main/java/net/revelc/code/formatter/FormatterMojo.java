@@ -350,8 +350,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean removeTrailingWhitespace;
 
     /**
-     * When set to true, the resources for the project are included in formatting. This includes both the main and
-     * test resources.
+     * When set to true, the resources for the project are included in formatting. This includes both the main and test
+     * resources.
      * <p>
      * The included/excluded patterns for this plugin are honored as well as the included/excluded patterns from the
      * resource itself.
