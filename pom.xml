@@ -141,7 +141,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.9.1</version>
+        <version>5.9.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -272,6 +272,12 @@
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.9.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
@@ -292,6 +298,12 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-digester3</artifactId>
       <version>3.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
@@ -315,6 +327,11 @@
       <version>1.15.3</version>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.36</version>
+    </dependency>
+    <dependency>
       <groupId>org.w3c.css</groupId>
       <artifactId>sac</artifactId>
       <version>1.3</version>
@@ -328,7 +345,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
-      <version>3.8.6</version>
+      <version>3.8.7</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -340,7 +357,7 @@
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.7.0</version>
+      <version>3.7.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -411,7 +428,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -461,7 +478,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.4.1</version>
+          <version>3.4.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -501,7 +518,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M7</version>
+          <version>3.0.0-M8</version>
         </plugin>
         <plugin>
           <!-- this is kept to more easily run manual checks for updates -->
@@ -643,6 +660,8 @@
                 <ignored>commons-beanutils:commons-beanutils</ignored>
                 <!-- ignore alignment with jackson annotations -->
                 <ignored>com.fasterxml.jackson.core:jackson-annotations</ignored>
+                <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
+                <ignored>org.slf4j:jcl-over-slf4j</ignored>
               </ignoredUnusedDeclaredDependencies>
             </configuration>
           </execution>
