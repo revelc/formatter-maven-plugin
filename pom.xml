@@ -292,6 +292,12 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-digester3</artifactId>
       <version>3.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
@@ -313,6 +319,11 @@
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
       <version>1.15.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.36</version>
     </dependency>
     <dependency>
       <groupId>org.w3c.css</groupId>
@@ -643,6 +654,8 @@
                 <ignored>commons-beanutils:commons-beanutils</ignored>
                 <!-- ignore alignment with jackson annotations -->
                 <ignored>com.fasterxml.jackson.core:jackson-annotations</ignored>
+                <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
+                <ignored>org.slf4j:jcl-over-slf4j</ignored>
               </ignoredUnusedDeclaredDependencies>
             </configuration>
           </execution>
