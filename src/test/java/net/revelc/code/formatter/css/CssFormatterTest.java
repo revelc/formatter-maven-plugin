@@ -36,8 +36,8 @@ class CssFormatterTest extends AbstractFormatterTest {
     void testDoFormatFile() throws Exception {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "1af0032669532658f137ff80186df756abcfbccbe84e9663b54ef70be2c641f5af9e8c16ceeb3da7df9dc02599a3da0c0139a9397f93e383d6e8c6c50fd65c53"
-                : "684255d79eb28c6f4cfa340b6930fe1cfd9de16a1c6abf5f54e8f6837694b599101ef247ed00b8aea5460aa64cda60b418cebefd8ea28d5e747ed9cf4c3a9274";
+                ? "6434062bd7499e707dea1ea17d301556712222b7671fae79ec20d906cda467a2b2210896a196dbaa9da7d221f04cab87a6b2e5538ca3c46fa7fdbedb46010a8c"
+                : "488b10041890a552141edb844a7d98f04ec2f30291a774dcb7f5fedcaad87dac85d3d9ed43b02f4d8d266e96549acd234038cff6e16b32a57034609f16330c8b";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new CssFormatter(), "someFile.css", expectedHash, lineEnding);
     }
