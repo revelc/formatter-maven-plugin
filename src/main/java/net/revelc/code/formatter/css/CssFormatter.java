@@ -60,6 +60,12 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         // Patch converted 'tab' back to '\9' for IE 7,8, and 9 hack. Cssparser switches it to 'tab'.
         formattedCode = formattedCode.replace("\t;", "\\9;");
 
+        // Adding new line at end of file when needed
+        String[] lines = formattedCode.split(ending.getChars());
+        if (!lines[lines.length - 1].equals(ending.getChars())) {
+            formattedCode = formattedCode + ending.getChars();
+        }
+
         if (code.equals(formattedCode)) {
             return null;
         }
