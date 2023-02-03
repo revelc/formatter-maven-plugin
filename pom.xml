@@ -282,7 +282,7 @@
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>jsdt-core</artifactId>
-      <version>3.2.0</version>
+      <version>3.3.0</version>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
