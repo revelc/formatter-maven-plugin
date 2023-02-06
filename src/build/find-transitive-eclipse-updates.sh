@@ -46,6 +46,10 @@ for x in "${deps[@]}"; do
   depGroupId=$(echo "$x"    | cut -f1 -d:)
   depArtifactId=$(echo "$x" | cut -f2 -d:)
   depVersion=$(echo "$x"    | cut -f4 -d:)
+  if [[ $depArtifactId = 'osgi.annotation' ]] && [[ $depVersion = '8.0.1' ]]; then
+    # explicit override to avoid reverting https://github.com/revelc/formatter-maven-plugin/pull/691
+    depVersion='8.1.0'
+  fi
   cat >>"$workfile" <<EOF
       <dependency>
         <!-- $depComment -->
