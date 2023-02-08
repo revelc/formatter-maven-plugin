@@ -35,22 +35,13 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
         super.initCfg(cfg);
 
         final var prefs = new FormattingPreferences();
-        final var maxLineLength = options.get("maxLineLength");
-        final var wrapLongLines = options.get("wrapLongLines");
-        final var tabInsteadOfSpaces = options.get("tabInsteadOfSpaces");
-        final var tabWidth = options.get("tabWidth");
-        final var splitMultiAttrs = options.get("splitMultiAttrs");
-        final var wellFormedValidation = options.get("wellFormedValidation");
-
-        prefs.setMaxLineLength(maxLineLength != null ? Integer.valueOf(maxLineLength) : null);
-        prefs.setWrapLongLines(wrapLongLines != null ? Boolean.valueOf(wrapLongLines) : null);
-        prefs.setTabInsteadOfSpaces(tabInsteadOfSpaces != null ? Boolean.valueOf(tabInsteadOfSpaces) : null);
-        prefs.setTabWidth(tabWidth != null ? Integer.valueOf(tabWidth) : null);
-        prefs.setSplitMultiAttrs(splitMultiAttrs != null ? Boolean.valueOf(splitMultiAttrs) : null);
-
-        if (wellFormedValidation != null) {
-            prefs.setWellFormedValidation(wellFormedValidation);
-        }
+        prefs.setMaxLineLength(Integer.parseInt(options.getOrDefault("maxLineLength", "120")));
+        prefs.setWrapLongLines(Boolean.parseBoolean(options.getOrDefault("wrapLongLines", "true")));
+        prefs.setTabInsteadOfSpaces(Boolean.parseBoolean(options.getOrDefault("tabInsteadOfSpaces", "true")));
+        prefs.setTabWidth(Integer.parseInt(options.getOrDefault("tabWidth", "4")));
+        prefs.setSplitMultiAttrs(Boolean.parseBoolean(options.getOrDefault("splitMultiAttrs", "false")));
+        prefs.setWellFormedValidation(options.getOrDefault("wellFormedValidation", FormattingPreferences.WARN));
+        prefs.setDeleteBlankLines(Boolean.parseBoolean(options.getOrDefault("deleteBlankLines", "false")));
 
         this.formatter = new XmlDocumentFormatter(options.getOrDefault("lineending", System.lineSeparator()), prefs);
     }
