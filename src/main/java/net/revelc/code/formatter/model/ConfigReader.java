@@ -46,7 +46,7 @@ public class ConfigReader {
         digester.addRuleSet(new RuleSet());
 
         final var result = digester.parse(input);
-        if (result == null || !(result instanceof Profiles)) {
+        if (!(result instanceof Profiles)) {
             throw new ConfigReadException("No profiles found in config file");
         }
 
