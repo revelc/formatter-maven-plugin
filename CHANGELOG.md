@@ -199,3 +199,7 @@ ver 2.21.0
 ver 2.22.0
 ==========
 - Support Eclipse 2022-12 (4.26, JDT 3.32) - requires jdk 11
+
+ver 2.23.0
+==========
+- Support Eclipse 2023-03 (4.27, JDT 3.33) - requires jdk 11
