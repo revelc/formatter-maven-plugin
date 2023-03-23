@@ -82,7 +82,7 @@
   </developers>
 
   <prerequisites>
-    <maven>3.3.9</maven>
+    <maven>3.5.0</maven>
   </prerequisites>
 
   <scm>
@@ -147,6 +147,12 @@
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
+        <groupId>org.eclipse.jdt</groupId>
+        <artifactId>ecj</artifactId>
+        <version>3.33.0</version>
+      </dependency>
+      <dependency>
+        <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.compare.core</artifactId>
         <version>3.7.100</version>
@@ -185,7 +191,7 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.core.resources</artifactId>
-        <version>3.18.100</version>
+        <version>3.18.200</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
@@ -221,13 +227,13 @@
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.osgi</artifactId>
-        <version>3.18.200</version>
+        <version>3.18.300</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
         <groupId>org.eclipse.platform</groupId>
         <artifactId>org.eclipse.team.core</artifactId>
-        <version>3.9.600</version>
+        <version>3.9.700</version>
       </dependency>
       <dependency>
         <!-- transitive dependency of org.eclipse.jdt.core resolved here to avoid version range -->
@@ -313,23 +319,23 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.5.0</version>
+      <version>3.5.1</version>
     </dependency>
     <dependency>
       <!-- bump this and run src/build/find-transitive-eclipse-updates.sh to update eclipse deps -->
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.32.0</version>
+      <version>3.33.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <version>1.15.3</version>
+      <version>1.15.4</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>2.0.6</version>
+      <version>2.0.7</version>
     </dependency>
     <dependency>
       <groupId>org.w3c.css</groupId>
@@ -339,19 +345,19 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>3.9.0</version>
+      <version>3.9.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
-      <version>3.9.0</version>
+      <version>3.9.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>3.8.7</version>
+      <version>3.9.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -393,7 +399,7 @@
         <plugin>
           <groupId>net.revelc.code.formatter</groupId>
           <artifactId>formatter-maven-plugin</artifactId>
-          <version>2.21.0</version>
+          <version>2.22.0</version>
           <configuration>
             <configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</configFile>
             <configJsFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/javascript.xml</configJsFile>
@@ -483,7 +489,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>3.0.0-M7</version>
+          <version>3.0.0</version>
           <configuration>
             <arguments>-Psonatype-oss-release</arguments>
             <goals>clean deploy</goals>
@@ -500,7 +506,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M4</version>
+          <version>4.0.0-M6</version>
           <dependencies>
             <!-- Fluido is listed here for version update checking only -->
             <dependency>
@@ -518,7 +524,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M9</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <!-- this is kept to more easily run manual checks for updates -->
@@ -599,13 +605,17 @@
             </goals>
             <phase>process-resources</phase>
             <configuration>
-              <header>${project.basedir}/src/build/license-header.txt</header>
-              <excludes>
-                <exclude>**/target/**</exclude>
-                <exclude>LICENSE</exclude>
-                <exclude>NOTICE</exclude>
-                <exclude>.gitattributes</exclude>
-              </excludes>
+              <licenseSets>
+                <licenseSet>
+                  <header>${project.basedir}/src/build/license-header.txt</header>
+                  <excludes>
+                    <exclude>**/target/**</exclude>
+                    <exclude>LICENSE</exclude>
+                    <exclude>NOTICE</exclude>
+                    <exclude>.gitattributes</exclude>
+                  </excludes>
+                </licenseSet>
+              </licenseSets>
               <mapping>
                 <java>SLASHSTAR_STYLE</java>
                 <vm>XML_STYLE</vm>

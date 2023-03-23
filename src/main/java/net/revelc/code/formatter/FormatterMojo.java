@@ -105,7 +105,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /**
      * The Maven project for retrieving the resources.
      */
-    @Component
+    @Parameter(defaultValue = "${project}", readonly = true)
     private MavenProject project;
 
     /**
