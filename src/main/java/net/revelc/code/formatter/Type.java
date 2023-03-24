@@ -32,7 +32,7 @@ public enum Type {
     CSS("CSS");
 
     /** The name. */
-    private String name;
+    private final String name;
 
     /**
      * Instantiates a new type.

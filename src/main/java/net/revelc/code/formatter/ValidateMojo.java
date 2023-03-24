@@ -19,7 +19,6 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -58,9 +57,6 @@ public class ValidateMojo extends FormatterMojo {
 
     @Parameter(defaultValue = "${session}", required = true, readonly = true)
     private MavenSession mavenSession;
-
-    @Parameter(defaultValue = "${mojoExecution}", readonly = true, required = true)
-    private MojoExecution mojoExecution;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

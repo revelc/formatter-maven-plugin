@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
@@ -528,7 +529,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (log.isDebugEnabled()) {
                 log.debug(String.format("Skipping non-existing directory %s", newBasedir));
             }
-            return Collections.emptyList();
+            return List.of();
         }
         final var ds = new DirectoryScanner();
         ds.setBasedir(newBasedir);
@@ -561,11 +562,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.setFollowSymlinks(false);
         ds.scan();
 
-        final List<File> foundFiles = new ArrayList<>();
-        for (final String filename : ds.getIncludedFiles()) {
-            foundFiles.add(new File(newBasedir, filename));
-        }
-        return foundFiles;
+        return Stream.of(ds.getIncludedFiles()).map(filename -> new File(newBasedir, filename))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     /**
