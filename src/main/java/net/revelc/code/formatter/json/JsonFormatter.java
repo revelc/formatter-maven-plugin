@@ -24,7 +24,6 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.Separators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.common.base.Strings;
 
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
@@ -50,7 +49,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         this.formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
-        final DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(Strings.repeat(" ", indent), lineEnding);
+        final DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(" ".repeat(indent), lineEnding);
         final DefaultPrettyPrinter printer = new DefaultPrettyPrinter() {
             private static final long serialVersionUID = 1L;
 

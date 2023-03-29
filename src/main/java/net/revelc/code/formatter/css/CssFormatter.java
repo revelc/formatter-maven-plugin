@@ -61,7 +61,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         formattedCode = formattedCode.replace("\t;", "\\9;");
 
         // Adding new line at end of file when needed
-        String[] lines = formattedCode.split(ending.getChars());
+        String[] lines = formattedCode.split(ending.getChars(), -1);
         if (!lines[lines.length - 1].equals(ending.getChars())) {
             formattedCode = formattedCode + ending.getChars();
         }
