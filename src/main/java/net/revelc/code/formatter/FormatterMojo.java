@@ -415,6 +415,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         final List<File> files = new ArrayList<>();
+        final File[] directories = this.directories;
+        final File sourceDirectory = this.sourceDirectory;
+        final File testSourceDirectory = this.testSourceDirectory;
+
         if (this.directories != null) {
             for (final File directory : this.directories) {
                 if (directory.exists() && directory.isDirectory()) {
@@ -422,13 +426,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 }
             }
         } else {
+            boolean sourceDirectoryCondition = sourceDirectory != null && sourceDirectory.exists()
+                    && sourceDirectory.isDirectory();
+            boolean testSourceDirectoryCondition = testSourceDirectory != null && testSourceDirectory.exists()
+                    && testSourceDirectory.isDirectory();
+
             // Using defaults of source main and test dirs
-            if (this.sourceDirectory != null && this.sourceDirectory.exists() && this.sourceDirectory.isDirectory()) {
-                files.addAll(this.addCollectionFiles(this.sourceDirectory));
+            if (sourceDirectoryCondition) {
+                files.addAll(this.addCollectionFiles(sourceDirectory));
             }
-            if (this.testSourceDirectory != null && this.testSourceDirectory.exists()
-                    && this.testSourceDirectory.isDirectory()) {
-                files.addAll(this.addCollectionFiles(this.testSourceDirectory));
+            if (testSourceDirectoryCondition) {
+                files.addAll(this.addCollectionFiles(testSourceDirectory));
             }
         }
         // If including resources in formatting, format both the main and test resources
