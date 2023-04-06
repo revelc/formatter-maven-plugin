@@ -17,8 +17,6 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -53,7 +51,6 @@ import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.WriterFactory;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
@@ -64,6 +61,7 @@ import com.google.common.base.Strings;
 import com.google.common.hash.Hashing;
 
 import net.revelc.code.formatter.css.CssFormatter;
+import net.revelc.code.formatter.fileoperation.fileIO;
 import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
@@ -384,6 +382,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     /** The hash cache written. */
     private boolean hashCacheWritten;
 
+    /** File IO */
+    private final fileIO fileio = new fileIO();
+
     /**
      * Execute.
      *
@@ -394,14 +395,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
-    @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        if (this.skipFormatting) {
-            this.getLog().info("Formatting is skipped");
-            return;
-        }
-
-        final var startClock = System.nanoTime();
+    // my changes start extract condition
+    /**
+     * Encode the Files
+     */
+    private void fileEncoding() throws MojoExecutionException {
 
         if (StringUtils.isEmpty(this.encoding)) {
             this.encoding = ReaderFactory.FILE_ENCODING;
@@ -413,32 +411,47 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             }
             this.getLog().debug("Using '" + this.encoding + "' encoding to format source files.");
         }
+    }
+
+    private List<File> formatFileDirectory() {
 
         final List<File> files = new ArrayList<>();
         final File[] directories = this.directories;
         final File sourceDirectory = this.sourceDirectory;
         final File testSourceDirectory = this.testSourceDirectory;
-
-        if (this.directories != null) {
-            for (final File directory : this.directories) {
+        if (directories != null) {
+            for (final File directory : directories) {
                 if (directory.exists() && directory.isDirectory()) {
                     files.addAll(this.addCollectionFiles(directory));
                 }
             }
         } else {
+            // complex conditional
             boolean sourceDirectoryCondition = sourceDirectory != null && sourceDirectory.exists()
                     && sourceDirectory.isDirectory();
-            boolean testSourceDirectoryCondition = testSourceDirectory != null && testSourceDirectory.exists()
-                    && testSourceDirectory.isDirectory();
-
             // Using defaults of source main and test dirs
             if (sourceDirectoryCondition) {
                 files.addAll(this.addCollectionFiles(sourceDirectory));
             }
+            // complex conditional
+            boolean testSourceDirectoryCondition = testSourceDirectory != null && testSourceDirectory.exists()
+                    && testSourceDirectory.isDirectory();
+
             if (testSourceDirectoryCondition) {
                 files.addAll(this.addCollectionFiles(testSourceDirectory));
             }
         }
+        return files;
+    }
+
+    /**
+     * Get the files to format
+     *
+     * @return the files list
+     */
+    private List<File> getFilesToFormat() {
+
+        final List<File> files = formatFileDirectory();
         // If including resources in formatting, format both the main and test resources
         if (includeResources) {
             for (Resource resource : project.getResources()) {
@@ -448,6 +461,67 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 files.addAll(this.addCollectionFiles(resource));
             }
         }
+        return files;
+    }
+
+    /**
+     * Format the Files
+     *
+     * @param files
+     *            the files
+     *
+     * @return the formatted files list
+     */
+    private FormatterMojo.ResultCollector formatFiles(List<File> files)
+            throws MojoExecutionException, MojoFailureException {
+
+        final var rc = new FormatterMojo.ResultCollector();
+        final var hashCache = this.readFileHashCacheFile();
+        final var basedirPath = this.getBasedirPath();
+
+        for (final File file : files) {
+            if (file.exists()) {
+                if (file.canWrite()) {
+                    this.formatFile(file, rc, hashCache, basedirPath);
+                } else {
+                    rc.readOnlyCount++;
+                }
+            } else {
+                rc.failCount++;
+            }
+        }
+
+        // Only store the cache if it changed during processing to avoid java properties timestamp writing for
+        // those that want to save the cache
+        if (this.hashCacheWritten) {
+            this.storeFileHashCache(hashCache);
+        }
+        return rc;
+    }
+
+    /**
+     * Execute.
+     *
+     * @throws MojoExecutionException
+     *             the mojo execution exception
+     * @throws MojoFailureException
+     *             the mojo failure exception
+     *
+     * @see org.apache.maven.plugin.AbstractMojo#execute()
+     */
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (this.skipFormatting) {
+            this.getLog().info("Formatting is skipped");
+            return;
+        }
+
+        final var startClock = System.nanoTime();
+
+        fileEncoding();
+
+        final List<File> files = getFilesToFormat();
 
         this.logSkippedTypes();
 
@@ -460,36 +534,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         if (numberOfFiles > 0) {
             this.createCodeFormatter();
-            final var rc = new ResultCollector();
-            final var hashCache = this.readFileHashCacheFile();
 
-            final var basedirPath = this.getBasedirPath();
-            for (final File file : files) {
-                if (file.exists()) {
-                    if (file.canWrite()) {
-                        this.formatFile(file, rc, hashCache, basedirPath);
-                    } else {
-                        rc.readOnlyCount++;
-                    }
-                } else {
-                    rc.failCount++;
-                }
-            }
-
-            // Only store the cache if it changed during processing to avoid java properties timestamp writing for
-            // those that want to save the cache
-            if (this.hashCacheWritten) {
-                this.storeFileHashCache(hashCache);
-            }
+            FormatterMojo.ResultCollector rc = formatFiles(files);
 
             final var duration = NANOSECONDS.toMillis(System.nanoTime() - startClock);
-            final var elapsed = TimeUtil.printDuration(duration);
-
+            final var elapsed = printDuration(duration);
             final String results = String.format(
                     "Processed %d files in %s (Formatted: %d, Unchanged: %d, Failed: %d, Readonly: %d)", numberOfFiles,
                     elapsed, rc.successCount, rc.skippedCount, rc.failCount, rc.readOnlyCount);
             this.getLog().info(results);
         }
+
     }
 
     /**
@@ -718,7 +773,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
         final var log = this.getLog();
         log.debug("Processing file: " + file);
-        final var originalCode = this.readFileAsString(file);
+        final var originalCode = fileio.readFileAsString(file, this.encoding);
         final var originalHash = this.sha512hash(originalCode);
 
         final var canonicalPath = file.getCanonicalPath();
@@ -827,7 +882,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // Now write the file
         if (!dryRun) {
-            this.writeStringToFile(formattedCode, file);
+            fileio.writeStringToFile(formattedCode, file, encoding);
         }
     }
 
@@ -841,52 +896,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private String sha512hash(final String str) {
         return Hashing.sha512().hashBytes(str.getBytes(this.getEncoding())).toString();
-    }
-
-    /**
-     * Read the given file and return the content as a string.
-     *
-     * @param file
-     *            the file
-     *
-     * @return the string
-     *
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     */
-    private String readFileAsString(final File file) throws IOException {
-        final var fileData = new StringBuilder(1000);
-        try (var reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding))) {
-            var buf = new char[1024];
-            var numRead = 0;
-            while ((numRead = reader.read(buf)) != -1) {
-                final var readData = String.valueOf(buf, 0, numRead);
-                fileData.append(readData);
-                buf = new char[1024];
-            }
-        }
-        return fileData.toString();
-    }
-
-    /**
-     * Write the given string to a file.
-     *
-     * @param str
-     *            the str
-     * @param file
-     *            the file
-     *
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     */
-    private void writeStringToFile(final String str, final File file) throws IOException {
-        if (!file.exists() && file.isDirectory()) {
-            return;
-        }
-
-        try (var bw = new BufferedWriter(WriterFactory.newWriter(file, this.encoding))) {
-            bw.write(str);
-        }
     }
 
     /**
@@ -1066,6 +1075,40 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         return skippedTypes;
+    }
+
+    /**
+     * Prints the duration in a human-readable format as X minutes, Y seconds etc.
+     *
+     * @param duration
+     *            the duration in millis
+     *
+     * @return the time used for displaying on screen or in logs
+     */
+    public static String printDuration(final long duration) {
+        if (duration <= 0) {
+            return "0ms";
+        }
+
+        final var sb = new StringBuilder();
+
+        final var seconds = duration / 1000;
+        final var minutes = seconds / 60;
+        if (minutes > 0) {
+            sb.append(minutes % 60).append("m");
+        }
+        if (minutes + seconds > 0) {
+            sb.append(seconds % 60).append("s");
+        }
+
+        final var millis = duration % 1000;
+        if (duration < 1000 || millis > 0) {
+            // append millis if the duration is less than a second,
+            // for duration longer than a second then only include millis if not zero
+            sb.append(duration % 1000).append("ms");
+        }
+
+        return sb.toString();
     }
 
     /**

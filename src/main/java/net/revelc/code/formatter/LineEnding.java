@@ -77,7 +77,7 @@ public enum LineEnding {
 
         for (var i = 0; i < fileDataString.length(); i++) {
             final var c = fileDataString.charAt(i);
-            final var stringIncrementor = i +1;
+            final var stringIncrementor = i + 1;
             if (c == '\r') {
                 if (stringIncrementor < fileDataString.length() && fileDataString.charAt(stringIncrementor) == '\n') {
                     crlfCount++;

@@ -29,20 +29,20 @@ class TimeUtilTest {
      */
     @Test
     void testPrintDuration() throws Exception {
-        Assertions.assertEquals("123ms", TimeUtil.printDuration(123));
-        Assertions.assertEquals("1s", TimeUtil.printDuration(1000));
-        Assertions.assertEquals("1s1ms", TimeUtil.printDuration(1001));
-        Assertions.assertEquals("1s250ms", TimeUtil.printDuration(1250));
-        Assertions.assertEquals("33s", TimeUtil.printDuration(33000));
-        Assertions.assertEquals("33s1ms", TimeUtil.printDuration(33001));
-        Assertions.assertEquals("33s444ms", TimeUtil.printDuration(33444));
-        Assertions.assertEquals("1m0s", TimeUtil.printDuration(60000));
-        Assertions.assertEquals("1m1s", TimeUtil.printDuration(61000));
-        Assertions.assertEquals("1m1s1ms", TimeUtil.printDuration(61001));
-        Assertions.assertEquals("1m1s2ms", TimeUtil.printDuration(61002));
-        Assertions.assertEquals("30m55s123ms", TimeUtil.printDuration(1855123));
-        Assertions.assertEquals("30m0s", TimeUtil.printDuration(5400000));
-        Assertions.assertEquals("30m1s", TimeUtil.printDuration(5401000));
+        Assertions.assertEquals("123ms", FormatterMojo.printDuration(123));
+        Assertions.assertEquals("1s", FormatterMojo.printDuration(1000));
+        Assertions.assertEquals("1s1ms", FormatterMojo.printDuration(1001));
+        Assertions.assertEquals("1s250ms", FormatterMojo.printDuration(1250));
+        Assertions.assertEquals("33s", FormatterMojo.printDuration(33000));
+        Assertions.assertEquals("33s1ms", FormatterMojo.printDuration(33001));
+        Assertions.assertEquals("33s444ms", FormatterMojo.printDuration(33444));
+        Assertions.assertEquals("1m0s", FormatterMojo.printDuration(60000));
+        Assertions.assertEquals("1m1s", FormatterMojo.printDuration(61000));
+        Assertions.assertEquals("1m1s1ms", FormatterMojo.printDuration(61001));
+        Assertions.assertEquals("1m1s2ms", FormatterMojo.printDuration(61002));
+        Assertions.assertEquals("30m55s123ms", FormatterMojo.printDuration(1855123));
+        Assertions.assertEquals("30m0s", FormatterMojo.printDuration(5400000));
+        Assertions.assertEquals("30m1s", FormatterMojo.printDuration(5401000));
     }
 
 }
