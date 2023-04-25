@@ -268,6 +268,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean skipFormattingCache;
 
     /**
+     * Warn if no files were skipped or changed.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.warnunchanged")
+    private boolean warnUnchanged;
+
+    /**
      * Whether the java formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.java.skip")
@@ -486,7 +492,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                     "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
                     numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
                     rc.readOnlyCount);
-            this.getLog().info(results);
+
+            if (rc.failCount > 0)
+                this.getLog().error(results);
+            else if (rc.readOnlyCount > 0)
+                this.getLog().warn(results);
+            else if (warnUnchanged && rc.successCount == 0 && rc.skippedCount == 0)
+                this.getLog().warn(results);
+            else
+                this.getLog().info(results);
         }
     }
 
