@@ -262,6 +262,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String configCssFile;
 
     /**
+     * Whether the formatting cache is skipped.
+     */
+    @Parameter(defaultValue = "false", property = "formatter.cache.skip")
+    private boolean skipFormattingCache;
+
+    /**
      * Whether the java formatting is skipped.
      */
     @Parameter(defaultValue = "false", property = "formatter.java.skip")
@@ -477,8 +483,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             final var elapsed = TimeUtil.printDuration(duration);
 
             final String results = String.format(
-                    "Processed %d files in %s (Formatted: %d, Unchanged: %d, Failed: %d, Readonly: %d)", numberOfFiles,
-                    elapsed, rc.successCount, rc.skippedCount, rc.failCount, rc.readOnlyCount);
+                    "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
+                    numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
+                    rc.readOnlyCount);
             this.getLog().info(results);
         }
     }
@@ -715,9 +722,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var canonicalPath = file.getCanonicalPath();
         final var path = canonicalPath.substring(basedirPath.length());
         final var cachedHash = hashCache.getProperty(path);
-        if (cachedHash != null && cachedHash.equals(originalHash)) {
+        if (!skipFormattingCache && cachedHash != null && cachedHash.equals(originalHash)) {
             rc.skippedCount++;
-            log.debug("File is already formatted.");
+            log.debug("Cache hit: file is already formatted.");
             return;
         }
 
@@ -785,7 +792,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // Process the result type
         if (Result.SKIPPED.equals(result)) {
-            rc.skippedCount++;
+            rc.unchangedCount++;
         } else if (Result.SUCCESS.equals(result)) {
             rc.successCount++;
         } else if (Result.FAIL.equals(result)) {
@@ -805,7 +812,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // If we had determined to skip write, do so now after cache was written
         if (Result.SKIPPED.equals(result)) {
-            log.debug("File is already formatted.  Writing to cache only.");
+            log.debug("File is already formatted. Writing to cache only.");
             return;
         }
 
@@ -1072,6 +1079,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         /** The skipped count. */
         int skippedCount;
+
+        /** The skipped count. */
+        int unchangedCount;
 
         /** The read only count. */
         int readOnlyCount;
