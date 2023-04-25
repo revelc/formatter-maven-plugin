@@ -263,15 +263,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
     /**
      * Whether the formatting cache is skipped.
+     *
+     * @since 2.23.0
      */
     @Parameter(defaultValue = "false", property = "formatter.cache.skip")
     private boolean skipFormattingCache;
-
-    /**
-     * Warn if no files were skipped or changed.
-     */
-    @Parameter(defaultValue = "false", property = "formatter.warnunchanged")
-    private boolean warnUnchanged;
 
     /**
      * Whether the java formatting is skipped.
@@ -496,8 +492,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (rc.failCount > 0)
                 this.getLog().error(results);
             else if (rc.readOnlyCount > 0)
-                this.getLog().warn(results);
-            else if (warnUnchanged && rc.successCount == 0 && rc.skippedCount == 0)
                 this.getLog().warn(results);
             else
                 this.getLog().info(results);
@@ -1091,10 +1085,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         /** The fail count. */
         int failCount;
 
-        /** The skipped count. */
+        /** The skipped count is incremented for cached files that haven't changed since being cached. */
         int skippedCount;
 
-        /** The skipped count. */
+        /** The unchanged count is incremented on cache misses when a file remains unchanged after formatting. */
         int unchangedCount;
 
         /** The read only count. */
