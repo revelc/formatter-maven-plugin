@@ -60,7 +60,6 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
-import com.google.common.base.Strings;
 import com.google.common.hash.Hashing;
 
 import net.revelc.code.formatter.css.CssFormatter;
@@ -711,7 +710,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var log = this.getLog();
         log.debug("Processing file: " + file);
         final var originalCode = this.readFileAsString(file);
-        final var originalHash = this.sha512hash(originalCode);
+        final var originalHash = this.sha512hash(originalCode + this.javaFormatter.hashCode());
 
         final var canonicalPath = file.getCanonicalPath();
         final var path = canonicalPath.substring(basedirPath.length());
@@ -799,7 +798,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (Result.SKIPPED.equals(result)) {
             formattedHash = originalHash;
         } else {
-            formattedHash = this.sha512hash(Strings.nullToEmpty(formattedCode));
+            formattedHash = this.sha512hash(formattedCode + this.javaFormatter.hashCode());
         }
         hashCache.setProperty(path, formattedHash);
         this.hashCacheWritten = true;
