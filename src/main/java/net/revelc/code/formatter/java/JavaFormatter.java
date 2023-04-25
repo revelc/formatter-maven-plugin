@@ -13,7 +13,6 @@
  */
 package net.revelc.code.formatter.java;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     }
 
     @Override
-    public String doFormat(final String code, final LineEnding ending) throws IOException, BadLocationException {
+    public String doFormat(final String code, final LineEnding ending) throws BadLocationException {
         TextEdit te;
         try {
             final var regions = JavaFormatter.getRegions(code, this.exclusionPattern);

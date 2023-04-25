@@ -29,11 +29,9 @@ class CssFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFile() throws Exception {
+    void testDoFormatFile() {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         final var expectedHash = LineEnding.LF.isSystem()
                 ? "6434062bd7499e707dea1ea17d301556712222b7671fae79ec20d906cda467a2b2210896a196dbaa9da7d221f04cab87a6b2e5538ca3c46fa7fdbedb46010a8c"
@@ -45,11 +43,9 @@ class CssFormatterTest extends AbstractFormatterTest {
     /**
      * Test is intialized.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testIsIntialized() throws Exception {
+    void testIsIntialized() {
         final var cssFormatter = new CssFormatter();
         Assertions.assertFalse(cssFormatter.isInitialized());
         cssFormatter.init(Collections.emptyMap(),

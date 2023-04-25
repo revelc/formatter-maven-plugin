@@ -35,11 +35,9 @@ class JsonFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFile() throws Exception {
+    void testDoFormatFile() {
         // Since we set the line endings via options for json, we cannot rely on CRLF inside twoPassTest.
         // The option will not be available inside json formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
@@ -65,11 +63,9 @@ class JsonFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file with config.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFileWithConfig() throws Exception {
+    void testDoFormatFileWithConfig() {
         final Map<String, String> jsonFormattingOptions = new HashMap<>();
         jsonFormattingOptions.put("indent", "2");
         jsonFormattingOptions.put("spaceBeforeSeparator", "false");
