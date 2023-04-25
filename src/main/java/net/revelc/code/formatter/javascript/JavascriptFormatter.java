@@ -13,7 +13,6 @@
  */
 package net.revelc.code.formatter.javascript;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.jface.text.BadLocationException;
@@ -43,7 +42,7 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     }
 
     @Override
-    public String doFormat(final String code, final LineEnding ending) throws IOException, BadLocationException {
+    public String doFormat(final String code, final LineEnding ending) throws BadLocationException {
         final var te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
                 ending.getChars());
         if (te == null) {

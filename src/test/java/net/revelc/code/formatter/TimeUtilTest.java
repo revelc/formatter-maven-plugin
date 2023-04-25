@@ -24,11 +24,9 @@ class TimeUtilTest {
     /**
      * Test print duration.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testPrintDuration() throws Exception {
+    void testPrintDuration() {
         Assertions.assertEquals("123ms", TimeUtil.printDuration(123));
         Assertions.assertEquals("1s", TimeUtil.printDuration(1000));
         Assertions.assertEquals("1s1ms", TimeUtil.printDuration(1001));

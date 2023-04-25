@@ -29,11 +29,9 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFile() throws Exception {
+    void testDoFormatFile() {
         // FIXME Handle linux vs windows since this formatter does not accept line endings
         final var expectedHash = LineEnding.LF.isSystem()
                 ? "6182753e93b40a56497cb1537fff4a7bd69e821a79968e4ce4f80b621cd1268d0146d0ae65cd1715b0998464eb272803fbd479337dde8490019db5d5976744b8"
@@ -45,11 +43,9 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     /**
      * Test is intialized.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testIsIntialized() throws Exception {
+    void testIsIntialized() {
         final var htmlFormatter = new HTMLFormatter();
         Assertions.assertFalse(htmlFormatter.isInitialized());
         htmlFormatter.init(Collections.emptyMap(),

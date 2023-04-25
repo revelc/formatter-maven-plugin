@@ -24,11 +24,9 @@ class LineEndingTest {
     /**
      * Test successfully determining CRLF line ending.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void test_success_read_line_endings_crlf() throws Exception {
+    void test_success_read_line_endings_crlf() {
         final var fileData = "Test\r\nTest\r\nTest\r\n";
         final var lineEnd = LineEnding.determineLineEnding(fileData);
         Assertions.assertEquals(LineEnding.CRLF, lineEnd);
@@ -37,11 +35,9 @@ class LineEndingTest {
     /**
      * Test successfully determining LF line ending.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void test_success_read_line_endings_lf() throws Exception {
+    void test_success_read_line_endings_lf() {
         final var fileData = "Test\nTest\nTest\n";
         final var lineEnd = LineEnding.determineLineEnding(fileData);
         Assertions.assertEquals(LineEnding.LF, lineEnd);
@@ -50,11 +46,9 @@ class LineEndingTest {
     /**
      * Test successfully determining CR line ending.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void test_success_read_line_endings_cr() throws Exception {
+    void test_success_read_line_endings_cr() {
         final var fileData = "Test\rTest\rTest\r";
         final var lineEnd = LineEnding.determineLineEnding(fileData);
         Assertions.assertEquals(LineEnding.CR, lineEnd);
@@ -63,11 +57,9 @@ class LineEndingTest {
     /**
      * Test successfully determining LF line ending with mixed endings.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void test_success_read_line_endings_mixed_lf() throws Exception {
+    void test_success_read_line_endings_mixed_lf() {
         final var fileData = "Test\r\nTest\rTest\nTest\nTest\r\nTest\n";
         final var lineEnd = LineEnding.determineLineEnding(fileData);
         Assertions.assertEquals(LineEnding.LF, lineEnd);
@@ -76,11 +68,9 @@ class LineEndingTest {
     /**
      * Test successfully determining AUTO line ending with mixed endings and no clear majority.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void test_success_read_line_endings_mixed_auto() throws Exception {
+    void test_success_read_line_endings_mixed_auto() {
         final var fileData = "Test\r\nTest\r\nTest\nTest\nTest\r\nTest\nTest\r";
         final var lineEnd = LineEnding.determineLineEnding(fileData);
         Assertions.assertEquals(LineEnding.UNKNOWN, lineEnd);
@@ -89,11 +79,9 @@ class LineEndingTest {
     /**
      * Test successfully determining AUTO line ending with no endings.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void test_success_read_line_endings_none_auto() throws Exception {
+    void test_success_read_line_endings_none_auto() {
         final var fileData = "TestTestTestTest";
         final var lineEnd = LineEnding.determineLineEnding(fileData);
         Assertions.assertEquals(LineEnding.UNKNOWN, lineEnd);

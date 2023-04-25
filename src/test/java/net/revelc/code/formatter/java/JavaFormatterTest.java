@@ -29,11 +29,9 @@ class JavaFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFile() throws Exception {
+    void testDoFormatFile() {
         final var expectedHash = LineEnding.LF.isSystem()
                 ? "2471c37dc976b24353bda569c9e9d702f8b376c2296c0acd1f9e2513b1d842d8a58af2167147b1f79805fa0aa0003480e95c51917510d3c738de486a3b760d4c"
                 : "4c002ff0cb5f8455bc42d3457b1d3418fcf1fd742551aa2d37d665b30825bf210636cfb8c1fc04e04ed074324c0d22909053b7e805db42b05fb4ba68e0cf457a";
@@ -44,11 +42,9 @@ class JavaFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file keep line feed LF.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFileKeepLineFeedLF() throws Exception {
+    void testDoFormatFileKeepLineFeedLF() {
         final var expectedHash = "2471c37dc976b24353bda569c9e9d702f8b376c2296c0acd1f9e2513b1d842d8a58af2167147b1f79805fa0aa0003480e95c51917510d3c738de486a3b760d4c";
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClassLF.java", expectedHash, LineEnding.KEEP);
     }
@@ -56,11 +52,9 @@ class JavaFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file keep line feed CR.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFileKeepLineFeedCR() throws Exception {
+    void testDoFormatFileKeepLineFeedCR() {
         final var expectedHash = "3ca0689406f695ab2b2f8ec07d4ddbec3fd50a5f777b41294747555ad4b3df1edecaf7ac754abc4c6a700aaa04e8fd59fd34300b3eba6173d0dab80bc981e1c4";
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClassCR.java", expectedHash, LineEnding.KEEP);
     }
@@ -68,11 +62,9 @@ class JavaFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file keep line feed CRLF.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFileKeepLineFeedCRLF() throws Exception {
+    void testDoFormatFileKeepLineFeedCRLF() {
         final var expectedHash = "4c002ff0cb5f8455bc42d3457b1d3418fcf1fd742551aa2d37d665b30825bf210636cfb8c1fc04e04ed074324c0d22909053b7e805db42b05fb4ba68e0cf457a";
         this.twoPassTest(Collections.emptyMap(), new JavaFormatter(), "AnyClassCRLF.java", expectedHash,
                 LineEnding.KEEP);
@@ -81,11 +73,9 @@ class JavaFormatterTest extends AbstractFormatterTest {
     /**
      * Test is intialized.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testIsIntialized() throws Exception {
+    void testIsIntialized() {
         final var javaFormatter = new JavaFormatter();
         Assertions.assertFalse(javaFormatter.isInitialized());
         javaFormatter.init(Collections.emptyMap(),
@@ -96,11 +86,9 @@ class JavaFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file with exclusions.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFileWithExclusions() throws Exception {
+    void testDoFormatFileWithExclusions() {
         final var formatter = new JavaFormatter();
         formatter.setExclusionPattern("\\b(from\\([^;]*\\.end[^;]*?\\));");
         final var expectedHash = "7d83d3145da6e03087b99387dbcd4f3fc1a6893b3133eaf068556ae52683e91a20aeab5c91b910d704b468fc5d9b2f6999d956a87b6bb01f13d072e323ed76d9";

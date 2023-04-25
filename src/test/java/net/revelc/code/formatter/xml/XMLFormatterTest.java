@@ -29,11 +29,9 @@ class XMLFormatterTest extends AbstractFormatterTest {
     /**
      * Test do format file.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testDoFormatFile() throws Exception {
+    void testDoFormatFile() {
         // Since we set the line endings via options for xml, we cannot rely on CRLF inside twoPassTest.
         // The option will not be available inside xml formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
@@ -47,11 +45,9 @@ class XMLFormatterTest extends AbstractFormatterTest {
     /**
      * Test is intialized.
      *
-     * @throws Exception
-     *             the exception
      */
     @Test
-    void testIsIntialized() throws Exception {
+    void testIsIntialized() {
         final var xmlFormatter = new XMLFormatter();
         Assertions.assertFalse(xmlFormatter.isInitialized());
         xmlFormatter.init(Collections.emptyMap(),
