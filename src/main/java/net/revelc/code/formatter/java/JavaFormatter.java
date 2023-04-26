@@ -16,6 +16,7 @@ package net.revelc.code.formatter.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.ToolFactory;
@@ -37,17 +38,37 @@ import net.revelc.code.formatter.LineEnding;
  */
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        JavaFormatter that = (JavaFormatter) o;
+        return Objects.equals(formatter, that.formatter) && Objects.equals(exclusionPattern, that.exclusionPattern)
+                && Objects.equals(options, that.options);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(formatter, exclusionPattern, options);
+    }
+
     /** The formatter. */
     private CodeFormatter formatter;
 
     /** The exclusion pattern. */
     private Pattern exclusionPattern;
 
+    /** The configuration options */
+    private Map<String, String> options;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
+        this.options = options;
     }
 
     @Override
