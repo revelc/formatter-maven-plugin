@@ -469,9 +469,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                         this.formatFile(file, rc, hashCache, basedirPath);
                     } else {
                         rc.readOnlyCount++;
+                        this.getLog().warn("File " + file + " is read only");
                     }
                 } else {
                     rc.failCount++;
+                    this.getLog().error("File " + file + " does not exist");
                 }
             }
 
@@ -692,7 +694,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             this.doFormatFile(file, rc, hashCache, basedirPath, false);
         } catch (IOException | MalformedTreeException | BadLocationException e) {
             rc.failCount++;
-            this.getLog().warn(e);
+            this.getLog().error(e);
         }
     }
 
