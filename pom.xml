@@ -114,7 +114,7 @@
   </distributionManagement>
 
   <properties>
-    <maven-fluido-skin.version>2.0.0-M5</maven-fluido-skin.version>
+    <maven-fluido-skin.version>2.0.0-M6</maven-fluido-skin.version>
 
     <!-- all 3 are needed, because some plugins might use the source/target variables -->
     <maven.compiler.release>11</maven.compiler.release>
