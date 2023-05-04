@@ -38,22 +38,6 @@ import net.revelc.code.formatter.LineEnding;
  */
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        JavaFormatter that = (JavaFormatter) o;
-        return Objects.equals(formatter, that.formatter) && Objects.equals(exclusionPattern, that.exclusionPattern)
-                && Objects.equals(options, that.options);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(formatter, exclusionPattern, options);
-    }
-
     /** The formatter. */
     private CodeFormatter formatter;
 
@@ -62,6 +46,22 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 
     /** The configuration options */
     private Map<String, String> options;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        JavaFormatter that = (JavaFormatter) o;
+        return Objects.equals(formatter, that.formatter) && Objects.equals(exclusionPattern, that.exclusionPattern)
+            && Objects.equals(options, that.options);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(formatter, exclusionPattern, options);
+    }
 
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
