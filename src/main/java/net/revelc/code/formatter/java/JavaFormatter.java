@@ -55,7 +55,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
             return false;
         JavaFormatter that = (JavaFormatter) o;
         return Objects.equals(formatter, that.formatter) && Objects.equals(exclusionPattern, that.exclusionPattern)
-            && Objects.equals(options, that.options);
+                && Objects.equals(options, that.options);
     }
 
     @Override
