@@ -1,5 +1,20 @@
-formatter-maven-plugin
-======================
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+# formatter-maven-plugin
 
 [![mvn verify][ci_img]][ci_link]
 [![Maven Central][maven_img]][maven_link]
@@ -38,9 +53,9 @@ basis for this plugin's formatting. See [the project website][compat] for a
 list of recent versions of this plugin and their corresponding Eclipse
 versions.
 
-## Integration Tests ##
+## Integration Tests
 
-mvn -Prun-it clean verify
+mvn clean verify
 
 ## JDK Requirements
 - 2.16.x requires jdk 8 as required by Eclipse binaries

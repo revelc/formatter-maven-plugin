@@ -12,10 +12,3 @@
 # limitations under the License.
 #
 
-charset=UTF-8
-escapeMode=xhtml
-indentAmount=4
-maxPaddingWidth=-1
-outlineMode=true
-pretty=true
-syntax=html
