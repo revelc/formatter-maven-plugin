@@ -3,7 +3,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package net.revelc.code.formatter;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -23,7 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -51,9 +54,7 @@ import org.codehaus.plexus.resource.ResourceManager;
 import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.DirectoryScanner;
-import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.WriterFactory;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
@@ -411,7 +412,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var startClock = System.nanoTime();
 
         if (StringUtils.isEmpty(this.encoding)) {
-            this.encoding = ReaderFactory.FILE_ENCODING;
+            this.encoding = System.getProperty("file.encoding");
             this.getLog().warn("File encoding has not been set, using platform encoding (" + this.encoding
                     + ") to format source files, i.e. build is platform dependent!");
         } else {
@@ -864,7 +865,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private String readFileAsString(final File file) throws IOException {
         final var fileData = new StringBuilder(1000);
-        try (var reader = new BufferedReader(ReaderFactory.newReader(file, this.encoding))) {
+        try (var fileStream = Files.newInputStream(file.toPath());
+                var fileReader = new InputStreamReader(fileStream, this.encoding);
+                var reader = new BufferedReader(fileReader)) {
             var buf = new char[1024];
             var numRead = 0;
             while ((numRead = reader.read(buf)) != -1) {
@@ -892,7 +895,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        try (var bw = new BufferedWriter(WriterFactory.newWriter(file, this.encoding))) {
+        try (var fileStream = Files.newOutputStream(file.toPath());
+                var fileWriter = new OutputStreamWriter(fileStream, this.encoding);
+                var bw = new BufferedWriter(fileWriter)) {
             bw.write(str);
         }
     }

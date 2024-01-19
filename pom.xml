@@ -5,7 +5,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-         https://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,57 +16,34 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+  <parent>
+    <groupId>net.revelc.code</groupId>
+    <artifactId>revelc</artifactId>
+    <version>4</version>
+  </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>2.24.0-SNAPSHOT</version>
-
   <packaging>maven-plugin</packaging>
   <name>formatter-maven-plugin</name>
-
   <description>Maven plugin for formatting source code</description>
-  <url>https://github.com/revelc/formatter-maven-plugin/</url>
   <inceptionYear>2010</inceptionYear>
-
-  <licenses>
-    <license>
-      <name>Apache License, Version 2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-      <comments>A business-friendly OSS license</comments>
-    </license>
-  </licenses>
-
   <developers>
     <developer>
       <id>jecki.go</id>
       <name>Jecki</name>
-      <email>jecki.go@gmail.com</email>
     </developer>
     <developer>
       <id>matt.blanchette</id>
       <name>Matt Blanchette</name>
-      <email>matt.blanchette@gmail.com</email>
     </developer>
     <developer>
       <id>velo</id>
       <name>Marvin Froeder</name>
-      <email>velo.br@gmail.com</email>
     </developer>
     <developer>
       <id>jlandis</id>
       <name>Jeremy Landis</name>
-      <email>jeremylandis@hotmail.com</email>
-      <url>https://www.linkedin.com/in/jeremy-landis-548b2719</url>
-      <organization>hazendaz</organization>
-      <organizationUrl>https://github.com/hazendaz</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-      <timezone>-5</timezone>
-      <properties>
-        <picUrl>https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/000/128/174/30cff69.jpg</picUrl>
-      </properties>
     </developer>
     <developer>
       <id>ctubbsii</id>
@@ -75,73 +52,35 @@
     <developer>
       <id>jam01</id>
       <name>Jose Montoya</name>
-      <email>jmontoya@ms3-inc.com</email>
-      <organization>ms3-inc</organization>
-      <organizationUrl>https://www.ms3-inc.com</organizationUrl>
     </developer>
   </developers>
-
   <prerequisites>
-    <maven>3.5.0</maven>
+    <maven>3.6.3</maven>
   </prerequisites>
-
   <scm>
-    <connection>scm:git:https://github.com/revelc/formatter-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com/revelc/formatter-maven-plugin.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/revelc/formatter-maven-plugin</url>
   </scm>
-
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/revelc/formatter-maven-plugin/issues</url>
-  </issueManagement>
-  <ciManagement>
-    <system>GitHub</system>
-    <url>https://github.com/revelc/formatter-maven-plugin/actions</url>
-  </ciManagement>
-
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <properties>
-    <maven-fluido-skin.version>2.0.0-M8</maven-fluido-skin.version>
-
-    <!-- all 3 are needed, because some plugins might use the source/target variables -->
+    <formatter.configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</formatter.configFile>
+    <formatter.css.skip>true</formatter.css.skip>
+    <formatter.excludes>**/src/test/resources/**,**/target/**</formatter.excludes>
+    <formatter.html.skip>true</formatter.html.skip>
+    <formatter.js.skip>true</formatter.js.skip>
+    <formatter.json.skip>true</formatter.json.skip>
+    <formatter.lineEnding>AUTO</formatter.lineEnding>
+    <formatter.sourceDirectory>${project.basedir}</formatter.sourceDirectory>
+    <formatter.xml.skip>true</formatter.xml.skip>
+    <impsort.groups>java.,javax.,org.,com.,net.</impsort.groups>
+    <javadoc.doclint>all</javadoc.doclint>
     <maven.compiler.release>11</maven.compiler.release>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-
-    <!-- skip standard site deployment, because site is deployed using github plugin instead -->
-    <maven.site.deploy.skip>true</maven.site.deploy.skip>
-
-    <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <revelc.min-build-jdk>17</revelc.min-build-jdk>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
         <version>2.15.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>5.10.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -335,592 +274,30 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>2.0.10</version>
+      <version>2.0.11</version>
     </dependency>
     <dependency>
       <groupId>org.w3c.css</groupId>
       <artifactId>sac</artifactId>
       <version>1.3</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-core</artifactId>
-      <version>3.9.6</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-model</artifactId>
-      <version>3.9.6</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>3.9.6</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.plugin-tools</groupId>
-      <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.10.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
-
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>com.github.ekryd.sortpom</groupId>
-          <artifactId>sortpom-maven-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <groupId>com.github.github</groupId>
-          <artifactId>site-maven-plugin</artifactId>
-          <version>0.12</version>
-        </plugin>
-        <plugin>
-          <groupId>com.mycila</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <version>4.3</version>
-        </plugin>
-        <plugin>
-          <groupId>net.revelc.code.formatter</groupId>
-          <artifactId>formatter-maven-plugin</artifactId>
-          <version>2.23.0</version>
-          <configuration>
-            <configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</configFile>
-            <configJsFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/javascript.xml</configJsFile>
-            <sourceDirectory>${project.basedir}</sourceDirectory>
-            <excludes>
-              <exclude>**/src/test/resources/**</exclude>
-              <exclude>**/target/**</exclude>
-            </excludes>
-            <lineEnding>AUTO</lineEnding>
-            <skipCssFormatting>true</skipCssFormatting>
-            <skipHtmlFormatting>true</skipHtmlFormatting>
-            <skipJsFormatting>true</skipJsFormatting>
-            <skipJsonFormatting>true</skipJsonFormatting>
-            <skipXmlFormatting>true</skipXmlFormatting>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>net.revelc.code</groupId>
-          <artifactId>impsort-maven-plugin</artifactId>
-          <version>1.9.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.3.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.12.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.6.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.4.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.3.0</version>
-          <configuration>
-            <archive>
-              <manifestEntries>
-                <Sealed>true</Sealed>
-              </manifestEntries>
-            </archive>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.6.3</version>
-          <configuration>
-            <quiet>true</quiet>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.10.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.5.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>3.0.1</version>
-          <configuration>
-            <arguments>-Psonatype-oss-release</arguments>
-            <goals>clean deploy</goals>
-            <localCheckout>true</localCheckout>
-            <pushChanges>false</pushChanges>
-            <useReleaseProfile>false</useReleaseProfile>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M13</version>
-          <dependencies>
-            <!-- Fluido is listed here for version update checking only -->
-            <dependency>
-              <groupId>org.apache.maven.skins</groupId>
-              <artifactId>maven-fluido-skin</artifactId>
-              <version>${maven-fluido-skin.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.2.3</version>
-        </plugin>
-        <plugin>
-          <!-- this is kept to more easily run manual checks for updates -->
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.16.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.gaul</groupId>
-          <artifactId>modernizer-maven-plugin</artifactId>
-          <version>2.7.0</version>
-          <configuration>
-            <javaVersion>${maven.compiler.target}</javaVersion>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
     <plugins>
-      <plugin>
-        <groupId>com.github.ekryd.sortpom</groupId>
-        <artifactId>sortpom-maven-plugin</artifactId>
-        <configuration>
-          <createBackupFile>false</createBackupFile>
-          <expandEmptyElements>false</expandEmptyElements>
-          <keepBlankLines>true</keepBlankLines>
-          <lineSeparator>\n</lineSeparator>
-          <nrOfIndentSpace>2</nrOfIndentSpace>
-          <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-          <sortDependencies>scope,groupId,artifactId</sortDependencies>
-          <sortProperties>true</sortProperties>
-          <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
-          <verifyFail>Stop</verifyFail>
-        </configuration>
-        <executions>
-          <execution>
-            <id>sort-pom</id>
-            <goals>
-              <goal>sort</goal>
-            </goals>
-            <phase>process-sources</phase>
-          </execution>
-          <execution>
-            <id>verify-pom</id>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-            <phase>process-resources</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>create-github-pages</id>
-            <goals>
-              <goal>site</goal>
-            </goals>
-            <phase>site-deploy</phase>
-            <configuration>
-              <server>github</server>
-              <message>Creating site for ${project.version}</message>
-              <noJekyll>true</noJekyll>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>license-headers</id>
-            <goals>
-              <goal>format</goal>
-            </goals>
-            <phase>process-resources</phase>
-            <configuration>
-              <licenseSets>
-                <licenseSet>
-                  <header>${project.basedir}/src/build/license-header.txt</header>
-                  <excludes>
-                    <exclude>**/target/**</exclude>
-                    <exclude>LICENSE</exclude>
-                    <exclude>NOTICE</exclude>
-                    <exclude>.gitattributes</exclude>
-                  </excludes>
-                </licenseSet>
-              </licenseSets>
-              <mapping>
-                <java>SLASHSTAR_STYLE</java>
-                <vm>XML_STYLE</vm>
-              </mapping>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>net.revelc.code.formatter</groupId>
-        <artifactId>formatter-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>format-code</id>
-            <goals>
-              <goal>format</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>net.revelc.code</groupId>
-        <artifactId>impsort-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sort-imports</id>
-            <goals>
-              <goal>sort</goal>
-            </goals>
-            <configuration>
-              <groups>java.,javax.,org.,com.,net.</groups>
-              <removeUnused>true</removeUnused>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>analyze</id>
-            <goals>
-              <goal>analyze-only</goal>
-            </goals>
-            <configuration>
-              <failOnWarning>true</failOnWarning>
-              <ignoredUnusedDeclaredDependencies>
-                <!-- ignore runtime junit test dependency -->
-                <ignored>org.junit.jupiter:junit-jupiter-engine</ignored>
-                <!-- ignore transitive dependency overridden to avoid vulnerability -->
-                <ignored>commons-beanutils:commons-beanutils</ignored>
-                <!-- ignore alignment with jackson annotations -->
-                <ignored>com.fasterxml.jackson.core:jackson-annotations</ignored>
-                <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
-                <ignored>org.slf4j:jcl-over-slf4j</ignored>
-              </ignoredUnusedDeclaredDependencies>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
         <configuration>
-          <rules>
-            <requireMavenVersion>
-              <version>[3.5.0,)</version>
-            </requireMavenVersion>
-            <requireJavaVersion>
-              <version>[17,)</version>
-            </requireJavaVersion>
-          </rules>
+          <ignoredUnusedDeclaredDependencies>
+            <!-- ignore transitive dependency overridden to avoid vulnerability -->
+            <ignore>commons-beanutils:commons-beanutils</ignore>
+            <!-- ignore alignment with jackson annotations -->
+            <ignore>com.fasterxml.jackson.core:jackson-annotations</ignore>
+            <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
+            <ignore>org.slf4j:jcl-over-slf4j</ignore>
+          </ignoredUnusedDeclaredDependencies>
         </configuration>
-        <executions>
-          <execution>
-            <id>enforce-maven</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>enforce-clean</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <phase>pre-clean</phase>
-          </execution>
-          <execution>
-            <id>enforce-site</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <phase>pre-site</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.gaul</groupId>
-        <artifactId>modernizer-maven-plugin</artifactId>
-        <configuration>
-          <javaVersion>${maven.compiler.release}</javaVersion>
-        </configuration>
-        <executions>
-          <execution>
-            <id>modernizer</id>
-            <goals>
-              <goal>modernizer</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-descriptor</id>
-            <goals>
-              <goal>descriptor</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>help-descriptor</id>
-            <goals>
-              <goal>helpmojo</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-report-plugin</artifactId>
-        <version>3.10.2</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
-
-  <profiles>
-    <profile>
-      <id>sonatype-oss-release</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                <phase>verify</phase>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>eclipse</id>
-      <activation>
-        <property>
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <!--This plugin's configuration is used to store Eclipse m2e settings only. It
-                            has no influence on the Maven build itself. -->
-            <plugin>
-              <groupId>org.eclipse.m2e</groupId>
-              <artifactId>lifecycle-mapping</artifactId>
-              <version>1.0.0</version>
-              <configuration>
-                <lifecycleMappingMetadata>
-                  <pluginExecutions>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-plugin-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>helpmojo</goal>
-                          <goal>descriptor</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>enforce</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>com.github.ekryd.sortpom</groupId>
-                        <artifactId>sortpom-maven-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>sort</goal>
-                          <goal>verify</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.gaul</groupId>
-                        <artifactId>modernizer-maven-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>modernizer</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                  </pluginExecutions>
-                </lifecycleMappingMetadata>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>run-it</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-invoker-plugin</artifactId>
-            <version>3.6.0</version>
-            <executions>
-              <execution>
-                <id>integration-test-run</id>
-                <goals>
-                  <goal>install</goal>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <projectsDirectory>${project.basedir}/src/it</projectsDirectory>
-                  <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                  <showVersion>true</showVersion>
-                  <pomIncludes>
-                    <pomInclude>*/pom.xml</pomInclude>
-                  </pomIncludes>
-                  <postBuildHookScript>verify</postBuildHookScript>
-                  <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-                  <settingsFile>${project.basedir}/src/it/settings.xml</settingsFile>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
