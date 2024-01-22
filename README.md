@@ -60,6 +60,7 @@ mvn clean verify
 ## JDK Requirements
 - 2.16.x requires jdk 8 as required by Eclipse binaries
 - 2.17.x and later requires jdk 11 as required by Eclipse binaries
+- 2.24.x and later requires jdk 17 as required by Eclipse binaries
 
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org

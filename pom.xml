@@ -19,7 +19,7 @@
   <parent>
     <groupId>net.revelc.code</groupId>
     <artifactId>revelc</artifactId>
-    <version>4</version>
+    <version>5</version>
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
@@ -72,8 +72,7 @@
     <formatter.xml.skip>true</formatter.xml.skip>
     <impsort.groups>java.,javax.,org.,com.,net.</impsort.groups>
     <javadoc.doclint>all</javadoc.doclint>
-    <maven.compiler.release>11</maven.compiler.release>
-    <revelc.min-build-jdk>17</revelc.min-build-jdk>
+    <maven.compiler.release>17</maven.compiler.release>
   </properties>
   <dependencyManagement>
     <dependencies>
