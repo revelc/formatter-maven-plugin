@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
@@ -38,6 +39,8 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
     /** The formatter. */
     private ObjectMapper formatter;
+
+    private static final Pattern ANY_EOL = Pattern.compile("\\R");
 
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
@@ -79,11 +82,10 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     protected String doFormat(final String code, final LineEnding ending) throws IOException {
         try (StringWriter stringWriter = new StringWriter()) {
             JsonParser jsonParser = this.formatter.createParser(code);
-            // note: line ending set in init for this usecase
             final Iterator<Object> jsonObjectIterator = this.formatter.readValues(jsonParser, Object.class);
             while (jsonObjectIterator.hasNext()) {
                 String jsonString = this.formatter.writer().writeValueAsString(jsonObjectIterator.next());
-                stringWriter.write(jsonString);
+                stringWriter.write(ANY_EOL.matcher(jsonString.strip()).replaceAll(ending.getChars()));
                 stringWriter.write(ending.getChars());
             }
             String formattedCode = stringWriter.toString();
