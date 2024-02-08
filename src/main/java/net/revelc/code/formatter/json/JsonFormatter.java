@@ -79,11 +79,10 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     protected String doFormat(final String code, final LineEnding ending) throws IOException {
         try (StringWriter stringWriter = new StringWriter()) {
             JsonParser jsonParser = this.formatter.createParser(code);
-            // note: line ending set in init for this usecase
             final Iterator<Object> jsonObjectIterator = this.formatter.readValues(jsonParser, Object.class);
             while (jsonObjectIterator.hasNext()) {
                 String jsonString = this.formatter.writer().writeValueAsString(jsonObjectIterator.next());
-                stringWriter.write(jsonString);
+                stringWriter.write(jsonString.strip().replaceAll("\\R", ending.getChars()));
                 stringWriter.write(ending.getChars());
             }
             String formattedCode = stringWriter.toString();

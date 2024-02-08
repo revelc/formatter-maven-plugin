@@ -929,13 +929,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         // Xml Setup
         if (this.configXmlFile != null) {
             final var xmlFormattingOptions = this.getOptionsFromPropertiesFile(this.configXmlFile);
-            xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
+            if (this.lineEnding != LineEnding.KEEP) {
+                xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
+            }
             this.xmlFormatter.init(xmlFormattingOptions, this);
         }
         // Json Setup
         if (this.configJsonFile != null) {
             final var jsonFormattingOptions = this.getOptionsFromPropertiesFile(this.configJsonFile);
-            jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
+            if (this.lineEnding != LineEnding.KEEP) {
+                jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
+            }
             this.jsonFormatter.init(jsonFormattingOptions, this);
         }
         // Css Setup
