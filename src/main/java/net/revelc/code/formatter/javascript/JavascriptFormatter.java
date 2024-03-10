@@ -35,11 +35,15 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     /** The formatter. */
     private CodeFormatter formatter;
 
+    /** The configuration options */
+    private Map<String, String> options;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
+        this.options = options;
     }
 
     @Override
@@ -65,6 +69,15 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     @Override
     public boolean isInitialized() {
         return this.formatter != null;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public Map<String, String> getOptions() {
+        return options;
     }
 
 }

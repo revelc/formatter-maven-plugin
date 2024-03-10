@@ -728,7 +728,22 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var log = this.getLog();
         log.debug("Processing file: " + file);
         final var originalCode = this.readFileAsString(file);
-        final var originalHash = this.sha512hash(originalCode + this.javaFormatter.hashCode());
+
+        // Default to original hashing, adjust based on appropriate file type for inclusion of formatter options
+        var originalHash = this.sha512hash(originalCode);
+        if (file.getName().endsWith(".java")) {
+            originalHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".js")) {
+            originalHash = this.sha512hash(originalCode + this.jsFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".html")) {
+            originalHash = this.sha512hash(originalCode + this.htmlFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".xml")) {
+            originalHash = this.sha512hash(originalCode + this.xmlFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".json")) {
+            originalHash = this.sha512hash(originalCode + this.jsonFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".css")) {
+            originalHash = this.sha512hash(originalCode + this.cssFormatter.getOptions().hashCode());
+        }
 
         final var canonicalPath = file.getCanonicalPath();
         final var path = canonicalPath.substring(basedirPath.length());
@@ -816,7 +831,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (Result.SKIPPED.equals(result)) {
             formattedHash = originalHash;
         } else {
-            formattedHash = this.sha512hash(formattedCode + this.javaFormatter.hashCode());
+            // Default to formatted hashing, adjust based on appropriate file type for inclusion of formatter options
+            formattedHash = this.sha512hash(originalCode);
+            if (file.getName().endsWith(".java")) {
+                formattedHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
+            } else if (file.getName().endsWith(".js")) {
+                formattedHash = this.sha512hash(originalCode + this.jsFormatter.getOptions().hashCode());
+            } else if (file.getName().endsWith(".html")) {
+                formattedHash = this.sha512hash(originalCode + this.htmlFormatter.getOptions().hashCode());
+            } else if (file.getName().endsWith(".xml")) {
+                formattedHash = this.sha512hash(originalCode + this.xmlFormatter.getOptions().hashCode());
+            } else if (file.getName().endsWith(".json")) {
+                formattedHash = this.sha512hash(originalCode + this.jsonFormatter.getOptions().hashCode());
+            } else if (file.getName().endsWith(".css")) {
+                formattedHash = this.sha512hash(originalCode + this.cssFormatter.getOptions().hashCode());
+            }
         }
         hashCache.setProperty(path, formattedHash);
         this.hashCacheWritten = true;

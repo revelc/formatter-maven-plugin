@@ -42,6 +42,9 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
     private static final Pattern ANY_EOL = Pattern.compile("\\R");
 
+    /** The configuration options */
+    public Map<String, String> options;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
@@ -76,6 +79,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         this.formatter.setDefaultPrettyPrinter(printer);
         this.formatter.enable(SerializationFeature.INDENT_OUTPUT);
         this.formatter.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, useAlphabeticalOrder);
+        this.options = options;
     }
 
     @Override
@@ -96,6 +100,15 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     @Override
     public boolean isInitialized() {
         return this.formatter != null;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public Map<String, String> getOptions() {
+        return options;
     }
 
 }

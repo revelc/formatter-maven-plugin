@@ -17,7 +17,6 @@ package net.revelc.code.formatter.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.ToolFactory;
@@ -47,22 +46,6 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
 
     /** The configuration options */
     private Map<String, String> options;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        JavaFormatter that = (JavaFormatter) o;
-        return Objects.equals(formatter, that.formatter) && Objects.equals(exclusionPattern, that.exclusionPattern)
-                && Objects.equals(options, that.options);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(formatter, exclusionPattern, options);
-    }
 
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
@@ -138,6 +121,15 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
         }
         regions.add(new Region(start, code.length() - start));
         return regions.toArray(new IRegion[0]);
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public Map<String, String> getOptions() {
+        return options;
     }
 
 }

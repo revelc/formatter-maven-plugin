@@ -31,6 +31,9 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
     /** The formatter. */
     private XmlDocumentFormatter formatter;
 
+    /** The configuration options */
+    private Map<String, String> options;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
@@ -45,6 +48,7 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
         prefs.setDeleteBlankLines(Boolean.parseBoolean(options.getOrDefault("deleteBlankLines", "false")));
 
         this.formatter = new XmlDocumentFormatter(options.getOrDefault("lineending", System.lineSeparator()), prefs);
+        this.options = options;
     }
 
     @Override
@@ -61,6 +65,15 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
     @Override
     public boolean isInitialized() {
         return this.formatter != null;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public Map<String, String> getOptions() {
+        return options;
     }
 
 }
