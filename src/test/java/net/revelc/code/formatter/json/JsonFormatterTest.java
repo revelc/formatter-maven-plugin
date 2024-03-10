@@ -76,8 +76,8 @@ class JsonFormatterTest extends AbstractFormatterTest {
         // The option will not be available inside json formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "0ca303fef968b92f3f798ff1615cd6c501ea3b754fd18f54932fd07c1dce86d2df9845817b8f521a2254c98c6e0d35b0bced3ea12113e961d3789111868897d7"
-                : "5d433f2700a2fdabfabdb309d5f807df91ad86f7a94658d4a3f2f3699ae78b2efb1de451c141f61905f1c814cd647f312ae9651454e65d124510be0573082e86";
+                ? "3886d1b96fa1b887e48ec7317c7e7aa034b30b902e6697a646401e8c04d9301e08621dd8a4c7830f8a3a51977592574020e489a5de0d8f0b799f5c412cd57bd9"
+                : "0e37513ff8430246ff75edb33b61b3427546a84ef4eb83eaf2214249572b1f91305a2d4b3bd748354d74f9baf638d8ac8c3d7ee1cac2fb3aee55c19a040aea23";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(jsonFormattingOptions, new JsonFormatter(), "someFile.json", expectedHash, lineEnding);
     }
