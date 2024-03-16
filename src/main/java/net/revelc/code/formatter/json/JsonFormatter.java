@@ -43,7 +43,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     private static final Pattern ANY_EOL = Pattern.compile("\\R");
 
     /** The configuration options */
-    public Map<String, String> options;
+    private Map<String, String> options;
 
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
@@ -53,7 +53,6 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
         final var lineEnding = options.getOrDefault("lineending", System.lineSeparator());
         final var spaceBeforeSeparator = Boolean.parseBoolean(options.getOrDefault("spaceBeforeSeparator", "true"));
         final var useAlphabeticalOrder = Boolean.parseBoolean(options.getOrDefault("alphabeticalOrder", "false"));
-        this.formatter = new ObjectMapper();
 
         // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
         final DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(" ".repeat(indent), lineEnding);
@@ -76,6 +75,8 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
         printer.indentObjectsWith(indenter);
         printer.indentArraysWith(indenter);
+
+        this.formatter = new ObjectMapper();
         this.formatter.setDefaultPrettyPrinter(printer);
         this.formatter.enable(SerializationFeature.INDENT_OUTPUT);
         this.formatter.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, useAlphabeticalOrder);
