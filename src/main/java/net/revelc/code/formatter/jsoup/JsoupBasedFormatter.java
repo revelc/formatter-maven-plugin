@@ -47,6 +47,9 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     /** The formatter. */
     private OutputSettings formatter;
 
+    /** The configuration options */
+    private Map<String, String> options;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
@@ -59,6 +62,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         this.formatter.outline(Boolean.parseBoolean(options.getOrDefault("outlineMode", Boolean.TRUE.toString())));
         this.formatter.prettyPrint(Boolean.parseBoolean(options.getOrDefault("pretty", Boolean.TRUE.toString())));
         this.formatter.syntax(Syntax.valueOf(options.getOrDefault("syntax", Syntax.html.name())));
+        this.options = options;
     }
 
     @Override
@@ -126,6 +130,15 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
     @Override
     public boolean isInitialized() {
         return this.formatter != null;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public Map<String, String> getOptions() {
+        return options;
     }
 
 }

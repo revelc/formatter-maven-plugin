@@ -38,6 +38,9 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     /** The formatter. */
     private CSSFormat formatter;
 
+    /** The configuration options */
+    private Map<String, String> options;
+
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
@@ -48,6 +51,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
                 .parseBoolean(options.getOrDefault("useSourceStringValues", Boolean.FALSE.toString()));
         this.formatter = new CSSFormat().setPropertiesInSeparateLines(indent).setRgbAsHex(rgbAsHex)
                 .setUseSourceStringValues(useSourceStringValues);
+        this.options = options;
     }
 
     @Override
@@ -76,6 +80,15 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     @Override
     public boolean isInitialized() {
         return this.formatter != null;
+    }
+
+    /**
+     * Gets the options.
+     *
+     * @return the options
+     */
+    public Map<String, String> getOptions() {
+        return options;
     }
 
 }
