@@ -43,7 +43,7 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     private static final Pattern ANY_EOL = Pattern.compile("\\R");
 
     /** The configuration options */
-    public Map<String, String> options;
+    private Map<String, String> options;
 
     @Override
     public void init(final Map<String, String> options, final ConfigurationSource cfg) {
