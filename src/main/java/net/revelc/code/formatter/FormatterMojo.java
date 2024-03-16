@@ -17,18 +17,17 @@ package net.revelc.code.formatter;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -604,42 +603,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *            the props
      */
     private void storeFileHashCache(final Properties props) {
-        final var cacheFile = new File(this.cachedir, FormatterMojo.CACHE_PROPERTIES_FILENAME);
-        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(cacheFile))) {
-            this.getLog().debug("Storing property file cache");
-            props.store(out, null);
+        final var cacheFile = Path.of(this.cachedir.getAbsolutePath(), CACHE_PROPERTIES_FILENAME);
+        try (StringWriter sw = new StringWriter()) {
+            props.store(sw, null);
+            getLog().debug("Writing sorted files to cache without timestamp:\n\n" + props);
+            Files.write(cacheFile, (Iterable<String>) sw.toString().lines().skip(1).sorted()::iterator,
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (final IOException e) {
             this.getLog().warn("Cannot store file hash cache properties file", e);
             return;
-        }
-
-        // Run update on cache file to make sure its sorted and we remove the property timestamp
-        final List<String> existing;
-        try {
-            // Read in existing file
-            this.getLog().debug("Reading property file cache");
-            existing = Files.readAllLines(cacheFile.toPath());
-        } catch (final IOException e) {
-            this.getLog().warn("Cannot read the hash cache properties file", e);
-            return;
-        }
-
-        // Sort the properties
-        this.getLog().debug("Sorting property file cache");
-        Collections.sort(existing);
-
-        // Remove properties timestamp
-        this.getLog().debug("Removing timestamp from property file cache");
-        existing.remove(0);
-
-        // Write file back
-        try {
-            this.getLog().debug("Writing sorted cache file with no timestamp");
-            this.getLog().debug("Files in cache are:\n\n" + existing);
-            Files.deleteIfExists(cacheFile.toPath());
-            Files.write(cacheFile.toPath(), existing, StandardOpenOption.CREATE);
-        } catch (IOException e) {
-            this.getLog().warn("Cannot write the hash cache properties file", e);
         }
     }
 
