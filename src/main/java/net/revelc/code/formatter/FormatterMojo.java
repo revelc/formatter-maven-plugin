@@ -803,23 +803,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         String formattedHash;
         if (Result.SKIPPED.equals(result)) {
             formattedHash = originalHash;
+        // Default to formatted hashing for unknown type otherwise include formatter options
+        } else if (file.getName().endsWith(".java")) {
+            formattedHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".js")) {
+            formattedHash = this.sha512hash(originalCode + this.jsFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".html")) {
+            formattedHash = this.sha512hash(originalCode + this.htmlFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".xml")) {
+            formattedHash = this.sha512hash(originalCode + this.xmlFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".json")) {
+            formattedHash = this.sha512hash(originalCode + this.jsonFormatter.getOptions().hashCode());
+        } else if (file.getName().endsWith(".css")) {
+            formattedHash = this.sha512hash(originalCode + this.cssFormatter.getOptions().hashCode());
         } else {
-            // Default to formatted hashing for unknown type otherwise include formatter options
-            if (file.getName().endsWith(".java")) {
-                formattedHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
-            } else if (file.getName().endsWith(".js")) {
-                formattedHash = this.sha512hash(originalCode + this.jsFormatter.getOptions().hashCode());
-            } else if (file.getName().endsWith(".html")) {
-                formattedHash = this.sha512hash(originalCode + this.htmlFormatter.getOptions().hashCode());
-            } else if (file.getName().endsWith(".xml")) {
-                formattedHash = this.sha512hash(originalCode + this.xmlFormatter.getOptions().hashCode());
-            } else if (file.getName().endsWith(".json")) {
-                formattedHash = this.sha512hash(originalCode + this.jsonFormatter.getOptions().hashCode());
-            } else if (file.getName().endsWith(".css")) {
-                formattedHash = this.sha512hash(originalCode + this.cssFormatter.getOptions().hashCode());
-            } else {
-                formattedHash = this.sha512hash(originalCode);
-            }
+            formattedHash = this.sha512hash(originalCode);
         }
         hashCache.setProperty(path, formattedHash);
         this.hashCacheWritten = true;
