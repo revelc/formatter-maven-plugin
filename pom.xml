@@ -197,10 +197,6 @@
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
     </dependency>
     <dependency>
@@ -302,8 +298,6 @@
           <ignoredUnusedDeclaredDependencies>
             <!-- ignore transitive dependency overridden to avoid vulnerability -->
             <ignore>commons-beanutils:commons-beanutils</ignore>
-            <!-- ignore alignment with jackson annotations -->
-            <ignore>com.fasterxml.jackson.core:jackson-annotations</ignore>
             <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
             <ignore>org.slf4j:jcl-over-slf4j</ignore>
             <!-- ignore alignment with plexus-xml as required to ensure plexus-utils uses maven 3 -->
