@@ -579,7 +579,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.scan();
 
         return Stream.of(ds.getIncludedFiles()).map(filename -> new File(newBasedir, filename))
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     /**
