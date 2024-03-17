@@ -3,11 +3,7 @@
 
 name: mvn verify
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
