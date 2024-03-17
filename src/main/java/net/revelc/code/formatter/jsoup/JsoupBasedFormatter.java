@@ -84,7 +84,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         // XXX: Jsoup results in mixed line ending content needing normalized until jsoup
         // provides line ending support. Internally Jsoup simply uses new line only and
         // mixture comes from lines that did not require additional formatting.
-        String[] lines = formattedCode.split("\\r?\\n");
+        var lines = formattedCode.split("\\r?\\n");
         formattedCode = String.join(ending.getChars(), lines);
 
         // XXX: Fixing jsoup counter issue when more than one character indentation until jsoup fixes bug.
