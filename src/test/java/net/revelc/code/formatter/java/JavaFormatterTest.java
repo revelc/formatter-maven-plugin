@@ -72,11 +72,11 @@ class JavaFormatterTest extends AbstractFormatterTest {
     }
 
     /**
-     * Test is intialized.
+     * Test is initialized.
      *
      */
     @Test
-    void testIsIntialized() {
+    void testIsInitialized() {
         final var javaFormatter = new JavaFormatter();
         Assertions.assertFalse(javaFormatter.isInitialized());
         javaFormatter.init(Collections.emptyMap(),

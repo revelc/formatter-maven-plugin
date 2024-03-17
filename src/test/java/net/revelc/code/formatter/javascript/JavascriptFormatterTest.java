@@ -41,11 +41,11 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
     }
 
     /**
-     * Test is intialized.
+     * Test is initialized.
      *
      */
     @Test
-    void testIsIntialized() {
+    void testIsInitialized() {
         final var jsFormatter = new JavascriptFormatter();
         Assertions.assertFalse(jsFormatter.isInitialized());
         jsFormatter.init(Collections.emptyMap(),

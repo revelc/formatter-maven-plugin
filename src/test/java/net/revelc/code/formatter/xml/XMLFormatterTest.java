@@ -44,11 +44,11 @@ class XMLFormatterTest extends AbstractFormatterTest {
     }
 
     /**
-     * Test is intialized.
+     * Test is initialized.
      *
      */
     @Test
-    void testIsIntialized() {
+    void testIsInitialized() {
         final var xmlFormatter = new XMLFormatter();
         Assertions.assertFalse(xmlFormatter.isInitialized());
         xmlFormatter.init(Collections.emptyMap(),

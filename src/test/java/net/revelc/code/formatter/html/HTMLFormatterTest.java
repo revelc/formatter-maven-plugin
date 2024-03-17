@@ -42,11 +42,11 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     }
 
     /**
-     * Test is intialized.
+     * Test is initialized.
      *
      */
     @Test
-    void testIsIntialized() {
+    void testIsInitialized() {
         final var htmlFormatter = new HTMLFormatter();
         Assertions.assertFalse(htmlFormatter.isInitialized());
         htmlFormatter.init(Collections.emptyMap(),
