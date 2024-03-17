@@ -261,6 +261,11 @@
       <version>4.0.0</version>
     </dependency>
     <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-xml</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
       <!-- bump this and run src/build/find-transitive-eclipse-updates.sh to update eclipse deps -->
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
@@ -301,6 +306,8 @@
             <ignore>com.fasterxml.jackson.core:jackson-annotations</ignore>
             <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
             <ignore>org.slf4j:jcl-over-slf4j</ignore>
+            <!-- ignore alignment with plexus-xml as required to ensure plexus-utils uses maven 3 -->
+            <ignore>org.codehaus.plexus:plexus-xml</ignore>
           </ignoredUnusedDeclaredDependencies>
         </configuration>
       </plugin>
