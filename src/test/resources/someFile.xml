@@ -17,5 +17,9 @@
 <to>Tove</to>
 <from>Jani</from>
 <heading>Reminder</heading>
+<!--context-param>
+                                        <param-name>resteasy.document.secure.disableDTDs</param-name>
+                                        <param-value></param-value>
+                                    </context-param-->
 <body attr1="val1" attr2="val2" attr3="val3" attr4="a very very very very very very very very very very vey long val">Don't forget me this weekend!</body>
 </note>
