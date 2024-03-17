@@ -47,11 +47,10 @@ public class ConfigReader {
         digester.addRuleSet(new RuleSet());
 
         final var result = digester.parse(input);
-        if (!(result instanceof Profiles)) {
+        if (!(result instanceof final Profiles profiles)) {
             throw new ConfigReadException("No profiles found in config file");
         }
 
-        final var profiles = (Profiles) result;
         final var list = profiles.getProfiles();
         if (list.isEmpty()) {
             throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
