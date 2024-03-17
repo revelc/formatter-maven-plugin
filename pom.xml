@@ -213,12 +213,11 @@
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.9.4</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.3.0</version>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
@@ -239,12 +238,6 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-digester3</artifactId>
       <version>3.2</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
@@ -273,11 +266,6 @@
       <version>1.17.2</version>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <version>1.7.36</version>
-    </dependency>
-    <dependency>
       <groupId>org.w3c.css</groupId>
       <artifactId>sac</artifactId>
       <version>1.3</version>
@@ -298,8 +286,8 @@
           <ignoredUnusedDeclaredDependencies>
             <!-- ignore transitive dependency overridden to avoid vulnerability -->
             <ignore>commons-beanutils:commons-beanutils</ignore>
-            <!-- ignore alignment with jcl-over-slf4j as we intentially dropped commons logging -->
-            <ignore>org.slf4j:jcl-over-slf4j</ignore>
+            <!-- ignore alignment with commons-logging to support slf4j -->
+            <ignore>commons-logging:commons-logging</ignore>
             <!-- ignore alignment with plexus-xml as required to ensure plexus-utils uses maven 3 -->
             <ignore>org.codehaus.plexus:plexus-xml</ignore>
           </ignoredUnusedDeclaredDependencies>
