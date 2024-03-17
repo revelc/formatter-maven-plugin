@@ -20,6 +20,13 @@ package net.revelc.code.formatter;
 public final class TimeUtil {
 
     /**
+     * Prevents instantiation a new time util as entirely static.
+     */
+    private TimeUtil() {
+        // Do not allow instantiation
+    }
+
+    /**
      * Prints the duration in a human-readable format as X minutes, Y seconds etc.
      *
      * @param duration
