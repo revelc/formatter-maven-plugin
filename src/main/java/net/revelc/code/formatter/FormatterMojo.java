@@ -611,7 +611,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (final IOException e) {
             this.getLog().warn("Cannot store file hash cache properties file", e);
-            return;
         }
     }
 
