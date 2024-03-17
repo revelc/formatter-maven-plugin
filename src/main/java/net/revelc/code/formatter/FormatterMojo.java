@@ -578,8 +578,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.setFollowSymlinks(false);
         ds.scan();
 
-        return Stream.of(ds.getIncludedFiles()).map(filename -> new File(newBasedir, filename))
-                .toList();
+        return Stream.of(ds.getIncludedFiles()).map(filename -> new File(newBasedir, filename)).toList();
     }
 
     /**
@@ -803,7 +802,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         String formattedHash;
         if (Result.SKIPPED.equals(result)) {
             formattedHash = originalHash;
-        // Default to formatted hashing for unknown type otherwise include formatter options
+            // Default to formatted hashing for unknown type otherwise include formatter options
         } else if (file.getName().endsWith(".java")) {
             formattedHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
         } else if (file.getName().endsWith(".js")) {
