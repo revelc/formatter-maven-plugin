@@ -411,7 +411,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var startClock = System.nanoTime();
 
         if (StringUtils.isEmpty(this.encoding)) {
-            this.encoding = System.getProperty("file.encoding");
+            this.encoding = Charset.defaultCharset().displayName();
             this.getLog().warn("File encoding has not been set, using platform encoding (" + this.encoding
                     + ") to format source files, i.e. build is platform dependent!");
         } else {
@@ -491,12 +491,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                     numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
                     rc.readOnlyCount);
 
-            if (rc.failCount > 0)
+            if (rc.failCount > 0) {
                 this.getLog().error(results);
-            else if (rc.readOnlyCount > 0)
+            } else if (rc.readOnlyCount > 0) {
                 this.getLog().warn(results);
-            else
+            } else {
                 this.getLog().info(results);
+            }
         }
     }
 
