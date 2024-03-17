@@ -19,18 +19,19 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
-import org.codehaus.plexus.util.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
 import com.google.common.hash.Hashing;
-import com.google.common.io.Files;
 
 /**
  * The Class AbstractFormatterTest.
@@ -216,18 +217,19 @@ public abstract class AbstractFormatterTest {
         final var sourceFile = new File(testOutputDir, fileUnderTest);
 
         // Copy file to new location
-        Files.copy(originalSourceFile, sourceFile);
+        Files.copy(originalSourceFile.toPath(), sourceFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         // Read file to be formatted
-        final var originalCode = FileUtils.fileRead(sourceFile, StandardCharsets.UTF_8.name());
+        final var originalCode = new String(Files.readAllBytes(sourceFile.toPath()), StandardCharsets.UTF_8);
 
         // Format the file and make sure formatting worked
         formatter.init(options, new TestConfigurationSource(testOutputDir));
         final var formattedCode = formatter.formatFile(sourceFile, originalCode, lineEnding);
         Assertions.assertNotNull(formattedCode);
 
-        // Write the file we formatte4d
-        FileUtils.fileWrite(sourceFile, StandardCharsets.UTF_8.name(), formattedCode);
+        // Write the file we formatted
+        Files.write(sourceFile.toPath(), formattedCode.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING);
 
         // Run assertions on formatted file, if not valid, reject and tester can look at resulting files
         // to debug issue.
@@ -243,7 +245,7 @@ public abstract class AbstractFormatterTest {
         }
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
-        final var sha512 = Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
+        final var sha512 = com.google.common.io.Files.asByteSource(sourceFile).hash(Hashing.sha512()).asBytes();
         final var sb = new StringBuilder();
         for (final byte element : sha512) {
             sb.append(Integer.toString((element & 0xff) + 0x100, 16).substring(1));
