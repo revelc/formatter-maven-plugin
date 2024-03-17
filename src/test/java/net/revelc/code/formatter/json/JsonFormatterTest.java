@@ -83,12 +83,12 @@ class JsonFormatterTest extends AbstractFormatterTest {
     }
 
     @Test
-    public void testMultipleJson() throws IOException {
+    void testMultipleJson() throws IOException {
         testFormattingObjects("/multiple-json");
     }
 
     @Test
-    public void testNormalJson() throws IOException {
+    void testNormalJson() throws IOException {
         testFormattingObjects("/normal-json");
     }
 

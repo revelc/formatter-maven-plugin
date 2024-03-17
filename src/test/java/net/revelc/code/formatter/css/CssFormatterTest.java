@@ -42,11 +42,11 @@ class CssFormatterTest extends AbstractFormatterTest {
     }
 
     /**
-     * Test is intialized.
+     * Test is initialized.
      *
      */
     @Test
-    void testIsIntialized() {
+    void testIsInitialized() {
         final var cssFormatter = new CssFormatter();
         Assertions.assertFalse(cssFormatter.isInitialized());
         cssFormatter.init(Collections.emptyMap(),
