@@ -74,7 +74,7 @@ public abstract class JsoupBasedFormatter extends AbstractCacheableFormatter imp
         document = Jsoup.parse(code, "", Parser.htmlParser());
         document.outputSettings(this.formatter);
 
-        // Perform Jsoup Pretty Format which does result in inconsistences handled after
+        // Perform Jsoup Pretty Format which does result in inconsistencies handled after
         var formattedCode = document.outerHtml();
 
         // XXX: Trim trailing spaces inserted by jsoup. We do fix this during a full run

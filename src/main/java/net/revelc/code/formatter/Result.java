@@ -21,8 +21,11 @@ public enum Result {
 
     /** The skipped. */
     SKIPPED,
+
     /** The success. */
     SUCCESS,
+
     /** The fail. */
     FAIL
+
 }
