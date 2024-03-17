@@ -62,6 +62,7 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
         final var sheet = (CSSStyleSheetImpl) parser.parseStyleSheet(source, null, null);
         var formattedCode = sheet.getCssText(this.formatter);
 
+        // TODO Remove this as IE is long dead and no longer supported.
         // Patch converted 'tab' back to '\9' for IE 7,8, and 9 hack. Cssparser switches it to 'tab'.
         formattedCode = formattedCode.replace("\t;", "\\9;");
 

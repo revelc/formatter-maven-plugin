@@ -456,47 +456,49 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var msg = "Number of files to be formatted: " + numberOfFiles;
         log.debug(msg);
 
-        if (numberOfFiles > 0) {
-            this.createCodeFormatter();
-            final var rc = new ResultCollector();
-            final var hashCache = this.readFileHashCacheFile();
+        if (numberOfFiles == 0) {
+            return;
+        }
 
-            final var basedirPath = this.getBasedirPath();
-            for (final File file : files) {
-                if (file.exists()) {
-                    if (file.canWrite()) {
-                        this.formatFile(file, rc, hashCache, basedirPath);
-                    } else {
-                        rc.readOnlyCount++;
-                        this.getLog().warn("File " + file + " is read only");
-                    }
+        this.createCodeFormatter();
+        final var rc = new ResultCollector();
+        final var hashCache = this.readFileHashCacheFile();
+
+        final var basedirPath = this.getBasedirPath();
+        for (final File file : files) {
+            if (file.exists()) {
+                if (file.canWrite()) {
+                    this.formatFile(file, rc, hashCache, basedirPath);
                 } else {
-                    rc.failCount++;
-                    this.getLog().error("File " + file + " does not exist");
+                    rc.readOnlyCount++;
+                    this.getLog().warn("File " + file + " is read only");
                 }
-            }
-
-            // Only store the cache if it changed during processing to avoid java properties timestamp writing for
-            // those that want to save the cache
-            if (this.hashCacheWritten) {
-                this.storeFileHashCache(hashCache);
-            }
-
-            final var duration = NANOSECONDS.toMillis(System.nanoTime() - startClock);
-            final var elapsed = TimeUtil.printDuration(duration);
-
-            final var results = String.format(
-                    "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
-                    numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
-                    rc.readOnlyCount);
-
-            if (rc.failCount > 0) {
-                this.getLog().error(results);
-            } else if (rc.readOnlyCount > 0) {
-                this.getLog().warn(results);
             } else {
-                this.getLog().info(results);
+                rc.failCount++;
+                this.getLog().error("File " + file + " does not exist");
             }
+        }
+
+        // Only store the cache if it changed during processing to avoid java properties timestamp writing for
+        // those that want to save the cache
+        if (this.hashCacheWritten) {
+            this.storeFileHashCache(hashCache);
+        }
+
+        final var duration = NANOSECONDS.toMillis(System.nanoTime() - startClock);
+        final var elapsed = TimeUtil.printDuration(duration);
+
+        final var results = String.format(
+                "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
+                numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
+                rc.readOnlyCount);
+
+        if (rc.failCount > 0) {
+            this.getLog().error(results);
+        } else if (rc.readOnlyCount > 0) {
+            this.getLog().warn(results);
+        } else {
+            this.getLog().info(results);
         }
     }
 

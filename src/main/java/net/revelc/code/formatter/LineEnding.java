@@ -21,14 +21,19 @@ public enum LineEnding {
 
     /** The auto. */
     AUTO(System.lineSeparator()),
+
     /** The keep. */
     KEEP(null),
+
     /** The lf. */
     LF("\n"),
+
     /** The crlf. */
     CRLF("\r\n"),
+
     /** The cr. */
     CR("\r"),
+
     /** The unknown. */
     UNKNOWN(null);
 
