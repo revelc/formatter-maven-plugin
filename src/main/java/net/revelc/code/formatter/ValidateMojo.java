@@ -75,7 +75,7 @@ public class ValidateMojo extends FormatterMojo {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
         if (rc.successCount != 0) {
-            String errorMessage = String.format(
+            var errorMessage = String.format(
                     "File '%s' has not been previously formatted. Please format file (for example by invoking `%s`) and commit before running validation!",
                     file, formatCommand());
             throw new MojoFailureException(errorMessage);
@@ -86,11 +86,10 @@ public class ValidateMojo extends FormatterMojo {
     }
 
     private String formatCommand() {
-        String mojoInvocation = String.format("%s:%s:%s:%s", mojoGroupId, mojoArtifactId, mojoVersion,
-                FORMAT_MOJO_NAME);
-        boolean isMultiModule = mavenSession.getAllProjects().size() > 1;
-        Path moduleDir = Path.of(".").toAbsolutePath().relativize(mavenProject.getBasedir().toPath().toAbsolutePath());
-        String specifyModule = isMultiModule ? String.format("-f %s", moduleDir) : "";
+        var mojoInvocation = String.format("%s:%s:%s:%s", mojoGroupId, mojoArtifactId, mojoVersion, FORMAT_MOJO_NAME);
+        var isMultiModule = mavenSession.getAllProjects().size() > 1;
+        var moduleDir = Path.of(".").toAbsolutePath().relativize(mavenProject.getBasedir().toPath().toAbsolutePath());
+        var specifyModule = isMultiModule ? String.format("-f %s", moduleDir) : "";
         return String.format("mvn %s %s", specifyModule, mojoInvocation).replace("  ", " ");
     }
 

@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.Separators;
@@ -85,15 +84,15 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
     @Override
     protected String doFormat(final String code, final LineEnding ending) throws IOException {
-        try (StringWriter stringWriter = new StringWriter()) {
-            JsonParser jsonParser = this.formatter.createParser(code);
+        try (var stringWriter = new StringWriter()) {
+            var jsonParser = this.formatter.createParser(code);
             final Iterator<Object> jsonObjectIterator = this.formatter.readValues(jsonParser, Object.class);
             while (jsonObjectIterator.hasNext()) {
-                String jsonString = this.formatter.writer().writeValueAsString(jsonObjectIterator.next());
+                var jsonString = this.formatter.writer().writeValueAsString(jsonObjectIterator.next());
                 stringWriter.write(ANY_EOL.matcher(jsonString.strip()).replaceAll(ending.getChars()));
                 stringWriter.write(ending.getChars());
             }
-            String formattedCode = stringWriter.toString();
+            var formattedCode = stringWriter.toString();
             return code.equals(formattedCode) ? null : formattedCode;
         }
     }

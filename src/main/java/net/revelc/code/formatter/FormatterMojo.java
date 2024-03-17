@@ -44,7 +44,6 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -486,7 +485,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             final var duration = NANOSECONDS.toMillis(System.nanoTime() - startClock);
             final var elapsed = TimeUtil.printDuration(duration);
 
-            final String results = String.format(
+            final var results = String.format(
                     "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
                     numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
                     rc.readOnlyCount);
@@ -542,7 +541,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private List<File> addCollectionFiles(final Resource resource) {
         final var newBasedir = new File(resource.getDirectory());
         if (!newBasedir.exists()) {
-            final Log log = getLog();
+            final var log = getLog();
             if (log.isDebugEnabled()) {
                 log.debug(String.format("Skipping non-existing directory %s", newBasedir));
             }
@@ -605,7 +604,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private void storeFileHashCache(final Properties props) {
         final var cacheFile = Path.of(this.cachedir.getAbsolutePath(), CACHE_PROPERTIES_FILENAME);
-        try (StringWriter sw = new StringWriter()) {
+        try (var sw = new StringWriter()) {
             props.store(sw, null);
             getLog().debug("Writing sorted files to cache without timestamp:\n\n" + props);
             Files.write(cacheFile, (Iterable<String>) sw.toString().lines().skip(1).sorted()::iterator,
