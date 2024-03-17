@@ -9,8 +9,8 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        java: [17]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-14]
+        java: [17, 21]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java }}
-        distribution: zulu
+        distribution: temurin
         cache: 'maven'
     - name: Build with Maven
       run: mvn -B -V -e "-Dstyle.color=always" verify -DskipFormat -DverifyFormat
