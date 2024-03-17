@@ -15,13 +15,14 @@
 package net.revelc.code.formatter.json;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import org.codehaus.plexus.util.IOUtil;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -96,10 +97,10 @@ class JsonFormatterTest extends AbstractFormatterTest {
         String originalJson;
         String expectedFormattedJson;
         try (var in = getClass().getResourceAsStream(testpath + "/before.json")) {
-            originalJson = IOUtil.toString(Objects.requireNonNull(in), "UTF-8");
+            originalJson = IOUtils.toString(Objects.requireNonNull(in), StandardCharsets.UTF_8);
         }
         try (var in = getClass().getResourceAsStream(testpath + "/after.json")) {
-            expectedFormattedJson = IOUtil.toString(Objects.requireNonNull(in), "UTF-8");
+            expectedFormattedJson = IOUtils.toString(Objects.requireNonNull(in), StandardCharsets.UTF_8);
         }
         for (LineEnding currentTestedLineEnding : EnumSet.of(LineEnding.CRLF, LineEnding.LF, LineEnding.CR)) {
             final var jsonFormatter = new JsonFormatter();
