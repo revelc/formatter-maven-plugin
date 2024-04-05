@@ -15,14 +15,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK
+    - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: 'maven'
+    - name: Download Maven Wrapper
+      run: mvn wrapper:wrapper "-Dmaven=3.9.6"
     - name: Build with Maven
-      run: mvn -B -V -e "-Dstyle.color=always" verify -DskipFormat -DverifyFormat
+      run: ./mvnw -B -V -e "-Dstyle.color=always" verify -DskipFormat -DverifyFormat
       env:
         MAVEN_OPTS: -Djansi.force=true
     - name: View IT build log on failure
