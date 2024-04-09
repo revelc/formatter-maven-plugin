@@ -222,7 +222,7 @@
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>jsdt-core</artifactId>
-      <version>3.4.2</version>
+      <version>3.4.4</version>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
