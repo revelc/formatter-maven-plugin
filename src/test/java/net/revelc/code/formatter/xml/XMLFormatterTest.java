@@ -37,8 +37,8 @@ class XMLFormatterTest extends AbstractFormatterTest {
         // The option will not be available inside xml formatter init so it will use whatever the system
         // default is regardless of requesting it to be CRLF later which is ignored.
         final var expectedHash = LineEnding.LF.isSystem()
-                ? "c3b2ca12cf14ad635031fb19d7418631921cdb61b4ffab06c647f0e7ba01e08c3e1e4a254a58dd4d8b385c21a084e16678f1e1f5787cec622c6b5dcdfad1b99a"
-                : "dd3b72b53916bf7a9c108b511905404b8c358e1b570412f96eecb7544666efd0ae56fe8143bec38a1ea7edb5f0688723e6421771789bef352633411b0749e83c";
+                ? "a9c0300d0ab7290d26099d4fbdf353eadbed9cd0a78b3ec66985b6a7b710138f217578a1185d05d7ae80b84761a000113134bc7e5339e80ff1a17a468a38c1a5"
+                : "281854ee2ca10debb947f9b35f3acf769a8f89a59c199fbff041a780c912c12ba6215130943439961d3aefbdf84008b7b1f5b11e4c4807ee2f48d0b879c038ee";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
         this.twoPassTest(Collections.emptyMap(), new XMLFormatter(), "someFile.xml", expectedHash, lineEnding);
     }
