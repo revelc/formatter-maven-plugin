@@ -252,12 +252,12 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>4.0.0</version>
+      <version>4.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-xml</artifactId>
-      <version>3.0.0</version>
+      <version>4.0.3</version>
     </dependency>
     <dependency>
       <!-- bump this and run src/build/find-transitive-eclipse-updates.sh to update eclipse deps -->
@@ -278,13 +278,13 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.16.0</version>
+      <version>2.16.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.36</version>
+      <version>2.0.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
