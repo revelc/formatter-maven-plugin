@@ -80,7 +80,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>2.17.0</version>
+        <version>2.17.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -206,7 +206,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.1.0-jre</version>
+      <version>33.2.0-jre</version>
     </dependency>
     <dependency>
       <!-- override vulnerable transitive version from commons-digester3 -->
@@ -257,7 +257,7 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-xml</artifactId>
-      <version>3.0.0</version>
+      <version>4.0.3</version>
     </dependency>
     <dependency>
       <!-- bump this and run src/build/find-transitive-eclipse-updates.sh to update eclipse deps -->
@@ -284,7 +284,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.36</version>
+      <version>2.0.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
