@@ -24,7 +24,7 @@
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
-  <version>2.24.0-SNAPSHOT</version>
+  <version>2.24.0</version>
   <packaging>maven-plugin</packaging>
   <name>formatter-maven-plugin</name>
   <description>Maven plugin for formatting source code</description>
@@ -59,7 +59,7 @@
     <maven>3.6.3</maven>
   </prerequisites>
   <scm>
-    <tag>HEAD</tag>
+    <tag>formatter-maven-plugin-2.24.0</tag>
   </scm>
   <properties>
     <formatter.configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</formatter.configFile>
