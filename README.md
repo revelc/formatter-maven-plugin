@@ -62,6 +62,14 @@ mvn clean verify
 - 2.17.x and later requires jdk 11 as required by Eclipse binaries
 - 2.24.x and later requires jdk 17 as required by Eclipse binaries
 
+## Changelog
+
+The changelog was removed but now restored using a generated process.  To generate a change log update, run the following
+
+```
+mvn mavanagaiata:changelog -D"mavanagaiata.format=MARKDOWN" -D"mavanagaiata.changelog.outputFile=CHANGELOG.md"
+```
+
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
 [blog]: https://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
