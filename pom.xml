@@ -74,6 +74,9 @@
     <impsort.groups>java.,javax.,org.,com.,net.</impsort.groups>
     <javadoc.doclint>all</javadoc.doclint>
     <maven.compiler.release>17</maven.compiler.release>
+
+    <!-- Allow newer invoker for higher jdk support -->
+    <version.maven-invoker-plugin>3.7.0</version.maven-invoker-plugin>
   </properties>
   <dependencyManagement>
     <dependencies>
