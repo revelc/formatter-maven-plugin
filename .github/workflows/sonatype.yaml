@@ -25,13 +25,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK
+      - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: zulu
+          cache: 'maven'
+      - name: Download Maven Wrapper
+        run: mvn wrapper:wrapper "-Dmaven=3.9.7"
       - name: Deploy to Sonatype
-        run: mvn deploy -DskipTests -B --settings ./.mvn/settings.xml
+        run: ./mvnw deploy -DskipTests -B --settings ./.mvn/settings.xml
         env:
           CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
           CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
