@@ -806,19 +806,19 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             formattedHash = originalHash;
             // Default to formatted hashing for unknown type otherwise include formatter options
         } else if (file.getName().endsWith(".java")) {
-            formattedHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
+            formattedHash = this.sha512hash(formattedCode + this.javaFormatter.getOptions().hashCode());
         } else if (file.getName().endsWith(".js")) {
-            formattedHash = this.sha512hash(originalCode + this.jsFormatter.getOptions().hashCode());
+            formattedHash = this.sha512hash(formattedCode + this.jsFormatter.getOptions().hashCode());
         } else if (file.getName().endsWith(".html")) {
-            formattedHash = this.sha512hash(originalCode + this.htmlFormatter.getOptions().hashCode());
+            formattedHash = this.sha512hash(formattedCode + this.htmlFormatter.getOptions().hashCode());
         } else if (file.getName().endsWith(".xml")) {
-            formattedHash = this.sha512hash(originalCode + this.xmlFormatter.getOptions().hashCode());
+            formattedHash = this.sha512hash(formattedCode + this.xmlFormatter.getOptions().hashCode());
         } else if (file.getName().endsWith(".json")) {
-            formattedHash = this.sha512hash(originalCode + this.jsonFormatter.getOptions().hashCode());
+            formattedHash = this.sha512hash(formattedCode + this.jsonFormatter.getOptions().hashCode());
         } else if (file.getName().endsWith(".css")) {
-            formattedHash = this.sha512hash(originalCode + this.cssFormatter.getOptions().hashCode());
+            formattedHash = this.sha512hash(formattedCode + this.cssFormatter.getOptions().hashCode());
         } else {
-            formattedHash = this.sha512hash(originalCode);
+            formattedHash = this.sha512hash(formattedCode);
         }
         hashCache.setProperty(path, formattedHash);
         this.hashCacheWritten = true;
