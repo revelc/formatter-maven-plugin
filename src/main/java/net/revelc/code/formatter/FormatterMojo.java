@@ -699,8 +699,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
         final var log = this.getLog();
         log.debug("Processing file: " + file);
+        final var fileName = file.getName();
         final var originalCode = this.readFileAsString(file);
-        final var originalHash = this.calculateHash(file.getName(), originalCode);
+        final var originalHash = this.calculateHash(fileName, originalCode);
         final var canonicalPath = file.getCanonicalPath();
         final var path = canonicalPath.substring(basedirPath.length());
         final var cachedHash = hashCache.getProperty(path);
@@ -712,42 +713,42 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         Result result = null;
         String formattedCode = null;
-        if (file.getName().endsWith(".java") && this.javaFormatter.isInitialized()) {
+        if (fileName.endsWith(".java") && this.javaFormatter.isInitialized()) {
             if (this.skipJavaFormatting) {
                 log.debug(Type.JAVA + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".js") && this.jsFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".js") && this.jsFormatter.isInitialized()) {
             if (this.skipJsFormatting) {
                 log.debug(Type.JAVASCRIPT + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".html") && this.htmlFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".html") && this.htmlFormatter.isInitialized()) {
             if (this.skipHtmlFormatting) {
                 log.debug(Type.HTML + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.htmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".xml") && this.xmlFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".xml") && this.xmlFormatter.isInitialized()) {
             if (this.skipXmlFormatting) {
                 log.debug(Type.XML + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.xmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".json") && this.jsonFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".json") && this.jsonFormatter.isInitialized()) {
             if (this.skipJsonFormatting) {
                 log.debug(Type.JSON + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsonFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".css") && this.cssFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".css") && this.cssFormatter.isInitialized()) {
             if (this.skipCssFormatting) {
                 log.debug(Type.CSS + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
@@ -755,7 +756,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 formattedCode = this.cssFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else {
-            log.debug("No formatter found or initialization failed for file " + file.getName());
+            log.debug("No formatter found or initialization failed for file " + fileName);
             result = Result.SKIPPED;
         }
 
@@ -787,7 +788,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (Result.SKIPPED.equals(result)) {
             formattedHash = originalHash;
         } else {
-            formattedHash = this.calculateHash(file.getName(), formattedCode);
+            formattedHash = this.calculateHash(fileName, formattedCode);
         }
         hashCache.setProperty(path, formattedHash);
         this.hashCacheWritten = true;
