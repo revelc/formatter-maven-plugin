@@ -699,26 +699,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
         final var log = this.getLog();
         log.debug("Processing file: " + file);
+        final var fileName = file.getName();
         final var originalCode = this.readFileAsString(file);
-
-        // Default to original hashing for unknown type otherwise include formatter options
-        String originalHash;
-        if (file.getName().endsWith(".java")) {
-            originalHash = this.sha512hash(originalCode + this.javaFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".js")) {
-            originalHash = this.sha512hash(originalCode + this.jsFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".html")) {
-            originalHash = this.sha512hash(originalCode + this.htmlFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".xml")) {
-            originalHash = this.sha512hash(originalCode + this.xmlFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".json")) {
-            originalHash = this.sha512hash(originalCode + this.jsonFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".css")) {
-            originalHash = this.sha512hash(originalCode + this.cssFormatter.getOptions().hashCode());
-        } else {
-            originalHash = this.sha512hash(originalCode);
-        }
-
+        final var originalHash = this.calculateHash(fileName, originalCode);
         final var canonicalPath = file.getCanonicalPath();
         final var path = canonicalPath.substring(basedirPath.length());
         final var cachedHash = hashCache.getProperty(path);
@@ -730,42 +713,42 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         Result result = null;
         String formattedCode = null;
-        if (file.getName().endsWith(".java") && this.javaFormatter.isInitialized()) {
+        if (fileName.endsWith(".java") && this.javaFormatter.isInitialized()) {
             if (this.skipJavaFormatting) {
                 log.debug(Type.JAVA + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".js") && this.jsFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".js") && this.jsFormatter.isInitialized()) {
             if (this.skipJsFormatting) {
                 log.debug(Type.JAVASCRIPT + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".html") && this.htmlFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".html") && this.htmlFormatter.isInitialized()) {
             if (this.skipHtmlFormatting) {
                 log.debug(Type.HTML + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.htmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".xml") && this.xmlFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".xml") && this.xmlFormatter.isInitialized()) {
             if (this.skipXmlFormatting) {
                 log.debug(Type.XML + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.xmlFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".json") && this.jsonFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".json") && this.jsonFormatter.isInitialized()) {
             if (this.skipJsonFormatting) {
                 log.debug(Type.JSON + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
                 formattedCode = this.jsonFormatter.formatFile(file, originalCode, this.lineEnding);
             }
-        } else if (file.getName().endsWith(".css") && this.cssFormatter.isInitialized()) {
+        } else if (fileName.endsWith(".css") && this.cssFormatter.isInitialized()) {
             if (this.skipCssFormatting) {
                 log.debug(Type.CSS + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
@@ -773,7 +756,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 formattedCode = this.cssFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else {
-            log.debug("No formatter found or initialization failed for file " + file.getName());
+            log.debug("No formatter found or initialization failed for file " + fileName);
             result = Result.SKIPPED;
         }
 
@@ -804,21 +787,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         String formattedHash;
         if (Result.SKIPPED.equals(result)) {
             formattedHash = originalHash;
-            // Default to formatted hashing for unknown type otherwise include formatter options
-        } else if (file.getName().endsWith(".java")) {
-            formattedHash = this.sha512hash(formattedCode + this.javaFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".js")) {
-            formattedHash = this.sha512hash(formattedCode + this.jsFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".html")) {
-            formattedHash = this.sha512hash(formattedCode + this.htmlFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".xml")) {
-            formattedHash = this.sha512hash(formattedCode + this.xmlFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".json")) {
-            formattedHash = this.sha512hash(formattedCode + this.jsonFormatter.getOptions().hashCode());
-        } else if (file.getName().endsWith(".css")) {
-            formattedHash = this.sha512hash(formattedCode + this.cssFormatter.getOptions().hashCode());
         } else {
-            formattedHash = this.sha512hash(formattedCode);
+            formattedHash = this.calculateHash(fileName, formattedCode);
         }
         hashCache.setProperty(path, formattedHash);
         this.hashCacheWritten = true;
@@ -840,6 +810,46 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (!dryRun) {
             this.writeStringToFile(formattedCode, file);
         }
+    }
+
+    /**
+     * Calculate Hash.
+     *
+     * @param fileType
+     *            the file type being processed
+     * @param code
+     *            the code file for generating the hash
+     *
+     * @return the calculated hash for the file
+     */
+    private String calculateHash(final String fileType, final String code) {
+        // Include formatter options with each known type
+        if (fileType.endsWith(".java")) {
+            return this.sha512hash(code + this.javaFormatter.getOptions().hashCode());
+        }
+
+        if (fileType.endsWith(".js")) {
+            return this.sha512hash(code + this.jsFormatter.getOptions().hashCode());
+        }
+
+        if (fileType.endsWith(".html")) {
+            return this.sha512hash(code + this.htmlFormatter.getOptions().hashCode());
+        }
+
+        if (fileType.endsWith(".xml")) {
+            return this.sha512hash(code + this.xmlFormatter.getOptions().hashCode());
+        }
+
+        if (fileType.endsWith(".json")) {
+            return this.sha512hash(code + this.jsonFormatter.getOptions().hashCode());
+        }
+
+        if (fileType.endsWith(".css")) {
+            return this.sha512hash(code + this.cssFormatter.getOptions().hashCode());
+        }
+
+        // Default to formatted hashing for unknown type
+        return this.sha512hash(code);
     }
 
     /**
