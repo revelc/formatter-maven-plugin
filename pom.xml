@@ -75,6 +75,11 @@
     <javadoc.doclint>all</javadoc.doclint>
     <maven.compiler.release>17</maven.compiler.release>
 
+    <!-- Remove the following after next parent update -->
+    <version.maven-fluido-skin>2.0.0-M9</version.maven-fluido-skin>
+    <version.maven-site-plugin>4.0.0-M15</version.maven-site-plugin>
+    <maven.site.deploy.skip>false</maven.site.deploy.skip>
+
     <!-- Allow newer invoker for higher jdk support -->
     <version.maven-invoker-plugin>3.7.0</version.maven-invoker-plugin>
   </properties>
