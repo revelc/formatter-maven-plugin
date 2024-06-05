@@ -61,6 +61,14 @@
   <scm>
     <tag>HEAD</tag>
   </scm>
+  <distributionManagement>
+    <site>
+      <id>gh-pages</id>
+      <name>Formatter Maven Plugin GitHub Pages</name>
+      <url>scm:git:ssh://git@github.com/revelc/formatter-maven-plugin.git</url>
+    </site>
+  </distributionManagement>
+
   <properties>
     <formatter.configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</formatter.configFile>
     <formatter.css.skip>true</formatter.css.skip>
@@ -319,6 +327,16 @@
           <excludes combine.children="append">
             <exclude>CHANGELOG.md</exclude>
           </excludes>
+        </configuration>
+      </plugin>
+      <!-- Release still doesn't publish site automately due to overrides on release, to use this run: mvn site site:stage scm-publish:publish-scm -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-publish-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <scmBranch>gh-pages</scmBranch>
+          <tryUpdate>true</tryUpdate>
         </configuration>
       </plugin>
     </plugins>
