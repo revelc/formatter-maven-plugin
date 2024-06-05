@@ -14,7 +14,7 @@
     limitations under the License.
 
 -->
-<project name="${project.name}" xmlns="http://maven.apache.org/site/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<site name="${project.name}" xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd">
     <skin>
         <groupId>org.apache.maven.skins</groupId>
@@ -46,4 +46,4 @@
         </menu>
         <menu ref="reports" />
     </body>
-</project>
+</site>
