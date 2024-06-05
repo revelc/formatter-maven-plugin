@@ -3,6 +3,13 @@ Changelog
 
 Commits on branch "main"
 
+ * [ci] Fix the eclipse versions markdown to reflect 2.24 level at eclipse 4.31
+ * [cleanup] Reuse file.getName() as a string as its called many times
+ * [rework] Reduce reused code by using common calculate hash code method
+ * [pom] Bump guava to 33.2.1-jre
+ * [894] Use the formattedCode for the formattedHash.
+ * [maven-release-plugin] prepare for next development iteration
+
 Version formatter-maven-plugin-2.24.0 – 05/29/2024 03:40 PM -0400
 
  * [maven-release-plugin] prepare release formatter-maven-plugin-2.24.0
