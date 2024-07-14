@@ -276,7 +276,7 @@
       <!-- bump this and run src/build/find-transitive-eclipse-updates.sh to update eclipse deps -->
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.37.0</version>
+      <version>3.38.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
