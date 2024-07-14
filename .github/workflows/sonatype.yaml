@@ -32,7 +32,7 @@ jobs:
           distribution: zulu
           cache: 'maven'
       - name: Download Maven Wrapper
-        run: mvn wrapper:wrapper "-Dmaven=3.9.7"
+        run: mvn wrapper:wrapper "-Dmaven=3.9.8"
       - name: Deploy to Sonatype
         run: ./mvnw deploy -DskipTests -B --settings ./.mvn/settings.xml
         env:
