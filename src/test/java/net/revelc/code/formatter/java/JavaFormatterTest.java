@@ -29,7 +29,6 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file.
-     *
      */
     @Test
     void testDoFormatFile() {
@@ -42,7 +41,6 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file keep line feed LF.
-     *
      */
     @Test
     void testDoFormatFileKeepLineFeedLF() {
@@ -52,7 +50,6 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file keep line feed CR.
-     *
      */
     @Test
     void testDoFormatFileKeepLineFeedCR() {
@@ -62,7 +59,6 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file keep line feed CRLF.
-     *
      */
     @Test
     void testDoFormatFileKeepLineFeedCRLF() {
@@ -73,7 +69,6 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test is initialized.
-     *
      */
     @Test
     void testIsInitialized() {
@@ -86,7 +81,6 @@ class JavaFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file with exclusions.
-     *
      */
     @Test
     void testDoFormatFileWithExclusions() {

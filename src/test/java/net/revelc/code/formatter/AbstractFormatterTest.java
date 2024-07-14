@@ -200,16 +200,16 @@ public abstract class AbstractFormatterTest {
         // Set the used output directory for test (either first pass or second pass)
         File testOutputDir;
         switch (formatCycle) {
-        case 1:
-            resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_PRIMARY;
-            testOutputDir = AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR;
-            break;
-        case 2:
-            resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_SECONDARY;
-            testOutputDir = AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR;
-            break;
-        default:
-            throw new IllegalStateException("Unrecognized format cycle: " + formatCycle);
+            case 1:
+                resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_PRIMARY;
+                testOutputDir = AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR;
+                break;
+            case 2:
+                resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_SECONDARY;
+                testOutputDir = AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR;
+                break;
+            default:
+                throw new IllegalStateException("Unrecognized format cycle: " + formatCycle);
         }
 
         // Set original file and file to use for test
@@ -234,14 +234,14 @@ public abstract class AbstractFormatterTest {
         // Run assertions on formatted file, if not valid, reject and tester can look at resulting files
         // to debug issue.
         switch (formatCycle) {
-        case 1:
-            Assertions.assertNotEquals(originalCode, formattedCode);
-            break;
-        case 2:
-            Assertions.assertEquals(originalCode, formattedCode);
-            break;
-        default:
-            throw new IllegalStateException("Unrecognized format cycle: " + formatCycle);
+            case 1:
+                Assertions.assertNotEquals(originalCode, formattedCode);
+                break;
+            case 2:
+                Assertions.assertEquals(originalCode, formattedCode);
+                break;
+            default:
+                throw new IllegalStateException("Unrecognized format cycle: " + formatCycle);
         }
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.

@@ -29,7 +29,6 @@ class HTMLFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file.
-     *
      */
     @Test
     void testDoFormatFile() {
@@ -43,7 +42,6 @@ class HTMLFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test is initialized.
-     *
      */
     @Test
     void testIsInitialized() {

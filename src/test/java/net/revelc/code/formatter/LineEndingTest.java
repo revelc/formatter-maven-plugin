@@ -24,7 +24,6 @@ class LineEndingTest {
 
     /**
      * Test successfully determining CRLF line ending.
-     *
      */
     @Test
     void test_success_read_line_endings_crlf() {
@@ -35,7 +34,6 @@ class LineEndingTest {
 
     /**
      * Test successfully determining LF line ending.
-     *
      */
     @Test
     void test_success_read_line_endings_lf() {
@@ -46,7 +44,6 @@ class LineEndingTest {
 
     /**
      * Test successfully determining CR line ending.
-     *
      */
     @Test
     void test_success_read_line_endings_cr() {
@@ -57,7 +54,6 @@ class LineEndingTest {
 
     /**
      * Test successfully determining LF line ending with mixed endings.
-     *
      */
     @Test
     void test_success_read_line_endings_mixed_lf() {
@@ -68,7 +64,6 @@ class LineEndingTest {
 
     /**
      * Test successfully determining AUTO line ending with mixed endings and no clear majority.
-     *
      */
     @Test
     void test_success_read_line_endings_mixed_auto() {
@@ -79,7 +74,6 @@ class LineEndingTest {
 
     /**
      * Test successfully determining AUTO line ending with no endings.
-     *
      */
     @Test
     void test_success_read_line_endings_none_auto() {

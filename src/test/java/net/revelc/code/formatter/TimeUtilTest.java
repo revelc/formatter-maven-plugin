@@ -24,7 +24,6 @@ class TimeUtilTest {
 
     /**
      * Test print duration.
-     *
      */
     @Test
     void testPrintDuration() {
