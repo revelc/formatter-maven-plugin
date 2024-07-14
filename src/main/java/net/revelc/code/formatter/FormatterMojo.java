@@ -880,7 +880,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private String readFileAsString(final File file) throws IOException {
         final var fileData = new StringBuilder(1000);
         try (var fileStream = Files.newInputStream(file.toPath());
-                var fileReader = new InputStreamReader(fileStream, this.encoding);
+                var fileReader = new InputStreamReader(fileStream, Charset.forName(this.encoding));
                 var reader = new BufferedReader(fileReader)) {
             var buf = new char[1024];
             var numRead = 0;
@@ -910,7 +910,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
 
         try (var fileStream = Files.newOutputStream(file.toPath());
-                var fileWriter = new OutputStreamWriter(fileStream, this.encoding);
+                var fileWriter = new OutputStreamWriter(fileStream, Charset.forName(this.encoding));
                 var bw = new BufferedWriter(fileWriter)) {
             bw.write(str);
         }
