@@ -29,7 +29,6 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file.
-     *
      */
     @Test
     void testDoFormatFile() {
@@ -42,7 +41,6 @@ class JavascriptFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test is initialized.
-     *
      */
     @Test
     void testIsInitialized() {

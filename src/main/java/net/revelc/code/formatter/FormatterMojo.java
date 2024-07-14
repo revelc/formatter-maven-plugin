@@ -775,7 +775,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // Process the result type
         if (Result.SKIPPED.equals(result)) {
-            // Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip formatting.
+            // Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
+            // formatting.
             rc.unchangedCount++;
         } else if (Result.SUCCESS.equals(result)) {
             rc.successCount++;
@@ -1112,7 +1113,10 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         /** The skipped count is incremented for cached files that haven't changed since being cached. */
         int skippedCount;
 
-        /** Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip formatting. */
+        /**
+         * Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
+         * formatting.
+         */
         int unchangedCount;
 
         /** The read only count. */

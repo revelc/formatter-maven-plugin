@@ -36,7 +36,6 @@ class JsonFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file.
-     *
      */
     @Test
     void testDoFormatFile() {
@@ -64,7 +63,6 @@ class JsonFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file with config.
-     *
      */
     @Test
     void testDoFormatFileWithConfig() {

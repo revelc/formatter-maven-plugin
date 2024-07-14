@@ -29,7 +29,6 @@ class XMLFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test do format file.
-     *
      */
     @Test
     void testDoFormatFile() {
@@ -45,7 +44,6 @@ class XMLFormatterTest extends AbstractFormatterTest {
 
     /**
      * Test is initialized.
-     *
      */
     @Test
     void testIsInitialized() {

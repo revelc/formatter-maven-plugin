@@ -130,7 +130,7 @@ public abstract class AbstractCacheableFormatter {
 
     /**
      * Do format.
-     *
+     * <p>
      * notice that when calling this function, {@code ending} here MUST equals lineending in config when
      * {@link #init(Map, ConfigurationSource)} init.
      *
