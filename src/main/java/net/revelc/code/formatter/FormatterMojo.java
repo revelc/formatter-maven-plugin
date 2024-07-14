@@ -608,7 +608,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         try (var sw = new StringWriter()) {
             props.store(sw, null);
             getLog().debug("Writing sorted files to cache without timestamp:\n\n" + props);
-            Files.write(cacheFile, (Iterable<String>) sw.toString().lines().skip(1).sorted()::iterator,
+            Files.write(cacheFile, (Iterable<String>) sw.toString().lines().skip(1).sorted().toList(),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (final IOException e) {
             this.getLog().warn("Cannot store file hash cache properties file", e);
