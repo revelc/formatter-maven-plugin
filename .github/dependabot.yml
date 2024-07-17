@@ -8,13 +8,6 @@ updates:
     maven:
       patterns:
         - "*"
-  ignore:
-    - dependency-name: org.codehaus.plexus:plexus-xml
-      versions:
-      - ">=4.0.0"
-    - dependency-name: org.slf4j:slf4j-simple
-      version:
-      - ">=2.0.0"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
