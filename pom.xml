@@ -24,7 +24,7 @@
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
-  <version>2.24.2-SNAPSHOT</version>
+  <version>2.25.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>formatter-maven-plugin</name>
   <description>Maven plugin for formatting source code</description>
@@ -59,15 +59,11 @@
     <maven>3.6.3</maven>
   </prerequisites>
   <scm>
+    <connection>scm:git:https://github.com/revelc/${github.site.repositoryName}.git</connection>
+    <developerConnection>scm:git:git@github.com:revelc/${github.site.repositoryName}.git</developerConnection>
     <tag>HEAD</tag>
+    <url>https://github.com/revelc/${github.site.repositoryName}</url>
   </scm>
-  <distributionManagement>
-    <site>
-      <id>gh-pages</id>
-      <name>Formatter Maven Plugin GitHub Pages</name>
-      <url>scm:git:ssh://git@github.com/revelc/formatter-maven-plugin.git</url>
-    </site>
-  </distributionManagement>
   <properties>
     <formatter.configFile>${project.basedir}/src/main/resources/formatter-maven-plugin/eclipse/java.xml</formatter.configFile>
     <formatter.css.skip>true</formatter.css.skip>
@@ -81,10 +77,7 @@
     <impsort.groups>java.,javax.,org.,com.,net.</impsort.groups>
     <javadoc.doclint>all</javadoc.doclint>
     <maven.compiler.release>17</maven.compiler.release>
-    <!-- Remove the following after next parent update includes these major updates -->
-    <maven.site.deploy.skip>false</maven.site.deploy.skip>
-    <version.maven-fluido-skin>2.0.0-M9</version.maven-fluido-skin>
-    <version.maven-site-plugin>4.0.0-M15</version.maven-site-plugin>
+    <sort.ignoreLineSeparators>true</sort.ignoreLineSeparators>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -92,6 +85,13 @@
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
         <version>2.17.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-bom</artifactId>
+        <version>2.0.13</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -116,6 +116,12 @@
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.9.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
@@ -126,11 +132,35 @@
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>jsdt-core</artifactId>
       <version>3.4.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.osgi</groupId>
+          <artifactId>org.osgi.util.function</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.osgi</groupId>
+          <artifactId>osgi.annotation</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.revelc.code.formatter</groupId>
       <artifactId>xml-formatter</artifactId>
       <version>0.4.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.cssparser</groupId>
@@ -141,6 +171,16 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-digester3</artifactId>
       <version>3.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-beanutils</groupId>
+          <artifactId>commons-beanutils</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -151,16 +191,17 @@
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-resources</artifactId>
       <version>1.3.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-utils</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
       <version>4.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-xml</artifactId>
-      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
@@ -173,9 +214,33 @@
       <version>1.18.1</version>
     </dependency>
     <dependency>
+      <!-- converge dependency with jsdt-core -->
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.util.function</artifactId>
+      <version>1.2.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.osgi</groupId>
+          <artifactId>osgi.annotation</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <!-- converge dependency with jsdt-core -->
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi.annotation</artifactId>
+      <version>8.1.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.w3c.css</groupId>
       <artifactId>sac</artifactId>
       <version>1.3</version>
+    </dependency>
+    <dependency>
+      <!-- provided by Maven 3.1.0 and later; might be an older version like 1.7 -->
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -186,12 +251,29 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.36</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>dependency-convergence</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <phase>validate</phase>
+            <configuration>
+              <rules>
+                <dependencyConvergence />
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -201,28 +283,10 @@
             <ignore>commons-beanutils:commons-beanutils</ignore>
             <!-- ignore alignment with commons-logging to support slf4j -->
             <ignore>commons-logging:commons-logging</ignore>
-            <!-- ignore alignment with plexus-xml as required to ensure plexus-utils uses maven 3 -->
-            <ignore>org.codehaus.plexus:plexus-xml</ignore>
+            <!-- ignore unused osgi items added only for transitive dependency convergence-->
+            <ignore>org.osgi:org.osgi.util.function</ignore>
+            <ignore>org.osgi:osgi.annotation</ignore>
           </ignoredUnusedDeclaredDependencies>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <configuration>
-          <excludes combine.children="append">
-            <exclude>CHANGELOG.md</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <!-- Release still doesn't publish site automately due to overrides on release, to use this run: mvn site site:stage scm-publish:publish-scm -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-scm-publish-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <scmBranch>gh-pages</scmBranch>
-          <tryUpdate>true</tryUpdate>
         </configuration>
       </plugin>
     </plugins>
