@@ -21,10 +21,7 @@
 * text=auto
 
 # Declare files with fixed line ending for tests.
-src/test/resources/**/*LF.* text eol=lf
-src/test/resources/**/*CR.* text eol=cr
-# This line MUST be after the *LF.* line as *LF.* also matches *CRLF.* files
-src/test/resources/**/*CRLF.* text eol=crlf
+src/test/resources/**/* binary
 
 # Custom for Visual Studio
 *.cs     diff=csharp
