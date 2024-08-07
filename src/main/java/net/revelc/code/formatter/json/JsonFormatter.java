@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.core.util.Separators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -60,15 +59,10 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
 
             @Override
             public DefaultPrettyPrinter createInstance() {
-                return new DefaultPrettyPrinter(this);
-            }
-
-            @Override
-            public DefaultPrettyPrinter withSeparators(final Separators separators) {
-                this._separators = separators;
                 this._objectFieldValueSeparatorWithSpaces = (spaceBeforeSeparator ? " " : "")
-                        + separators.getObjectFieldValueSeparator() + " ";
-                return this;
+                        + this._separators.getObjectFieldValueSeparator() + " ";
+
+                return new DefaultPrettyPrinter(this);
             }
         };
 
