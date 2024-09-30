@@ -84,7 +84,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>2.17.2</version>
+        <version>2.18.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -109,7 +109,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.3.0-jre</version>
+      <version>33.3.1-jre</version>
     </dependency>
     <dependency>
       <!-- override vulnerable transitive version from commons-digester3 -->
@@ -201,12 +201,12 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>4.0.1</version>
+      <version>4.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.38.0</version>
+      <version>3.39.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
@@ -245,7 +245,7 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.16.1</version>
+      <version>2.17.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
