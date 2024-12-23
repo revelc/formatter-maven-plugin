@@ -109,7 +109,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.3.1-jre</version>
+      <version>33.4.0-jre</version>
     </dependency>
     <dependency>
       <!-- override vulnerable transitive version from commons-digester3 -->
@@ -206,7 +206,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.38.0</version>
+      <version>3.40.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
