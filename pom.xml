@@ -19,7 +19,7 @@
   <parent>
     <groupId>net.revelc.code</groupId>
     <artifactId>revelc</artifactId>
-    <version>6</version>
+    <version>7</version>
     <relativePath />
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
