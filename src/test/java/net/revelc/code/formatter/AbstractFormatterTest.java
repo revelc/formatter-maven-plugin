@@ -14,12 +14,12 @@
 
 package net.revelc.code.formatter;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.Collections;
@@ -45,20 +45,24 @@ public abstract class AbstractFormatterTest {
     protected static final String RESOURCE_LOCATION_SECONDARY = "target/testoutput";
 
     /** The Constant TEST_OUTPUT_PRIMARY_DIR. */
-    protected static final File TEST_OUTPUT_PRIMARY_DIR = new File("target/testoutput");
+    protected static final Path TEST_OUTPUT_PRIMARY_DIR = Path.of("target/testoutput");
 
     /** The Constant TEST_OUTPUT_SECONDARY_DIR. */
-    protected static final File TEST_OUTPUT_SECONDARY_DIR = new File("target/testoutputrepeat");
+    protected static final Path TEST_OUTPUT_SECONDARY_DIR = Path.of("target/testoutputrepeat");
 
     /**
      * Creates the test dir.
+     *
+     * @throws IOException
+     *             unable to create directories
      */
     @BeforeAll
-    public static void createTestDir() {
-        Assertions.assertTrue(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR.mkdirs()
-                || AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR.isDirectory());
-        Assertions.assertTrue(AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR.mkdirs()
-                || AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR.isDirectory());
+    public static void createTestDir() throws IOException {
+        Files.createDirectories(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR);
+        Assertions.assertTrue(Files.isDirectory(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR));
+
+        Files.createDirectories(AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR);
+        Assertions.assertTrue(Files.isDirectory(AbstractFormatterTest.TEST_OUTPUT_SECONDARY_DIR));
     }
 
     /**
@@ -67,7 +71,7 @@ public abstract class AbstractFormatterTest {
     public static class TestConfigurationSource implements ConfigurationSource {
 
         /** The target dir. */
-        private final File targetDir;
+        private final Path targetDir;
 
         /**
          * Instantiates a new test configuration source.
@@ -75,12 +79,12 @@ public abstract class AbstractFormatterTest {
          * @param targetDir
          *            the target dir
          */
-        public TestConfigurationSource(final File targetDir) {
+        public TestConfigurationSource(final Path targetDir) {
             this.targetDir = targetDir;
         }
 
         @Override
-        public File getTargetDirectory() {
+        public Path getTargetDirectory() {
             return this.targetDir;
         }
 
@@ -198,7 +202,7 @@ public abstract class AbstractFormatterTest {
         // Set the used resource location for test (either first pass or second pass)
         String resourceLocation;
         // Set the used output directory for test (either first pass or second pass)
-        File testOutputDir;
+        Path testOutputDir;
         switch (formatCycle) {
             case 1:
                 resourceLocation = AbstractFormatterTest.RESOURCE_LOCATION_PRIMARY;
@@ -213,14 +217,14 @@ public abstract class AbstractFormatterTest {
         }
 
         // Set original file and file to use for test
-        final var originalSourceFile = new File(resourceLocation, fileUnderTest);
-        final var sourceFile = new File(testOutputDir, fileUnderTest);
+        final var originalSourceFile = Path.of(resourceLocation, fileUnderTest);
+        final var sourceFile = Path.of(testOutputDir.toString(), fileUnderTest);
 
         // Copy file to new location
-        Files.copy(originalSourceFile.toPath(), sourceFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(originalSourceFile, sourceFile, StandardCopyOption.REPLACE_EXISTING);
 
         // Read file to be formatted
-        final var originalCode = new String(Files.readAllBytes(sourceFile.toPath()), StandardCharsets.UTF_8);
+        final var originalCode = new String(Files.readAllBytes(sourceFile), StandardCharsets.UTF_8);
 
         // Format the file and make sure formatting worked
         formatter.init(options, new TestConfigurationSource(testOutputDir));
@@ -228,7 +232,7 @@ public abstract class AbstractFormatterTest {
         Assertions.assertNotNull(formattedCode);
 
         // Write the file we formatted
-        Files.write(sourceFile.toPath(), formattedCode.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE,
+        Files.write(sourceFile, formattedCode.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING);
 
         // Run assertions on formatted file, if not valid, reject and tester can look at resulting files

@@ -14,7 +14,6 @@
 
 package net.revelc.code.formatter;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Properties;
@@ -69,7 +68,7 @@ public class ValidateMojo extends FormatterMojo {
     }
 
     @Override
-    protected void doFormatFile(final File file, final ResultCollector rc, final Properties hashCache,
+    protected void doFormatFile(final Path file, final ResultCollector rc, final Properties hashCache,
             final String basedirPath, final boolean dryRun)
             throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
