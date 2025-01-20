@@ -16,13 +16,8 @@ package net.revelc.code.formatter;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -636,8 +631,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return props;
         }
 
-        try (var stream = new BufferedInputStream(Files.newInputStream(cacheFile))) {
-            props.load(stream);
+        try (var reader = Files.newBufferedReader(cacheFile)) {
+            props.load(reader);
         } catch (final IOException e) {
             log.warn("Cannot load file hash cache properties file", e);
         }
@@ -879,15 +874,13 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     private String readFileAsString(final Path file) throws IOException {
         final var fileData = new StringBuilder(1000);
-        try (var fileStream = Files.newInputStream(file);
-                var fileReader = new InputStreamReader(fileStream, Charset.forName(this.encoding));
-                var reader = new BufferedReader(fileReader)) {
-            var buf = new char[1024];
+        try (var reader = Files.newBufferedReader(file, Charset.forName(this.encoding))) {
+            var buffer = new char[1024];
             var numRead = 0;
-            while ((numRead = reader.read(buf)) != -1) {
-                final var readData = String.valueOf(buf, 0, numRead);
+            while ((numRead = reader.read(buffer)) != -1) {
+                final var readData = String.valueOf(buffer, 0, numRead);
                 fileData.append(readData);
-                buf = new char[1024];
+                buffer = new char[1024];
             }
         }
         return fileData.toString();
@@ -909,10 +902,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return;
         }
 
-        try (var fileStream = Files.newOutputStream(file);
-                var fileWriter = new OutputStreamWriter(fileStream, Charset.forName(this.encoding));
-                var bw = new BufferedWriter(fileWriter)) {
-            bw.write(str);
+        try (var buffer = Files.newBufferedWriter(file, Charset.forName(this.encoding))) {
+            buffer.write(str);
         }
     }
 
