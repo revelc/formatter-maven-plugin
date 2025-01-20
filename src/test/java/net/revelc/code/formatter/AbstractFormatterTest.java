@@ -249,13 +249,8 @@ public abstract class AbstractFormatterTest {
         }
 
         // We are hashing this as set in stone in case for some reason our source file changes unexpectedly.
-        final var sha512 = Hashing.sha512().hashBytes(Files.readAllBytes(sourceFile)).asBytes();
-        final var sb = new StringBuilder();
-        for (final byte element : sha512) {
-            sb.append(Integer.toString((element & 0xff) + 0x100, 16).substring(1));
-        }
-
-        Assertions.assertEquals(expectedSha512, sb.toString());
+        final var sha512 = Hashing.sha512().hashBytes(Files.readAllBytes(sourceFile)).toString();
+        Assertions.assertEquals(expectedSha512, sha512);
     }
 
 }
