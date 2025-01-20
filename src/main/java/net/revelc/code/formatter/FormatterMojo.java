@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -404,7 +403,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         final var startClock = System.nanoTime();
 
-        if (StringUtils.isEmpty(this.encoding)) {
+        if (this.encoding == null || this.encoding.length() == 0) {
             this.encoding = Charset.defaultCharset().displayName();
             this.getLog().warn("File encoding has not been set, using platform encoding (" + this.encoding
                     + ") to format source files, i.e. build is platform dependent!");
