@@ -224,7 +224,19 @@
             <phase>validate</phase>
             <configuration>
               <rules>
-                <dependencyConvergence />
+                <dependencyConvergence>
+                  <excludes>
+                    <exclude>commons-beanutils:commons-beanutils</exclude>
+                    <exclude>commons-logging:commons-logging</exclude>
+                    <exclude>com.google.guava:guava</exclude>
+                    <exclude>com.google.errorprone:error_prone_annotations</exclude>
+                    <exclude>org.codehaus.plexus:plexus-utils</exclude>
+                    <exclude>org.eclipse.platform:org.eclipse.equinox.common</exclude>
+                    <exclude>org.eclipse.platform:org.eclipse.core.runtime</exclude>
+                    <exclude>org.osgi:osgi.annotation</exclude>
+                    <exclude>org.osgi:org.osgi.util.function</exclude>
+                  </excludes>
+                </dependencyConvergence>
               </rules>
             </configuration>
           </execution>
