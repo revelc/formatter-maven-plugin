@@ -223,6 +223,7 @@
             <configuration>
               <rules>
                 <dependencyConvergence>
+                  <!-- The items listed below have been verified non issue for allowing. -->
                   <excludes>
                     <exclude>cglib:cglib</exclude>
                     <exclude>commons-beanutils:commons-beanutils</exclude>
@@ -246,12 +247,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <configuration>
+          <!-- The items listed below have been verified non issue to override. -->
           <ignoredUnusedDeclaredDependencies>
-            <!-- ignore transient dependency overridden to get newer asm jdk support -->
             <ignored>cglib:cglib</ignored>
-            <!-- ignore transitive dependency overridden to avoid vulnerability -->
             <ignore>commons-beanutils:commons-beanutils</ignore>
-            <!-- ignore alignment with commons-logging to support slf4j -->
             <ignore>commons-logging:commons-logging</ignore>
             <!-- ignore transitive dependency on error prone annotations -->
             <ignore>com.google.errorprone:error_prone_annotations</ignore>
