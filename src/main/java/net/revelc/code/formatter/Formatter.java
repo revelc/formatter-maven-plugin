@@ -14,7 +14,7 @@
 
 package net.revelc.code.formatter;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Map;
 
 /**
@@ -44,7 +44,7 @@ public interface Formatter {
      *
      * @return the string
      */
-    String formatFile(File file, String originalCode, LineEnding ending);
+    String formatFile(Path file, String originalCode, LineEnding ending);
 
     /**
      * Return true if this formatter have been initialized.

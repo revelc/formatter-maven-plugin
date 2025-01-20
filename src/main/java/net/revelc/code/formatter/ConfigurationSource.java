@@ -14,8 +14,8 @@
 
 package net.revelc.code.formatter;
 
-import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 import org.apache.maven.plugin.logging.Log;
 
@@ -57,7 +57,7 @@ public interface ConfigurationSource {
      *
      * @return the target directory
      */
-    File getTargetDirectory();
+    Path getTargetDirectory();
 
     /**
      * Gets the encoding.

@@ -14,9 +14,9 @@
 
 package net.revelc.code.formatter;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.Map;
 
 import org.apache.maven.plugin.logging.Log;
@@ -71,7 +71,7 @@ public abstract class AbstractCacheableFormatter {
      *
      * @return the string
      */
-    public String formatFile(final File file, final String originalCode, final LineEnding ending) {
+    public String formatFile(final Path file, final String originalCode, final LineEnding ending) {
         try {
             this.log.debug("Processing file: " + file + " with line ending: " + ending);
             var formatterLineEnding = ending;

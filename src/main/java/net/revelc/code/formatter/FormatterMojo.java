@@ -20,7 +20,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -421,21 +420,21 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             this.getLog().debug("Using '" + this.encoding + "' encoding to format source files.");
         }
 
-        final List<File> files = new ArrayList<>();
+        final List<Path> files = new ArrayList<>();
         if (this.directories != null) {
             for (final File directory : this.directories) {
                 if (directory.exists() && directory.isDirectory()) {
-                    files.addAll(this.addCollectionFiles(directory));
+                    files.addAll(this.addCollectionFiles(directory.toPath()));
                 }
             }
         } else {
             // Using defaults of source main and test dirs
             if (this.sourceDirectory != null && this.sourceDirectory.exists() && this.sourceDirectory.isDirectory()) {
-                files.addAll(this.addCollectionFiles(this.sourceDirectory));
+                files.addAll(this.addCollectionFiles(this.sourceDirectory.toPath()));
             }
             if (this.testSourceDirectory != null && this.testSourceDirectory.exists()
                     && this.testSourceDirectory.isDirectory()) {
-                files.addAll(this.addCollectionFiles(this.testSourceDirectory));
+                files.addAll(this.addCollectionFiles(this.testSourceDirectory.toPath()));
             }
         }
         // If including resources in formatting, format both the main and test resources
@@ -466,9 +465,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var hashCache = this.readFileHashCacheFile();
 
         final var basedirPath = this.getBasedirPath();
-        for (final File file : files) {
-            if (file.exists()) {
-                if (file.canWrite()) {
+        for (final Path file : files) {
+            if (Files.exists(file)) {
+                if (Files.isWritable(file)) {
                     this.formatFile(file, rc, hashCache, basedirPath);
                 } else {
                     rc.readOnlyCount++;
@@ -511,9 +510,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @return the list
      */
-    List<File> addCollectionFiles(final File newBasedir) {
+    List<Path> addCollectionFiles(final Path newBasedir) {
         final var ds = new DirectoryScanner();
-        ds.setBasedir(newBasedir);
+        ds.setBasedir(newBasedir.toFile());
         if (this.includes != null && this.includes.length > 0) {
             ds.setIncludes(this.includes);
         } else {
@@ -526,9 +525,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.setFollowSymlinks(false);
         ds.scan();
 
-        final List<File> foundFiles = new ArrayList<>();
+        final List<Path> foundFiles = new ArrayList<>();
         for (final String filename : ds.getIncludedFiles()) {
-            foundFiles.add(new File(newBasedir, filename));
+            foundFiles.add(Path.of(newBasedir.toString(), filename));
         }
         return foundFiles;
     }
@@ -541,9 +540,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @return the list
      */
-    private List<File> addCollectionFiles(final Resource resource) {
-        final var newBasedir = new File(resource.getDirectory());
-        if (!newBasedir.exists()) {
+    private List<Path> addCollectionFiles(final Resource resource) {
+        final var newBasedir = Path.of(resource.getDirectory());
+        if (!Files.exists(newBasedir)) {
             final var log = getLog();
             if (log.isDebugEnabled()) {
                 log.debug(String.format("Skipping non-existing directory %s", newBasedir));
@@ -551,7 +550,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return List.of();
         }
         final var ds = new DirectoryScanner();
-        ds.setBasedir(newBasedir);
+        ds.setBasedir(newBasedir.toFile());
 
         // Check includes. We want to process both what the user includes from this plugin and what the resource itself
         // includes.
@@ -581,7 +580,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.setFollowSymlinks(false);
         ds.scan();
 
-        return Stream.of(ds.getIncludedFiles()).map(filename -> new File(newBasedir, filename)).toList();
+        return Stream.of(ds.getIncludedFiles()).map(filename -> Path.of(newBasedir.toString(), filename)).toList();
     }
 
     /**
@@ -627,17 +626,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (!this.cachedir.exists()) {
             this.cachedir.mkdirs();
         } else if (!this.cachedir.isDirectory()) {
-            log.warn("Something strange here as the '" + this.cachedir.getPath()
+            log.warn("Something strange here as the '" + this.cachedir
                     + "' supposedly cache directory is not a directory.");
             return props;
         }
 
-        final var cacheFile = new File(this.cachedir, FormatterMojo.CACHE_PROPERTIES_FILENAME);
-        if (!cacheFile.exists()) {
+        final var cacheFile = Path.of(this.cachedir.toString(), FormatterMojo.CACHE_PROPERTIES_FILENAME);
+        if (!Files.exists(cacheFile)) {
             return props;
         }
 
-        try (var stream = new BufferedInputStream(new FileInputStream(cacheFile))) {
+        try (var stream = new BufferedInputStream(Files.newInputStream(cacheFile))) {
             props.load(stream);
         } catch (final IOException e) {
             log.warn("Cannot load file hash cache properties file", e);
@@ -662,7 +661,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private void formatFile(final File file, final ResultCollector rc, final Properties hashCache,
+    private void formatFile(final Path file, final ResultCollector rc, final Properties hashCache,
             final String basedirPath) throws MojoFailureException, MojoExecutionException {
         try {
             this.doFormatFile(file, rc, hashCache, basedirPath, false);
@@ -695,15 +694,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    protected void doFormatFile(final File file, final ResultCollector rc, final Properties hashCache,
+    protected void doFormatFile(final Path file, final ResultCollector rc, final Properties hashCache,
             final String basedirPath, final boolean dryRun)
             throws IOException, BadLocationException, MojoFailureException, MojoExecutionException {
         final var log = this.getLog();
         log.debug("Processing file: " + file);
-        final var fileName = file.getName();
+        final var fileName = file.toFile().getName();
         final var originalCode = this.readFileAsString(file);
         final var originalHash = this.calculateHash(fileName, originalCode);
-        final var canonicalPath = file.getCanonicalPath();
+        final var canonicalPath = file.toFile().getCanonicalPath();
         final var path = canonicalPath.substring(basedirPath.length());
         final var cachedHash = hashCache.getProperty(path);
         if (!skipFormattingCache && cachedHash != null && cachedHash.equals(originalHash)) {
@@ -878,9 +877,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private String readFileAsString(final File file) throws IOException {
+    private String readFileAsString(final Path file) throws IOException {
         final var fileData = new StringBuilder(1000);
-        try (var fileStream = Files.newInputStream(file.toPath());
+        try (var fileStream = Files.newInputStream(file);
                 var fileReader = new InputStreamReader(fileStream, Charset.forName(this.encoding));
                 var reader = new BufferedReader(fileReader)) {
             var buf = new char[1024];
@@ -905,12 +904,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void writeStringToFile(final String str, final File file) throws IOException {
-        if (!file.exists() && file.isDirectory()) {
+    private void writeStringToFile(final String str, final Path file) throws IOException {
+        if (!Files.exists(file) && Files.isDirectory(file)) {
             return;
         }
 
-        try (var fileStream = Files.newOutputStream(file.toPath());
+        try (var fileStream = Files.newOutputStream(file);
                 var fileWriter = new OutputStreamWriter(fileStream, Charset.forName(this.encoding));
                 var bw = new BufferedWriter(fileWriter)) {
             bw.write(str);
@@ -1140,8 +1139,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     @Override
-    public File getTargetDirectory() {
-        return this.targetDirectory;
+    public Path getTargetDirectory() {
+        return this.targetDirectory.toPath();
     }
 
     @Override
