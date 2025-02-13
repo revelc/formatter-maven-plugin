@@ -76,6 +76,8 @@
     <formatter.xml.skip>true</formatter.xml.skip>
     <impsort.groups>java.,javax.,org.,com.,net.</impsort.groups>
     <javadoc.doclint>all</javadoc.doclint>
+    <!-- timestamp for reproducible outputs, updated on release by the release plugin -->
+    <project.build.outputTimestamp>2025-01-19T21:38:15Z</project.build.outputTimestamp>
     <maven.compiler.release>17</maven.compiler.release>
     <sort.ignoreLineSeparators>true</sort.ignoreLineSeparators>
   </properties>
