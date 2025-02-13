@@ -65,7 +65,7 @@ mvn clean verify
 [Eclipse]: https://eclipse.org
 [Maven]: https://maven.apache.org
 [blog]: https://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/
-[ci_img]: https://github.com/revelc/formatter-maven-plugin/workflows/mvn%20verify/badge.svg
+[ci_img]: https://github.com/revelc/formatter-maven-plugin/actions/workflows/maven.yaml/badge.svg
 [ci_link]: https://github.com/revelc/formatter-maven-plugin/actions
 [compat]: https://code.revelc.net/formatter-maven-plugin/eclipse-versions.html
 [formatter-m2e-configurator]: https://github.com/revelc/formatter-m2e-configurator
