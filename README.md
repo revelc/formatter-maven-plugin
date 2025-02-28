@@ -20,6 +20,8 @@
 [![Maven Central][maven_img]][maven_link]
 [![Apache License][license_img]][license_link]
 
+Adding text.
+
 This project provides a mechanism to automatically (re)format your [Maven]
 project during a Maven build, or to verify its formatting, so that your project
 can converge on consistent code style regardless of user preferences, IDE
