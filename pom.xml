@@ -91,6 +91,12 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <!-- override vulnerable transitive version from commons-digester3 -->
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.10.1</version>
+      </dependency>
+      <dependency>
         <groupId>org.ow2.asm</groupId>
         <artifactId>asm</artifactId>
         <version>9.7.1</version>
@@ -130,12 +136,6 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>33.4.0-jre</version>
-    </dependency>
-    <dependency>
-      <!-- override vulnerable transitive version from commons-digester3 -->
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.10.1</version>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
@@ -233,7 +233,6 @@
                 <dependencyConvergence>
                   <!-- The items listed below have been verified non issue for allowing. -->
                   <excludes>
-                    <exclude>commons-beanutils:commons-beanutils</exclude>
                     <exclude>commons-logging:commons-logging</exclude>
                     <exclude>com.google.guava:guava</exclude>
                     <exclude>com.google.errorprone:error_prone_annotations</exclude>
@@ -255,7 +254,6 @@
         <configuration>
           <!-- The items listed below have been verified non issue to override. -->
           <ignoredUnusedDeclaredDependencies>
-            <ignore>commons-beanutils:commons-beanutils</ignore>
             <ignore>commons-logging:commons-logging</ignore>
             <ignore>com.google.errorprone:error_prone_annotations</ignore>
             <!-- converge dependency with jsdt-core -->
