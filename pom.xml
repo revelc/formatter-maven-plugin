@@ -126,6 +126,12 @@
         <artifactId>commons-logging</artifactId>
         <version>1.3.5</version>
       </dependency>
+      <dependency>
+        <!-- converge dependency with jsdt-core -->
+        <groupId>org.osgi</groupId>
+        <artifactId>osgi.annotation</artifactId>
+        <version>8.1.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -188,12 +194,6 @@
       <version>1.18.3</version>
     </dependency>
     <dependency>
-      <!-- converge dependency with jsdt-core -->
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi.annotation</artifactId>
-      <version>8.1.0</version>
-    </dependency>
-    <dependency>
       <groupId>org.w3c.css</groupId>
       <artifactId>sac</artifactId>
       <version>1.3</version>
@@ -237,7 +237,6 @@
                     <exclude>org.codehaus.plexus:plexus-utils</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.equinox.common</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.core.runtime</exclude>
-                    <exclude>org.osgi:osgi.annotation</exclude>
                     <exclude>org.osgi:org.osgi.util.function</exclude>
                   </excludes>
                 </dependencyConvergence>
@@ -245,17 +244,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <configuration>
-          <!-- The items listed below have been verified non issue to override. -->
-          <ignoredUnusedDeclaredDependencies>
-            <!-- converge dependency with jsdt-core -->
-            <ignore>org.osgi:osgi.annotation</ignore>
-          </ignoredUnusedDeclaredDependencies>
-        </configuration>
       </plugin>
     </plugins>
   </build>
