@@ -110,6 +110,12 @@
         <version>3.3.0</version>
       </dependency>
       <dependency>
+        <!-- converge dependency with jsdt-core -->
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotations</artifactId>
+        <version>2.36.0</version>
+      </dependency>
+      <dependency>
         <!-- override vulnerable transitive version from commons-digester3 -->
         <groupId>commons-beanutils</groupId>
         <artifactId>commons-beanutils</artifactId>
@@ -125,12 +131,6 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <dependency>
-      <!-- converge dependency with jsdt-core -->
-      <groupId>com.google.errorprone</groupId>
-      <artifactId>error_prone_annotations</artifactId>
-      <version>2.36.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -235,7 +235,6 @@
                   <excludes>
                     <exclude>commons-logging:commons-logging</exclude>
                     <exclude>com.google.guava:guava</exclude>
-                    <exclude>com.google.errorprone:error_prone_annotations</exclude>
                     <exclude>org.codehaus.plexus:plexus-utils</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.equinox.common</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.core.runtime</exclude>
@@ -255,7 +254,6 @@
           <!-- The items listed below have been verified non issue to override. -->
           <ignoredUnusedDeclaredDependencies>
             <ignore>commons-logging:commons-logging</ignore>
-            <ignore>com.google.errorprone:error_prone_annotations</ignore>
             <!-- converge dependency with jsdt-core -->
             <ignore>org.osgi:osgi.annotation</ignore>
           </ignoredUnusedDeclaredDependencies>
