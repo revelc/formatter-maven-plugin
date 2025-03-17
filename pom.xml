@@ -104,14 +104,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.3.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <version>3.3.0</version>
-    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -233,7 +233,6 @@
                 <dependencyConvergence>
                   <!-- The items listed below have been verified non issue for allowing. -->
                   <excludes>
-                    <exclude>cglib:cglib</exclude>
                     <exclude>commons-beanutils:commons-beanutils</exclude>
                     <exclude>commons-logging:commons-logging</exclude>
                     <exclude>com.google.guava:guava</exclude>
@@ -256,7 +255,6 @@
         <configuration>
           <!-- The items listed below have been verified non issue to override. -->
           <ignoredUnusedDeclaredDependencies>
-            <ignored>cglib:cglib</ignored>
             <ignore>commons-beanutils:commons-beanutils</ignore>
             <ignore>commons-logging:commons-logging</ignore>
             <ignore>com.google.errorprone:error_prone_annotations</ignore>
