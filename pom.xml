@@ -91,12 +91,6 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <!-- override vulnerable transitive version from commons-digester3 -->
-        <groupId>commons-beanutils</groupId>
-        <artifactId>commons-beanutils</artifactId>
-        <version>1.10.1</version>
-      </dependency>
-      <dependency>
         <groupId>org.ow2.asm</groupId>
         <artifactId>asm</artifactId>
         <version>9.7.1</version>
@@ -114,6 +108,12 @@
         <groupId>cglib</groupId>
         <artifactId>cglib</artifactId>
         <version>3.3.0</version>
+      </dependency>
+      <dependency>
+        <!-- override vulnerable transitive version from commons-digester3 -->
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.10.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
