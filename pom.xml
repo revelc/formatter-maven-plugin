@@ -121,6 +121,11 @@
         <artifactId>commons-beanutils</artifactId>
         <version>1.10.1</version>
       </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.3.5</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -136,11 +141,6 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>33.4.0-jre</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.3.5</version>
     </dependency>
     <dependency>
       <groupId>javax.inject</groupId>
@@ -233,7 +233,6 @@
                 <dependencyConvergence>
                   <!-- The items listed below have been verified non issue for allowing. -->
                   <excludes>
-                    <exclude>commons-logging:commons-logging</exclude>
                     <exclude>com.google.guava:guava</exclude>
                     <exclude>org.codehaus.plexus:plexus-utils</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.equinox.common</exclude>
@@ -253,7 +252,6 @@
         <configuration>
           <!-- The items listed below have been verified non issue to override. -->
           <ignoredUnusedDeclaredDependencies>
-            <ignore>commons-logging:commons-logging</ignore>
             <!-- converge dependency with jsdt-core -->
             <ignore>org.osgi:osgi.annotation</ignore>
           </ignoredUnusedDeclaredDependencies>
