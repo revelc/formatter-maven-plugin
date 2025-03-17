@@ -116,6 +116,11 @@
         <version>2.36.0</version>
       </dependency>
       <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>33.4.0-jre</version>
+      </dependency>
+      <dependency>
         <!-- override vulnerable transitive version from commons-digester3 -->
         <groupId>commons-beanutils</groupId>
         <artifactId>commons-beanutils</artifactId>
@@ -146,7 +151,6 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.4.0-jre</version>
     </dependency>
     <dependency>
       <groupId>javax.inject</groupId>
@@ -233,7 +237,6 @@
                 <dependencyConvergence>
                   <!-- The items listed below have been verified non issue for allowing. -->
                   <excludes>
-                    <exclude>com.google.guava:guava</exclude>
                     <exclude>org.codehaus.plexus:plexus-utils</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.equinox.common</exclude>
                     <exclude>org.eclipse.platform:org.eclipse.core.runtime</exclude>
