@@ -107,12 +107,12 @@
         <!-- converge dependency between our guava and jsdt-core's gson -->
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
-        <version>2.36.0</version>
+        <version>2.37.0</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.4.0-jre</version>
+        <version>33.4.5-jre</version>
       </dependency>
       <dependency>
         <!-- override vulnerable transitive version from commons-digester3 -->
@@ -201,7 +201,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.40.0</version>
+      <version>3.41.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
