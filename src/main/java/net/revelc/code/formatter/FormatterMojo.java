@@ -462,7 +462,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         for (final Path file : files) {
             if (Files.exists(file)) {
                 if (Files.isWritable(file)) {
-                    this.formatFile(file, rc, hashCache, basedirPath);
+                    try {
+                        this.doFormatFile(file, rc, hashCache, basedirPath, false);
+                    } catch (IOException | MalformedTreeException | BadLocationException e) {
+                        rc.failCount++;
+                        this.getLog().error(e);
+                    }
                 } else {
                     rc.readOnlyCount++;
                     this.getLog().warn("File " + file + " is read only");
@@ -636,33 +641,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             log.warn("Cannot load file hash cache properties file", e);
         }
         return props;
-    }
-
-    /**
-     * Format file.
-     *
-     * @param file
-     *            the file
-     * @param rc
-     *            the rc
-     * @param hashCache
-     *            the hash cache
-     * @param basedirPath
-     *            the basedir path
-     *
-     * @throws MojoFailureException
-     *             the mojo failure exception
-     * @throws MojoExecutionException
-     *             the mojo execution exception
-     */
-    private void formatFile(final Path file, final ResultCollector rc, final Properties hashCache,
-            final String basedirPath) throws MojoFailureException, MojoExecutionException {
-        try {
-            this.doFormatFile(file, rc, hashCache, basedirPath, false);
-        } catch (IOException | MalformedTreeException | BadLocationException e) {
-            rc.failCount++;
-            this.getLog().error(e);
-        }
     }
 
     /**
