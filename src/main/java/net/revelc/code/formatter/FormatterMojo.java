@@ -23,12 +23,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,14 +39,11 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.resource.ResourceManager;
-import org.codehaus.plexus.resource.loader.FileResourceLoader;
-import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
-import org.xml.sax.SAXException;
 
 import com.google.common.hash.Hashing;
 
@@ -60,8 +52,6 @@ import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.java.JavaFormatter;
 import net.revelc.code.formatter.javascript.JavascriptFormatter;
 import net.revelc.code.formatter.json.JsonFormatter;
-import net.revelc.code.formatter.model.ConfigReadException;
-import net.revelc.code.formatter.model.ConfigReader;
 import net.revelc.code.formatter.xml.XMLFormatter;
 
 /**
@@ -385,6 +375,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean hashCacheWritten;
 
     /**
+     * The formatter config file searcher.
+     */
+    private CfgFileSearcher cfgFileSearcher;
+
+    /**
      * Execute.
      *
      * @throws MojoExecutionException
@@ -396,6 +391,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        this.cfgFileSearcher = new CfgFileSearcher(this.getLog(), this.basedir, this.resourceManager);
+
         if (this.skipFormatting) {
             this.getLog().info("Formatting is skipped");
             return;
@@ -906,11 +903,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
         // Html Setup
         if (this.configHtmlFile != null) {
-            this.htmlFormatter.init(this.getOptionsFromPropertiesFile(this.configHtmlFile), this);
+            this.htmlFormatter.init(this.cfgFileSearcher.getOptionsFromPropertiesFile(this.configHtmlFile), this);
         }
         // Xml Setup
         if (this.configXmlFile != null) {
-            final var xmlFormattingOptions = this.getOptionsFromPropertiesFile(this.configXmlFile);
+            final var xmlFormattingOptions = this.cfgFileSearcher.getOptionsFromPropertiesFile(this.configXmlFile);
             if (this.lineEnding != LineEnding.KEEP) {
                 xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
             }
@@ -918,7 +915,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
         // Json Setup
         if (this.configJsonFile != null) {
-            final var jsonFormattingOptions = this.getOptionsFromPropertiesFile(this.configJsonFile);
+            final var jsonFormattingOptions = this.cfgFileSearcher.getOptionsFromPropertiesFile(this.configJsonFile);
             if (this.lineEnding != LineEnding.KEEP) {
                 jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
             }
@@ -926,7 +923,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
         // Css Setup
         if (this.configCssFile != null) {
-            this.cssFormatter.init(this.getOptionsFromPropertiesFile(this.configCssFile), this);
+            this.cssFormatter.init(this.cfgFileSearcher.getOptionsFromPropertiesFile(this.configCssFile), this);
         }
         // stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null && this.configHtmlFile == null
@@ -958,70 +955,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             return options;
         }
 
-        return this.getOptionsFromConfigFile(newConfigFile);
-    }
-
-    /**
-     * Read config file and return the config as {@link Map}.
-     *
-     * @param newConfigFile
-     *            the new config file
-     *
-     * @return the options from config file
-     *
-     * @throws MojoExecutionException
-     *             the mojo execution exception
-     */
-    private Map<String, String> getOptionsFromConfigFile(final String newConfigFile) throws MojoExecutionException {
-
-        this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
-        this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
-
-        try (var configInput = this.resourceManager.getResourceAsInputStream(newConfigFile)) {
-            return new ConfigReader().read(configInput);
-        } catch (final ResourceNotFoundException e) {
-            throw new MojoExecutionException("Cannot find config file [" + newConfigFile + "]");
-        } catch (final IOException e) {
-            throw new MojoExecutionException("Cannot read config file [" + newConfigFile + "]", e);
-        } catch (final SAXException e) {
-            throw new MojoExecutionException("Cannot parse config file [" + newConfigFile + "]", e);
-        } catch (final ConfigReadException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Read properties file and return the properties as {@link Map}.
-     *
-     * @param newPropertiesFile
-     *            the new properties file
-     *
-     * @return the options from properties file or null if not properties file found
-     *
-     * @throws MojoExecutionException
-     *             the mojo execution exception
-     */
-    private Map<String, String> getOptionsFromPropertiesFile(final String newPropertiesFile)
-            throws MojoExecutionException {
-
-        this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
-        this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
-
-        final var properties = new Properties();
-        try {
-            properties.load(this.resourceManager.getResourceAsInputStream(newPropertiesFile));
-        } catch (final ResourceNotFoundException e) {
-            this.getLog().debug("Property file [" + newPropertiesFile + "] cannot be found", e);
-            return new HashMap<>();
-        } catch (final IOException e) {
-            throw new MojoExecutionException("Cannot read config file [" + newPropertiesFile + "]", e);
-        }
-
-        final Map<String, String> map = new HashMap<>();
-        for (final String name : properties.stringPropertyNames()) {
-            map.put(name, properties.getProperty(name));
-        }
-        return map;
+        return this.cfgFileSearcher.getOptionsFromConfigFile(newConfigFile);
     }
 
     /**
