@@ -19,15 +19,16 @@
   <parent>
     <groupId>net.revelc.code</groupId>
     <artifactId>revelc</artifactId>
-    <version>7</version>
+    <version>8</version>
     <relativePath />
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>formatter-maven-plugin</artifactId>
   <version>2.27.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
-  <name>formatter-maven-plugin</name>
+  <name>Formatter Maven Plugin</name>
   <description>Maven plugin for formatting source code</description>
+  <url>https://code.revelc.net/formatter-maven-plugin</url>
   <inceptionYear>2010</inceptionYear>
   <developers>
     <developer>
