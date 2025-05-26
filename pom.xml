@@ -19,7 +19,7 @@
   <parent>
     <groupId>net.revelc.code</groupId>
     <artifactId>revelc</artifactId>
-    <version>7</version>
+    <version>8</version>
     <relativePath />
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
@@ -218,7 +218,7 @@
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <version>1.19.1</version>
+      <version>1.20.1</version>
     </dependency>
     <dependency>
       <groupId>org.w3c.css</groupId>
