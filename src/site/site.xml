@@ -14,36 +14,37 @@
     limitations under the License.
 
 -->
-<project name="${project.name}" xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd">
-    <skin>
-        <groupId>org.apache.maven.skins</groupId>
-        <artifactId>maven-fluido-skin</artifactId>
-        <version>${version.maven-fluido-skin}</version>
-    </skin>
-    <custom>
-        <fluidoSkin>
-            <topBarEnabled>true</topBarEnabled>
-            <sideBarEnabled>true</sideBarEnabled>
-        </fluidoSkin>
-    </custom>
-    <body>
-        <menu name="Overview">
-            <item name="Project Home" href="https://code.revelc.net/formatter-maven-plugin/"/>
-            <item name="Introduction" href="index.html"/>
-            <item name="Goals" href="plugin-info.html"/>
-            <item name="Usage" href="usage.html"/>
-            <item name="Eclipse Compatibility" href="eclipse-versions.html"/>
-            <item name="Examples" href="examples.html"/>
-        </menu>
-        <menu name="Examples">
-            <item name="Source Files" href="examples.html#Setting_Source_Files"/>
-            <item name="Compiler Version" href="examples.html#Setting_Compiler_Version"/>
-            <item name="Line Endings" href="examples.html#System_Independent_Line_Endings"/>
-            <item name="File Encoding" href="examples.html#Source_File_Encoding"/>
-            <item name="Custom Formatting" href="examples.html#Custom_Configuration_File"/>
-            <item name="Multimodule" href="examples.html#Multimodule_Configuration"/>
-        </menu>
-        <menu ref="reports" />
-    </body>
-</project>
+<site xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd">
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>${version.maven-fluido-skin}</version>
+  </skin>
+  <custom>
+    <fluidoSkin>
+      <topBarEnabled>true</topBarEnabled>
+      <sideBarEnabled>true</sideBarEnabled>
+      <skipGenerationDate>true</skipGenerationDate>
+      <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+    </fluidoSkin>
+  </custom>
+  <body>
+    <menu name="Overview">
+      <item name="About" href="index.html" />
+      <item name="Goals" href="plugin-info.html" />
+      <item name="Usage" href="usage.html" />
+      <item name="Eclipse Compatibility" href="eclipse-versions.html" />
+      <item name="Examples" href="examples.html" />
+    </menu>
+    <menu name="Examples">
+      <item name="Source Files" href="examples.html#Setting_Source_Files" />
+      <item name="Compiler Version" href="examples.html#Setting_Compiler_Version" />
+      <item name="Line Endings" href="examples.html#System_Independent_Line_Endings" />
+      <item name="File Encoding" href="examples.html#Source_File_Encoding" />
+      <item name="Custom Formatting" href="examples.html#Custom_Configuration_File" />
+      <item name="Multimodule" href="examples.html#Multimodule_Configuration" />
+    </menu>
+    <menu ref="reports" />
+  </body>
+</site>

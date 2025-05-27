@@ -16,13 +16,16 @@
 
 #set ($d = "$")
 
-Introduction
-============
+${project.name}
+===============
 
 ${project.description}
 
-This plugin allows formatting java source code using the Eclipse code
-formatter.
+This `${project.artifactId}` allows formatting java source code using the Eclipse code
+formatter, as well as formatting files of other types.
+
+Introduction
+------------
 
 For a description on how to begin using the plugin, see the [usage] section.
 
