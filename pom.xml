@@ -108,7 +108,7 @@
         <!-- converge dependency between our guava and jsdt-core's gson -->
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
-        <version>2.38.0</version>
+        <version>2.39.0</version>
       </dependency>
       <dependency>
         <!-- converge dependency between our guava and jsdt-core's gson -->
@@ -137,6 +137,12 @@
         <!-- resolve dependency convergence issue with Eclipse -->
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna</artifactId>
+        <version>5.17.0</version>
+      </dependency>
+      <dependency>
+        <!-- resolve dependency convergence issue with Eclipse and jsdt-core -->
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna-platform</artifactId>
         <version>5.17.0</version>
       </dependency>
       <dependency>
@@ -214,7 +220,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.41.0</version>
+      <version>3.42.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
