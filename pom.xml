@@ -137,13 +137,13 @@
         <!-- resolve dependency convergence issue with Eclipse -->
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna</artifactId>
-        <version>5.17.0</version>
+        <version>5.18.0</version>
       </dependency>
       <dependency>
         <!-- resolve dependency convergence issue with Eclipse and jsdt-core -->
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna-platform</artifactId>
-        <version>5.17.0</version>
+        <version>5.18.0</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
