@@ -31,7 +31,7 @@ jobs:
       env:
         MAVEN_OPTS: -Djansi.force=true
     - name: View IT build log on failure
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: ${{ failure() }}
       with:
         name: build-logs-java-${{ matrix.java }}-os-${{ matrix.os }}
