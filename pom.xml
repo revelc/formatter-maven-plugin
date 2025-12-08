@@ -108,7 +108,7 @@
         <!-- converge dependency between our guava and jsdt-core's gson -->
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
-        <version>2.44.0</version>
+        <version>2.45.0</version>
       </dependency>
       <dependency>
         <!-- converge dependency between our guava and jsdt-core's gson -->
@@ -220,7 +220,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.43.0</version>
+      <version>3.44.0</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
