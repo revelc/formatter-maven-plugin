@@ -72,8 +72,8 @@ mvn clean verify
 [license_img]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
 [license_link]: https://github.com/revelc/formatter-maven-plugin/blob/main/LICENSE
 [m2e]: https://eclipse.org/m2e
-[maven_img]: https://maven-badges.sml.io/maven-central/net.revelc.code.formatter/formatter-maven-plugin/badge.svg
-[maven_link]: https://maven-badges.sml.io/maven-central/net.revelc.code.formatter/formatter-maven-plugin
+[maven_img]: https://img.shields.io/maven-central/v/net.revelc.code.formatter/formatter-maven-plugin
+[maven_link]: https://central.sonatype.com/artifact/net.revelc.code.formatter/formatter-maven-plugin
 [plugin-docs]: https://code.revelc.net/formatter-maven-plugin/
 [related1]: https://wiki.eclipse.org/M2E_extension_development_environment
 [related2]: https://wiki.eclipse.org/Submitting_M2E_marketplace_entries
