@@ -551,13 +551,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var ds = new DirectoryScanner();
         ds.setBasedir(newBasedir.toFile());
 
-        // Check includes. We want to process both what the user includes from this plugin and what the resource itself
-        // includes.
+        // Check includes. If the user has specified plugin-level includes, honour them exclusively.
+        // Otherwise fall back to the resource's own includes, or DEFAULT_INCLUDES when the resource
+        // has none. Combining both sets with OR semantics (which is what DirectoryScanner does)
+        // would cause DEFAULT_INCLUDES patterns such as **/*.xml to match files that do not satisfy
+        // the user's narrower filter.
         final List<String> included = new ArrayList<>();
         if (this.includes != null && this.includes.length > 0) {
             Collections.addAll(included, this.includes);
-        }
-        if (resource.getIncludes().isEmpty()) {
+        } else if (resource.getIncludes().isEmpty()) {
             Collections.addAll(included, DEFAULT_INCLUDES);
         } else {
             included.addAll(resource.getIncludes());
