@@ -166,7 +166,7 @@
         <!-- override outdated transitive version from commons-digester3 -->
         <groupId>org.ow2.asm</groupId>
         <artifactId>asm</artifactId>
-        <version>9.10</version>
+        <version>9.10.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
