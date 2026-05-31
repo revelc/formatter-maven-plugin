@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>@project.groupId@</groupId>
+    <artifactId>@project.artifactId@-include-resources-filter-test</artifactId>
+    <version>@project.version@</version>
+
+    <properties>
+        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>@project.version@</version>
+                <executions>
+                    <execution>
+                        <id>format-code</id>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                        <configuration>
+                            <!--
+                                includeResources=true: also scan Maven resource directories.
+                                includes: restrict formatting to changelog XML files only.
+
+                                Bug: the includes filter is not honoured when includeResources=true.
+                                Files like log4j.xml and app.json are picked up via DEFAULT_INCLUDES
+                                even though they do not match the user-specified pattern.
+                                Expected: only changelog-1.0.xml (1 file total) is processed.
+                                Actual (with bug): log4j.xml and app.json are also processed (3 files total).
+                            -->
+                            <includeResources>true</includeResources>
+                            <includes>
+                                <include>**/changelog-*.xml</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
