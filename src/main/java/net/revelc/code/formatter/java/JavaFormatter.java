@@ -40,8 +40,11 @@ import net.revelc.code.formatter.LineEnding;
  */
 public class JavaFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    /** The formatter. */
-    private CodeFormatter formatter;
+    /**
+     * Per-thread Eclipse {@link CodeFormatter} instance. The Eclipse JDT {@code DefaultCodeFormatter} is not documented
+     * as thread-safe, so each thread gets its own instance constructed from the configured options.
+     */
+    private ThreadLocal<CodeFormatter> formatter;
 
     /** The exclusion pattern. */
     private Pattern exclusionPattern;
@@ -53,8 +56,9 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
     public void init(final ImmutableMap<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
         this.options = options;
+        this.formatter = ThreadLocal
+                .withInitial(() -> ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING));
     }
 
     @Override
@@ -62,7 +66,7 @@ public class JavaFormatter extends AbstractCacheableFormatter implements Formatt
         TextEdit te;
         try {
             final var regions = JavaFormatter.getRegions(code, this.exclusionPattern);
-            te = this.formatter.format(CodeFormatter.K_COMPILATION_UNIT | CodeFormatter.F_INCLUDE_COMMENTS, code,
+            te = this.formatter.get().format(CodeFormatter.K_COMPILATION_UNIT | CodeFormatter.F_INCLUDE_COMMENTS, code,
                     regions, 0, ending.getChars());
             if (te == null) {
                 this.log.debug(

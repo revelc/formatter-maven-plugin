@@ -14,6 +14,7 @@
 
 package net.revelc.code.formatter;
 
+import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import java.io.File;
@@ -364,6 +365,17 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "false", property = "formatter.includeResources")
     private boolean includeResources;
 
+    /**
+     * Number of threads to use for formatting files in parallel. Defaults to {@code 1}, which preserves the historical
+     * single-threaded behavior. A value of {@code 0} or any negative value selects a value equal to the number of
+     * available processors (i.e. {@link Runtime#availableProcessors()}). Larger projects may benefit substantially from
+     * parallel formatting.
+     *
+     * @since 2.30.0
+     */
+    @Parameter(defaultValue = "1", property = "formatter.threads")
+    private int threads;
+
     /** The java formatter. */
     private final JavaFormatter javaFormatter = new JavaFormatter();
 
@@ -383,7 +395,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private final CssFormatter cssFormatter = new CssFormatter();
 
     /** The hash cache written. */
-    private boolean hashCacheWritten;
+    private volatile boolean hashCacheWritten;
 
     /**
      * Execute.
@@ -460,22 +472,32 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var hashCache = this.readFileHashCacheFile();
 
         final var basedirPath = this.getBasedirPath();
-        for (final Path file : files) {
-            if (Files.exists(file)) {
-                if (Files.isWritable(file)) {
+
+        final var effectiveThreads = this.threads <= 0 ? Runtime.getRuntime().availableProcessors() : this.threads;
+        if (effectiveThreads <= 1) {
+            for (final Path file : files) {
+                this.processFile(file, rc, hashCache, basedirPath);
+            }
+        } else {
+            log.debug("Formatting files using " + effectiveThreads + " threads");
+            var executor = newFixedThreadPool(effectiveThreads);
+            try {
+                final var futures = files.stream().map(f -> executor.submit(() -> {
+                    this.processFile(f, rc, hashCache, basedirPath);
+                    return null;
+                })).toList();
+                for (final var future : futures) {
                     try {
-                        this.doFormatFile(file, rc, hashCache, basedirPath, false);
-                    } catch (IOException | MalformedTreeException | BadLocationException e) {
-                        rc.failCount++;
-                        this.getLog().error(e);
+                        future.get();
+                    } catch (final java.util.concurrent.ExecutionException e) {
+                        throw new MojoExecutionException("Error formatting files", e);
+                    } catch (final InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new MojoExecutionException("Interrupted while formatting files", e);
                     }
-                } else {
-                    rc.readOnlyCount++;
-                    this.getLog().warn("File " + file + " is read only");
                 }
-            } else {
-                rc.failCount++;
-                this.getLog().error("File " + file + " does not exist");
+            } finally {
+                executor.shutdownNow();
             }
         }
 
@@ -490,15 +512,52 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         final var results = String.format(
                 "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
-                numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
-                rc.readOnlyCount);
+                numberOfFiles, elapsed, rc.successCount.get(), rc.skippedCount.get(), rc.unchangedCount.get(),
+                rc.failCount.get(), rc.readOnlyCount.get());
 
-        if (rc.failCount > 0) {
+        if (rc.failCount.get() > 0) {
             this.getLog().error(results);
-        } else if (rc.readOnlyCount > 0) {
+        } else if (rc.readOnlyCount.get() > 0) {
             this.getLog().warn(results);
         } else {
             this.getLog().info(results);
+        }
+    }
+
+    /**
+     * Format a single file, handling read-only/missing files and per-file exceptions in a thread-safe manner.
+     *
+     * @param file
+     *            the file to format
+     * @param rc
+     *            the shared result collector
+     * @param hashCache
+     *            the hash cache ({@link Properties} is internally synchronized)
+     * @param basedirPath
+     *            the project basedir canonical path
+     *
+     * @throws MojoExecutionException
+     *             if formatting fails fatally
+     * @throws MojoFailureException
+     *             if formatting fails fatally (e.g. validation)
+     */
+    private void processFile(final Path file, final ResultCollector rc, final Properties hashCache,
+            final String basedirPath) throws MojoExecutionException, MojoFailureException {
+        if (Files.exists(file)) {
+            if (Files.isWritable(file)) {
+                try {
+                    this.doFormatFile(file, rc, hashCache, basedirPath, false);
+                } catch (IOException | MalformedTreeException | BadLocationException e) {
+                    rc.failCount.incrementAndGet();
+                    this.getLog().error(e);
+                }
+            } else {
+                rc.readOnlyCount.incrementAndGet();
+                this.getLog().warn("File " + file + " is read only");
+            }
+        } else {
+            rc.failCount.incrementAndGet();
+            this.getLog().error("File " + file + " does not exist");
         }
     }
 
@@ -681,7 +740,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var path = canonicalPath.substring(basedirPath.length());
         final var cachedHash = hashCache.getProperty(path);
         if (!skipFormattingCache && cachedHash != null && cachedHash.equals(originalHash)) {
-            rc.skippedCount++;
+            rc.skippedCount.incrementAndGet();
             log.debug("Cache hit: file is already formatted.");
             return;
         }
@@ -693,6 +752,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 log.debug(Type.JAVA + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
+                // JavaFormatter uses a ThreadLocal CodeFormatter, so concurrent calls are safe.
                 formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (fileName.endsWith(".js") && this.jsFormatter.isInitialized()) {
@@ -700,6 +760,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 log.debug(Type.JAVASCRIPT + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
+                // JavascriptFormatter uses a ThreadLocal CodeFormatter, so concurrent calls are safe.
                 formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (fileName.endsWith(".html") && this.htmlFormatter.isInitialized()) {
@@ -752,11 +813,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (Result.SKIPPED.equals(result)) {
             // Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
             // formatting.
-            rc.unchangedCount++;
+            rc.unchangedCount.incrementAndGet();
         } else if (Result.SUCCESS.equals(result)) {
-            rc.successCount++;
+            rc.successCount.incrementAndGet();
         } else if (Result.FAIL.equals(result)) {
-            rc.failCount++;
+            rc.failCount.incrementAndGet();
             return;
         }
 
@@ -778,7 +839,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // As a safety check, if our hash matches, skip the write of file (should never occur)
         if (originalHash.equals(formattedHash)) {
-            rc.skippedCount++;
+            rc.skippedCount.incrementAndGet();
             log.debug("Equal hash code. Not writing result to file.");
             return;
         }
@@ -1078,22 +1139,22 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     static class ResultCollector {
 
         /** The success count. */
-        int successCount;
+        final java.util.concurrent.atomic.AtomicInteger successCount = new java.util.concurrent.atomic.AtomicInteger();
 
         /** The fail count. */
-        int failCount;
+        final java.util.concurrent.atomic.AtomicInteger failCount = new java.util.concurrent.atomic.AtomicInteger();
 
         /** The skipped count is incremented for cached files that haven't changed since being cached. */
-        int skippedCount;
+        final java.util.concurrent.atomic.AtomicInteger skippedCount = new java.util.concurrent.atomic.AtomicInteger();
 
         /**
          * Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
          * formatting.
          */
-        int unchangedCount;
+        final java.util.concurrent.atomic.AtomicInteger unchangedCount = new java.util.concurrent.atomic.AtomicInteger();
 
         /** The read only count. */
-        int readOnlyCount;
+        final java.util.concurrent.atomic.AtomicInteger readOnlyCount = new java.util.concurrent.atomic.AtomicInteger();
     }
 
     @Override

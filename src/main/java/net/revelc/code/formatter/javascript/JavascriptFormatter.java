@@ -34,8 +34,11 @@ import net.revelc.code.formatter.LineEnding;
  */
 public class JavascriptFormatter extends AbstractCacheableFormatter implements Formatter {
 
-    /** The formatter. */
-    private CodeFormatter formatter;
+    /**
+     * Per-thread Eclipse {@link CodeFormatter} instance. The Eclipse JSDT formatter is not documented as thread-safe,
+     * so each thread gets its own instance constructed from the configured options.
+     */
+    private ThreadLocal<CodeFormatter> formatter;
 
     /** The configuration options */
     private ImmutableMap<String, String> options;
@@ -44,13 +47,14 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     public void init(final ImmutableMap<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
-        this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);
         this.options = options;
+        this.formatter = ThreadLocal
+                .withInitial(() -> ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING));
     }
 
     @Override
     public String doFormat(final String code, final LineEnding ending) throws BadLocationException {
-        final var te = this.formatter.format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
+        final var te = this.formatter.get().format(CodeFormatter.K_JAVASCRIPT_UNIT, code, 0, code.length(), 0,
                 ending.getChars());
         if (te == null) {
             this.log.debug("Code cannot be formatted. Possible cause is unmatched source/target/compliance version.");

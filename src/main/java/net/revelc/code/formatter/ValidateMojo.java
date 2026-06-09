@@ -73,13 +73,13 @@ public class ValidateMojo extends FormatterMojo {
             throws IOException, MojoFailureException, BadLocationException, MojoExecutionException {
         super.doFormatFile(file, rc, hashCache, basedirPath, true);
 
-        if (rc.successCount != 0) {
+        if (rc.successCount.get() != 0) {
             var errorMessage = String.format(
                     "File '%s' has not been previously formatted. Please format file (for example by invoking `%s`) and commit before running validation!",
                     file, formatCommand());
             throw new MojoFailureException(errorMessage);
         }
-        if (rc.failCount != 0) {
+        if (rc.failCount.get() != 0) {
             throw new MojoExecutionException("Error formatting '" + file + "' ");
         }
     }
