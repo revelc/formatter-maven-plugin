@@ -24,12 +24,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -584,11 +579,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.setFollowSymlinks(false);
         ds.scan();
 
-        final List<Path> foundFiles = new ArrayList<>();
-        for (final String filename : ds.getIncludedFiles()) {
-            foundFiles.add(Path.of(newBasedir.toString(), filename));
-        }
-        return foundFiles;
+        return Arrays.stream(ds.getIncludedFiles()).map(f -> Path.of(newBasedir.toString(), f)).toList();
     }
 
     /**
