@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.w3c.css.sac.InputSource;
 
+import com.google.common.collect.ImmutableMap;
 import com.steadystate.css.dom.CSSStyleSheetImpl;
 import com.steadystate.css.format.CSSFormat;
 import com.steadystate.css.parser.CSSOMParser;
@@ -39,10 +40,10 @@ public class CssFormatter extends AbstractCacheableFormatter implements Formatte
     private CSSFormat formatter;
 
     /** The configuration options */
-    private Map<String, String> options;
+    private ImmutableMap<String, String> options;
 
     @Override
-    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
+    public void init(final ImmutableMap<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         final var indent = Integer.parseInt(options.getOrDefault("indent", "4"));

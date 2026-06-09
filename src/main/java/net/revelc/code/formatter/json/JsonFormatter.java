@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.collect.ImmutableMap;
 
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
@@ -41,10 +42,10 @@ public class JsonFormatter extends AbstractCacheableFormatter implements Formatt
     private static final Pattern ANY_EOL = Pattern.compile("\\R");
 
     /** The configuration options */
-    private Map<String, String> options;
+    private ImmutableMap<String, String> options;
 
     @Override
-    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
+    public void init(final ImmutableMap<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         final var indent = Integer.parseInt(options.getOrDefault("indent", "4"));

@@ -22,6 +22,8 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.wst.jsdt.core.ToolFactory;
 import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 
+import com.google.common.collect.ImmutableMap;
+
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
@@ -36,10 +38,10 @@ public class JavascriptFormatter extends AbstractCacheableFormatter implements F
     private CodeFormatter formatter;
 
     /** The configuration options */
-    private Map<String, String> options;
+    private ImmutableMap<String, String> options;
 
     @Override
-    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
+    public void init(final ImmutableMap<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         this.formatter = ToolFactory.createCodeFormatter(options, ToolFactory.M_FORMAT_EXISTING);

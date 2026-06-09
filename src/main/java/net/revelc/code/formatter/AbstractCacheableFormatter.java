@@ -23,6 +23,8 @@ import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 
+import com.google.common.collect.ImmutableMap;
+
 import net.revelc.code.formatter.css.CssFormatter;
 import net.revelc.code.formatter.html.HTMLFormatter;
 import net.revelc.code.formatter.xml.XMLFormatter;
@@ -46,7 +48,7 @@ public abstract class AbstractCacheableFormatter {
      * @param cfg
      *            the cfg
      */
-    protected abstract void init(Map<String, String> options, ConfigurationSource cfg);
+    protected abstract void init(ImmutableMap<String, String> options, ConfigurationSource cfg);
 
     /**
      * Inits the cfg.

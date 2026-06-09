@@ -15,7 +15,8 @@
 package net.revelc.code.formatter;
 
 import java.nio.file.Path;
-import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * The Interface Formatter.
@@ -30,7 +31,7 @@ public interface Formatter {
      * @param cfg
      *            the cfg
      */
-    void init(Map<String, String> options, ConfigurationSource cfg);
+    void init(ImmutableMap<String, String> options, ConfigurationSource cfg);
 
     /**
      * Format individual file.

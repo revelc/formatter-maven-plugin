@@ -53,6 +53,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.hash.Hashing;
 
 import net.revelc.code.formatter.css.CssFormatter;
@@ -908,7 +909,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
         // Html Setup
         if (this.configHtmlFile != null) {
-            this.htmlFormatter.init(this.getOptionsFromPropertiesFile(this.configHtmlFile), this);
+            this.htmlFormatter.init(ImmutableMap.copyOf(this.getOptionsFromPropertiesFile(this.configHtmlFile)), this);
         }
         // Xml Setup
         if (this.configXmlFile != null) {
@@ -916,7 +917,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (this.lineEnding != LineEnding.KEEP) {
                 xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
             }
-            this.xmlFormatter.init(xmlFormattingOptions, this);
+            this.xmlFormatter.init(ImmutableMap.copyOf(xmlFormattingOptions), this);
         }
         // Json Setup
         if (this.configJsonFile != null) {
@@ -924,11 +925,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (this.lineEnding != LineEnding.KEEP) {
                 jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
             }
-            this.jsonFormatter.init(jsonFormattingOptions, this);
+            this.jsonFormatter.init(ImmutableMap.copyOf(jsonFormattingOptions), this);
         }
         // Css Setup
         if (this.configCssFile != null) {
-            this.cssFormatter.init(this.getOptionsFromPropertiesFile(this.configCssFile), this);
+            this.cssFormatter.init(ImmutableMap.copyOf(this.getOptionsFromPropertiesFile(this.configCssFile)), this);
         }
         // stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null && this.configHtmlFile == null
@@ -949,7 +950,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private Map<String, String> getFormattingOptions(final String newConfigFile) throws MojoExecutionException {
+    private ImmutableMap<String, String> getFormattingOptions(final String newConfigFile)
+            throws MojoExecutionException {
         if (this.useEclipseDefaults) {
             this.getLog().info("Using Eclipse Defaults");
             // Use defaults only for formatting
@@ -957,7 +959,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
             options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
             options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
-            return options;
+            return ImmutableMap.copyOf(options);
         }
 
         return this.getOptionsFromConfigFile(newConfigFile);
@@ -974,7 +976,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private Map<String, String> getOptionsFromConfigFile(final String newConfigFile) throws MojoExecutionException {
+    private ImmutableMap<String, String> getOptionsFromConfigFile(final String newConfigFile)
+            throws MojoExecutionException {
 
         this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
         this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
@@ -1003,7 +1006,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private Map<String, String> getOptionsFromPropertiesFile(final String newPropertiesFile)
+    private HashMap<String, String> getOptionsFromPropertiesFile(final String newPropertiesFile)
             throws MojoExecutionException {
 
         this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
@@ -1019,7 +1022,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throw new MojoExecutionException("Cannot read config file [" + newPropertiesFile + "]", e);
         }
 
-        final Map<String, String> map = new HashMap<>();
+        final var map = new HashMap<String, String>();
         for (final String name : properties.stringPropertyNames()) {
             map.put(name, properties.getProperty(name));
         }
