@@ -564,7 +564,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @return the list
      */
-    List<Path> addCollectionFiles(final Path newBasedir) {
+    private List<Path> addCollectionFiles(final Path newBasedir) {
         final var ds = new DirectoryScanner();
         ds.setBasedir(newBasedir.toFile());
         if (this.includes != null && this.includes.length > 0) {
