@@ -25,7 +25,7 @@ jobs:
         distribution: temurin
         cache: 'maven'
     - name: Download Maven Wrapper
-      run: mvn wrapper:wrapper "-Dmaven=3.9.9"
+      run: mvn wrapper:wrapper "-Dmaven=3.9.16"
     - name: Build with Maven
       run: ./mvnw -B -V -e "-Dstyle.color=always" verify "-Drevelc.skipFormat" "-Drevelc.verifyFormat"
       env:
