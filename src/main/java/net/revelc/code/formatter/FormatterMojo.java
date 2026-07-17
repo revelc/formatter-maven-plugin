@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -1136,22 +1137,22 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     static class ResultCollector {
 
         /** The success count. */
-        final java.util.concurrent.atomic.AtomicInteger successCount = new java.util.concurrent.atomic.AtomicInteger();
+        final AtomicInteger successCount = new AtomicInteger();
 
         /** The fail count. */
-        final java.util.concurrent.atomic.AtomicInteger failCount = new java.util.concurrent.atomic.AtomicInteger();
+        final AtomicInteger failCount = new AtomicInteger();
 
         /** The skipped count is incremented for cached files that haven't changed since being cached. */
-        final java.util.concurrent.atomic.AtomicInteger skippedCount = new java.util.concurrent.atomic.AtomicInteger();
+        final AtomicInteger skippedCount = new AtomicInteger();
 
         /**
          * Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
          * formatting.
          */
-        final java.util.concurrent.atomic.AtomicInteger unchangedCount = new java.util.concurrent.atomic.AtomicInteger();
+        final AtomicInteger unchangedCount = new AtomicInteger();
 
         /** The read only count. */
-        final java.util.concurrent.atomic.AtomicInteger readOnlyCount = new java.util.concurrent.atomic.AtomicInteger();
+        final AtomicInteger readOnlyCount = new AtomicInteger();
     }
 
     @Override
