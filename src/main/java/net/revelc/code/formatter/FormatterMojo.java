@@ -368,15 +368,16 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean includeResources;
 
     /**
-     * Number of threads to use for formatting files in parallel. Defaults to {@code 1}, which preserves the historical
-     * single-threaded behavior. A value of {@code 0} or any negative value selects a value equal to the number of
-     * available processors (i.e. {@link Runtime#availableProcessors()}). Larger projects may benefit substantially from
-     * parallel formatting.
+     * Number of threads to use for formatting files in parallel. Either an integer specifying the number of threads or
+     * a multiplier (e.g. {@code 0.75C}, {@code 1.5C}, {@code 2C}) specifying the number of threads per core. Defaults
+     * to {@code 1}, which preserves the historical single-threaded behavior. A value of {@code 0} or any negative value
+     * selects a value equal to the number of available processors (i.e. {@link Runtime#availableProcessors()}). Larger
+     * projects may benefit substantially from parallel formatting.
      *
      * @since 2.30.0
      */
     @Parameter(defaultValue = "1", property = "formatter.threads")
-    private int threads;
+    private String threads;
 
     /** The java formatter. */
     private final JavaFormatter javaFormatter = new JavaFormatter();
@@ -475,7 +476,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         final var basedirPath = this.getBasedirPath();
 
-        final var effectiveThreads = this.threads <= 0 ? Runtime.getRuntime().availableProcessors() : this.threads;
+        final var effectiveThreads = effectiveThreads(threads, Runtime.getRuntime().availableProcessors());
         if (effectiveThreads <= 1) {
             for (final Path file : files) {
                 this.processFile(file, rc, hashCache, basedirPath);
@@ -524,6 +525,28 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         } else {
             this.getLog().info(results);
         }
+    }
+
+    /**
+     * Determines the number of threads given the threads option and the number of available cores.
+     *
+     * @param threadsOption
+     *            The number of threads or a per-core multiplier.
+     * @param cores
+     *            The number of CPU cores available on the system.
+     *
+     * @return The number of effective threads.
+     */
+    static int effectiveThreads(String threadsOption, int cores) {
+        if (threadsOption.matches("\\d+(\\.\\d+)?C")) {
+            var threadsPerCore = Double.parseDouble(threadsOption.substring(0, threadsOption.length() - 1));
+            return Math.max(1, (int) (threadsPerCore * cores));
+        }
+        if (threadsOption.matches("\\d+")) {
+            var threads = Integer.parseInt(threadsOption);
+            return threads <= 0 ? cores : threads;
+        }
+        throw new IllegalArgumentException(String.format("Invalid value `%s` for option `threads`", threadsOption));
     }
 
     /**
