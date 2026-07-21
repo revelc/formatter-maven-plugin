@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@v5
       with:
@@ -25,7 +25,7 @@ jobs:
         distribution: temurin
         cache: 'maven'
     - name: Download Maven Wrapper
-      run: mvn wrapper:wrapper "-Dmaven=3.9.9"
+      run: mvn wrapper:wrapper "-Dmaven=3.9.16"
     - name: Build with Maven
       run: ./mvnw -B -V -e "-Dstyle.color=always" verify "-Drevelc.skipFormat" "-Drevelc.verifyFormat"
       env:
