@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -490,7 +491,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 for (final var future : futures) {
                     try {
                         future.get();
-                    } catch (final java.util.concurrent.ExecutionException e) {
+                    } catch (final ExecutionException e) {
                         throw new MojoExecutionException("Error formatting files", e);
                     } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt();
