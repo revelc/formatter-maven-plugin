@@ -461,7 +461,6 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var numberOfFiles = files.size();
         final var log = this.getLog();
 
-        // reduce logging noise
         final var msg = "Number of files to be formatted: " + numberOfFiles;
         log.debug(msg);
 
@@ -476,12 +475,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var basedirPath = this.getBasedirPath();
 
         final int effectiveThreads = effectiveThreads(threads, Runtime.getRuntime().availableProcessors());
+        log.debug("Formatting files using " + effectiveThreads + " thread(s)");
         if (effectiveThreads <= 1) {
             for (final Path file : files) {
                 this.processFile(file, rc, hashCache, basedirPath);
             }
         } else {
-            log.debug("Formatting files using " + effectiveThreads + " threads");
             var executor = newFixedThreadPool(effectiveThreads);
             try {
                 final var futures = files.stream().map(f -> executor.submit(() -> {
