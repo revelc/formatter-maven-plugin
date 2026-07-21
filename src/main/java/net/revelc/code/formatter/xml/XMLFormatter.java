@@ -16,8 +16,6 @@ package net.revelc.code.formatter.xml;
 
 import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
-
 import net.revelc.code.formatter.AbstractCacheableFormatter;
 import net.revelc.code.formatter.ConfigurationSource;
 import net.revelc.code.formatter.Formatter;
@@ -34,10 +32,10 @@ public class XMLFormatter extends AbstractCacheableFormatter implements Formatte
     private XmlDocumentFormatter formatter;
 
     /** The configuration options */
-    private ImmutableMap<String, String> options;
+    private Map<String, String> options;
 
     @Override
-    public void init(final ImmutableMap<String, String> options, final ConfigurationSource cfg) {
+    public void init(final Map<String, String> options, final ConfigurationSource cfg) {
         super.initCfg(cfg);
 
         final var prefs = new FormattingPreferences();

@@ -22,6 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.apache.maven.plugin.logging.Log;
@@ -29,7 +31,6 @@ import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.hash.Hashing;
 
 /**
@@ -127,7 +128,7 @@ public abstract class AbstractFormatterTest {
      */
     protected void singlePassTest(final Formatter formatter, final String fileUnderTest, final String expectedSha512,
             final LineEnding lineEnding) {
-        this.multiPassTest(1, ImmutableMap.of(), formatter, fileUnderTest, expectedSha512, lineEnding);
+        this.multiPassTest(1, Collections.emptyMap(), formatter, fileUnderTest, expectedSha512, lineEnding);
     }
 
     /**
@@ -144,8 +145,8 @@ public abstract class AbstractFormatterTest {
      * @param lineEnding
      *            the line ending
      */
-    protected void twoPassTest(final ImmutableMap<String, String> options, final Formatter formatter,
-            final String fileUnderTest, final String expectedSha512, final LineEnding lineEnding) {
+    protected void twoPassTest(final Map<String, String> options, final Formatter formatter, final String fileUnderTest,
+            final String expectedSha512, final LineEnding lineEnding) {
         this.multiPassTest(2, options, formatter, fileUnderTest, expectedSha512, lineEnding);
     }
 
@@ -165,9 +166,8 @@ public abstract class AbstractFormatterTest {
      * @param lineEnding
      *            the line ending
      */
-    private void multiPassTest(final int numPasses, final ImmutableMap<String, String> options,
-            final Formatter formatter, final String fileUnderTest, final String expectedSha512,
-            final LineEnding lineEnding) {
+    private void multiPassTest(final int numPasses, final Map<String, String> options, final Formatter formatter,
+            final String fileUnderTest, final String expectedSha512, final LineEnding lineEnding) {
         IntStream.rangeClosed(1, numPasses).forEachOrdered(passNumber -> {
             try {
                 this.doTestFormat(options, formatter, fileUnderTest, expectedSha512, lineEnding, passNumber);
@@ -196,9 +196,8 @@ public abstract class AbstractFormatterTest {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void doTestFormat(final ImmutableMap<String, String> options, final Formatter formatter,
-            final String fileUnderTest, final String expectedSha512, final LineEnding lineEnding, final int formatCycle)
-            throws IOException {
+    private void doTestFormat(final Map<String, String> options, final Formatter formatter, final String fileUnderTest,
+            final String expectedSha512, final LineEnding lineEnding, final int formatCycle) throws IOException {
 
         // Set the used resource location for test (either first pass or second pass)
         String resourceLocation;

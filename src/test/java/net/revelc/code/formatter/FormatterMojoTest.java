@@ -13,7 +13,8 @@
  */
 package net.revelc.code.formatter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,11 +22,35 @@ class FormatterMojoTest {
 
     @Test
     void numberOfThreadsTest() {
-        assertEquals(2, FormatterMojo.effectiveThreads("0.5C", 5));
-        assertEquals(1, FormatterMojo.effectiveThreads("0.5C", 1));
-        assertEquals(2, FormatterMojo.effectiveThreads("1C", 2));
-        assertEquals(5, FormatterMojo.effectiveThreads("0", 5));
-        assertEquals(3, FormatterMojo.effectiveThreads("3", 5));
+        assertEquals(7, FormatterMojo.effectiveThreads("0.72C", 10), "expected rounding down");
+        assertEquals(7, FormatterMojo.effectiveThreads("0.79C", 10), "expected rounding down");
+        assertEquals(1, FormatterMojo.effectiveThreads("0.00001 C", 2), "expected at least 1 thread");
+        assertEquals(2, FormatterMojo.effectiveThreads("1C", 2), "expected exact multiple");
+        assertEquals(4, FormatterMojo.effectiveThreads("2C", 2), "expected exact multiple");
+        assertEquals(5, FormatterMojo.effectiveThreads("2.5C", 2), "expected exact multiple");
+        assertEquals(5, FormatterMojo.effectiveThreads("2.6C", 2), "expected rounded multiple");
+        assertEquals(4, FormatterMojo.effectiveThreads("2.4C", 2), "expected rounded multiple");
+        assertEquals(4, FormatterMojo.effectiveThreads("2.4c", 2), "expected case insensitivity");
+        assertEquals(4, FormatterMojo.effectiveThreads(" 2.4  c ", 2), "expected spaces allowed");
+        assertEquals(4, FormatterMojo.effectiveThreads(" 2.4  c ", 2), "expected spaces allowed");
+        assertEquals(4, FormatterMojo.effectiveThreads("2.C", 2), "expected no decimal part allowed");
+        assertEquals(4, FormatterMojo.effectiveThreads(".5 c", 8), "expected no whole part allowed");
+        assertEquals(4, FormatterMojo.effectiveThreads(".0 c", 4), "expected num cores");
+        assertEquals(4, FormatterMojo.effectiveThreads("0.0 c", 4), "expected num cores");
+        assertEquals(4, FormatterMojo.effectiveThreads("000000.0000000000 c", 4), "expected num cores");
+        assertEquals(4, FormatterMojo.effectiveThreads("0 c", 4), "expected num cores");
+
+        assertEquals(5, FormatterMojo.effectiveThreads("0", 5), "expected num cores");
+        assertEquals(3, FormatterMojo.effectiveThreads("3", 0), "expected specified count");
+        assertEquals(8, FormatterMojo.effectiveThreads(" 8  ", 0), "expected spaces allowed");
+
         assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads("", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads(" ", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads("-1", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads("1.", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads(".1", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads(".2.", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads("2 .3c", 5));
+        assertThrows(IllegalArgumentException.class, () -> FormatterMojo.effectiveThreads("-1.0c", 5));
     }
 }

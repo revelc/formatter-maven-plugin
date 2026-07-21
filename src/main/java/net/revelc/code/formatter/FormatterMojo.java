@@ -51,12 +51,10 @@ import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.hash.Hashing;
 
 import net.revelc.code.formatter.css.CssFormatter;
@@ -368,15 +366,15 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private boolean includeResources;
 
     /**
-     * Number of threads to use for formatting files in parallel. Either an integer specifying the number of threads or
-     * a multiplier (e.g. {@code 0.75C}, {@code 1.5C}, {@code 2C}) specifying the number of threads per core. Defaults
-     * to {@code 1}, which preserves the historical single-threaded behavior. A value of {@code 0} or any negative value
-     * selects a value equal to the number of available processors (i.e. {@link Runtime#availableProcessors()}). Larger
-     * projects may benefit substantially from parallel formatting.
+     * Number of threads to use for formatting files in parallel. Either a non-negative integer specifying the number of
+     * threads or a non-negative multiplier (e.g. {@code 0.75C}, {@code 1.5C}, {@code 2C}) specifying the number of
+     * threads per core. Defaults to {@code 0.75C}, with a minimum thread count of 1. A value of {@code 0} selects a
+     * value equal to the number of available processors (i.e. {@link Runtime#availableProcessors()}). Larger projects
+     * may benefit substantially from parallel formatting.
      *
      * @since 2.30.0
      */
-    @Parameter(defaultValue = "1", property = "formatter.threads")
+    @Parameter(defaultValue = "0.75C", property = "formatter.threads")
     private String threads;
 
     /** The java formatter. */
@@ -476,7 +474,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         final var basedirPath = this.getBasedirPath();
 
-        final var effectiveThreads = effectiveThreads(threads, Runtime.getRuntime().availableProcessors());
+        final int effectiveThreads = effectiveThreads(threads, Runtime.getRuntime().availableProcessors());
         if (effectiveThreads <= 1) {
             for (final Path file : files) {
                 this.processFile(file, rc, hashCache, basedirPath);
@@ -527,26 +525,35 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
     }
 
+    // either it has a unit or it doesn't; if it does, then it can be a decimal that starts with a dot
+    // and has at least one digit, or it is a decimal that starts with at least one digit and is
+    // followed by an optional dot and more optional digits; the unit may be separated by spaces; if
+    // it doesn't contain a unit, then it must be a whole number; it must not be negative
+    private static final Pattern THREAD_OPT_PATTERN = Pattern
+            .compile("^(?:(?<hasunit>(?<factor>(?:[.]\\d+|\\d+[.]?\\d*))\\s*[Cc])|" + "(?<count>\\d+))$");
+
     /**
      * Determines the number of threads given the threads option and the number of available cores.
      *
      * @param threadsOption
-     *            The number of threads or a per-core multiplier.
+     *            The non-negative whole number of threads, or a per-core multiplier with the units specified by the
+     *            case-insensitive letter 'C'.
      * @param cores
      *            The number of CPU cores available on the system.
      *
      * @return The number of effective threads.
      */
     static int effectiveThreads(String threadsOption, int cores) {
-        if (threadsOption.matches("\\d+(\\.\\d+)?C")) {
-            var threadsPerCore = Double.parseDouble(threadsOption.substring(0, threadsOption.length() - 1));
-            return Math.max(1, (int) (threadsPerCore * cores));
+        var matcher = THREAD_OPT_PATTERN.matcher(threadsOption.strip());
+        if (matcher.matches()) {
+            if (matcher.group("hasunit") != null) {
+                var threadsPerCore = Double.parseDouble(matcher.group("factor"));
+                return threadsPerCore == 0.0 ? cores : Math.max(1, (int) (threadsPerCore * cores));
+            }
+            var threads = Integer.parseInt(matcher.group("count"));
+            return threads == 0 ? cores : threads;
         }
-        if (threadsOption.matches("\\d+")) {
-            var threads = Integer.parseInt(threadsOption);
-            return threads <= 0 ? cores : threads;
-        }
-        throw new IllegalArgumentException(String.format("Invalid value `%s` for option `threads`", threadsOption));
+        throw new IllegalArgumentException(String.format("Invalid threads value '%s'", threadsOption));
     }
 
     /**
@@ -690,8 +697,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         try (var sw = new StringWriter()) {
             props.store(sw, null);
             getLog().debug("Writing sorted files to cache without timestamp:\n\n" + props);
-            Files.write(cacheFile, (Iterable<String>) sw.toString().lines().skip(1).sorted().toList(),
-                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(cacheFile, sw.toString().lines().skip(1).sorted().toList(), StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
         } catch (final IOException e) {
             this.getLog().warn("Cannot store file hash cache properties file", e);
         }
@@ -970,7 +977,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     /**
-     * Create a {@link CodeFormatter} instance to be used by this mojo.
+     * Initialize the code formatter instances to be used by this mojo.
      *
      * @throws MojoExecutionException
      *             the mojo execution exception
@@ -991,7 +998,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         }
         // Html Setup
         if (this.configHtmlFile != null) {
-            this.htmlFormatter.init(ImmutableMap.copyOf(this.getOptionsFromPropertiesFile(this.configHtmlFile)), this);
+            this.htmlFormatter.init(this.getOptionsFromPropertiesFile(this.configHtmlFile), this);
         }
         // Xml Setup
         if (this.configXmlFile != null) {
@@ -999,7 +1006,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (this.lineEnding != LineEnding.KEEP) {
                 xmlFormattingOptions.put("lineending", this.lineEnding.getChars());
             }
-            this.xmlFormatter.init(ImmutableMap.copyOf(xmlFormattingOptions), this);
+            this.xmlFormatter.init(xmlFormattingOptions, this);
         }
         // Json Setup
         if (this.configJsonFile != null) {
@@ -1007,11 +1014,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             if (this.lineEnding != LineEnding.KEEP) {
                 jsonFormattingOptions.put("lineending", this.lineEnding.getChars());
             }
-            this.jsonFormatter.init(ImmutableMap.copyOf(jsonFormattingOptions), this);
+            this.jsonFormatter.init(jsonFormattingOptions, this);
         }
         // Css Setup
         if (this.configCssFile != null) {
-            this.cssFormatter.init(ImmutableMap.copyOf(this.getOptionsFromPropertiesFile(this.configCssFile)), this);
+            this.cssFormatter.init(this.getOptionsFromPropertiesFile(this.configCssFile), this);
         }
         // stop the process if not config files where found
         if (javaFormattingOptions == null && jsFormattingOptions == null && this.configHtmlFile == null
@@ -1022,7 +1029,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     /**
-     * Return the options to be passed when creating {@link CodeFormatter} instance.
+     * Return the options to be passed when creating the code formatter instances.
      *
      * @param newConfigFile
      *            the new config file
@@ -1032,16 +1039,12 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private ImmutableMap<String, String> getFormattingOptions(final String newConfigFile)
-            throws MojoExecutionException {
+    private Map<String, String> getFormattingOptions(final String newConfigFile) throws MojoExecutionException {
         if (this.useEclipseDefaults) {
             this.getLog().info("Using Eclipse Defaults");
             // Use defaults only for formatting
-            final Map<String, String> options = new HashMap<>();
-            options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
-            options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
-            options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
-            return ImmutableMap.copyOf(options);
+            return Map.of(JavaCore.COMPILER_SOURCE, this.compilerSource, JavaCore.COMPILER_COMPLIANCE,
+                    this.compilerCompliance, JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
         }
 
         return this.getOptionsFromConfigFile(newConfigFile);
@@ -1058,8 +1061,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private ImmutableMap<String, String> getOptionsFromConfigFile(final String newConfigFile)
-            throws MojoExecutionException {
+    private Map<String, String> getOptionsFromConfigFile(final String newConfigFile) throws MojoExecutionException {
 
         this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
         this.resourceManager.addSearchPath(FileResourceLoader.ID, this.basedir.getAbsolutePath());
@@ -1165,7 +1167,9 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         /** The fail count. */
         final AtomicInteger failCount = new AtomicInteger();
 
-        /** The skipped count is incremented for cached files that haven't changed since being cached. */
+        /**
+         * The skipped count is incremented for cached files that haven't changed since being cached.
+         */
         final AtomicInteger skippedCount = new AtomicInteger();
 
         /**

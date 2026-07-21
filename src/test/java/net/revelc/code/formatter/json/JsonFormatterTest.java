@@ -16,14 +16,14 @@ package net.revelc.code.formatter.json;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.collect.ImmutableMap;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
@@ -45,7 +45,7 @@ class JsonFormatterTest extends AbstractFormatterTest {
                 ? "1c8b8931b79a7dfaa4d2ab1986ebfe5967716b63877aa0311091214bf870f5480469a80e920fc825a98ad265f252e94e1ca4b94a55a279d0d2d302a20dcb4fa3"
                 : "c6e19e9d042d8d2045eb17d2966f105e6c538d5c05c614c556eb88dfb020645cb2d410cf059643a14ca193487b888e24194499ee8be2c337afdc89067a23e4cd";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
-        this.twoPassTest(ImmutableMap.of(), new JsonFormatter(), "someFile.json", expectedHash, lineEnding);
+        this.twoPassTest(Collections.emptyMap(), new JsonFormatter(), "someFile.json", expectedHash, lineEnding);
     }
 
     /**
@@ -55,7 +55,7 @@ class JsonFormatterTest extends AbstractFormatterTest {
     void testIsInitialized() {
         final var jsonFormatter = new JsonFormatter();
         Assertions.assertFalse(jsonFormatter.isInitialized());
-        jsonFormatter.init(ImmutableMap.of(),
+        jsonFormatter.init(Collections.emptyMap(),
                 new AbstractFormatterTest.TestConfigurationSource(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR));
         Assertions.assertTrue(jsonFormatter.isInitialized());
     }
@@ -65,8 +65,8 @@ class JsonFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testDoFormatFileWithConfig() {
-        final var jsonFormattingOptions = ImmutableMap.of("indent", "2", "spaceBeforeSeparator", "false",
-                "alphabeticalOrder", "true");
+        final var jsonFormattingOptions = Map.of("indent", "2", "spaceBeforeSeparator", "false", "alphabeticalOrder",
+                "true");
 
         // Since we set the line endings via options for json, we cannot rely on CRLF inside twoPassTest.
         // The option will not be available inside json formatter init so it will use whatever the system
@@ -100,7 +100,7 @@ class JsonFormatterTest extends AbstractFormatterTest {
         for (LineEnding currentTestedLineEnding : EnumSet.of(LineEnding.CRLF, LineEnding.LF, LineEnding.CR)) {
             final var jsonFormatter = new JsonFormatter();
             Assertions.assertFalse(jsonFormatter.isInitialized());
-            jsonFormatter.init(ImmutableMap.of("lineending", currentTestedLineEnding.getChars()),
+            jsonFormatter.init(Map.of("lineending", currentTestedLineEnding.getChars()),
                     new TestConfigurationSource(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR));
             Assertions.assertTrue(jsonFormatter.isInitialized());
             String result = jsonFormatter.doFormat(originalJson, currentTestedLineEnding);

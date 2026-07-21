@@ -21,8 +21,6 @@ import java.util.Map;
 import org.apache.commons.digester3.Digester;
 import org.xml.sax.SAXException;
 
-import com.google.common.collect.ImmutableMap;
-
 /**
  * This class reads a config file for Eclipse code formatter.
  */
@@ -44,8 +42,7 @@ public class ConfigReader {
      * @throws ConfigReadException
      *             the config read exception
      */
-    public ImmutableMap<String, String> read(final InputStream input)
-            throws IOException, SAXException, ConfigReadException {
+    public Map<String, String> read(final InputStream input) throws IOException, SAXException, ConfigReadException {
         final var digester = new Digester();
         digester.addRuleSet(new RuleSet());
 
@@ -59,7 +56,7 @@ public class ConfigReader {
             throw new ConfigReadException("No profile in config file of kind: " + Profiles.PROFILE_KIND);
         }
 
-        return ImmutableMap.copyOf(list.get(0));
+        return list.get(0);
     }
 
 }

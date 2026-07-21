@@ -14,10 +14,10 @@
 
 package net.revelc.code.formatter.html;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.collect.ImmutableMap;
 
 import net.revelc.code.formatter.AbstractFormatterTest;
 import net.revelc.code.formatter.LineEnding;
@@ -37,7 +37,7 @@ class HTMLFormatterTest extends AbstractFormatterTest {
                 ? "cf502240752d8f1785e327ecc81da0e8d528d4ba05fe8b8b5c175572a3b04355e47c715909134a3817d532137bbee1cee8b7012e2864a82e0ff454ce27dfbe8d"
                 : "428169b59607e874cc2dfdc98df19d2a309990eeae2ece04b8ac039c2e48ff94444dd3331271be75505bbb170fd6734ba56d231e3ef0f149351b9b0abb7495dc";
         final var lineEnding = LineEnding.LF.isSystem() ? LineEnding.LF : LineEnding.CRLF;
-        this.twoPassTest(ImmutableMap.of(), new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
+        this.twoPassTest(Collections.emptyMap(), new HTMLFormatter(), "someFile.html", expectedHash, lineEnding);
     }
 
     /**
@@ -47,7 +47,7 @@ class HTMLFormatterTest extends AbstractFormatterTest {
     void testIsInitialized() {
         final var htmlFormatter = new HTMLFormatter();
         Assertions.assertFalse(htmlFormatter.isInitialized());
-        htmlFormatter.init(ImmutableMap.of(),
+        htmlFormatter.init(Collections.emptyMap(),
                 new AbstractFormatterTest.TestConfigurationSource(AbstractFormatterTest.TEST_OUTPUT_PRIMARY_DIR));
         Assertions.assertTrue(htmlFormatter.isInitialized());
     }
