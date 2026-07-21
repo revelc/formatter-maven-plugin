@@ -14,6 +14,7 @@
 
 package net.revelc.code.formatter;
 
+import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import java.io.File;
@@ -24,11 +25,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,7 +52,6 @@ import org.codehaus.plexus.resource.loader.FileResourceLoader;
 import org.codehaus.plexus.resource.loader.ResourceNotFoundException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.xml.sax.SAXException;
@@ -363,6 +366,18 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     @Parameter(defaultValue = "false", property = "formatter.includeResources")
     private boolean includeResources;
 
+    /**
+     * Number of threads to use for formatting files in parallel. Either a non-negative integer specifying the number of
+     * threads or a non-negative multiplier (e.g. {@code 0.75C}, {@code 1.5C}, {@code 2C}) specifying the number of
+     * threads per core. Defaults to {@code 0.75C}, with a minimum thread count of 1. A value of {@code 0} selects a
+     * value equal to the number of available processors (i.e. {@link Runtime#availableProcessors()}). Larger projects
+     * may benefit substantially from parallel formatting.
+     *
+     * @since 2.30.0
+     */
+    @Parameter(defaultValue = "0.75C", property = "formatter.threads")
+    private String threads;
+
     /** The java formatter. */
     private final JavaFormatter javaFormatter = new JavaFormatter();
 
@@ -382,7 +397,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     private final CssFormatter cssFormatter = new CssFormatter();
 
     /** The hash cache written. */
-    private boolean hashCacheWritten;
+    private volatile boolean hashCacheWritten;
 
     /**
      * Execute.
@@ -459,22 +474,32 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var hashCache = this.readFileHashCacheFile();
 
         final var basedirPath = this.getBasedirPath();
-        for (final Path file : files) {
-            if (Files.exists(file)) {
-                if (Files.isWritable(file)) {
+
+        final int effectiveThreads = effectiveThreads(threads, Runtime.getRuntime().availableProcessors());
+        if (effectiveThreads <= 1) {
+            for (final Path file : files) {
+                this.processFile(file, rc, hashCache, basedirPath);
+            }
+        } else {
+            log.debug("Formatting files using " + effectiveThreads + " threads");
+            var executor = newFixedThreadPool(effectiveThreads);
+            try {
+                final var futures = files.stream().map(f -> executor.submit(() -> {
+                    this.processFile(f, rc, hashCache, basedirPath);
+                    return null;
+                })).toList();
+                for (final var future : futures) {
                     try {
-                        this.doFormatFile(file, rc, hashCache, basedirPath, false);
-                    } catch (IOException | MalformedTreeException | BadLocationException e) {
-                        rc.failCount++;
-                        this.getLog().error(e);
+                        future.get();
+                    } catch (final ExecutionException e) {
+                        throw new MojoExecutionException("Error formatting files", e);
+                    } catch (final InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new MojoExecutionException("Interrupted while formatting files", e);
                     }
-                } else {
-                    rc.readOnlyCount++;
-                    this.getLog().warn("File " + file + " is read only");
                 }
-            } else {
-                rc.failCount++;
-                this.getLog().error("File " + file + " does not exist");
+            } finally {
+                executor.shutdownNow();
             }
         }
 
@@ -489,15 +514,83 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         final var results = String.format(
                 "Processed %d files in %s (Formatted: %d, Skipped: %d, Unchanged: %d, Failed: %d, Readonly: %d)",
-                numberOfFiles, elapsed, rc.successCount, rc.skippedCount, rc.unchangedCount, rc.failCount,
-                rc.readOnlyCount);
+                numberOfFiles, elapsed, rc.successCount.get(), rc.skippedCount.get(), rc.unchangedCount.get(),
+                rc.failCount.get(), rc.readOnlyCount.get());
 
-        if (rc.failCount > 0) {
+        if (rc.failCount.get() > 0) {
             this.getLog().error(results);
-        } else if (rc.readOnlyCount > 0) {
+        } else if (rc.readOnlyCount.get() > 0) {
             this.getLog().warn(results);
         } else {
             this.getLog().info(results);
+        }
+    }
+
+    // either it has a unit or it doesn't; if it does, then it can be a decimal that starts with a dot
+    // and has at least one digit, or it is a decimal that starts with at least one digit and is
+    // followed by an optional dot and more optional digits; the unit may be separated by spaces; if
+    // it doesn't contain a unit, then it must be a whole number; it must not be negative
+    private static final Pattern THREAD_OPT_PATTERN = Pattern
+            .compile("^(?:(?<hasunit>(?<factor>(?:[.]\\d+|\\d+[.]?\\d*))\\s*[Cc])|" + "(?<count>\\d+))$");
+
+    /**
+     * Determines the number of threads given the threads option and the number of available cores.
+     *
+     * @param threadsOption
+     *            The non-negative whole number of threads, or a per-core multiplier with the units specified by the
+     *            case-insensitive letter 'C'.
+     * @param cores
+     *            The number of CPU cores available on the system.
+     *
+     * @return The number of effective threads.
+     */
+    static int effectiveThreads(String threadsOption, int cores) {
+        var matcher = THREAD_OPT_PATTERN.matcher(threadsOption.strip());
+        if (matcher.matches()) {
+            if (matcher.group("hasunit") != null) {
+                var threadsPerCore = Double.parseDouble(matcher.group("factor"));
+                return threadsPerCore == 0.0 ? cores : Math.max(1, (int) (threadsPerCore * cores));
+            }
+            var threads = Integer.parseInt(matcher.group("count"));
+            return threads == 0 ? cores : threads;
+        }
+        throw new IllegalArgumentException(String.format("Invalid threads value '%s'", threadsOption));
+    }
+
+    /**
+     * Format a single file, handling read-only/missing files and per-file exceptions in a thread-safe manner.
+     *
+     * @param file
+     *            the file to format
+     * @param rc
+     *            the shared result collector
+     * @param hashCache
+     *            the hash cache ({@link Properties} is internally synchronized)
+     * @param basedirPath
+     *            the project basedir canonical path
+     *
+     * @throws MojoExecutionException
+     *             if formatting fails fatally
+     * @throws MojoFailureException
+     *             if formatting fails fatally (e.g. validation)
+     */
+    private void processFile(final Path file, final ResultCollector rc, final Properties hashCache,
+            final String basedirPath) throws MojoExecutionException, MojoFailureException {
+        if (Files.exists(file)) {
+            if (Files.isWritable(file)) {
+                try {
+                    this.doFormatFile(file, rc, hashCache, basedirPath, false);
+                } catch (IOException | MalformedTreeException | BadLocationException e) {
+                    rc.failCount.incrementAndGet();
+                    this.getLog().error(e);
+                }
+            } else {
+                rc.readOnlyCount.incrementAndGet();
+                this.getLog().warn("File " + file + " is read only");
+            }
+        } else {
+            rc.failCount.incrementAndGet();
+            this.getLog().error("File " + file + " does not exist");
         }
     }
 
@@ -509,7 +602,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      *
      * @return the list
      */
-    List<Path> addCollectionFiles(final Path newBasedir) {
+    private List<Path> addCollectionFiles(final Path newBasedir) {
         final var ds = new DirectoryScanner();
         ds.setBasedir(newBasedir.toFile());
         if (this.includes != null && this.includes.length > 0) {
@@ -524,11 +617,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         ds.setFollowSymlinks(false);
         ds.scan();
 
-        final List<Path> foundFiles = new ArrayList<>();
-        for (final String filename : ds.getIncludedFiles()) {
-            foundFiles.add(Path.of(newBasedir.toString(), filename));
-        }
-        return foundFiles;
+        return Arrays.stream(ds.getIncludedFiles()).map(f -> Path.of(newBasedir.toString(), f)).toList();
     }
 
     /**
@@ -609,8 +698,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         try (var sw = new StringWriter()) {
             props.store(sw, null);
             getLog().debug("Writing sorted files to cache without timestamp:\n\n" + props);
-            Files.write(cacheFile, (Iterable<String>) sw.toString().lines().skip(1).sorted().toList(),
-                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(cacheFile, sw.toString().lines().skip(1).sorted().toList(), StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
         } catch (final IOException e) {
             this.getLog().warn("Cannot store file hash cache properties file", e);
         }
@@ -680,7 +769,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         final var path = canonicalPath.substring(basedirPath.length());
         final var cachedHash = hashCache.getProperty(path);
         if (!skipFormattingCache && cachedHash != null && cachedHash.equals(originalHash)) {
-            rc.skippedCount++;
+            rc.skippedCount.incrementAndGet();
             log.debug("Cache hit: file is already formatted.");
             return;
         }
@@ -692,6 +781,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 log.debug(Type.JAVA + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
+                // JavaFormatter uses a ThreadLocal CodeFormatter, so concurrent calls are safe.
                 formattedCode = this.javaFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (fileName.endsWith(".js") && this.jsFormatter.isInitialized()) {
@@ -699,6 +789,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
                 log.debug(Type.JAVASCRIPT + FormatterMojo.FORMATTING_IS_SKIPPED);
                 result = Result.SKIPPED;
             } else {
+                // JavascriptFormatter uses a ThreadLocal CodeFormatter, so concurrent calls are safe.
                 formattedCode = this.jsFormatter.formatFile(file, originalCode, this.lineEnding);
             }
         } else if (fileName.endsWith(".html") && this.htmlFormatter.isInitialized()) {
@@ -751,11 +842,11 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (Result.SKIPPED.equals(result)) {
             // Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
             // formatting.
-            rc.unchangedCount++;
+            rc.unchangedCount.incrementAndGet();
         } else if (Result.SUCCESS.equals(result)) {
-            rc.successCount++;
+            rc.successCount.incrementAndGet();
         } else if (Result.FAIL.equals(result)) {
-            rc.failCount++;
+            rc.failCount.incrementAndGet();
             return;
         }
 
@@ -777,7 +868,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
 
         // As a safety check, if our hash matches, skip the write of file (should never occur)
         if (originalHash.equals(formattedHash)) {
-            rc.skippedCount++;
+            rc.skippedCount.incrementAndGet();
             log.debug("Equal hash code. Not writing result to file.");
             return;
         }
@@ -887,7 +978,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     /**
-     * Create a {@link CodeFormatter} instance to be used by this mojo.
+     * Initialize the code formatter instances to be used by this mojo.
      *
      * @throws MojoExecutionException
      *             the mojo execution exception
@@ -939,7 +1030,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     }
 
     /**
-     * Return the options to be passed when creating {@link CodeFormatter} instance.
+     * Return the options to be passed when creating the code formatter instances.
      *
      * @param newConfigFile
      *            the new config file
@@ -953,11 +1044,8 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
         if (this.useEclipseDefaults) {
             this.getLog().info("Using Eclipse Defaults");
             // Use defaults only for formatting
-            final Map<String, String> options = new HashMap<>();
-            options.put(JavaCore.COMPILER_SOURCE, this.compilerSource);
-            options.put(JavaCore.COMPILER_COMPLIANCE, this.compilerCompliance);
-            options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
-            return options;
+            return Map.of(JavaCore.COMPILER_SOURCE, this.compilerSource, JavaCore.COMPILER_COMPLIANCE,
+                    this.compilerCompliance, JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, this.compilerTargetPlatform);
         }
 
         return this.getOptionsFromConfigFile(newConfigFile);
@@ -1003,7 +1091,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
      * @throws MojoExecutionException
      *             the mojo execution exception
      */
-    private Map<String, String> getOptionsFromPropertiesFile(final String newPropertiesFile)
+    private HashMap<String, String> getOptionsFromPropertiesFile(final String newPropertiesFile)
             throws MojoExecutionException {
 
         this.getLog().debug("Using search path at: " + this.basedir.getAbsolutePath());
@@ -1019,7 +1107,7 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
             throw new MojoExecutionException("Cannot read config file [" + newPropertiesFile + "]", e);
         }
 
-        final Map<String, String> map = new HashMap<>();
+        final var map = new HashMap<String, String>();
         for (final String name : properties.stringPropertyNames()) {
             map.put(name, properties.getProperty(name));
         }
@@ -1075,22 +1163,24 @@ public class FormatterMojo extends AbstractMojo implements ConfigurationSource {
     static class ResultCollector {
 
         /** The success count. */
-        int successCount;
+        final AtomicInteger successCount = new AtomicInteger();
 
         /** The fail count. */
-        int failCount;
+        final AtomicInteger failCount = new AtomicInteger();
 
-        /** The skipped count is incremented for cached files that haven't changed since being cached. */
-        int skippedCount;
+        /**
+         * The skipped count is incremented for cached files that haven't changed since being cached.
+         */
+        final AtomicInteger skippedCount = new AtomicInteger();
 
         /**
          * Use unchanged count for files that either 'skipFormattingCache' or cache missed but flagged to skip
          * formatting.
          */
-        int unchangedCount;
+        final AtomicInteger unchangedCount = new AtomicInteger();
 
         /** The read only count. */
-        int readOnlyCount;
+        final AtomicInteger readOnlyCount = new AtomicInteger();
     }
 
     @Override

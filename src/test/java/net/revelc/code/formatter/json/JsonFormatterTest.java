@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -66,10 +65,8 @@ class JsonFormatterTest extends AbstractFormatterTest {
      */
     @Test
     void testDoFormatFileWithConfig() {
-        final Map<String, String> jsonFormattingOptions = new HashMap<>();
-        jsonFormattingOptions.put("indent", "2");
-        jsonFormattingOptions.put("spaceBeforeSeparator", "false");
-        jsonFormattingOptions.put("alphabeticalOrder", "true");
+        final var jsonFormattingOptions = Map.of("indent", "2", "spaceBeforeSeparator", "false", "alphabeticalOrder",
+                "true");
 
         // Since we set the line endings via options for json, we cannot rely on CRLF inside twoPassTest.
         // The option will not be available inside json formatter init so it will use whatever the system
